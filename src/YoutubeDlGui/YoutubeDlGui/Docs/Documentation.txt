@@ -1,0 +1,5 @@
+﻿Acknowledgement:
+- youtube-dl: https://github.com/ytdl-org/youtube-dl
+- WrapYoutubeDl: https://github.com/detaybey/WrapYoutubeDl
+- WebBrowserControl: https://www.codeproject.com/Tips/1158298/WPF-WebBrowser-Control-Enhancements
+- Syncfusion Metro Studio 5

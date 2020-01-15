@@ -55,8 +55,16 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,13 +77,65 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WrapYoutubeDl">
+      <HintPath>Binaries\WrapYoutubeDl.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Common\Epsilon.cs" />
+    <Compile Include="Common\NotifyPropertyChanged.cs" />
+    <Compile Include="Common\OutputFormat.cs" />
+    <Compile Include="Common\Percentage.cs" />
+    <Compile Include="Common\Range.cs" />
+    <Compile Include="Common\RangeDouble.cs" />
+    <Compile Include="Common\RangeInt.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Controls\WebBrowserControl\BrowserEmulationVersion.cs" />
+    <Compile Include="Controls\WebBrowserControl\IExecuteWithObject.cs" />
+    <Compile Include="Controls\WebBrowserControl\IExecuteWithObjectAndResult.cs" />
+    <Compile Include="Controls\WebBrowserControl\InternetExplorerBrowserEmulation.cs" />
+    <Compile Include="Controls\WebBrowserControl\RelayCommand.cs" />
+    <Compile Include="Controls\WebBrowserControl\RelayCommandGeneric.cs" />
+    <Compile Include="Controls\WebBrowserControl\WeakAction.cs" />
+    <Compile Include="Controls\WebBrowserControl\WeakActionGeneric.cs" />
+    <Compile Include="Controls\WebBrowserControl\WeakFunc.cs" />
+    <Compile Include="Controls\WebBrowserControl\WeakFuncGeneric.cs" />
+    <Compile Include="Controls\WebBrowserControl\WebBrowserControl.cs" />
+    <Compile Include="Converters\BoolToValueConverter.cs" />
+    <Compile Include="Converters\EventBindingExtension.cs" />
+    <Compile Include="Converters\ValueConverter.cs" />
+    <Compile Include="Core\Downloader.cs" />
+    <Compile Include="Extensions\INotifyPropertyChangedExtension.cs" />
+    <Compile Include="Extensions\MathExtensions.cs" />
+    <Compile Include="Extensions\RangeExtension.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="If\IRange.cs" />
+    <Compile Include="Models\Video.cs" />
+    <Compile Include="Common\VideoState.cs" />
+    <Compile Include="Resources\Icons.cs" />
+    <Compile Include="ViewModels\DownloadVideoViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
+    <Compile Include="ViewModels\VideoViewModel.cs" />
+    <Compile Include="Views\DownloadVideoView.xaml.cs">
+      <DependentUpon>DownloadVideoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VideoBrowserView.xaml.cs">
+      <DependentUpon>VideoBrowserView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resources\IconsResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -83,10 +143,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DownloadVideoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VideoBrowserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -113,6 +185,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Binaries\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Binaries\ffplay.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Binaries\ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Binaries\WrapYoutubeDl.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Binaries\youtube-dl.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Docs\Documentation.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

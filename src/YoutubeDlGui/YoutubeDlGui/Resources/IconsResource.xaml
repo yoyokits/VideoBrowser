@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  The Paths are based on Metro Studio  -->
+    <!--  24 Pixel and 0 Padding  -->
+    <Style x:Key="IconPathBaseStyle" TargetType="Path">
+        <Style.Setters>
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Fill" Value="#FF000000" />
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style.Setters>
+    </Style>
+    <Style
+        x:Key="Back"
+        BasedOn="{StaticResource IconPathBaseStyle}"
+        TargetType="Path">
+        <Style.Setters>
+            <Setter Property="Data" Value="M11.437023,0L12.910027,1.3519993 3.6363177,11.457997 32.000037,11.457997 32.000037,13.457997 3.6290457,13.457997 12.796026,23.446989 11.322024,24.798988 0,12.461994z" />
+        </Style.Setters>
+    </Style>
+    <Style
+        x:Key="Download"
+        BasedOn="{StaticResource IconPathBaseStyle}"
+        TargetType="Path">
+        <Style.Setters>
+            <Setter Property="Data" Value="M2.3841858E-06,30L24,30 24,32 2.3841858E-06,32z M11.000002,0L13.000002,0 13.000002,24.443178 22.684996,15.998997 23.999998,17.507006 11.963988,27.999996 0,17.505007 1.3189697,16.001011 11.000002,24.493849z" />
+        </Style.Setters>
+    </Style>
+    <Style
+        x:Key="Forward"
+        BasedOn="{StaticResource IconPathBaseStyle}"
+        TargetType="Path">
+        <Style.Setters>
+            <Setter Property="Data" Value="M20.564032,0L32.000033,12.461994 20.679032,24.798988 19.205031,23.446989 28.371085,13.457998 0,13.457998 0,11.457997 28.363814,11.457997 19.091031,1.3519993z" />
+        </Style.Setters>
+    </Style>
+    <Style
+        x:Key="Settings"
+        BasedOn="{StaticResource IconPathBaseStyle}"
+        TargetType="Path">
+        <Style.Setters>
+            <Setter Property="Data" Value="M16.099976,9.3999939C12.299988,9.3999939 9.2000122,12.299988 9.2000122,16 9.2000122,19.699982 12.200012,22.600006 16,22.699982 19.799988,22.699982 22.899963,19.799988 22.899963,16.100006 23,12.399994 19.899963,9.3999939 16.099976,9.3999939z M16.200012,0C17.599976,0,19,0.19998169,20.299988,0.6000061L20.799988,4.1000061C22.099976,4.6000061,23.399963,5.2999878,24.5,6.1999817L27.899963,4.8999939C29.799988,6.7999878,31.299988,9.1999817,32,11.899994L29.200012,14C29.299988,14.699982 29.399963,15.299988 29.399963,16 29.399963,16.699982 29.299988,17.399994 29.200012,18L32,20.199982C31.200012,22.799988,29.799988,25.199982,27.799988,27.100006L24.399963,26C23.299988,26.899994,22.099976,27.5,20.700012,28L20.099976,31.5C18.799988,31.799988 17.399963,32 15.899963,32 14.5,32 13.099976,31.799988 11.700012,31.399994L11.200012,27.899994C9.8999634,27.399994,8.5999756,26.699982,7.5,25.799988L4.0999756,27.100006C2.2000122,25.199982,0.70001221,22.799988,0,20.100006L3,18C2.8999634,17.299988 2.7999878,16.699982 2.7999878,16 2.7999878,15.299988 2.8999634,14.600006 3,14L0.20001221,11.799988C1,9.1000061,2.3999634,6.7999878,4.3999634,4.8999939L7.7999878,6C8.8999634,5.1000061,10.099976,4.5,11.5,4L12.099976,0.5C13.399963,0.19998169,14.799988,0,16.200012,0z" />
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>
