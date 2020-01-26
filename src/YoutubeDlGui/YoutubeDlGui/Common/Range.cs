@@ -4,11 +4,13 @@
     using YoutubeDlGui.If;
 
     /// <summary>
-    /// Defines the <see cref="Migas.Common.Core.Objects.Range{T}" />
+    /// Defines the <see cref="Range{T}" />
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public struct Range<T> : IRange<T> where T : IComparable<T>
     {
+        #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref=""/> class.
         /// </summary>
@@ -20,6 +22,10 @@
             this.End = end;
         }
 
+        #endregion Constructors
+
+        #region Properties
+
         /// <summary>
         /// Gets the End
         /// </summary>
@@ -29,6 +35,10 @@
         /// Gets the Start
         /// </summary>
         public T Start { get; }
+
+        #endregion Properties
+
+        #region Methods
 
         /// <summary>
         /// The Equals
@@ -69,6 +79,8 @@
         {
             return $"Start:{this.Start};End:{this.End}";
         }
+
+        #endregion Methods
 
         /// <summary>
         /// Implements the operator ==.

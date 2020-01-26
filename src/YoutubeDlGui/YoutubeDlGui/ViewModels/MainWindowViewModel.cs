@@ -1,31 +1,19 @@
 ﻿namespace YoutubeDlGui.ViewModels
 {
     using YoutubeDlGui.Common;
-    using YoutubeDlGui.Extensions;
 
     /// <summary>
     /// Defines the <see cref="MainWindowViewModel" />
     /// </summary>
     public class MainWindowViewModel : NotifyPropertyChanged
     {
-        #region Fields
-
-        private string _outputFolder;
-
-        #endregion Fields
-
         #region Properties
 
         /// <summary>
         /// Gets the DownloadVideo
         /// Gets or sets the DownloadVideo
         /// </summary>
-        public DownloadVideoViewModel DownloadVideo { get; } = new DownloadVideoViewModel();
-
-        /// <summary>
-        /// Gets or sets the OuputFolder
-        /// </summary>
-        public string OuputFolder { get => this._outputFolder; set => this.Set(this.PropertyChangedHandler, ref this._outputFolder, value); }
+        public DownloadQueueViewModel DownloadVideo { get; } = new DownloadQueueViewModel();
 
         /// <summary>
         /// Gets the Settings

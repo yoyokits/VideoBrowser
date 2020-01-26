@@ -68,11 +68,8 @@
             return this == (RangeDouble)obj;
         }
 
-        /// <summary>
-        /// The Equals
-        /// </summary>
-        /// <param name="other">The <see cref="Migas.Common.Core.Objects.Range{T}"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <summary>Equalses the specified other.</summary>
+        /// <param name="other">The other.</param>
         public bool Equals(RangeDouble other)
         {
             return this.Start.IsEqualTo(other.Start, PRECISION) && this.End.IsEqualTo(other.End, PRECISION);

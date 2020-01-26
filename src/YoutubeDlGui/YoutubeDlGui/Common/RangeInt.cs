@@ -60,11 +60,8 @@
             return this == (RangeInt)obj;
         }
 
-        /// <summary>
-        /// The Equals
-        /// </summary>
-        /// <param name="other">The <see cref="Migas.Common.Core.Objects.Range{T}"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <summary>Equalses the specified other.</summary>
+        /// <param name="other">The other.</param>
         public bool Equals(RangeInt other)
         {
             return this.Start == other.Start && this.End == other.End;
