@@ -215,6 +215,7 @@
             {
                 return;
             }
+
             this.ConsoleLog += outLine.Data;
 
             if (outLine.Data.Contains("ERROR"))
@@ -227,6 +228,7 @@
             {
                 return;
             }
+
             var pattern = new Regex(@"\b\d+([\.,]\d+)?", RegexOptions.None);
             if (!pattern.IsMatch(outLine.Data))
             {
@@ -240,6 +242,7 @@
                 Console.WriteLine("weird perc {0}", perc);
                 return;
             }
+
             this.Percentage = perc;
             this.OnProgress(new ProgressEventArgs() { ProcessObject = this.ProcessObject, Percentage = perc });
 

@@ -11,7 +11,7 @@
     d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel}"
     mc:Ignorable="d">
     <Grid Background="WhiteSmoke">
-        <TabControl TabStripPlacement="Right" BorderBrush="WhiteSmoke">
+        <TabControl BorderBrush="WhiteSmoke" TabStripPlacement="Right">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Template">
@@ -49,7 +49,7 @@
                 <views:VideoBrowserView />
             </TabItem>
             <TabItem DataContext="{Binding DownloadVideo}" Header="Download">
-                <views:DownloadVideoView />
+                <views:DownloadQueueView />
             </TabItem>
             <TabItem DataContext="{Binding Settings}" Header="Settings">
                 <views:SettingsView />

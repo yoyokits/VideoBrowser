@@ -63,6 +63,10 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -114,12 +118,16 @@
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
+    <Compile Include="Core\Commands.cs" />
     <Compile Include="Core\Downloader.cs" />
+    <Compile Include="Core\FileSizeUpdateEventArgs.cs" />
     <Compile Include="Core\PlayList.cs" />
     <Compile Include="Core\PlayListReader.cs" />
     <Compile Include="Core\VideoFormat.cs" />
     <Compile Include="Core\VideoInfo.cs" />
     <Compile Include="Core\YoutubeDl.cs" />
+    <Compile Include="Core\YoutubeAuthentication.cs" />
+    <Compile Include="Extensions\DictionaryExtension.cs" />
     <Compile Include="Extensions\INotifyPropertyChangedExtension.cs" />
     <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\RangeExtension.cs" />
