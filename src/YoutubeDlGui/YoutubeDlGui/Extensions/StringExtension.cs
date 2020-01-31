@@ -1,13 +1,20 @@
-﻿using YoutubeDlGui.Common;
-
-namespace YoutubeDlGui.Extensions
+﻿namespace YoutubeDlGui.Extensions
 {
+    using YoutubeDlGui.Common;
+
     /// <summary>
     /// Defines the <see cref="StringExtension" />
     /// </summary>
     public static class StringExtension
     {
+        #region Properties
+
+        /// <summary>
+        /// Gets the ByteSizeFormatProvider
+        /// </summary>
         private static ByteFormatProvider ByteSizeFormatProvider { get; } = new ByteFormatProvider();
+
+        #endregion Properties
 
         #region Methods
 
@@ -22,15 +29,25 @@ namespace YoutubeDlGui.Extensions
             return name;
         }
 
-        public static string ToFormatedSpeed(int speed)
-        {
-            var formated = string.Format(ByteSizeFormatProvider, "{0:s}", speed);
-            return formated;
-        }
-
+        /// <summary>
+        /// The ToFormatedByte
+        /// </summary>
+        /// <param name="byteSize">The byteSize<see cref="int"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string ToFormatedByte(int byteSize)
         {
             var formated = string.Format(ByteSizeFormatProvider, "{0:fs}", byteSize);
+            return formated;
+        }
+
+        /// <summary>
+        /// The ToFormatedSpeed
+        /// </summary>
+        /// <param name="speed">The speed<see cref="int"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public static string ToFormatedSpeed(int speed)
+        {
+            var formated = string.Format(ByteSizeFormatProvider, "{0:s}", speed);
             return formated;
         }
 

@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("YoutubeDlGui")]
-[assembly: AssemblyCopyright("Copyright© 2020")]
+[assembly: AssemblyCopyright("Copyright©2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: InternalsVisibleTo("YoutubeDlGui.Test")]
