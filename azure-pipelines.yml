@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
+- development
 
 pool:
   vmImage: 'windows-latest'
@@ -29,5 +29,5 @@ steps:
 
 - task: VSTest@2
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    platform: 'x64'
+    configuration: 'Release'
