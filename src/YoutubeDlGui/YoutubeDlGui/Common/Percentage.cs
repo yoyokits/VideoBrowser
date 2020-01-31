@@ -6,7 +6,7 @@
     /// <summary>
     /// Defines the <see cref="Percentage" />
     /// </summary>
-    public struct Percentage : IEquatable<Percentage>
+    internal struct Percentage : IEquatable<Percentage>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref=""/> class.

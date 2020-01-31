@@ -25,7 +25,7 @@
         /// <returns>The <see cref="string"/></returns>
         public static string FormatFileSize(long size)
         {
-            return string.Format(new FileSizeFormatProvider(), "{0:fs}", size);
+            return string.Format(new ByteFormatProvider(), "{0:fs}", size);
         }
 
         /// <summary>
