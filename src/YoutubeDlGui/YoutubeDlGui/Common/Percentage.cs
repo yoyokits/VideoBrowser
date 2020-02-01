@@ -74,7 +74,7 @@
         public override string ToString()
         {
             var message = $"{this.Percent.Format()}%";
-            return base.ToString();
+            return message;
         }
 
         public static bool operator ==(Percentage left, Percentage right)
