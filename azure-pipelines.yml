@@ -11,7 +11,7 @@ pool:
 
 variables:
   solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
+  buildPlatform: 'x64'
   buildConfiguration: 'Release'
 
 steps:
@@ -31,3 +31,4 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    otherConsoleOptions: '/platform:x64 /Framework:.NETFramework,Version=v4.7.2'
