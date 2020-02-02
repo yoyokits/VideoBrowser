@@ -95,7 +95,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\AppEnvironment.cs" />
     <Compile Include="Common\Epsilon.cs" />
-    <Compile Include="Common\FileSizeFormatProvider.cs" />
+    <Compile Include="Common\ByteSizeFormatProvider.cs" />
     <Compile Include="Common\Log.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\OutputFormat.cs" />

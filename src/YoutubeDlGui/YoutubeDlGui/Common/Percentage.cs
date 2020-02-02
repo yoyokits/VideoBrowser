@@ -6,7 +6,7 @@
     /// <summary>
     /// Defines the <see cref="Percentage" />
     /// </summary>
-    public struct Percentage : IEquatable<Percentage>
+    internal struct Percentage : IEquatable<Percentage>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref=""/> class.
@@ -74,7 +74,7 @@
         public override string ToString()
         {
             var message = $"{this.Percent.Format()}%";
-            return base.ToString();
+            return message;
         }
 
         public static bool operator ==(Percentage left, Percentage right)

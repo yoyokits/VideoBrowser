@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
+- development
 
 pool:
   vmImage: 'windows-latest'
@@ -31,3 +31,4 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    otherConsoleOptions: '/platform:x64 /Framework:.NETFramework,Version=v4.7.2'
