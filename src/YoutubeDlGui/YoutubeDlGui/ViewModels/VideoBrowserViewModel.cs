@@ -6,6 +6,7 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using YoutubeDlGui.Common;
+    using YoutubeDlGui.Core;
     using YoutubeDlGui.Extensions;
     using YoutubeDlGui.Resources;
 
@@ -18,7 +19,17 @@
 
         private readonly Dictionary<string, string> _cookies;
 
+        private ICommand _backwardCommand;
+
+        private bool _canBackward;
+
+        private bool _canForward;
+
+        private ICommand _forwardCommand;
+
         private bool _isDownloadable;
+
+        private string _navigateUrl = "youtube.com";
 
         private string _webUri;
 
@@ -31,14 +42,15 @@
         /// </summary>
         internal VideoBrowserViewModel()
         {
-            this.DownloadCommand = new RelayCommand(this.OnDownload);
-            this.ForwardCommand = new RelayCommand(this.OnForward);
-            this.BackCommand = new RelayCommand(this.OnBack);
-            this.SettingsCommand = new RelayCommand(this.OnSettings);
+            // BackwardCommand and ForwardCommand are set by the View.
+            this.DownloadCommand = new RelayCommand(this.OnDownload, (o) => this.UrlReader.UrlHandler.IsDownloadable);
             this.HomeCommand = new RelayCommand(this.OnHome);
+            this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl);
+            this.SettingsCommand = new RelayCommand(this.OnSettings);
             _cookies = new Dictionary<string, string>();
             IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
-            this.WebUri = "http://www.youtube.com";
+            this.Url = "http://www.youtube.com";
+            this.PropertyChanged += this.OnPropertyChanged;
         }
 
         #endregion Constructors
@@ -46,9 +58,21 @@
         #region Properties
 
         /// <summary>
-        /// Gets the BackCommand
+        /// Gets or sets the BackwardCommand
         /// </summary>
-        public ICommand BackCommand { get; }
+        public ICommand BackwardCommand { get => this._backwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._backwardCommand, value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether CanBackward
+        /// Gets or sets the CanBackward.
+        /// </summary>
+        public bool CanBackward { get => this._canBackward; set => this.Set(this.PropertyChangedHandler, ref this._canBackward, value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether CanForward
+        /// Gets or sets the CanForward.
+        /// </summary>
+        public bool CanForward { get => this._canForward; set => this.Set(this.PropertyChangedHandler, ref this._canForward, value); }
 
         /// <summary>
         /// Gets the DownloadCommand
@@ -56,9 +80,9 @@
         public ICommand DownloadCommand { get; }
 
         /// <summary>
-        /// Gets the ForwardCommand
+        /// Gets or sets the ForwardCommand
         /// </summary>
-        public ICommand ForwardCommand { get; }
+        public ICommand ForwardCommand { get => this._forwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._forwardCommand, value); }
 
         /// <summary>
         /// Gets the HomeCommand
@@ -99,20 +123,37 @@
         }
 
         /// <summary>
+        /// Gets or sets the NavigateUrl.
+        /// The current valid Url that is currently opened.
+        /// It is set by Url property if the Return key is pressed or link is clicked.
+        /// </summary>
+        public string NavigateUrl { get => this._navigateUrl; set => this.Set(this.PropertyChangedHandler, ref this._navigateUrl, value); }
+
+        /// <summary>
+        /// Gets the NavigateUrlCommand
+        /// </summary>
+        public ICommand NavigateUrlCommand { get; }
+
+        /// <summary>
         /// Gets the SettingsCommand
         /// </summary>
         public ICommand SettingsCommand { get; }
 
         /// <summary>
+        /// Gets or sets the WebUri that is typed in the TextBox.
+        /// Gets the WebUri
+        /// </summary>
+        public string Url { get => this._webUri; set => this.Set(this.PropertyChangedHandler, ref this._webUri, value); }
+
+        /// <summary>
+        /// Gets the UrlReader
+        /// </summary>
+        public UrlReader UrlReader { get; } = new UrlReader();
+
+        /// <summary>
         /// Gets the WebCookies
         /// </summary>
         public string WebCookies => string.Join("; ", _cookies.Select(x => $"{x.Key}={x.Value}"));
-
-        /// <summary>
-        /// Gets or sets the WebUri
-        /// Gets the WebUri
-        /// </summary>
-        public string WebUri { get => this._webUri; set => this.Set(this.PropertyChangedHandler, ref this._webUri, value); }
 
         /// <summary>
         /// Gets or sets the DownloadAction
@@ -133,14 +174,6 @@
         }
 
         /// <summary>
-        /// The OnBack
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
-        private void OnBack(object obj)
-        {
-        }
-
-        /// <summary>
         /// The OnDownload
         /// </summary>
         /// <param name="obj">The obj<see cref="object"/></param>
@@ -151,15 +184,7 @@
                 return;
             }
 
-            this.DownloadAction(this.WebUri);
-        }
-
-        /// <summary>
-        /// The OnForward
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
-        private void OnForward(object obj)
-        {
+            this.DownloadAction(this.Url);
         }
 
         /// <summary>
@@ -168,6 +193,37 @@
         /// <param name="obj">The obj<see cref="object"/></param>
         private void OnHome(object obj)
         {
+        }
+
+        /// <summary>
+        /// The OnNavigateUrl
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/></param>
+        private void OnNavigateUrl(object obj)
+        {
+            this.NavigateUrl = this.Url;
+        }
+
+        /// <summary>
+        /// The OnPropertyChanged
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="System.ComponentModel.PropertyChangedEventArgs"/></param>
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(this.Url):
+                    this.UrlReader.Url = this.Url;
+                    break;
+
+                case nameof(this.NavigateUrl):
+                    this.Url = this.NavigateUrl;
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:YoutubeDlGui.ViewModels"
     xmlns:webbrowserinheritedcontrol="clr-namespace:WebBrowserInheritedControl"
+    xmlns:webviewcontrol="clr-namespace:YoutubeDlGui.Controls.WebViewControl"
     d:DataContext="{d:DesignInstance viewmodels:VideoBrowserViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -41,7 +42,7 @@
                 Grid.Column="0"
                 Height="32"
                 Orientation="Horizontal">
-                <Button Command="{Binding BackCommand}">
+                <Button Command="{Binding BackwardCommand}">
                     <Path Style="{StaticResource Back}" />
                 </Button>
                 <Button Command="{Binding ForwardCommand}">
@@ -54,7 +55,11 @@
                 Height="21"
                 Margin="2"
                 VerticalAlignment="Center"
-                Text="{Binding WebUri}" />
+                Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding NavigateUrlCommand}" />
+                </TextBox.InputBindings>
+            </TextBox>
             <StackPanel
                 Grid.Column="2"
                 Height="32"
@@ -67,11 +72,10 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <webbrowserinheritedcontrol:WebBrowserControl
+        <webviewcontrol:WebViewControl
             Grid.Row="1"
-            BrowserVersion="Version11Edge"
-            HeaderString="{Binding WebCookies}"
-            IsSuccessful="{Binding IsSuccessful}"
-            NavigateString="{Binding WebUri}" />
+            BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
+            ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
+            Url="{Binding NavigateUrl}" />
     </Grid>
 </UserControl>

@@ -11,8 +11,18 @@
         </Style.Setters>
     </Style>
     <Style
-        x:Key="Back"
+        x:Key="IconPathButtonBaseStyle"
         BasedOn="{StaticResource IconPathBaseStyle}"
+        TargetType="Path">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}" Value="False">
+                <Setter Property="Fill" Value="Gainsboro" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="Back"
+        BasedOn="{StaticResource IconPathButtonBaseStyle}"
         TargetType="Path">
         <Style.Setters>
             <Setter Property="Data" Value="M11.437023,0L12.910027,1.3519993 3.6363177,11.457997 32.000037,11.457997 32.000037,13.457997 3.6290457,13.457997 12.796026,23.446989 11.322024,24.798988 0,12.461994z" />
@@ -20,7 +30,7 @@
     </Style>
     <Style
         x:Key="Download"
-        BasedOn="{StaticResource IconPathBaseStyle}"
+        BasedOn="{StaticResource IconPathButtonBaseStyle}"
         TargetType="Path">
         <Style.Setters>
             <Setter Property="Data" Value="M2.3841858E-06,30L24,30 24,32 2.3841858E-06,32z M11.000002,0L13.000002,0 13.000002,24.443178 22.684996,15.998997 23.999998,17.507006 11.963988,27.999996 0,17.505007 1.3189697,16.001011 11.000002,24.493849z" />
@@ -28,7 +38,7 @@
     </Style>
     <Style
         x:Key="Forward"
-        BasedOn="{StaticResource IconPathBaseStyle}"
+        BasedOn="{StaticResource IconPathButtonBaseStyle}"
         TargetType="Path">
         <Style.Setters>
             <Setter Property="Data" Value="M20.564032,0L32.000033,12.461994 20.679032,24.798988 19.205031,23.446989 28.371085,13.457998 0,13.457998 0,11.457997 28.363814,11.457997 19.091031,1.3519993z" />
