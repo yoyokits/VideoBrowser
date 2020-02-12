@@ -31,6 +31,8 @@
 
         private string _navigateUrl = "youtube.com";
 
+        private ICommand _reloadCommand;
+
         private string _webUri;
 
         #endregion Fields
@@ -133,6 +135,11 @@
         /// Gets the NavigateUrlCommand
         /// </summary>
         public ICommand NavigateUrlCommand { get; }
+
+        /// <summary>
+        /// Gets or sets the ReloadCommand
+        /// </summary>
+        public ICommand ReloadCommand { get => this._reloadCommand; set => this.Set(this.PropertyChangedHandler, ref this._reloadCommand, value); }
 
         /// <summary>
         /// Gets the SettingsCommand

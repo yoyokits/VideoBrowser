@@ -85,6 +85,7 @@
             {
                 case nameof(this.Url):
                     this.UrlHandler = this.UrlHandlerProvider.GetUrlHandler(this.Url);
+                    this.UrlHandler.FullUrl = this.Url;
                     break;
 
                 default:
