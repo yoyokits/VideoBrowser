@@ -17,15 +17,6 @@
         public static readonly DependencyProperty BackwardCommandProperty =
             DependencyProperty.Register(nameof(BackwardCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty CanBackwardProperty =
-            DependencyProperty.Register(nameof(CanBackward), typeof(bool), typeof(CefSharpBrowser), new PropertyMetadata(false));
-
-        public static readonly DependencyProperty CanForwardProperty =
-            DependencyProperty.Register(nameof(CanForward), typeof(bool), typeof(CefSharpBrowser), new PropertyMetadata(false));
-
-        public static readonly DependencyProperty CanReloadProperty =
-            DependencyProperty.Register(nameof(CanReload), typeof(bool), typeof(CefSharpBrowser), new PropertyMetadata(false));
-
         public static readonly DependencyProperty ForwardCommandProperty =
             DependencyProperty.Register(nameof(ForwardCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
 
@@ -66,29 +57,17 @@
         /// <summary>
         /// Gets or sets a value indicating whether CanBackward
         /// </summary>
-        public bool CanBackward
-        {
-            get { return (bool)GetValue(CanBackwardProperty); }
-            set { SetValue(CanBackwardProperty, value); }
-        }
+        private bool CanBackward { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether CanForward
         /// </summary>
-        public bool CanForward
-        {
-            get { return (bool)GetValue(CanForwardProperty); }
-            set { SetValue(CanForwardProperty, value); }
-        }
+        private bool CanForward { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether CanReload
         /// </summary>
-        public bool CanReload
-        {
-            get { return (bool)GetValue(CanReloadProperty); }
-            set { SetValue(CanReloadProperty, value); }
-        }
+        private bool CanReload { get; set; }
 
         /// <summary>
         /// Gets the CefSettings
@@ -182,9 +161,9 @@
             this.WebBrowser.LoadingStateChanged += OnWebBrowser_LoadingStateChanged;
             this.WebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
             this.WebBrowser.LoadError += OnWebBrowser_LoadError;
-            this.BackwardCommand = new RelayCommand(this.OnBackward);
-            this.ForwardCommand = new RelayCommand(this.OnForward);
-            this.ReloadCommand = new RelayCommand(this.OnReload);
+            this.BackwardCommand = new RelayCommand(this.OnBackward, (o) => this.CanBackward);
+            this.ForwardCommand = new RelayCommand(this.OnForward, (o) => this.CanForward);
+            this.ReloadCommand = new RelayCommand(this.OnReload, (o) => this.CanReload);
         }
 
         /// <summary>
@@ -207,6 +186,7 @@
             {
                 this.InternalUrl = e.Address;
                 this.Url = this.InternalUrl;
+                CommandManager.InvalidateRequerySuggested();
             });
         }
 

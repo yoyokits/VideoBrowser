@@ -56,6 +56,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp">
       <HintPath>..\..\..\bin\CefSharp.dll</HintPath>
@@ -144,10 +147,20 @@
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Core\Commands.cs" />
     <Compile Include="Core\Downloader.cs" />
+    <Compile Include="Core\DownloadOperation.cs" />
+    <Compile Include="Core\EventHandlers.cs" />
+    <Compile Include="Core\FileDownload.cs" />
+    <Compile Include="Core\FileDownloader.cs" />
+    <Compile Include="Core\FileDownloadEventArgs.cs" />
+    <Compile Include="Core\FileDownloadFailedEventArgs.cs" />
     <Compile Include="Core\FileSizeUpdateEventArgs.cs" />
     <Compile Include="Core\NoneUrlHandler.cs" />
+    <Compile Include="Core\Operation.cs" />
+    <Compile Include="Core\OperationEventArgs.cs" />
+    <Compile Include="Core\OperationStatus.cs" />
     <Compile Include="Core\PlayList.cs" />
     <Compile Include="Core\PlayListReader.cs" />
+    <Compile Include="Core\StatusChangedEventArgs.cs" />
     <Compile Include="Core\UrlReader.cs" />
     <Compile Include="Core\VideoFormat.cs" />
     <Compile Include="Core\VideoInfo.cs" />
@@ -162,6 +175,10 @@
     <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\RangeExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Helpers\FFMpeg.cs" />
+    <Compile Include="Helpers\FFMpegFileType.cs" />
+    <Compile Include="Helpers\FFMpegHelper.cs" />
+    <Compile Include="Helpers\FFMpegResult.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\Format.cs" />
     <Compile Include="Helpers\ProcessHelper.cs" />
@@ -287,6 +304,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Docs\Documentation.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,6 +5,7 @@
     using log4net.Core;
     using log4net.Layout;
     using log4net.Repository.Hierarchy;
+    using System;
     using System.IO;
     using System.Reflection;
 
@@ -76,8 +77,13 @@
         /// The Info
         /// </summary>
         /// <param name="message">The message<see cref="object"/></param>
-        public static void Info(object message)
+        public static void Info(object message = null)
         {
+            if (message == null)
+            {
+                message = string.Empty;
+            }
+
             Log.Info(message);
         }
 
@@ -136,6 +142,15 @@
         public static void Warn(this object source, object message)
         {
             Log.Warn(message);
+        }
+
+        /// <summary>
+        /// Saves given Exception's stack trace to a readable file in the local application data folder.
+        /// </summary>
+        /// <param name="ex">The Exception to save.</param>
+        public static void WriteException(Exception ex)
+        {
+            Logger.Info(ex.ToString());
         }
 
         /// <summary>
