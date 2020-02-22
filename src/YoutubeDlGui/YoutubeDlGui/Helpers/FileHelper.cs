@@ -13,6 +13,27 @@
         #region Methods
 
         /// <summary>
+        /// Returns valid file name.
+        /// </summary>
+        /// <param name="filename">The filename to validate.</param>
+        private static string GetValidFilename(string filename)
+        {
+            var illegalChars = Path.GetInvalidFileNameChars();
+
+            // Check if filename contains illegal characters
+            // Returning true for some reason: valid = filename.Any(x => illegalChars.Contains(x));
+            var valid = filename.IndexOfAny(illegalChars) <= -1;
+
+            if (!valid)
+            {
+                string new_filename = YoutubeHelper.FormatTitle(filename);
+                filename = new_filename;
+            }
+
+            return filename;
+        }
+
+        /// <summary>
         /// Attempts to delete given file(s), ignoring exceptions for 10 tries, with 2 second delay between each try.
         /// </summary>
         /// <param name="files">The files to delete.</param>

@@ -20,6 +20,9 @@
         public static readonly DependencyProperty ForwardCommandProperty =
             DependencyProperty.Register(nameof(ForwardCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty IsAirspaceVisibleProperty =
+            DependencyProperty.Register(nameof(IsAirspaceVisible), typeof(bool), typeof(CefSharpBrowser), new PropertyMetadata(false));
+
         public static readonly DependencyProperty ReloadCommandProperty =
             DependencyProperty.Register(nameof(ReloadCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
 
@@ -55,21 +58,6 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether CanBackward
-        /// </summary>
-        private bool CanBackward { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether CanForward
-        /// </summary>
-        private bool CanForward { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether CanReload
-        /// </summary>
-        private bool CanReload { get; set; }
-
-        /// <summary>
         /// Gets the CefSettings
         /// </summary>
         public CefSettings CefSettings { get; }
@@ -81,6 +69,15 @@
         {
             get { return (ICommand)GetValue(ForwardCommandProperty); }
             set { SetValue(ForwardCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsAirspaceVisible
+        /// </summary>
+        public bool IsAirspaceVisible
+        {
+            get { return (bool)GetValue(IsAirspaceVisibleProperty); }
+            set { SetValue(IsAirspaceVisibleProperty, value); }
         }
 
         /// <summary>
@@ -100,6 +97,21 @@
             get { return (string)GetValue(UrlProperty); }
             set { SetValue(UrlProperty, value); }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether CanBackward
+        /// </summary>
+        private bool CanBackward { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether CanForward
+        /// </summary>
+        private bool CanForward { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether CanReload
+        /// </summary>
+        private bool CanReload { get; set; }
 
         /// <summary>
         /// Gets or sets the InternalUrl

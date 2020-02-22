@@ -127,6 +127,10 @@
     <Compile Include="Common\RangeDouble.cs" />
     <Compile Include="Common\RangeInt.cs" />
     <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Controls\AdornedControl\AdornedControl.cs" />
+    <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
+    <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
+    <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
@@ -192,6 +196,7 @@
     <Compile Include="ViewModels\DownloadQueueViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\UrlEditorViewModel.cs" />
     <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
     <Compile Include="Views\DownloadQueueView.xaml.cs">
@@ -200,9 +205,20 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UrlEditorView.xaml.cs">
+      <DependentUpon>UrlEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VideoBrowserView.xaml.cs">
       <DependentUpon>VideoBrowserView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AirspaceFixer\Themes\AirspacePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AirspaceFixer\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UrlEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

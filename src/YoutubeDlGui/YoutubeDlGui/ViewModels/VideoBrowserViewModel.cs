@@ -27,13 +27,13 @@
 
         private ICommand _forwardCommand;
 
+        private bool _isAirspaceVisible;
+
         private bool _isDownloadable;
 
         private string _navigateUrl = "youtube.com";
 
         private ICommand _reloadCommand;
-
-        private string _webUri;
 
         #endregion Fields
 
@@ -51,6 +51,11 @@
             this.SettingsCommand = new RelayCommand(this.OnSettings);
             _cookies = new Dictionary<string, string>();
             IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
+            this.UrlEditor = new UrlEditorViewModel
+            {
+                NavigateUrlCommand = this.NavigateUrlCommand
+            };
+            this.UrlEditor.PropertyChanged += this.OnUrlEditor_PropertyChanged;
             this.Url = "http://www.youtube.com";
             this.PropertyChanged += this.OnPropertyChanged;
         }
@@ -102,6 +107,12 @@
         public Brush IndicatorColor { get; private set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether IsAirspaceVisible
+        /// Gets or sets the IsAirspaceVisible.
+        /// </summary>
+        public bool IsAirspaceVisible { get => this._isAirspaceVisible; set => this.Set(this.PropertyChangedHandler, ref this._isAirspaceVisible, value); }
+
+        /// <summary>
         /// Gets or sets a value indicating whether IsDownloadable
         /// Gets or sets the IsDownloadable.
         /// </summary>
@@ -150,7 +161,12 @@
         /// Gets or sets the WebUri that is typed in the TextBox.
         /// Gets the WebUri
         /// </summary>
-        public string Url { get => this._webUri; set => this.Set(this.PropertyChangedHandler, ref this._webUri, value); }
+        public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
+
+        /// <summary>
+        /// Gets the UrlEditor
+        /// </summary>
+        public UrlEditorViewModel UrlEditor { get; }
 
         /// <summary>
         /// Gets the UrlReader
@@ -209,6 +225,7 @@
         private void OnNavigateUrl(object obj)
         {
             this.NavigateUrl = this.Url;
+            this.IsAirspaceVisible = false;
         }
 
         /// <summary>
@@ -239,6 +256,19 @@
         /// <param name="obj">The obj<see cref="object"/></param>
         private void OnSettings(object obj)
         {
+        }
+
+        /// <summary>
+        /// The OnUrlEditor_PropertyChanged
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="System.ComponentModel.PropertyChangedEventArgs"/></param>
+        private void OnUrlEditor_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.IsMatch(nameof(this.UrlEditor.Url)))
+            {
+                this.OnPropertyChanged(nameof(this.Url));
+            }
         }
 
         #endregion Methods

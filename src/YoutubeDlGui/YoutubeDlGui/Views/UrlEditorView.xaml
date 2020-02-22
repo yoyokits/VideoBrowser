@@ -1,0 +1,69 @@
+﻿<Grid
+    x:Class="YoutubeDlGui.Views.UrlEditorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:YoutubeDlGui.ViewModels"
+    Margin="2"
+    d:DataContext="{d:DesignInstance viewmodels:UrlEditorViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/IconsResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Grid.Resources>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition />
+    </Grid.RowDefinitions>
+    <!--  Url TextBox  -->
+    <TextBox
+        Grid.Row="0"
+        Height="21"
+        Margin="0,3,4,4"
+        VerticalAlignment="Center"
+        Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
+        <TextBox.InputBindings>
+            <KeyBinding Key="Return" Command="{Binding NavigateUrlCommand}" />
+        </TextBox.InputBindings>
+    </TextBox>
+    <Grid Grid.Row="1" Margin="4">
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Margin" Value="2" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Image
+            Grid.Column="0"
+            Width="200"
+            Source="https://i.ytimg.com/vi/VXF6089Fuvo/hqdefault.jpg"
+            Stretch="Uniform" />
+        <StackPanel Grid.Column="1" Margin="4,0,4,0">
+            <TextBlock Text="{Binding FileName}" />
+            <ComboBox Width="200" Margin="0,4,0,0" HorizontalAlignment="Left" />
+            <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
+                <TextBox Width="300" Text="{Binding OutputFolder}" />
+                <Button Margin="4,0,0,0" Command="{Binding GetFolderCommand}">
+                    <Path Style="{StaticResource VideoFolder}" />
+                </Button>
+            </StackPanel>
+            <Button
+            Width="32"
+            Height="32"
+            Margin="16 4 0 0"
+            Command="{Binding DownloadCommand}" HorizontalAlignment="Left">
+                <Path Style="{StaticResource Download}" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</Grid>
