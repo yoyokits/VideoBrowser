@@ -15,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/IconsResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Grid.Resources>
     <Grid.RowDefinitions>
@@ -32,7 +33,10 @@
             <KeyBinding Key="Return" Command="{Binding NavigateUrlCommand}" />
         </TextBox.InputBindings>
     </TextBox>
-    <Grid Grid.Row="1" Margin="4">
+    <Grid
+        Grid.Row="1"
+        Margin="0"
+        Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
         <Grid.Resources>
             <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
                 <Setter Property="BorderThickness" Value="0" />
@@ -46,11 +50,18 @@
         <Image
             Grid.Column="0"
             Width="200"
-            Source="https://i.ytimg.com/vi/VXF6089Fuvo/hqdefault.jpg"
+            Source="{Binding ImageUrl}"
             Stretch="Uniform" />
-        <StackPanel Grid.Column="1" Margin="4,0,4,0">
-            <TextBlock Text="{Binding FileName}" />
-            <ComboBox Width="200" Margin="0,4,0,0" HorizontalAlignment="Left" />
+        <StackPanel Grid.Column="1" Margin="12,0,12,0">
+            <TextBlock
+                Margin="0,0,8,0"
+                FontSize="14"
+                Text="{Binding FileName}" />
+            <TextBlock Margin="0,0,4,0" Text="{Binding Duration}" />
+            <ComboBox
+                Width="200"
+                Margin="0,4,0,0"
+                HorizontalAlignment="Left" />
             <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
                 <TextBox Width="300" Text="{Binding OutputFolder}" />
                 <Button Margin="4,0,0,0" Command="{Binding GetFolderCommand}">
@@ -58,10 +69,11 @@
                 </Button>
             </StackPanel>
             <Button
-            Width="32"
-            Height="32"
-            Margin="16 4 0 0"
-            Command="{Binding DownloadCommand}" HorizontalAlignment="Left">
+                Width="32"
+                Height="32"
+                Margin="16,4,0,0"
+                HorizontalAlignment="Left"
+                Command="{Binding DownloadCommand}">
                 <Path Style="{StaticResource Download}" />
             </Button>
         </StackPanel>

@@ -1,5 +1,6 @@
 ﻿namespace YoutubeDlGui.Core
 {
+    using System;
     using System.ComponentModel;
     using YoutubeDlGui.Extensions;
     using YoutubeDlGui.If;
@@ -7,7 +8,7 @@
     /// <summary>
     /// Defines the <see cref="UrlReader" />
     /// </summary>
-    public class UrlReader : INotifyPropertyChanged
+    public class UrlReader : INotifyPropertyChanged, IDisposable
     {
         #region Fields
 
@@ -70,9 +71,22 @@
         /// </summary>
         public UrlHandlerProvider UrlHandlerProvider { get; }
 
+        /// <summary>
+        /// Gets a value indicating whether IsDownloadable
+        /// </summary>
+        internal bool IsDownloadable => this.UrlHandler != null ? this.UrlHandler.IsDownloadable : false;
+
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            this.PropertyChanged -= this.OnPropertyChanged;
+        }
 
         /// <summary>
         /// The OnPropertyChanged

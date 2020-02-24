@@ -12,9 +12,11 @@
 
         public const string Name = "YouTube and Online Video Downloader";
 
-        private const string LogsDirectory = "Logs";
+        public const string ShortName = nameof(YoutubeDlGui);
 
         private const string JsonDirectory = "Json";
+
+        private const string LogsDirectory = "Logs";
 
         #endregion Constants
 
@@ -41,7 +43,7 @@
         public static string GetAppDataDirectory()
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                AppEnvironment.Name);
+                AppEnvironment.ShortName);
 
             if (!Directory.Exists(path))
             {
@@ -61,6 +63,7 @@
         /// <summary>
         /// Returns the json directory for this program. Also makes sure the directory exists.
         /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetJsonDirectory()
         {
             var path = Path.Combine(GetAppDataDirectory(), JsonDirectory);
@@ -92,7 +95,7 @@
         public static string GetUserLocalApplicationData()
         {
             var userFolder = UserLocalApplicationData;
-            var appFolder = Path.Combine(userFolder, Name);
+            var appFolder = Path.Combine(userFolder, ShortName);
             if (!Directory.Exists(appFolder))
             {
                 Directory.CreateDirectory(appFolder);

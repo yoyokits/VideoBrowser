@@ -1,6 +1,7 @@
 ﻿namespace YoutubeDlGui.Views
 {
     using System.Windows;
+    using YoutubeDlGui.Common;
     using YoutubeDlGui.ViewModels;
 
     /// <summary>
@@ -15,6 +16,7 @@
         /// </summary>
         public MainWindow()
         {
+            Logger.Info($"Start {nameof(YoutubeDlGui)}");
             InitializeComponent();
             this.Loaded += (object sender, RoutedEventArgs e) => this.DataContext = new MainWindowViewModel();
         }

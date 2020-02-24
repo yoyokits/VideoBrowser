@@ -15,7 +15,7 @@
     /// <summary>
     /// Defines the <see cref="YoutubeDl" />
     /// </summary>
-    public class YoutubeDl
+    public static class YoutubeDl
     {
         #region Constants
 
@@ -25,7 +25,7 @@
 
         #region Fields
 
-        public static string YouTubeDlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Externals", "youtube-dl.exe");
+        public static string YouTubeDlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Binaries", "youtube-dl.exe");
 
         #endregion Fields
 

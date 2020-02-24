@@ -13,7 +13,7 @@
     /// <summary>
     /// Defines the <see cref="VideoBrowserViewModel" />
     /// </summary>
-    public class VideoBrowserViewModel : NotifyPropertyChanged
+    public class VideoBrowserViewModel : NotifyPropertyChanged, IDisposable
     {
         #region Fields
 
@@ -29,8 +29,6 @@
 
         private bool _isAirspaceVisible;
 
-        private bool _isDownloadable;
-
         private string _navigateUrl = "youtube.com";
 
         private ICommand _reloadCommand;
@@ -45,13 +43,13 @@
         internal VideoBrowserViewModel()
         {
             // BackwardCommand and ForwardCommand are set by the View.
-            this.DownloadCommand = new RelayCommand(this.OnDownload, (o) => this.UrlReader.UrlHandler.IsDownloadable);
+            this.DownloadCommand = new RelayCommand(this.OnDownload, (o) => this.UrlReader.IsDownloadable);
             this.HomeCommand = new RelayCommand(this.OnHome);
             this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl);
             this.SettingsCommand = new RelayCommand(this.OnSettings);
             _cookies = new Dictionary<string, string>();
             IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
-            this.UrlEditor = new UrlEditorViewModel
+            this.UrlEditor = new UrlEditorViewModel(this.UrlReader)
             {
                 NavigateUrlCommand = this.NavigateUrlCommand
             };
@@ -111,12 +109,6 @@
         /// Gets or sets the IsAirspaceVisible.
         /// </summary>
         public bool IsAirspaceVisible { get => this._isAirspaceVisible; set => this.Set(this.PropertyChangedHandler, ref this._isAirspaceVisible, value); }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether IsDownloadable
-        /// Gets or sets the IsDownloadable.
-        /// </summary>
-        public bool IsDownloadable { get => this._isDownloadable; set => this.Set(this.PropertyChangedHandler, ref this._isDownloadable, value); }
 
         /// <summary>
         /// Sets the IsSuccessful
@@ -188,6 +180,16 @@
         #region Methods
 
         /// <summary>
+        /// The Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            this.UrlEditor.Dispose();
+            this.UrlEditor.PropertyChanged -= this.OnUrlEditor_PropertyChanged;
+            this.UrlReader.Dispose();
+        }
+
+        /// <summary>
         /// The IsUrlValid
         /// </summary>
         /// <returns>The <see cref="bool"/></returns>
@@ -219,7 +221,7 @@
         }
 
         /// <summary>
-        /// The OnNavigateUrl
+        /// The OnNavigateUrl called from Button.
         /// </summary>
         /// <param name="obj">The obj<see cref="object"/></param>
         private void OnNavigateUrl(object obj)
@@ -243,6 +245,7 @@
 
                 case nameof(this.NavigateUrl):
                     this.Url = this.NavigateUrl;
+                    this.UrlEditor.NavigateUrl = this.NavigateUrl;
                     break;
 
                 default:
