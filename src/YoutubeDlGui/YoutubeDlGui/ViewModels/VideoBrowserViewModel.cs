@@ -170,11 +170,6 @@
         /// </summary>
         public string WebCookies => string.Join("; ", _cookies.Select(x => $"{x.Key}={x.Value}"));
 
-        /// <summary>
-        /// Gets or sets the DownloadAction
-        /// </summary>
-        internal Action<string> DownloadAction { get; set; }
-
         #endregion Properties
 
         #region Methods
@@ -204,12 +199,12 @@
         /// <param name="obj">The obj<see cref="object"/></param>
         private void OnDownload(object obj)
         {
-            if (!this.IsUrlValid())
+            if (!this.IsUrlValid() || !this.UrlEditor.DownloadCommand.CanExecute(null))
             {
                 return;
             }
 
-            this.DownloadAction(this.Url);
+            this.UrlEditor.DownloadCommand.Execute(null);
         }
 
         /// <summary>

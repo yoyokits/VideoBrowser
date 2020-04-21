@@ -1,7 +1,9 @@
 ﻿namespace YoutubeDlGui.Helpers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text.RegularExpressions;
+    using YoutubeDlGui.Core;
 
     /// <summary>
     /// Defines the <see cref="YoutubeHelper" />
@@ -54,6 +56,28 @@
             }
 
             return sb.ToString().Trim();
+        }
+
+        /// <summary>
+        /// Returns the highest quality audio format from the given VideoFormat.
+        /// </summary>
+        /// <param name="format">The format to get audio format from.</param>
+        /// <returns>The <see cref="VideoFormat"/></returns>
+        public static VideoFormat GetAudioFormat(VideoFormat format)
+        {
+            var audio = new List<VideoFormat>();
+
+            // Add all audio only formats
+            audio.AddRange(format.VideoInfo.Formats.FindAll(f => f.AudioOnly == true && f.Extension != "webm"));
+
+            // Return null if no audio is found
+            if (audio.Count == 0)
+            {
+                return null;
+            }
+
+            // Return either the one with the highest audio bit rate, or the last found one
+            return audio.OrderBy(a => a.AudioBitRate).Last();
         }
 
         /// <summary>

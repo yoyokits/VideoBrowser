@@ -1,7 +1,10 @@
 ﻿namespace YoutubeDlGui.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using YoutubeDlGui.Common;
@@ -20,6 +23,8 @@
 
         private string _fileName;
 
+        private List<VideoFormat> _formats;
+
         private string _imageUrl;
 
         private bool _isVisible;
@@ -28,7 +33,11 @@
 
         private string _outputFolder;
 
+        private VideoFormat _selectedFormat;
+
         private string _url;
+
+        private VideoInfo _videoInfo;
 
         #endregion Fields
 
@@ -76,6 +85,11 @@
         public string FileName { get => this._fileName; set => this.Set(this.PropertyChanged, ref this._fileName, value); }
 
         /// <summary>
+        /// Gets or sets the Formats
+        /// </summary>
+        public List<VideoFormat> Formats { get => this._formats; set => this.Set(this.PropertyChanged, ref this._formats, value); }
+
+        /// <summary>
         /// Gets the GetFolderCommand
         /// </summary>
         public ICommand GetFolderCommand { get; }
@@ -109,10 +123,15 @@
                 {
                     Task.Run(() =>
                     {
-                        var info = YoutubeDl.GetVideoInfo(this.NavigateUrl);
-                        this.FileName = info.Title;
-                        this.Duration = info.Duration.FormatVideoLength();
-                        this.ImageUrl = info.ThumbnailUrl;
+                        this.VideoInfo = YoutubeDl.GetVideoInfo(this.NavigateUrl);
+                        this.FileName = this.VideoInfo.Title;
+                        this.Formats = this.VideoInfo.Formats;
+                        this.Duration = this.VideoInfo.Duration.FormatVideoLength();
+                        this.ImageUrl = this.VideoInfo.ThumbnailUrl;
+                        if (this.VideoInfo.Formats.Any())
+                        {
+                            this.SelectedFormat = this.VideoInfo.Formats.Last();
+                        }
                     });
                 }
 
@@ -131,6 +150,11 @@
         public string OutputFolder { get => this._outputFolder; set => this.Set(this.PropertyChanged, ref this._outputFolder, value); }
 
         /// <summary>
+        /// Gets or sets the SelectedFormat
+        /// </summary>
+        public VideoFormat SelectedFormat { get => this._selectedFormat; set => this.Set(this.PropertyChanged, ref this._selectedFormat, value); }
+
+        /// <summary>
         /// Gets or sets the Url
         /// </summary>
         public string Url { get => this._url; set => this.Set(this.PropertyChanged, ref this._url, value); }
@@ -140,6 +164,16 @@
         /// Gets or sets the UrlReader
         /// </summary>
         public UrlReader UrlReader { get; }
+
+        /// <summary>
+        /// Gets or sets the VideoInfo .
+        /// </summary>
+        public VideoInfo VideoInfo { get => this._videoInfo; set => this.Set(this.PropertyChanged, ref this._videoInfo, value); }
+
+        /// <summary>
+        /// Gets or sets the DownloadAction
+        /// </summary>
+        internal Action<Operation> DownloadAction { get; set; }
 
         #endregion Properties
 
@@ -164,9 +198,17 @@
         /// <summary>
         /// The OnDownload
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
-        private void OnDownload(object obj)
+        /// <param name="o">The o<see cref="object"/></param>
+        private void OnDownload(object o)
         {
+            var format = this.SelectedFormat;
+            var filename = string.Format("{0}.{1}", this.FileName, format.Extension);
+            var output = Path.Combine(this.OutputFolder, filename);
+
+            DownloadOperation operation = format.AudioOnly || format.HasAudioAndVideo
+                ? new DownloadOperation(format, output)
+                : new DownloadOperation(format, YoutubeHelper.GetAudioFormat(format), output);
+            Task.Run(() => this.DownloadAction?.Invoke(operation));
         }
 
         /// <summary>

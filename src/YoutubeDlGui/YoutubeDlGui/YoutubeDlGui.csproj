@@ -190,6 +190,8 @@
     <Compile Include="Helpers\YoutubeHelper.cs" />
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
+    <Compile Include="Models\GlobalData.cs" />
+    <Compile Include="Models\OperationModel.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />
     <Compile Include="Resources\Icons.cs" />

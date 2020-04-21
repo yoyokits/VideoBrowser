@@ -54,7 +54,11 @@
                 </Button>
             </StackPanel>
             <!--  URL TextBox  -->
-            <adornedcontrol:AdornedControl Grid.Column="1" IsAdornerVisible="{Binding IsAirspaceVisible, Mode=OneWayToSource}">
+            <adornedcontrol:AdornedControl
+                Grid.Column="1"
+                CloseAdornerTimeOut="0.5"
+                FadeOutTime="0.5"
+                IsAdornerVisible="{Binding IsAirspaceVisible, Mode=OneWayToSource}">
                 <adornedcontrol:AdornedControl.AdornerContent>
                     <Grid x:Name="UrlEditorGrid">
                         <Canvas>

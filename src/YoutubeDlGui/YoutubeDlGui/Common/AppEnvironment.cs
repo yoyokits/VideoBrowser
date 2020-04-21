@@ -10,13 +10,15 @@
     {
         #region Constants
 
-        public const string Name = "YouTube and Online Video Downloader";
-
-        public const string ShortName = nameof(YoutubeDlGui);
-
         private const string JsonDirectory = "Json";
 
         private const string LogsDirectory = "Logs";
+
+        public const string Name = "YouTube and Online Video Downloader";
+
+        public const int ProgressUpdateDelay = 250;
+
+        public const string ShortName = nameof(YoutubeDlGui);
 
         #endregion Constants
 
