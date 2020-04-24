@@ -6,14 +6,16 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Input;
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Extensions;
     using YoutubeDlGui.Helpers;
+    using YoutubeDlGui.Properties;
 
     /// <summary>
-    /// Defines the <see cref="UrlEditorViewModel" />
+    /// Defines the <see cref="UrlEditorViewModel" />.
     /// </summary>
     public class UrlEditorViewModel : INotifyPropertyChanged, IDisposable
     {
@@ -23,9 +25,17 @@
 
         private string _fileName;
 
-        private List<VideoFormat> _formats;
+        private string _fileSize;
+
+        private IList<VideoFormat> _formats;
 
         private string _imageUrl;
+
+        private bool _isBusy;
+
+        private bool _isDownloadable;
+
+        private bool _isFormatComboBoxVisible;
 
         private bool _isVisible;
 
@@ -46,10 +56,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UrlEditorViewModel"/> class.
         /// </summary>
-        /// <param name="reader">The reader<see cref="UrlReader"/></param>
+        /// <param name="reader">The reader<see cref="UrlReader"/>.</param>
         internal UrlEditorViewModel(UrlReader reader)
         {
             this.UrlReader = reader;
+            this.OutputFolder = string.IsNullOrEmpty(Settings.Default.DownloadFolder) ? AppEnvironment.UserVideoFolder : Settings.Default.DownloadFolder;
             this.UrlReader.PropertyChanged += this.OnUrlReader_PropertyChanged;
             this.DownloadCommand = new RelayCommand(this.OnDownload);
             this.GetFolderCommand = new RelayCommand(this.GetFolder);
@@ -60,7 +71,7 @@
         #region Events
 
         /// <summary>
-        /// Defines the PropertyChanged
+        /// Defines the PropertyChanged.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -69,44 +80,64 @@
         #region Properties
 
         /// <summary>
-        /// Gets the DownloadCommand
+        /// Gets the DownloadCommand.
         /// </summary>
         public ICommand DownloadCommand { get; }
 
         /// <summary>
         /// Gets the Duration
-        /// Gets or sets the Duration.
+        /// Gets or sets the Duration....
         /// </summary>
         public string Duration { get => this._duration; private set => this.Set(this.PropertyChanged, ref this._duration, value); }
 
         /// <summary>
-        /// Gets or sets the FileName
+        /// Gets or sets the FileName.
         /// </summary>
         public string FileName { get => this._fileName; set => this.Set(this.PropertyChanged, ref this._fileName, value); }
 
         /// <summary>
-        /// Gets or sets the Formats
+        /// Gets the FileSize.
         /// </summary>
-        public List<VideoFormat> Formats { get => this._formats; set => this.Set(this.PropertyChanged, ref this._formats, value); }
+        public string FileSize { get => _fileSize; private set => this.Set(this.PropertyChanged, ref _fileSize, value); }
 
         /// <summary>
-        /// Gets the GetFolderCommand
+        /// Gets or sets the Formats.
+        /// </summary>
+        public IList<VideoFormat> Formats { get => this._formats; set => this.Set(this.PropertyChanged, ref this._formats, value); }
+
+        /// <summary>
+        /// Gets the GetFolderCommand.
         /// </summary>
         public ICommand GetFolderCommand { get; }
 
         /// <summary>
-        /// Gets or sets the ImageUrl
+        /// Gets or sets the ImageUrl.
         /// </summary>
         public string ImageUrl { get => this._imageUrl; set => this.Set(this.PropertyChanged, ref this._imageUrl, value); }
 
         /// <summary>
+        /// Gets or sets a value indicating whether IsBusy.
+        /// </summary>
+        public bool IsBusy { get => _isBusy; set => this.Set(this.PropertyChanged, ref _isBusy, value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsDownloadable.
+        /// </summary>
+        public bool IsDownloadable { get => _isDownloadable; set => this.Set(this.PropertyChanged, ref _isDownloadable, value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsFormatComboBoxVisible.
+        /// </summary>
+        public bool IsFormatComboBoxVisible { get => _isFormatComboBoxVisible; set => this.Set(this.PropertyChanged, ref _isFormatComboBoxVisible, value); }
+
+        /// <summary>
         /// Gets a value indicating whether IsVisible
-        /// Gets or sets the IsVisible.
+        /// Gets or sets the IsVisible....
         /// </summary>
         public bool IsVisible { get => this._isVisible; private set => this.Set(this.PropertyChanged, ref this._isVisible, value); }
 
         /// <summary>
-        /// Gets or sets the NavigateUrl
+        /// Gets or sets the NavigateUrl.
         /// </summary>
         public string NavigateUrl
         {
@@ -121,18 +152,11 @@
                 this._navigateUrl = value;
                 if (this.UrlReader.IsDownloadable)
                 {
+                    this.IsBusy = true;
                     Task.Run(() =>
                     {
                         this.VideoInfo = YoutubeDl.GetVideoInfo(this.NavigateUrl);
-                        this.FileName = this.VideoInfo.Title;
-                        this.Formats = this.VideoInfo.Formats;
-                        this.Duration = this.VideoInfo.Duration.FormatVideoLength();
-                        this.ImageUrl = this.VideoInfo.ThumbnailUrl;
-                        if (this.VideoInfo.Formats.Any())
-                        {
-                            this.SelectedFormat = this.VideoInfo.Formats.Last();
-                        }
-                    });
+                    }).ContinueWith(this.LoadVideoInfo);
                 }
 
                 this.IsVisible = this.UrlReader.IsDownloadable;
@@ -140,38 +164,61 @@
         }
 
         /// <summary>
-        /// Gets or sets the NavigateUrlCommand
+        /// Gets or sets the NavigateUrlCommand.
         /// </summary>
         public ICommand NavigateUrlCommand { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the OutputFolder
+        /// Gets or sets the OutputFolder.
         /// </summary>
-        public string OutputFolder { get => this._outputFolder; set => this.Set(this.PropertyChanged, ref this._outputFolder, value); }
+        public string OutputFolder
+        {
+            get => this._outputFolder;
+            set
+            {
+                this.Set(this.PropertyChanged, ref this._outputFolder, value);
+                if (Directory.Exists(this.OutputFolder))
+                {
+                    Settings.Default.DownloadFolder = this.OutputFolder;
+                }
+            }
+        }
 
         /// <summary>
-        /// Gets or sets the SelectedFormat
+        /// Gets or sets the SelectedFormat.
         /// </summary>
         public VideoFormat SelectedFormat { get => this._selectedFormat; set => this.Set(this.PropertyChanged, ref this._selectedFormat, value); }
 
         /// <summary>
-        /// Gets or sets the Url
+        /// Gets or sets the Url.
         /// </summary>
         public string Url { get => this._url; set => this.Set(this.PropertyChanged, ref this._url, value); }
 
         /// <summary>
         /// Gets the UrlReader
-        /// Gets or sets the UrlReader
+        /// Gets or sets the UrlReader...
         /// </summary>
         public UrlReader UrlReader { get; }
 
         /// <summary>
-        /// Gets or sets the VideoInfo .
+        /// Gets or sets the VideoInfo ....
         /// </summary>
-        public VideoInfo VideoInfo { get => this._videoInfo; set => this.Set(this.PropertyChanged, ref this._videoInfo, value); }
+        public VideoInfo VideoInfo
+        {
+            get => this._videoInfo;
+            set
+            {
+                if (this.VideoInfo != null)
+                {
+                    this.VideoInfo.FileSizeUpdated -= this.OnVideoInfo_FileSizeUpdated;
+                }
+
+                this.Set(this.PropertyChanged, ref this._videoInfo, value);
+            }
+        }
 
         /// <summary>
-        /// Gets or sets the DownloadAction
+        /// Gets or sets the DownloadAction.
         /// </summary>
         internal Action<Operation> DownloadAction { get; set; }
 
@@ -180,7 +227,7 @@
         #region Methods
 
         /// <summary>
-        /// The Dispose
+        /// The Dispose.
         /// </summary>
         public void Dispose()
         {
@@ -188,17 +235,54 @@
         }
 
         /// <summary>
-        /// The GetFolder
+        /// The GetFolder.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void GetFolder(object obj)
         {
         }
 
         /// <summary>
-        /// The OnDownload
+        /// The LoadVideoInfo.
         /// </summary>
-        /// <param name="o">The o<see cref="object"/></param>
+        /// <param name="task">The task<see cref="Task"/>.</param>
+        private void LoadVideoInfo(Task task)
+        {
+            this.IsBusy = false;
+            this.IsDownloadable = false;
+            this.IsFormatComboBoxVisible = false;
+
+            if (this.VideoInfo.RequiresAuthentication)
+            {
+                ////var auth = Dialogs.LoginDialog.Show(this);
+            }
+            else if (this.VideoInfo.Failure)
+            {
+                MessageBox.Show("Couldn't retrieve video. Reason:\n\n" + this.VideoInfo.FailureReason, "Error Loading Video Info");
+                return;
+            }
+            else
+            {
+                this.FileName = YoutubeHelper.FormatTitle(this.VideoInfo.Title);
+                this.VideoInfo.FileSizeUpdated += this.OnVideoInfo_FileSizeUpdated;
+                this.Duration = this.VideoInfo.Duration.FormatVideoLength();
+                this.Formats = YoutubeHelper.CheckFormats(this.VideoInfo.Formats);
+                this.ImageUrl = this.VideoInfo.ThumbnailUrl;
+                if (this.Formats.Any())
+                {
+                    this.SelectedFormat = this.Formats.Last();
+                }
+            }
+
+            this.IsFormatComboBoxVisible = this.VideoInfo.Formats.Count > 0;
+            this.IsDownloadable = true;
+            Settings.Default.LastUrl = this.NavigateUrl;
+        }
+
+        /// <summary>
+        /// The OnDownload.
+        /// </summary>
+        /// <param name="o">The o<see cref="object"/>.</param>
         private void OnDownload(object o)
         {
             var format = this.SelectedFormat;
@@ -212,10 +296,10 @@
         }
 
         /// <summary>
-        /// The OnUrlReader_PropertyChanged
+        /// The OnUrlReader_PropertyChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="PropertyChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="PropertyChangedEventArgs"/>.</param>
         private void OnUrlReader_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -223,6 +307,16 @@
                 case nameof(this.UrlReader.IsDownloadable):
                     break;
             }
+        }
+
+        /// <summary>
+        /// The OnVideoInfo_FileSizeUpdated.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="FileSizeUpdateEventArgs"/>.</param>
+        private void OnVideoInfo_FileSizeUpdated(object sender, FileSizeUpdateEventArgs e)
+        {
+            this.FileSize = FormatString.FormatFileSize(e.VideoFormat.FileSize);
         }
 
         #endregion Methods

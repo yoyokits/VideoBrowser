@@ -8,6 +8,7 @@
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Extensions;
+    using YoutubeDlGui.Properties;
     using YoutubeDlGui.Resources;
 
     /// <summary>
@@ -54,8 +55,8 @@
                 NavigateUrlCommand = this.NavigateUrlCommand
             };
             this.UrlEditor.PropertyChanged += this.OnUrlEditor_PropertyChanged;
-            this.Url = "http://www.youtube.com";
             this.PropertyChanged += this.OnPropertyChanged;
+            this.NavigateUrl = Settings.Default.LastUrl;
         }
 
         #endregion Constructors

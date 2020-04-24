@@ -175,6 +175,7 @@
     <Compile Include="Core\YoutubeAuthentication.cs" />
     <Compile Include="Core\YoutubeUrlHandler.cs" />
     <Compile Include="Extensions\DictionaryExtension.cs" />
+    <Compile Include="Extensions\EventBindingExtension.cs" />
     <Compile Include="Extensions\INotifyPropertyChangedExtension.cs" />
     <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\RangeExtension.cs" />
@@ -282,7 +283,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.WinForms">

@@ -58,10 +58,14 @@
                 FontSize="14"
                 Text="{Binding FileName}" />
             <TextBlock Margin="0,0,4,0" Text="{Binding Duration}" />
+            <TextBlock Margin="0,0,4,0" Text="{Binding FileSize}" />
             <ComboBox
                 Width="200"
                 Margin="0,4,0,0"
-                HorizontalAlignment="Left" />
+                HorizontalAlignment="Left"
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding Formats}"
+                SelectedItem="{Binding SelectedFormat, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
                 <TextBox Width="300" Text="{Binding OutputFolder}" />
                 <Button Margin="4,0,0,0" Command="{Binding GetFolderCommand}">

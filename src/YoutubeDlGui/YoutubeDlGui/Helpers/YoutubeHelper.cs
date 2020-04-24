@@ -6,7 +6,7 @@
     using YoutubeDlGui.Core;
 
     /// <summary>
-    /// Defines the <see cref="YoutubeHelper" />
+    /// Defines the <see cref="YoutubeHelper" />.
     /// </summary>
     public static class YoutubeHelper
     {
@@ -16,7 +16,7 @@
         /// Returns a fixed URL, stripped of unnecessary invalid information.
         /// </summary>
         /// <param name="url">The URL to fix.</param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string FixUrl(string url)
         {
             // Remove "Watch Later" information, causes error
@@ -25,10 +25,10 @@
         }
 
         /// <summary>
-        /// Returns a formatted string of the given title, stripping illegal characters and replacing HTML entities with their actual character. (e.g. &quot; -> ')
+        /// Returns a formatted string of the given title, stripping illegal characters and replacing HTML entities with their actual character. (e.g. &quot; -> ').
         /// </summary>
         /// <param name="title">The title to format.</param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string FormatTitle(string title)
         {
             var illegalCharacters = new string[] { "/", @"\", "*", "?", "\"", "<", ">" };
@@ -62,7 +62,7 @@
         /// Returns the highest quality audio format from the given VideoFormat.
         /// </summary>
         /// <param name="format">The format to get audio format from.</param>
-        /// <returns>The <see cref="VideoFormat"/></returns>
+        /// <returns>The <see cref="VideoFormat"/>.</returns>
         public static VideoFormat GetAudioFormat(VideoFormat format)
         {
             var audio = new List<VideoFormat>();
@@ -84,7 +84,7 @@
         /// Returns the playlist id from given url.
         /// </summary>
         /// <param name="url">The url to get playlist id from.</param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetPlaylistId(string url)
         {
             var regex = new Regex(@"^(?:https?://)?(?:www.)?youtube.com/.*list=([0-9a-zA-Z\-_]*).*$");
@@ -95,7 +95,7 @@
         /// Returns true if the given url is a playlist YouTube url.
         /// </summary>
         /// <param name="url">The url to check.</param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public static bool IsPlaylist(string url)
         {
             var regex = new Regex(@"^(?:https?://)?(?:www.)?youtube.com/.*list=([0-9a-zA-Z\-_]*).*$");
@@ -106,7 +106,7 @@
         /// Returns true if the given url is a valid YouTube url.
         /// </summary>
         /// <param name="url">The url to check.</param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public static bool IsValidYouTubeUrl(string url)
         {
             if (!url.ToLower().Contains("www.youtube.com/watch?"))
@@ -118,6 +118,21 @@
             var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             return regex.IsMatch(url);
+        }
+
+        /// <summary>
+        /// The CheckFormats.
+        /// </summary>
+        /// <param name="list">The list<see cref="IList{VideoFormat}"/>.</param>
+        /// <returns>The <see cref="VideoFormat[]"/>.</returns>
+        internal static VideoFormat[] CheckFormats(IList<VideoFormat> list)
+        {
+            var formats = new List<VideoFormat>(list);
+            formats.RemoveAll(f => f.Extension.Contains("webm") ||
+                                   f.HasAudioAndVideo ||
+                                   f.FormatID == "meta");
+
+            return formats.ToArray();
         }
 
         #endregion Methods

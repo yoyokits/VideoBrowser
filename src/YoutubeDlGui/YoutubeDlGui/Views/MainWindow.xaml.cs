@@ -17,8 +17,8 @@
         public MainWindow()
         {
             Logger.Info($"Start {nameof(YoutubeDlGui)}");
+            this.DataContext = new MainWindowViewModel();
             InitializeComponent();
-            this.Loaded += (object sender, RoutedEventArgs e) => this.DataContext = new MainWindowViewModel();
         }
 
         #endregion Constructors
