@@ -286,7 +286,8 @@
         private void OnDownload(object o)
         {
             var format = this.SelectedFormat;
-            var filename = string.Format("{0}.{1}", this.FileName, format.Extension);
+            this.FileName = FileHelper.GetValidFilename(this.FileName);
+            var filename = $"{this.FileName}.{format.Extension}";
             var output = Path.Combine(this.OutputFolder, filename);
 
             DownloadOperation operation = format.AudioOnly || format.HasAudioAndVideo

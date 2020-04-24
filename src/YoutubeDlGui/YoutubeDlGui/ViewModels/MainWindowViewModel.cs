@@ -21,6 +21,7 @@
             this.GlobalData = new GlobalData();
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.ClosingCommand = new RelayCommand(this.OnClosing);
+            this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData.DownloadQueueViewModel.Download);
         }
 
         #endregion Constructors
@@ -68,7 +69,7 @@
         /// <summary>
         /// Gets the VideoBrowser.
         /// </summary>
-        public VideoBrowserViewModel VideoBrowser { get; } = new VideoBrowserViewModel();
+        public VideoBrowserViewModel VideoBrowser { get; }
 
         #endregion Properties
 

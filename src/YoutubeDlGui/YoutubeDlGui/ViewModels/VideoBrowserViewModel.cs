@@ -41,7 +41,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoBrowserViewModel"/> class.
         /// </summary>
-        internal VideoBrowserViewModel()
+        internal VideoBrowserViewModel(Action<Operation> downloadAction)
         {
             // BackwardCommand and ForwardCommand are set by the View.
             this.DownloadCommand = new RelayCommand(this.OnDownload, (o) => this.UrlReader.IsDownloadable);
@@ -52,7 +52,8 @@
             IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
             this.UrlEditor = new UrlEditorViewModel(this.UrlReader)
             {
-                NavigateUrlCommand = this.NavigateUrlCommand
+                NavigateUrlCommand = this.NavigateUrlCommand,
+                DownloadAction = downloadAction
             };
             this.UrlEditor.PropertyChanged += this.OnUrlEditor_PropertyChanged;
             this.PropertyChanged += this.OnPropertyChanged;

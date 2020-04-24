@@ -16,7 +16,7 @@
         /// Returns valid file name.
         /// </summary>
         /// <param name="filename">The filename to validate.</param>
-        private static string GetValidFilename(string filename)
+        public static string GetValidFilename(string filename)
         {
             var illegalChars = Path.GetInvalidFileNameChars();
 
