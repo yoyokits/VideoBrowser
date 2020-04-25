@@ -5,9 +5,10 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using YoutubeDlGui.Extensions;
 
     /// <summary>
-    /// Defines the <see cref="Operation" />
+    /// Defines the <see cref="Operation" />.
     /// </summary>
     public abstract class Operation : IDisposable, INotifyPropertyChanged
     {
@@ -43,7 +44,11 @@
 
         private long _fileSize;
 
+        private string _input;
+
         private string _link;
+
+        private string _output;
 
         private long _progress;
 
@@ -90,32 +95,32 @@
         public event OperationEventHandler Completed;
 
         /// <summary>
-        /// Defines the ProgressChanged
+        /// Defines the ProgressChanged.
         /// </summary>
         public event ProgressChangedEventHandler ProgressChanged;
 
         /// <summary>
-        /// Defines the PropertyChanged
+        /// Defines the PropertyChanged.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Defines the ReportsProgressChanged
+        /// Defines the ReportsProgressChanged.
         /// </summary>
         public event EventHandler ReportsProgressChanged;
 
         /// <summary>
-        /// Defines the Resumed
+        /// Defines the Resumed.
         /// </summary>
         public event EventHandler Resumed;
 
         /// <summary>
-        /// Defines the Started
+        /// Defines the Started.
         /// </summary>
         public event EventHandler Started;
 
         /// <summary>
-        /// Defines the StatusChanged
+        /// Defines the StatusChanged.
         /// </summary>
         public event StatusChangedEventHandler StatusChanged;
 
@@ -124,12 +129,12 @@
         #region Properties
 
         /// <summary>
-        /// Gets a value indicating whether CancellationPending
+        /// Gets a value indicating whether CancellationPending.
         /// </summary>
         public bool CancellationPending => _worker?.CancellationPending == true;
 
         /// <summary>
-        /// Gets or sets the Duration
+        /// Gets or sets the Duration.
         /// </summary>
         public long Duration
         {
@@ -143,17 +148,17 @@
 
         /// <summary>
         /// Gets the Errors
-        /// Gets a human readable list of errors caused by the operation.
+        /// Gets a human readable list of errors caused by the operation..
         /// </summary>
         public ReadOnlyCollection<string> Errors => new ReadOnlyCollection<string>(ErrorsInternal);
 
         /// <summary>
-        /// Gets or sets the Errors1
+        /// Gets or sets the Errors1.
         /// </summary>
         public List<string> Errors1 { get => ErrorsInternal; set => ErrorsInternal = value; }
 
         /// <summary>
-        /// Gets or sets the ETA
+        /// Gets or sets the ETA.
         /// </summary>
         public string ETA
         {
@@ -166,12 +171,12 @@
         }
 
         /// <summary>
-        /// Gets the Exception
+        /// Gets the Exception.
         /// </summary>
         public Exception Exception { get; private set; }
 
         /// <summary>
-        /// Gets or sets the FileSize
+        /// Gets or sets the FileSize.
         /// </summary>
         public long FileSize
         {
@@ -185,29 +190,29 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether HasStarted
+        /// Gets or sets a value indicating whether HasStarted.
         /// </summary>
         public bool HasStarted { get; set; }
 
         /// <summary>
         /// Gets or sets the Input
-        /// Gets the input file or download url.
+        /// Gets the input file or download url..
         /// </summary>
-        public string Input { get; set; }
+        public string Input { get => _input; set => this.Set(this.PropertyChanged, ref _input, value); }
 
         /// <summary>
-        /// Gets a value indicating whether IsBusy
+        /// Gets a value indicating whether IsBusy.
         /// </summary>
         public bool IsBusy => _worker?.IsBusy == true;
 
         /// <summary>
-        /// Gets a value indicating whether IsCanceled
+        /// Gets a value indicating whether IsCanceled.
         /// </summary>
         public bool IsCanceled => this.Status == OperationStatus.Canceled;
 
         /// <summary>
         /// Gets a value indicating whether IsDone
-        /// Returns True if Operation is done, regardless of result.
+        /// Returns True if Operation is done, regardless of result..
         /// </summary>
         public bool IsDone
         {
@@ -220,27 +225,27 @@
         }
 
         /// <summary>
-        /// Gets a value indicating whether IsPaused
+        /// Gets a value indicating whether IsPaused.
         /// </summary>
         public bool IsPaused => this.Status == OperationStatus.Paused;
 
         /// <summary>
-        /// Gets a value indicating whether IsQueued
+        /// Gets a value indicating whether IsQueued.
         /// </summary>
         public bool IsQueued => this.Status == OperationStatus.Queued;
 
         /// <summary>
-        /// Gets a value indicating whether IsSuccessful
+        /// Gets a value indicating whether IsSuccessful.
         /// </summary>
         public bool IsSuccessful => this.Status == OperationStatus.Success;
 
         /// <summary>
-        /// Gets a value indicating whether IsWorking
+        /// Gets a value indicating whether IsWorking.
         /// </summary>
         public bool IsWorking => this.Status == OperationStatus.Working;
 
         /// <summary>
-        /// Gets or sets the Link
+        /// Gets or sets the Link.
         /// </summary>
         public string Link
         {
@@ -254,12 +259,12 @@
 
         /// <summary>
         /// Gets or sets the Output
-        /// Gets the output file.
+        /// Gets the output file..
         /// </summary>
-        public string Output { get; set; }
+        public string Output { get => _output; set => this.Set(this.PropertyChanged, ref _output, value); }
 
         /// <summary>
-        /// Gets or sets the Progress
+        /// Gets or sets the Progress.
         /// </summary>
         public long Progress
         {
@@ -274,7 +279,7 @@
 
         /// <summary>
         /// Gets or sets the ProgressPercentage
-        /// Gets the operation progress, as a double between 0-100.
+        /// Gets the operation progress, as a double between 0-100..
         /// </summary>
         public int ProgressPercentage
         {
@@ -288,12 +293,12 @@
         }
 
         /// <summary>
-        /// Gets or sets the ProgressText
+        /// Gets or sets the ProgressText.
         /// </summary>
         public string ProgressText { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether ReportsProgress
+        /// Gets or sets a value indicating whether ReportsProgress.
         /// </summary>
         public bool ReportsProgress
         {
@@ -307,7 +312,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the Speed
+        /// Gets or sets the Speed.
         /// </summary>
         public string Speed
         {
@@ -322,7 +327,7 @@
 
         /// <summary>
         /// Gets or sets the Status
-        /// Gets the operation status.
+        /// Gets the operation status..
         /// </summary>
         public OperationStatus Status
         {
@@ -350,7 +355,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the Thumbnail
+        /// Gets or sets the Thumbnail.
         /// </summary>
         public string Thumbnail
         {
@@ -363,7 +368,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the Title
+        /// Gets or sets the Title.
         /// </summary>
         public string Title
         {
@@ -376,13 +381,13 @@
         }
 
         /// <summary>
-        /// Gets or sets the Operation's arguments.
+        /// Gets or sets the Operation's arguments..
         /// </summary>
         protected Dictionary<string, object> Arguments { get; set; }
 
         /// <summary>
         /// Gets or sets the ErrorsInternal
-        /// Gets or sets a editable list of errors.
+        /// Gets or sets a editable list of errors..
         /// </summary>
         protected List<string> ErrorsInternal { get; set; } = new List<string>();
 
@@ -393,7 +398,7 @@
         /// <summary>
         /// Returns whether 'Open' method is supported and available at the moment.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public virtual bool CanOpen()
         {
             return false;
@@ -402,7 +407,7 @@
         /// <summary>
         /// Returns whether 'Pause' method is supported and available at the moment.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public virtual bool CanPause()
         {
             return false;
@@ -411,7 +416,7 @@
         /// <summary>
         /// Returns whether 'Resume' method is supported and available at the moment.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public virtual bool CanResume()
         {
             return false;
@@ -420,14 +425,14 @@
         /// <summary>
         /// Returns whether 'Stop' method is supported and available at the moment.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public virtual bool CanStop()
         {
             return false;
         }
 
         /// <summary>
-        /// The Dispose
+        /// The Dispose.
         /// </summary>
         public virtual void Dispose()
         {
@@ -436,18 +441,18 @@
         }
 
         /// <summary>
-        /// The OnPropertyChanged
+        /// The OnPropertyChanged.
         /// </summary>
-        /// <param name="propertyName">The propertyName<see cref="string"/></param>
+        /// <param name="propertyName">The propertyName<see cref="string"/>.</param>
         public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             this.OnPropertyChangedExplicit(propertyName);
         }
 
         /// <summary>
-        /// The OnPropertyChangedExplicit
+        /// The OnPropertyChangedExplicit.
         /// </summary>
-        /// <param name="propertyName">The propertyName<see cref="string"/></param>
+        /// <param name="propertyName">The propertyName<see cref="string"/>.</param>
         public void OnPropertyChangedExplicit(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -456,7 +461,7 @@
         /// <summary>
         /// Opens the output file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>.</returns>
         public virtual bool Open()
         {
             throw new NotSupportedException();
@@ -465,7 +470,7 @@
         /// <summary>
         /// Opens the containing folder of the output file(s).
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public virtual bool OpenContainingFolder()
         {
             throw new NotSupportedException();
@@ -530,19 +535,19 @@
         /// <summary>
         /// Stops the operation if supported &amp; available.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public virtual bool Stop()
         {
             throw new NotSupportedException();
         }
 
         /// <summary>
-        /// The CancelAsync
+        /// The CancelAsync.
         /// </summary>
         protected void CancelAsync() => _worker?.CancelAsync();
 
         /// <summary>
-        /// The Complete
+        /// The Complete.
         /// </summary>
         protected void Complete()
         {
@@ -558,40 +563,40 @@
         }
 
         /// <summary>
-        /// The OnCompleted
+        /// The OnCompleted.
         /// </summary>
-        /// <param name="e">The e<see cref="OperationEventArgs"/></param>
+        /// <param name="e">The e<see cref="OperationEventArgs"/>.</param>
         protected virtual void OnCompleted(OperationEventArgs e) => this.Completed?.Invoke(this, e);
 
         /// <summary>
-        /// The OnProgressChanged
+        /// The OnProgressChanged.
         /// </summary>
-        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/></param>
+        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/>.</param>
         protected virtual void OnProgressChanged(ProgressChangedEventArgs e) => this.ProgressChanged?.Invoke(this, e);
 
         /// <summary>
-        /// The OnReportsProgressChanged
+        /// The OnReportsProgressChanged.
         /// </summary>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
+        /// <param name="e">The e<see cref="EventArgs"/>.</param>
         protected virtual void OnReportsProgressChanged(EventArgs e) => this.ReportsProgressChanged?.Invoke(this, e);
 
         /// <summary>
-        /// The OnStarted
+        /// The OnStarted.
         /// </summary>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
+        /// <param name="e">The e<see cref="EventArgs"/>.</param>
         protected virtual void OnStarted(EventArgs e) => this.Started?.Invoke(this, e);
 
         /// <summary>
-        /// The OnStatusChanged
+        /// The OnStatusChanged.
         /// </summary>
-        /// <param name="e">The e<see cref="StatusChangedEventArgs"/></param>
+        /// <param name="e">The e<see cref="StatusChangedEventArgs"/>.</param>
         protected virtual void OnStatusChanged(StatusChangedEventArgs e) => this.StatusChanged?.Invoke(this, e);
 
         /// <summary>
-        /// The ReportProgress
+        /// The ReportProgress.
         /// </summary>
-        /// <param name="percentProgress">The percentProgress<see cref="int"/></param>
-        /// <param name="userState">The userState<see cref="object"/></param>
+        /// <param name="percentProgress">The percentProgress<see cref="int"/>.</param>
+        /// <param name="userState">The userState<see cref="object"/>.</param>
         protected void ReportProgress(int percentProgress, object userState) => _worker?.ReportProgress(percentProgress, userState);
 
         /// <summary>
@@ -600,27 +605,27 @@
         protected virtual void ResumeInternal() => throw new NotSupportedException();
 
         /// <summary>
-        /// The WorkerCompleted
+        /// The WorkerCompleted.
         /// </summary>
-        /// <param name="e">The e<see cref="RunWorkerCompletedEventArgs"/></param>
+        /// <param name="e">The e<see cref="RunWorkerCompletedEventArgs"/>.</param>
         protected abstract void WorkerCompleted(RunWorkerCompletedEventArgs e);
 
         /// <summary>
-        /// The WorkerDoWork
+        /// The WorkerDoWork.
         /// </summary>
-        /// <param name="e">The e<see cref="DoWorkEventArgs"/></param>
+        /// <param name="e">The e<see cref="DoWorkEventArgs"/>.</param>
         protected abstract void WorkerDoWork(DoWorkEventArgs e);
 
         /// <summary>
-        /// The WorkerProgressChanged
+        /// The WorkerProgressChanged.
         /// </summary>
-        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/></param>
+        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/>.</param>
         protected abstract void WorkerProgressChanged(ProgressChangedEventArgs e);
 
         /// <summary>
-        /// The Dispose
+        /// The Dispose.
         /// </summary>
-        /// <param name="disposing">The disposing<see cref="bool"/></param>
+        /// <param name="disposing">The disposing<see cref="bool"/>.</param>
         private void Dispose(bool disposing)
         {
             if (_disposed)
@@ -643,10 +648,10 @@
         }
 
         /// <summary>
-        /// The Worker_Completed
+        /// The Worker_Completed.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="RunWorkerCompletedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="RunWorkerCompletedEventArgs"/>.</param>
         private void Worker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             Operation.Running.Remove(this);
@@ -666,17 +671,17 @@
         }
 
         /// <summary>
-        /// The Worker_DoWork
+        /// The Worker_DoWork.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="DoWorkEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="DoWorkEventArgs"/>.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e) => WorkerDoWork(e);
 
         /// <summary>
-        /// The Worker_ProgressChanged
+        /// The Worker_ProgressChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/>.</param>
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (e.ProgressPercentage >= 0 && e.ProgressPercentage <= 100)

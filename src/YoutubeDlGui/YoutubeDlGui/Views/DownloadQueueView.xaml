@@ -11,23 +11,50 @@
     mc:Ignorable="d">
     <StackPanel>
         <TextBlock Margin="0,4,0,4" Text="Download" />
-        <ListBox>
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Title}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding OperationCollectionView}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    MinWidth="200"
+                    Binding="{Binding Title}"
+                    Header="Title"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    MinWidth="200"
+                    Binding="{Binding Url}"
+                    Header="Url"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    MinWidth="200"
+                    Binding="{Binding Operation.Output}"
+                    Header="Output"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Status}"
+                    Header="Status"
+                    IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Progress">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ProgressBar
+                                Maximum="100"
+                                Minimum="0"
+                                Value="{Binding Progress, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                    Binding="{Binding FileSize}"
+                    Header="File Size"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Duration}"
+                    Header="Duration"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Operation.Speed}"
+                    Header="Speed"
+                    IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
     </StackPanel>
 </UserControl>
