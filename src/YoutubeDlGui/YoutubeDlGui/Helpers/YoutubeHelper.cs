@@ -127,7 +127,7 @@
         /// <returns>The <see cref="VideoFormat[]"/>.</returns>
         internal static VideoFormat[] CheckFormats(IList<VideoFormat> list)
         {
-            var formats = new List<VideoFormat>(list);
+            var formats = new List<VideoFormat>(list.Distinct());
             formats.RemoveAll(f => f.Extension.Contains("webm") ||
                                    f.HasAudioAndVideo ||
                                    f.FormatID == "meta");

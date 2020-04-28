@@ -65,6 +65,7 @@
                 HorizontalAlignment="Left"
                 IsSynchronizedWithCurrentItem="True"
                 ItemsSource="{Binding Formats}"
+                SelectedIndex="{Binding SelectedFormatIndex, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding SelectedFormat, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
                 <TextBox Width="300" Text="{Binding OutputFolder}" />

@@ -82,5 +82,29 @@ namespace YoutubeDlGui.Properties {
                 this["LastUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowMaxSimDownloads {
+            get {
+                return ((bool)(this["ShowMaxSimDownloads"]));
+            }
+            set {
+                this["ShowMaxSimDownloads"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int MaxSimDownloads {
+            get {
+                return ((int)(this["MaxSimDownloads"]));
+            }
+            set {
+                this["MaxSimDownloads"] = value;
+            }
+        }
     }
 }

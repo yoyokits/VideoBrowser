@@ -45,6 +45,8 @@
 
         private VideoFormat _selectedFormat;
 
+        private int _selectedFormatIndex;
+
         private string _url;
 
         private VideoInfo _videoInfo;
@@ -86,7 +88,7 @@
 
         /// <summary>
         /// Gets the Duration
-        /// Gets or sets the Duration....
+        /// Gets or sets the Duration.....
         /// </summary>
         public string Duration { get => this._duration; private set => this.Set(this.PropertyChanged, ref this._duration, value); }
 
@@ -132,7 +134,7 @@
 
         /// <summary>
         /// Gets a value indicating whether IsVisible
-        /// Gets or sets the IsVisible....
+        /// Gets or sets the IsVisible.....
         /// </summary>
         public bool IsVisible { get => this._isVisible; private set => this.Set(this.PropertyChanged, ref this._isVisible, value); }
 
@@ -190,18 +192,23 @@
         public VideoFormat SelectedFormat { get => this._selectedFormat; set => this.Set(this.PropertyChanged, ref this._selectedFormat, value); }
 
         /// <summary>
+        /// Gets or sets the SelectedFormatIndex.
+        /// </summary>
+        public int SelectedFormatIndex { get => _selectedFormatIndex; set => this.Set(this.PropertyChanged, ref _selectedFormatIndex, value); }
+
+        /// <summary>
         /// Gets or sets the Url.
         /// </summary>
         public string Url { get => this._url; set => this.Set(this.PropertyChanged, ref this._url, value); }
 
         /// <summary>
         /// Gets the UrlReader
-        /// Gets or sets the UrlReader...
+        /// Gets or sets the UrlReader....
         /// </summary>
         public UrlReader UrlReader { get; }
 
         /// <summary>
-        /// Gets or sets the VideoInfo ....
+        /// Gets or sets the VideoInfo .....
         /// </summary>
         public VideoInfo VideoInfo
         {
@@ -270,7 +277,11 @@
                 this.ImageUrl = this.VideoInfo.ThumbnailUrl;
                 if (this.Formats.Any())
                 {
-                    this.SelectedFormat = this.Formats.Last();
+                    this.SelectedFormatIndex = this.Formats.Count - 1;
+                }
+                else
+                {
+                    return;
                 }
             }
 

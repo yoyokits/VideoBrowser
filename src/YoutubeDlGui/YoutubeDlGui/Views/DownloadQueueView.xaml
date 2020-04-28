@@ -2,6 +2,7 @@
     x:Class="YoutubeDlGui.Views.DownloadQueueView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:YoutubeDlGui.ViewModels"
@@ -35,7 +36,7 @@
                 <DataGridTemplateColumn Header="Progress">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ProgressBar
+                            <Controls:MetroProgressBar
                                 Maximum="100"
                                 Minimum="0"
                                 Value="{Binding Progress, Mode=OneWay}" />

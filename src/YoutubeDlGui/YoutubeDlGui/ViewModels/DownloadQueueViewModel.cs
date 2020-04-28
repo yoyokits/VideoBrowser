@@ -5,6 +5,7 @@
     using System.Windows.Data;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.Threading;
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Models;
@@ -61,7 +62,8 @@
         public void Download(Operation operation)
         {
             var operationModel = new OperationModel(operation);
-            this.Operations.Add(operationModel);
+            var element = (DispatcherObject)this.OperationCollectionView;
+            element.InvokeUIThread(() => this.Operations.Add(operationModel));
         }
 
         /// <summary>

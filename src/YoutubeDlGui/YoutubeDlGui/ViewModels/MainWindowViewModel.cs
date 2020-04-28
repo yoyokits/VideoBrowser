@@ -3,6 +3,7 @@
     using System.Windows;
     using System.Windows.Input;
     using YoutubeDlGui.Common;
+    using YoutubeDlGui.Core;
     using YoutubeDlGui.Models;
     using YoutubeDlGui.Views;
 
@@ -35,7 +36,7 @@
 
         /// <summary>
         /// Gets the DownloadVideo
-        /// Gets or sets the DownloadVideo...
+        /// Gets or sets the DownloadVideo....
         /// </summary>
         public DownloadQueueViewModel DownloadQueueViewModel => this.GlobalData.DownloadQueueViewModel;
 
@@ -76,6 +77,14 @@
         #region Methods
 
         /// <summary>
+        /// The Dispose.
+        /// </summary>
+        private void Dispose()
+        {
+            this.VideoBrowser.Dispose();
+        }
+
+        /// <summary>
         /// The OnClosing.
         /// </summary>
         /// <param name="obj">The obj<see cref="object"/>.</param>
@@ -83,10 +92,12 @@
         {
             var window = (MainWindow)obj;
             var settings = Properties.Settings.Default;
-            settings.WindowPosition = new Point(window.Left, settings.WindowPosition.Y);
+            settings.WindowPosition = new Point(window.Left, window.Top);
             settings.WindowWidth = window.ActualWidth;
             settings.WindowHeight = window.Height;
             settings.Save();
+            DownloadQueueHandler.Stop();
+            this.Dispose();
         }
 
         /// <summary>
@@ -101,6 +112,8 @@
             window.Top = settings.WindowPosition.Y;
             window.Width = settings.WindowWidth;
             window.Height = settings.WindowHeight;
+            DownloadQueueHandler.LimitDownloads = settings.ShowMaxSimDownloads;
+            DownloadQueueHandler.StartWatching(settings.MaxSimDownloads);
         }
 
         #endregion Methods
