@@ -22,7 +22,7 @@
             this.GlobalData = new GlobalData();
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.ClosingCommand = new RelayCommand(this.OnClosing);
-            this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData.DownloadQueueViewModel.Download);
+            this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData);
         }
 
         #endregion Constructors
@@ -112,6 +112,7 @@
             window.Top = settings.WindowPosition.Y;
             window.Width = settings.WindowWidth;
             window.Height = settings.WindowHeight;
+            this.GlobalData.MainWindow = window;
             DownloadQueueHandler.LimitDownloads = settings.ShowMaxSimDownloads;
             DownloadQueueHandler.StartWatching(settings.MaxSimDownloads);
         }

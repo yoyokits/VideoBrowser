@@ -64,6 +64,7 @@
             var operationModel = new OperationModel(operation);
             var element = (DispatcherObject)this.OperationCollectionView;
             element.InvokeUIThread(() => this.Operations.Add(operationModel));
+            DownloadQueueHandler.Add(operation);
         }
 
         /// <summary>

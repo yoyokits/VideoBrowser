@@ -16,7 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Grid.Resources>
-    <asf:AirspacePanel FixAirspace="{Binding IsAirspaceVisible}">
+    <asf:AirspacePanel FixAirspace="{Binding GlobalData.IsAirspaceVisible}">
         <WindowsFormsHost
             x:Name="windowsFormsHost"
             Background="Red"

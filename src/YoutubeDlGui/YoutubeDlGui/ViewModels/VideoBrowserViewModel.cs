@@ -8,11 +8,12 @@
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Extensions;
+    using YoutubeDlGui.Models;
     using YoutubeDlGui.Properties;
     using YoutubeDlGui.Resources;
 
     /// <summary>
-    /// Defines the <see cref="VideoBrowserViewModel" />
+    /// Defines the <see cref="VideoBrowserViewModel" />.
     /// </summary>
     public class VideoBrowserViewModel : NotifyPropertyChanged, IDisposable
     {
@@ -28,8 +29,6 @@
 
         private ICommand _forwardCommand;
 
-        private bool _isAirspaceVisible;
-
         private string _navigateUrl = "youtube.com";
 
         private ICommand _reloadCommand;
@@ -41,8 +40,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoBrowserViewModel"/> class.
         /// </summary>
-        internal VideoBrowserViewModel(Action<Operation> downloadAction)
+        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
+        internal VideoBrowserViewModel(GlobalData globalData)
         {
+            this.GlobalData = globalData;
+
             // BackwardCommand and ForwardCommand are set by the View.
             this.DownloadCommand = new RelayCommand(this.OnDownload, (o) => this.UrlReader.IsDownloadable);
             this.HomeCommand = new RelayCommand(this.OnHome);
@@ -50,10 +52,10 @@
             this.SettingsCommand = new RelayCommand(this.OnSettings);
             _cookies = new Dictionary<string, string>();
             IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
-            this.UrlEditor = new UrlEditorViewModel(this.UrlReader)
+            this.UrlEditor = new UrlEditorViewModel(this.UrlReader, globalData)
             {
                 NavigateUrlCommand = this.NavigateUrlCommand,
-                DownloadAction = downloadAction
+                DownloadAction = globalData.DownloadQueueViewModel.Download
             };
             this.UrlEditor.PropertyChanged += this.OnUrlEditor_PropertyChanged;
             this.PropertyChanged += this.OnPropertyChanged;
@@ -65,55 +67,51 @@
         #region Properties
 
         /// <summary>
-        /// Gets or sets the BackwardCommand
+        /// Gets or sets the BackwardCommand.
         /// </summary>
         public ICommand BackwardCommand { get => this._backwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._backwardCommand, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether CanBackward
-        /// Gets or sets the CanBackward.
+        /// Gets or sets the CanBackward..
         /// </summary>
         public bool CanBackward { get => this._canBackward; set => this.Set(this.PropertyChangedHandler, ref this._canBackward, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether CanForward
-        /// Gets or sets the CanForward.
+        /// Gets or sets the CanForward..
         /// </summary>
         public bool CanForward { get => this._canForward; set => this.Set(this.PropertyChangedHandler, ref this._canForward, value); }
 
+        public GlobalData GlobalData { get; }
+
         /// <summary>
-        /// Gets the DownloadCommand
+        /// Gets the DownloadCommand.
         /// </summary>
         public ICommand DownloadCommand { get; }
 
         /// <summary>
-        /// Gets or sets the ForwardCommand
+        /// Gets or sets the ForwardCommand.
         /// </summary>
         public ICommand ForwardCommand { get => this._forwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._forwardCommand, value); }
 
         /// <summary>
-        /// Gets the HomeCommand
+        /// Gets the HomeCommand.
         /// </summary>
         public ICommand HomeCommand { get; }
 
         /// <summary>
-        /// Gets or sets the Icon
+        /// Gets or sets the Icon.
         /// </summary>
         public Geometry Icon { get; set; } = Icons.SearchVideo;
 
         /// <summary>
-        /// Gets the IndicatorColor
+        /// Gets the IndicatorColor.
         /// </summary>
         public Brush IndicatorColor { get; private set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether IsAirspaceVisible
-        /// Gets or sets the IsAirspaceVisible.
-        /// </summary>
-        public bool IsAirspaceVisible { get => this._isAirspaceVisible; set => this.Set(this.PropertyChangedHandler, ref this._isAirspaceVisible, value); }
-
-        /// <summary>
-        /// Sets the IsSuccessful
+        /// Sets the IsSuccessful.
         /// </summary>
         public bool? IsSuccessful
         {
@@ -132,43 +130,43 @@
         /// <summary>
         /// Gets or sets the NavigateUrl.
         /// The current valid Url that is currently opened.
-        /// It is set by Url property if the Return key is pressed or link is clicked.
+        /// It is set by Url property if the Return key is pressed or link is clicked..
         /// </summary>
         public string NavigateUrl { get => this._navigateUrl; set => this.Set(this.PropertyChangedHandler, ref this._navigateUrl, value); }
 
         /// <summary>
-        /// Gets the NavigateUrlCommand
+        /// Gets the NavigateUrlCommand.
         /// </summary>
         public ICommand NavigateUrlCommand { get; }
 
         /// <summary>
-        /// Gets or sets the ReloadCommand
+        /// Gets or sets the ReloadCommand.
         /// </summary>
         public ICommand ReloadCommand { get => this._reloadCommand; set => this.Set(this.PropertyChangedHandler, ref this._reloadCommand, value); }
 
         /// <summary>
-        /// Gets the SettingsCommand
+        /// Gets the SettingsCommand.
         /// </summary>
         public ICommand SettingsCommand { get; }
 
         /// <summary>
         /// Gets or sets the WebUri that is typed in the TextBox.
-        /// Gets the WebUri
+        /// Gets the WebUri.
         /// </summary>
         public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
 
         /// <summary>
-        /// Gets the UrlEditor
+        /// Gets the UrlEditor.
         /// </summary>
         public UrlEditorViewModel UrlEditor { get; }
 
         /// <summary>
-        /// Gets the UrlReader
+        /// Gets the UrlReader.
         /// </summary>
         public UrlReader UrlReader { get; } = new UrlReader();
 
         /// <summary>
-        /// Gets the WebCookies
+        /// Gets the WebCookies.
         /// </summary>
         public string WebCookies => string.Join("; ", _cookies.Select(x => $"{x.Key}={x.Value}"));
 
@@ -177,7 +175,7 @@
         #region Methods
 
         /// <summary>
-        /// The Dispose
+        /// The Dispose.
         /// </summary>
         public void Dispose()
         {
@@ -187,18 +185,18 @@
         }
 
         /// <summary>
-        /// The IsUrlValid
+        /// The IsUrlValid.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool IsUrlValid()
         {
             return true;
         }
 
         /// <summary>
-        /// The OnDownload
+        /// The OnDownload.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnDownload(object obj)
         {
             if (!this.IsUrlValid() || !this.UrlEditor.DownloadCommand.CanExecute(null))
@@ -210,9 +208,9 @@
         }
 
         /// <summary>
-        /// The OnHome
+        /// The OnHome.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnHome(object obj)
         {
         }
@@ -220,18 +218,18 @@
         /// <summary>
         /// The OnNavigateUrl called from Button.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnNavigateUrl(object obj)
         {
             this.NavigateUrl = this.Url;
-            this.IsAirspaceVisible = false;
+            this.GlobalData.IsAirspaceVisible = false;
         }
 
         /// <summary>
-        /// The OnPropertyChanged
+        /// The OnPropertyChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="System.ComponentModel.PropertyChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="System.ComponentModel.PropertyChangedEventArgs"/>.</param>
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -251,18 +249,18 @@
         }
 
         /// <summary>
-        /// The OnSettings
+        /// The OnSettings.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnSettings(object obj)
         {
         }
 
         /// <summary>
-        /// The OnUrlEditor_PropertyChanged
+        /// The OnUrlEditor_PropertyChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="System.ComponentModel.PropertyChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="System.ComponentModel.PropertyChangedEventArgs"/>.</param>
         private void OnUrlEditor_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.IsMatch(nameof(this.UrlEditor.Url)))

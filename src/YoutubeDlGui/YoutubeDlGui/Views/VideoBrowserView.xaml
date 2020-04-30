@@ -58,7 +58,7 @@
                 Grid.Column="1"
                 CloseAdornerTimeOut="0.5"
                 FadeOutTime="0.5"
-                IsAdornerVisible="{Binding IsAirspaceVisible, Mode=OneWayToSource}">
+                IsAdornerVisible="{Binding GlobalData.IsAirspaceVisible, Mode=OneWayToSource}">
                 <adornedcontrol:AdornedControl.AdornerContent>
                     <Grid x:Name="UrlEditorGrid">
                         <Canvas>
@@ -95,7 +95,7 @@
             Grid.Row="1"
             BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
             ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
-            IsAirspaceVisible="{Binding IsAirspaceVisible}"
+            IsAirspaceVisible="{Binding GlobalData.IsAirspaceVisible}"
             ReloadCommand="{Binding ReloadCommand, Mode=OneWayToSource}"
             Url="{Binding NavigateUrl}" />
     </Grid>

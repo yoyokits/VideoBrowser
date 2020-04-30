@@ -12,6 +12,7 @@
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Extensions;
     using YoutubeDlGui.Helpers;
+    using YoutubeDlGui.Models;
     using YoutubeDlGui.Properties;
 
     /// <summary>
@@ -59,9 +60,11 @@
         /// Initializes a new instance of the <see cref="UrlEditorViewModel"/> class.
         /// </summary>
         /// <param name="reader">The reader<see cref="UrlReader"/>.</param>
-        internal UrlEditorViewModel(UrlReader reader)
+        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
+        internal UrlEditorViewModel(UrlReader reader, GlobalData globalData)
         {
             this.UrlReader = reader;
+            this.GlobalData = globalData;
             this.OutputFolder = string.IsNullOrEmpty(Settings.Default.DownloadFolder) ? AppEnvironment.UserVideoFolder : Settings.Default.DownloadFolder;
             this.UrlReader.PropertyChanged += this.OnUrlReader_PropertyChanged;
             this.DownloadCommand = new RelayCommand(this.OnDownload);
@@ -87,8 +90,7 @@
         public ICommand DownloadCommand { get; }
 
         /// <summary>
-        /// Gets the Duration
-        /// Gets or sets the Duration.....
+        /// Gets the Duration.
         /// </summary>
         public string Duration { get => this._duration; private set => this.Set(this.PropertyChanged, ref this._duration, value); }
 
@@ -113,6 +115,11 @@
         public ICommand GetFolderCommand { get; }
 
         /// <summary>
+        /// Gets the GlobalData.
+        /// </summary>
+        public GlobalData GlobalData { get; }
+
+        /// <summary>
         /// Gets or sets the ImageUrl.
         /// </summary>
         public string ImageUrl { get => this._imageUrl; set => this.Set(this.PropertyChanged, ref this._imageUrl, value); }
@@ -133,8 +140,7 @@
         public bool IsFormatComboBoxVisible { get => _isFormatComboBoxVisible; set => this.Set(this.PropertyChanged, ref _isFormatComboBoxVisible, value); }
 
         /// <summary>
-        /// Gets a value indicating whether IsVisible
-        /// Gets or sets the IsVisible.....
+        /// Gets a value indicating whether IsVisible.
         /// </summary>
         public bool IsVisible { get => this._isVisible; private set => this.Set(this.PropertyChanged, ref this._isVisible, value); }
 
@@ -202,13 +208,12 @@
         public string Url { get => this._url; set => this.Set(this.PropertyChanged, ref this._url, value); }
 
         /// <summary>
-        /// Gets the UrlReader
-        /// Gets or sets the UrlReader....
+        /// Gets the UrlReader.
         /// </summary>
         public UrlReader UrlReader { get; }
 
         /// <summary>
-        /// Gets or sets the VideoInfo .....
+        /// Gets or sets the VideoInfo.
         /// </summary>
         public VideoInfo VideoInfo
         {
@@ -298,8 +303,14 @@
         {
             var format = this.SelectedFormat;
             this.FileName = FileHelper.GetValidFilename(this.FileName);
-            var filename = $"{this.FileName}.{format.Extension}";
-            var output = Path.Combine(this.OutputFolder, filename);
+            var fileName = $"{this.FileName}.{format.Extension}";
+            var output = Path.Combine(this.OutputFolder, fileName);
+            if (File.Exists(output))
+            {
+                var message = $@"File ""{fileName}"" is already downloaded";
+                this.GlobalData.ShowMessageAsync("Download Canceled", message);
+                return;
+            }
 
             DownloadOperation operation = format.AudioOnly || format.HasAudioAndVideo
                 ? new DownloadOperation(format, output)

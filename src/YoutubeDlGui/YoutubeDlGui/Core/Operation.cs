@@ -635,6 +635,9 @@
 
             if (disposing)
             {
+                _worker.DoWork -= Worker_DoWork;
+                _worker.ProgressChanged -= Worker_ProgressChanged;
+                _worker.RunWorkerCompleted -= Worker_Completed;
                 this.Completed = null;
 
                 if (_worker != null)
