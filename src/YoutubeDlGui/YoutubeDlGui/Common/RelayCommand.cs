@@ -55,7 +55,7 @@
         public void Execute(object parameter)
         {
             this._execute(parameter);
-            Logger.Info($"RelayCOmmand {this._name} is executed");
+            Logger.Info($"{nameof(RelayCommand)} {this._name} is executed");
         }
     }
 }

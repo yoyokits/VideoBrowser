@@ -173,9 +173,9 @@
             this.WebBrowser.LoadingStateChanged += OnWebBrowser_LoadingStateChanged;
             this.WebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
             this.WebBrowser.LoadError += OnWebBrowser_LoadError;
-            this.BackwardCommand = new RelayCommand(this.OnBackward, (o) => this.CanBackward);
-            this.ForwardCommand = new RelayCommand(this.OnForward, (o) => this.CanForward);
-            this.ReloadCommand = new RelayCommand(this.OnReload, (o) => this.CanReload);
+            this.BackwardCommand = new RelayCommand(this.OnBackward, "Backward", (o) => this.CanBackward);
+            this.ForwardCommand = new RelayCommand(this.OnForward, "Forward", (o) => this.CanForward);
+            this.ReloadCommand = new RelayCommand(this.OnReload, "Reload", (o) => this.CanReload);
         }
 
         /// <summary>

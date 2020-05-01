@@ -148,8 +148,8 @@
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= this.OnLoaded;
-            this.BackwardCommand = new RelayCommand(this.OnBackward, (o) => this.CanBackward);
-            this.ForwardCommand = new RelayCommand(this.OnForward, (o) => this.CanForward);
+            this.BackwardCommand = new RelayCommand(this.OnBackward, "Backward", (o) => this.CanBackward);
+            this.ForwardCommand = new RelayCommand(this.OnForward, "Forward", (o) => this.CanForward);
         }
 
         /// <summary>

@@ -46,10 +46,10 @@
             this.GlobalData = globalData;
 
             // BackwardCommand and ForwardCommand are set by the View.
-            this.DownloadCommand = new RelayCommand(this.OnDownload, (o) => this.UrlReader.IsDownloadable);
-            this.HomeCommand = new RelayCommand(this.OnHome);
-            this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl);
-            this.SettingsCommand = new RelayCommand(this.OnSettings);
+            this.DownloadCommand = new RelayCommand(this.OnDownload, "Download", (o) => this.UrlReader.IsDownloadable);
+            this.HomeCommand = new RelayCommand(this.OnHome, "Home");
+            this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl, "NavigateUrl");
+            this.SettingsCommand = new RelayCommand(this.OnSettings, "Settings");
             _cookies = new Dictionary<string, string>();
             IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
             this.UrlEditor = new UrlEditorViewModel(this.UrlReader, globalData)
