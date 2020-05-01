@@ -563,6 +563,7 @@
                 }
                 else
                 {
+                    webResp.Close();
                     webReq = (HttpWebRequest)WebRequest.Create(this.CurrentFile.Url);
                     webReq.AddRange(existLen);
                     webResp = (HttpWebResponse)webReq.GetResponse();
@@ -571,6 +572,8 @@
             }
             catch (Exception ex)
             {
+                webResp?.Close();
+                webResp?.Dispose();
                 exception = ex;
             }
 
@@ -587,6 +590,7 @@
 
                 long prevSize = 0;
                 var speedInterval = 100;
+                var stream = webResp.GetResponseStream();
 
                 while (this.CurrentFile.Progress < totalSize && !_downloader.CancellationPending)
                 {
@@ -596,7 +600,7 @@
                     }
 
                     speedTimer.Start();
-                    currentPackageSize = webResp.GetResponseStream().Read(readBytes, 0, this.PackageSize);
+                    currentPackageSize = stream.Read(readBytes, 0, this.PackageSize);
 
                     this.CurrentFile.Progress += currentPackageSize;
                     this.TotalProgress += currentPackageSize;
@@ -621,8 +625,10 @@
                 }
 
                 speedTimer.Stop();
+                stream.Close();
                 writer.Close();
                 webResp.Close();
+                webResp.Dispose();
 
                 if (!_downloader.CancellationPending)
                 {

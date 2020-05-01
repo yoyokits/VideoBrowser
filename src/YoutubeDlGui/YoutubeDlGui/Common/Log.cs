@@ -85,6 +85,7 @@
             }
 
             Log.Info(message);
+            System.Diagnostics.Trace.WriteLine(message);
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Windows;
     using System.Windows.Input;
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Core;
@@ -195,7 +194,19 @@
         /// <summary>
         /// Gets or sets the SelectedFormat.
         /// </summary>
-        public VideoFormat SelectedFormat { get => this._selectedFormat; set => this.Set(this.PropertyChanged, ref this._selectedFormat, value); }
+        public VideoFormat SelectedFormat
+        {
+            get => this._selectedFormat;
+            set
+            {
+                if (!this.Set(this.PropertyChanged, ref this._selectedFormat, value))
+                {
+                    return;
+                }
+
+                this.UpdateFileSize();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the SelectedFormatIndex.
@@ -270,7 +281,9 @@
             }
             else if (this.VideoInfo.Failure)
             {
-                MessageBox.Show("Couldn't retrieve video. Reason:\n\n" + this.VideoInfo.FailureReason, "Error Loading Video Info");
+                var message = "Couldn't retrieve video. Reason:\n\n" + this.VideoInfo.FailureReason;
+                this.GlobalData.ShowMessageAsync("The Video Not Downloadable", message);
+                Logger.Info(message);
                 return;
             }
             else
@@ -340,6 +353,33 @@
         private void OnVideoInfo_FileSizeUpdated(object sender, FileSizeUpdateEventArgs e)
         {
             this.FileSize = FormatString.FormatFileSize(e.VideoFormat.FileSize);
+        }
+
+        /// <summary>
+        /// The UpdateFileSize.
+        /// </summary>
+        private void UpdateFileSize()
+        {
+            if (this.SelectedFormat == null)
+            {
+                this.FileSize = "Unkown size";
+            }
+            else if (this.SelectedFormat.FileSize == 0)
+            {
+                this.FileSize = "Getting file size...";
+            }
+            else
+            {
+                var total = this.SelectedFormat.FileSize;
+
+                // If the format is VideoOnly, combine audio and video size.
+                if (this.SelectedFormat.VideoOnly)
+                {
+                    total += YoutubeHelper.GetAudioFormat(this.SelectedFormat).FileSize;
+                }
+
+                this.FileSize = FormatString.FormatFileSize(total);
+            }
         }
 
         #endregion Methods
