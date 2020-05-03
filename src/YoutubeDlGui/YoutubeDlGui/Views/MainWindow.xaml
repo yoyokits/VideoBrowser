@@ -14,6 +14,7 @@
     d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel}"
     Closing="{extension:EventBinding ClosingCommand,
                                      CommandParameter={Binding RelativeSource={RelativeSource Self}}}"
+    GlowBrush="{DynamicResource AccentColorBrush}"
     Loaded="{extension:EventBinding LoadedCommand,
                                     CommandParameter={Binding RelativeSource={RelativeSource Self}}}"
     mc:Ignorable="d">

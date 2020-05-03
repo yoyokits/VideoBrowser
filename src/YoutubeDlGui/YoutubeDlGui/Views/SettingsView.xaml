@@ -10,7 +10,16 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Text="Settings" />
+        <Label
+            Grid.Row="0"
+            Height="50"
+            Padding="16,5,5,5"
+            VerticalContentAlignment="Center"
+            Background="RoyalBlue"
+            Content="Settings"
+            FontSize="16"
+            FontWeight="SemiBold"
+            Foreground="White" />
         <Separator />
         <TextBlock Text="Output Path" />
         <TextBox Text="{Binding OuputFolder}" />

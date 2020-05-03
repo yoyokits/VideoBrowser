@@ -41,8 +41,6 @@
 
         private string _navigateUrl;
 
-        private string _outputFolder;
-
         private VideoFormat _selectedFormat;
 
         private int _selectedFormatIndex;
@@ -180,10 +178,15 @@
         /// </summary>
         public string OutputFolder
         {
-            get => this._outputFolder;
+            get => this.GlobalData.Settings.OuputFolder;
             set
             {
-                this.Set(this.PropertyChanged, ref this._outputFolder, value);
+                if (this.GlobalData.Settings.OuputFolder == value)
+                {
+                    return;
+                }
+
+                this.GlobalData.Settings.OuputFolder = value;
                 if (Directory.Exists(this.OutputFolder))
                 {
                     Settings.Default.DownloadFolder = this.OutputFolder;

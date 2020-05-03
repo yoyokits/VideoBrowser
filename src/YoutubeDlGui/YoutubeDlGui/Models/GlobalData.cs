@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows;
+    using YoutubeDlGui.Common;
     using YoutubeDlGui.Extensions;
     using YoutubeDlGui.ViewModels;
     using YoutubeDlGui.Views;
@@ -91,7 +92,7 @@
         /// <param name="message">The message<see cref="string"/>.</param>
         internal void ShowMessage(string title, string message)
         {
-            MessageBox.Show(this.MainWindow, message, title);
+            this.MainWindow.InvokeUIThread(() => MessageBox.Show(this.MainWindow, message, title));
         }
 
         /// <summary>

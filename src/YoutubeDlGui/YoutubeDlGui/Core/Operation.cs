@@ -136,15 +136,7 @@
         /// <summary>
         /// Gets or sets the Duration.
         /// </summary>
-        public long Duration
-        {
-            get { return _duration; }
-            set
-            {
-                _duration = value;
-                this.OnPropertyChanged();
-            }
-        }
+        public long Duration { get => _duration; set => this.Set(this.PropertyChanged, ref _duration, value); }
 
         /// <summary>
         /// Gets the Errors
@@ -160,15 +152,7 @@
         /// <summary>
         /// Gets or sets the ETA.
         /// </summary>
-        public string ETA
-        {
-            get { return _eta; }
-            set
-            {
-                _eta = value;
-                this.OnPropertyChanged();
-            }
-        }
+        public string ETA { get => _eta; set => this.Set(this.PropertyChanged, ref _eta, value); }
 
         /// <summary>
         /// Gets the Exception.
@@ -180,7 +164,7 @@
         /// </summary>
         public long FileSize
         {
-            get { return _fileSize; }
+            get => _fileSize;
             set
             {
                 _fileSize = value;
@@ -214,15 +198,9 @@
         /// Gets a value indicating whether IsDone
         /// Returns True if Operation is done, regardless of result..
         /// </summary>
-        public bool IsDone
-        {
-            get
-            {
-                return this.Status == OperationStatus.Canceled
+        public bool IsDone => this.Status == OperationStatus.Canceled
                     || this.Status == OperationStatus.Failed
                     || this.Status == OperationStatus.Success;
-            }
-        }
 
         /// <summary>
         /// Gets a value indicating whether IsPaused.
@@ -247,15 +225,7 @@
         /// <summary>
         /// Gets or sets the Link.
         /// </summary>
-        public string Link
-        {
-            get { return _link; }
-            set
-            {
-                _link = value;
-                this.OnPropertyChanged();
-            }
-        }
+        public string Link { get => _link; set => this.Set(this.PropertyChanged, ref _link, value); }
 
         /// <summary>
         /// Gets or sets the Output
@@ -268,7 +238,7 @@
         /// </summary>
         public long Progress
         {
-            get { return _progress; }
+            get => _progress;
             set
             {
                 _progress = value;
@@ -283,7 +253,7 @@
         /// </summary>
         public int ProgressPercentage
         {
-            get { return _progressPercentage; }
+            get => _progressPercentage;
             set
             {
                 _progressPercentage = value;
@@ -302,7 +272,7 @@
         /// </summary>
         public bool ReportsProgress
         {
-            get { return _reportsProgress; }
+            get => _reportsProgress;
             set
             {
                 _reportsProgress = value;
@@ -316,7 +286,7 @@
         /// </summary>
         public string Speed
         {
-            get { return _speed; }
+            get => _speed;
             set
             {
                 _speed = value;
@@ -331,7 +301,7 @@
         /// </summary>
         public OperationStatus Status
         {
-            get { return _status; }
+            get => _status;
             set
             {
                 var oldStatus = _status;
@@ -357,28 +327,12 @@
         /// <summary>
         /// Gets or sets the Thumbnail.
         /// </summary>
-        public string Thumbnail
-        {
-            get { return _thumbnail; }
-            set
-            {
-                _thumbnail = value;
-                this.OnPropertyChanged();
-            }
-        }
+        public string Thumbnail { get => _thumbnail; set => this.Set(this.PropertyChanged, ref _thumbnail, value); }
 
         /// <summary>
         /// Gets or sets the Title.
         /// </summary>
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                _title = value;
-                this.OnPropertyChanged();
-            }
-        }
+        public string Title { get => _title; set => this.Set(this.PropertyChanged, ref _title, value); }
 
         /// <summary>
         /// Gets or sets the Operation's arguments..
@@ -399,37 +353,25 @@
         /// Returns whether 'Open' method is supported and available at the moment.
         /// </summary>
         /// <returns>The <see cref="bool"/>.</returns>
-        public virtual bool CanOpen()
-        {
-            return false;
-        }
+        public virtual bool CanOpen() => false;
 
         /// <summary>
         /// Returns whether 'Pause' method is supported and available at the moment.
         /// </summary>
         /// <returns>The <see cref="bool"/>.</returns>
-        public virtual bool CanPause()
-        {
-            return false;
-        }
+        public virtual bool CanPause() => false;
 
         /// <summary>
         /// Returns whether 'Resume' method is supported and available at the moment.
         /// </summary>
         /// <returns>The <see cref="bool"/>.</returns>
-        public virtual bool CanResume()
-        {
-            return false;
-        }
+        public virtual bool CanResume() => false;
 
         /// <summary>
         /// Returns whether 'Stop' method is supported and available at the moment.
         /// </summary>
         /// <returns>The <see cref="bool"/>.</returns>
-        public virtual bool CanStop()
-        {
-            return false;
-        }
+        public virtual bool CanStop() => false;
 
         /// <summary>
         /// The Dispose.

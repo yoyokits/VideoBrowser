@@ -10,9 +10,93 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <StackPanel>
-        <TextBlock Margin="0,4,0,4" Text="Download" />
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding OperationCollectionView}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label
+            Grid.Row="0"
+            Height="50"
+            Padding="16,5,5,5"
+            VerticalContentAlignment="Center"
+            Background="RoyalBlue"
+            Content="Downloads"
+            FontSize="16"
+            FontWeight="SemiBold"
+            Foreground="White" />
+        <ListBox
+            Grid.Row="1"
+            ItemsSource="{Binding OperationCollectionView}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Background="WhiteSmoke" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="ListBoxItem">
+                    <Setter Property="Width" Value="800" />
+                    <Setter Property="Margin" Value="8" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Border
+                            BorderBrush="Black"
+                            BorderThickness="1"
+                            Opacity="0.7">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10" ShadowDepth="3" />
+                            </Border.Effect>
+                        </Border>
+                        <Grid x:Name="OperationModelGrid" Background="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <Image
+                                    Width="150"
+                                    Source="{Binding Operation.Thumbnail}"
+                                    Stretch="Uniform" />
+                            </Grid>
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="4">
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Foreground="RoyalBlue"
+                                    Text="{Binding Title}" />
+                                <TextBlock Text="{Binding Url}" />
+                                <TextBlock Text="{Binding FileSize}" />
+                                <TextBlock Text="{Binding Status}" />
+                            </StackPanel>
+                            <Grid
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Background="AliceBlue">
+                                <Controls:MetroProgressBar
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding Progress, Mode=OneWay}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!--<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding OperationCollectionView}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     MinWidth="200"
@@ -56,6 +140,6 @@
                     Header="Speed"
                     IsReadOnly="True" />
             </DataGrid.Columns>
-        </DataGrid>
-    </StackPanel>
+        </DataGrid>-->
+    </Grid>
 </UserControl>
