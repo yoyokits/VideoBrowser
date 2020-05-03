@@ -25,6 +25,16 @@
         #region Properties
 
         /// <summary>
+        /// Gets the AppBinaryDirectory.
+        /// </summary>
+        public static string AppBinaryDirectory => Path.Combine(AppDirectory, "Binaries");
+
+        /// <summary>
+        /// Gets the AppDirectory.
+        /// </summary>
+        public static string AppDirectory => AppDomain.CurrentDomain.BaseDirectory;
+
+        /// <summary>
         /// Gets the UserLocalApplicationData.
         /// </summary>
         public static string UserLocalApplicationData { get; } = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -49,9 +59,7 @@
         /// <returns>The <see cref="string"/>.</returns>
         public static string GetAppDataDirectory()
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                AppEnvironment.ShortName);
-
+            var path = Path.Combine(UserLocalApplicationData, AppEnvironment.ShortName);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

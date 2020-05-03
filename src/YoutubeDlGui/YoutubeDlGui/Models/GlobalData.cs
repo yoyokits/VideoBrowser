@@ -3,6 +3,7 @@
     using MahApps.Metro.Controls.Dialogs;
     using System.ComponentModel;
     using System.Threading.Tasks;
+    using System.Windows;
     using YoutubeDlGui.Extensions;
     using YoutubeDlGui.ViewModels;
     using YoutubeDlGui.Views;
@@ -48,8 +49,7 @@
         public DownloadQueueViewModel DownloadQueueViewModel { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether IsAirspaceVisible
-        /// Gets or sets the IsAirspaceVisible.......
+        /// Gets or sets a value indicating whether IsAirspaceVisible.
         /// </summary>
         public bool IsAirspaceVisible
         {
@@ -83,6 +83,16 @@
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The ShowMessage.
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/>.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        internal void ShowMessage(string title, string message)
+        {
+            MessageBox.Show(this.MainWindow, message, title);
+        }
 
         /// <summary>
         /// The ShowMessage.

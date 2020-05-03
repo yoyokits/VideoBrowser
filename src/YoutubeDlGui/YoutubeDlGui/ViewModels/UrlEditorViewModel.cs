@@ -282,7 +282,7 @@
             else if (this.VideoInfo.Failure)
             {
                 var message = "Couldn't retrieve video. Reason:\n\n" + this.VideoInfo.FailureReason;
-                this.GlobalData.ShowMessageAsync("The Video Not Downloadable", message);
+                this.GlobalData.ShowMessage("The Video Not Downloadable", message);
                 Logger.Info(message);
                 return;
             }

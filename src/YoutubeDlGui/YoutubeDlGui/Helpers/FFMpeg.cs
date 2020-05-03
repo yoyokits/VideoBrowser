@@ -11,7 +11,7 @@
     using YoutubeDlGui.Common;
 
     /// <summary>
-    /// Defines the <see cref="FFMpeg" />
+    /// Defines the <see cref="FFMpeg" />.
     /// </summary>
     public class FFMpeg
     {
@@ -33,7 +33,7 @@
         /// <summary>
         /// Gets the path to FFMpeg executable.
         /// </summary>
-        public static string FFMpegPath = Path.Combine(AppEnvironment.GetAppDataDirectory(), "Externals", "ffmpeg.exe");
+        public static string FFMpegPath = Path.Combine(AppEnvironment.AppBinaryDirectory, "ffmpeg.exe");
 
         #endregion Fields
 
@@ -43,7 +43,7 @@
         /// Returns true if given file can be converted to a MP3 file, false otherwise.
         /// </summary>
         /// <param name="file">The file to check.</param>
-        /// <returns>The <see cref="FFMpegResult{bool}"/></returns>
+        /// <returns>The <see cref="FFMpegResult{bool}"/>.</returns>
         public static FFMpegResult<bool> CanConvertToMP3(string file)
         {
             var hasAudioStream = false;
@@ -87,7 +87,7 @@
         /// <param name="audio">The input audio file.</param>
         /// <param name="output">The output destination.</param>
         /// <param name="reportProgress">The method to call when there is progress. Can be null.</param>
-        /// <returns>The <see cref="FFMpegResult{bool}"/></returns>
+        /// <returns>The <see cref="FFMpegResult{bool}"/>.</returns>
         public static FFMpegResult<bool> Combine(string video,
                                                  string audio,
                                                  string output,
@@ -159,9 +159,9 @@
         /// </summary>
         /// <param name="input">The input file.</param>
         /// <param name="output">The output destination.</param>
-        /// <param name="ct">The ct<see cref="CancellationToken"/></param>
+        /// <param name="ct">The ct<see cref="CancellationToken"/>.</param>
         /// <param name="reportProgress">The method to call when there is progress. Can be null.</param>
-        /// <returns>The <see cref="FFMpegResult{bool}"/></returns>
+        /// <returns>The <see cref="FFMpegResult{bool}"/>.</returns>
         public static FFMpegResult<bool> Convert(string input,
                                                  string output,
                                                     CancellationToken ct,
@@ -267,8 +267,8 @@
         /// <param name="output">The output destination.</param>
         /// <param name="cropStart">The <see cref="System.TimeSpan"/> crop start position.</param>
         /// <param name="reportProgress">The method to call when there is progress. Can be null.</param>
-        /// <param name="ct">The ct<see cref="CancellationToken"/></param>
-        /// <returns></returns>
+        /// <param name="ct">The ct<see cref="CancellationToken"/>.</param>
+        /// <returns>.</returns>
         public static FFMpegResult<bool> ConvertCrop(string input,
                                                      string output,
                                                      TimeSpan cropStart,
@@ -385,8 +385,8 @@
         /// <param name="cropStart">The <see cref="System.TimeSpan"/> crop start position.</param>
         /// <param name="cropEnd">The <see cref="System.TimeSpan"/> crop end position.</param>
         /// <param name="reportProgress">The method to call when there is progress. Can be null.</param>
-        /// <param name="ct">The ct<see cref="CancellationToken"/></param>
-        /// <returns></returns>
+        /// <param name="ct">The ct<see cref="CancellationToken"/>.</param>
+        /// <returns>.</returns>
         public static FFMpegResult<bool> ConvertCrop(string input,
                                                      string output,
                                                      TimeSpan cropStart,
@@ -497,8 +497,8 @@
         /// <param name="output">The output destination.</param>
         /// <param name="start">The <see cref="System.TimeSpan"/> crop start position.</param>
         /// <param name="reportProgress">The method to call when there is progress. Can be null.</param>
-        /// <param name="ct">The ct<see cref="CancellationToken"/></param>
-        /// <returns>The <see cref="FFMpegResult{bool}"/></returns>
+        /// <param name="ct">The ct<see cref="CancellationToken"/>.</param>
+        /// <returns>The <see cref="FFMpegResult{bool}"/>.</returns>
         public static FFMpegResult<bool> Crop(string input,
                                               string output,
                                               TimeSpan start,
@@ -606,8 +606,8 @@
         /// <param name="start">The <see cref="System.TimeSpan"/> crop start position.</param>
         /// <param name="end">The <see cref="System.TimeSpan"/> crop end position.</param>
         /// <param name="reportProgress">The method to call when there is progress. Can be null.</param>
-        /// <param name="ct">The ct<see cref="CancellationToken"/></param>
-        /// <returns>The <see cref="FFMpegResult{bool}"/></returns>
+        /// <param name="ct">The ct<see cref="CancellationToken"/>.</param>
+        /// <returns>The <see cref="FFMpegResult{bool}"/>.</returns>
         public static FFMpegResult<bool> Crop(string input,
                                               string output,
                                               TimeSpan start,
@@ -713,9 +713,9 @@
         /// <summary>
         /// Fixes and optimizes final .ts file from .m3u8 playlist.
         /// </summary>
-        /// <param name="input">The input<see cref="string"/></param>
-        /// <param name="output">The output<see cref="string"/></param>
-        /// <returns>The <see cref="FFMpegResult{bool}"/></returns>
+        /// <param name="input">The input<see cref="string"/>.</param>
+        /// <param name="output">The output<see cref="string"/>.</param>
+        /// <returns>The <see cref="FFMpegResult{bool}"/>.</returns>
         public static FFMpegResult<bool> FixM3U8(string input, string output)
         {
             var lines = new StringBuilder();
@@ -745,8 +745,8 @@
         /// <summary>
         /// Returns the bit rate of the given file.
         /// </summary>
-        /// <param name="file">The file<see cref="string"/></param>
-        /// <returns>The <see cref="FFMpegResult{int}"/></returns>
+        /// <param name="file">The file<see cref="string"/>.</param>
+        /// <returns>The <see cref="FFMpegResult{int}"/>.</returns>
         public static FFMpegResult<int> GetBitRate(string file)
         {
             var result = 128; // Default to 128k bitrate
@@ -787,7 +787,7 @@
         /// Returns the <see cref="System.TimeSpan"/> duration of the given file.
         /// </summary>
         /// <param name="file">The file to get <see cref="System.TimeSpan"/> duration from.</param>
-        /// <returns>The <see cref="FFMpegResult{TimeSpan}"/></returns>
+        /// <returns>The <see cref="FFMpegResult{TimeSpan}"/>.</returns>
         public static FFMpegResult<TimeSpan> GetDuration(string file)
         {
             var result = TimeSpan.Zero;
@@ -829,7 +829,7 @@
         /// Returns the <see cref="FileType"/> of the given file.
         /// </summary>
         /// <param name="file">The file to get <see cref="FileType"/> from.</param>
-        /// <returns>The <see cref="FFMpegResult{FFMpegFileType}"/></returns>
+        /// <returns>The <see cref="FFMpegResult{FFMpegFileType}"/>.</returns>
         public static FFMpegResult<FFMpegFileType> GetFileType(string file)
         {
             var result = FFMpegFileType.Error;
@@ -879,7 +879,7 @@
         /// Returns list of errors, if any, from given FFMpeg report file.
         /// </summary>
         /// <param name="filename">The report file to check.</param>
-        /// <returns>The <see cref="IEnumerable{string}"/></returns>
+        /// <returns>The <see cref="IEnumerable{string}"/>.</returns>
         private static IEnumerable<string> CheckForErrors(string filename)
         {
             var errors = new List<string>();
@@ -904,8 +904,8 @@
         /// <summary>
         /// Find where the FFMpeg report file is from the output using Regex.
         /// </summary>
-        /// <param name="lines">The lines<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="lines">The lines<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         private static string FindReportFile(string lines)
         {
             Match m;
@@ -917,7 +917,7 @@
         /// <summary>
         /// Gets current ffmpeg version.
         /// </summary>
-        /// <returns>The <see cref="FFMpegResult{string}"/></returns>
+        /// <returns>The <see cref="FFMpegResult{string}"/>.</returns>
         private static FFMpegResult<string> GetVersion()
         {
             var version = string.Empty;
@@ -960,8 +960,8 @@
         /// <summary>
         /// Writes log header to log.
         /// </summary>
-        /// <param name="arguments">The arguments<see cref="string"/></param>
-        /// <param name="caller">The caller<see cref="string"/></param>
+        /// <param name="arguments">The arguments<see cref="string"/>.</param>
+        /// <param name="caller">The caller<see cref="string"/>.</param>
         private static void LogHeader(string arguments, [CallerMemberName]string caller = "")
         {
             Logger.Info($"[{DateTime.Now}]");
@@ -972,10 +972,10 @@
         }
 
         /// <summary>
-        /// The RenameTemp
+        /// The RenameTemp.
         /// </summary>
-        /// <param name="input">The input<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="input">The input<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         private static string RenameTemp(string input)
         {
             var newInput =
@@ -989,7 +989,7 @@
         #endregion Methods
 
         /// <summary>
-        /// Defines the <see cref="Commands" />
+        /// Defines the <see cref="Commands" />.
         /// </summary>
         public static class Commands
         {
