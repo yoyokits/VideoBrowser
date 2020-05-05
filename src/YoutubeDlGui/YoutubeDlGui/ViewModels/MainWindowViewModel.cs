@@ -22,12 +22,15 @@
             this.GlobalData = new GlobalData();
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.ClosingCommand = new RelayCommand(this.OnClosing);
+            this.About = new AboutViewModel();
             this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData);
         }
 
         #endregion Constructors
 
         #region Properties
+
+        public AboutViewModel About { get; }
 
         /// <summary>
         /// Gets the ClosingCommand.
@@ -58,14 +61,7 @@
         /// <summary>
         /// Gets the Title.
         /// </summary>
-        public string Title
-        {
-            get
-            {
-                var title = "Youtube and Online Video Downloader v0.1";
-                return title;
-            }
-        }
+        public string Title => $"{AppEnvironment.Name} v{AppEnvironment.Version}";
 
         /// <summary>
         /// Gets the VideoBrowser.

@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Reflection;
 
     /// <summary>
     /// Defines the <see cref="AppEnvironment" />.
@@ -16,6 +17,8 @@
 
         public const string ShortName = nameof(YoutubeDlGui);
 
+        private const string BinariesDirectory = "Binaries";
+
         private const string JsonDirectory = "Json";
 
         private const string LogsDirectory = "Logs";
@@ -27,12 +30,22 @@
         /// <summary>
         /// Gets the AppBinaryDirectory.
         /// </summary>
-        public static string AppBinaryDirectory => Path.Combine(AppDirectory, "Binaries");
+        public static string AppBinaryDirectory => Path.Combine(AppDirectory, BinariesDirectory);
 
         /// <summary>
         /// Gets the AppDirectory.
         /// </summary>
         public static string AppDirectory => AppDomain.CurrentDomain.BaseDirectory;
+
+        /// <summary>
+        /// Gets the Author.
+        /// </summary>
+        public static string Author => "Yohanes Wahyu Nurcahyo";
+
+        /// <summary>
+        /// Gets the ProjectUrl.
+        /// </summary>
+        public static string ProjectUrl { get; } = "https://github.com/yoyokits/youtube-dl-gui-dotnet";
 
         /// <summary>
         /// Gets the UserLocalApplicationData.
@@ -48,6 +61,11 @@
         /// Gets the UserVideoFolder.
         /// </summary>
         public static string UserVideoFolder { get; } = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+
+        /// <summary>
+        /// Gets the Version.
+        /// </summary>
+        public static string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         #endregion Properties
 

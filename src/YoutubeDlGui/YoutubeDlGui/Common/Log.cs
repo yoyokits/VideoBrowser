@@ -32,7 +32,7 @@
         /// <summary>
         /// Gets the Log
         /// </summary>
-        public static ILog Log { get; } = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static ILog Log { get; } = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Gets the LogFilePath
@@ -105,7 +105,8 @@
         public static void Setup(string appName)
         {
             LogFilePath = GetLogFilePath(appName);
-            var hierarchy = (Hierarchy)LogManager.GetRepository(Assembly.GetEntryAssembly());
+            var entryAssembly = Assembly.GetExecutingAssembly();
+            var hierarchy = (Hierarchy)LogManager.GetRepository(entryAssembly);
 
             var patternLayout = new PatternLayout
             {

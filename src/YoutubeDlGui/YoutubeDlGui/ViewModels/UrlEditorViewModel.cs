@@ -17,7 +17,7 @@
     /// <summary>
     /// Defines the <see cref="UrlEditorViewModel" />.
     /// </summary>
-    public class UrlEditorViewModel : INotifyPropertyChanged, IDisposable
+    public class UrlEditorViewModel : NotifyPropertyChanged, IDisposable
     {
         #region Fields
 
@@ -62,22 +62,13 @@
         {
             this.UrlReader = reader;
             this.GlobalData = globalData;
+            this.GlobalData.Settings.PropertyChanged += this.OnSettings_PropertyChanged;
             this.OutputFolder = string.IsNullOrEmpty(Settings.Default.DownloadFolder) ? AppEnvironment.UserVideoFolder : Settings.Default.DownloadFolder;
             this.UrlReader.PropertyChanged += this.OnUrlReader_PropertyChanged;
             this.DownloadCommand = new RelayCommand(this.OnDownload);
-            this.GetFolderCommand = new RelayCommand(this.GetFolder);
         }
 
         #endregion Constructors
-
-        #region Events
-
-        /// <summary>
-        /// Defines the PropertyChanged.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion Events
 
         #region Properties
 
@@ -89,27 +80,27 @@
         /// <summary>
         /// Gets the Duration.
         /// </summary>
-        public string Duration { get => this._duration; private set => this.Set(this.PropertyChanged, ref this._duration, value); }
+        public string Duration { get => this._duration; private set => this.Set(this.PropertyChangedHandler, ref this._duration, value); }
 
         /// <summary>
         /// Gets or sets the FileName.
         /// </summary>
-        public string FileName { get => this._fileName; set => this.Set(this.PropertyChanged, ref this._fileName, value); }
+        public string FileName { get => this._fileName; set => this.Set(this.PropertyChangedHandler, ref this._fileName, value); }
 
         /// <summary>
         /// Gets the FileSize.
         /// </summary>
-        public string FileSize { get => _fileSize; private set => this.Set(this.PropertyChanged, ref _fileSize, value); }
+        public string FileSize { get => _fileSize; private set => this.Set(this.PropertyChangedHandler, ref _fileSize, value); }
 
         /// <summary>
         /// Gets or sets the Formats.
         /// </summary>
-        public IList<VideoFormat> Formats { get => this._formats; set => this.Set(this.PropertyChanged, ref this._formats, value); }
+        public IList<VideoFormat> Formats { get => this._formats; set => this.Set(this.PropertyChangedHandler, ref this._formats, value); }
 
         /// <summary>
         /// Gets the GetFolderCommand.
         /// </summary>
-        public ICommand GetFolderCommand { get; }
+        public ICommand GetFolderCommand => this.GlobalData.Settings.GetFolderCommand;
 
         /// <summary>
         /// Gets the GlobalData.
@@ -119,27 +110,27 @@
         /// <summary>
         /// Gets or sets the ImageUrl.
         /// </summary>
-        public string ImageUrl { get => this._imageUrl; set => this.Set(this.PropertyChanged, ref this._imageUrl, value); }
+        public string ImageUrl { get => this._imageUrl; set => this.Set(this.PropertyChangedHandler, ref this._imageUrl, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsBusy.
         /// </summary>
-        public bool IsBusy { get => _isBusy; set => this.Set(this.PropertyChanged, ref _isBusy, value); }
+        public bool IsBusy { get => _isBusy; set => this.Set(this.PropertyChangedHandler, ref _isBusy, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsDownloadable.
         /// </summary>
-        public bool IsDownloadable { get => _isDownloadable; set => this.Set(this.PropertyChanged, ref _isDownloadable, value); }
+        public bool IsDownloadable { get => _isDownloadable; set => this.Set(this.PropertyChangedHandler, ref _isDownloadable, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsFormatComboBoxVisible.
         /// </summary>
-        public bool IsFormatComboBoxVisible { get => _isFormatComboBoxVisible; set => this.Set(this.PropertyChanged, ref _isFormatComboBoxVisible, value); }
+        public bool IsFormatComboBoxVisible { get => _isFormatComboBoxVisible; set => this.Set(this.PropertyChangedHandler, ref _isFormatComboBoxVisible, value); }
 
         /// <summary>
         /// Gets a value indicating whether IsVisible.
         /// </summary>
-        public bool IsVisible { get => this._isVisible; private set => this.Set(this.PropertyChanged, ref this._isVisible, value); }
+        public bool IsVisible { get => this._isVisible; internal set => this.Set(this.PropertyChangedHandler, ref this._isVisible, value); }
 
         /// <summary>
         /// Gets or sets the NavigateUrl.
@@ -178,15 +169,15 @@
         /// </summary>
         public string OutputFolder
         {
-            get => this.GlobalData.Settings.OuputFolder;
+            get => this.GlobalData.Settings.OutputFolder;
             set
             {
-                if (this.GlobalData.Settings.OuputFolder == value)
+                if (this.GlobalData.Settings.OutputFolder == value)
                 {
                     return;
                 }
 
-                this.GlobalData.Settings.OuputFolder = value;
+                this.GlobalData.Settings.OutputFolder = value;
                 if (Directory.Exists(this.OutputFolder))
                 {
                     Settings.Default.DownloadFolder = this.OutputFolder;
@@ -202,7 +193,7 @@
             get => this._selectedFormat;
             set
             {
-                if (!this.Set(this.PropertyChanged, ref this._selectedFormat, value))
+                if (!this.Set(this.PropertyChangedHandler, ref this._selectedFormat, value))
                 {
                     return;
                 }
@@ -214,12 +205,12 @@
         /// <summary>
         /// Gets or sets the SelectedFormatIndex.
         /// </summary>
-        public int SelectedFormatIndex { get => _selectedFormatIndex; set => this.Set(this.PropertyChanged, ref _selectedFormatIndex, value); }
+        public int SelectedFormatIndex { get => _selectedFormatIndex; set => this.Set(this.PropertyChangedHandler, ref _selectedFormatIndex, value); }
 
         /// <summary>
         /// Gets or sets the Url.
         /// </summary>
-        public string Url { get => this._url; set => this.Set(this.PropertyChanged, ref this._url, value); }
+        public string Url { get => this._url; set => this.Set(this.PropertyChangedHandler, ref this._url, value); }
 
         /// <summary>
         /// Gets the UrlReader.
@@ -239,7 +230,7 @@
                     this.VideoInfo.FileSizeUpdated -= this.OnVideoInfo_FileSizeUpdated;
                 }
 
-                this.Set(this.PropertyChanged, ref this._videoInfo, value);
+                this.Set(this.PropertyChangedHandler, ref this._videoInfo, value);
             }
         }
 
@@ -258,6 +249,7 @@
         public void Dispose()
         {
             this.UrlReader.PropertyChanged -= this.OnUrlReader_PropertyChanged;
+            this.GlobalData.Settings.PropertyChanged -= this.OnSettings_PropertyChanged;
         }
 
         /// <summary>
@@ -332,6 +324,19 @@
                 ? new DownloadOperation(format, output)
                 : new DownloadOperation(format, YoutubeHelper.GetAudioFormat(format), output);
             Task.Run(() => this.DownloadAction?.Invoke(operation));
+        }
+
+        /// <summary>
+        /// The OnSettings_PropertyChanged.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="PropertyChangedEventArgs"/>.</param>
+        private void OnSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.IsMatch(nameof(SettingsViewModel.OutputFolder)))
+            {
+                this.InvokePropertiesChanged(this.OnPropertyChanged, nameof(this.OutputFolder));
+            }
         }
 
         /// <summary>

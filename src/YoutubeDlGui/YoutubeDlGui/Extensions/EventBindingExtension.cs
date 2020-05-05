@@ -159,20 +159,40 @@
         }
 
         /// <summary>
+        /// The GetDataContext.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <returns>The <see cref="object"/>.</returns>
+        private object GetDataContext(object sender)
+        {
+            if (sender is FrameworkContentElement control)
+            {
+                return control.DataContext;
+            }
+
+            return sender is FrameworkElement element ? element.DataContext : null;
+        }
+
+        /// <summary>
         /// The InvokeCommand.
         /// </summary>
         /// <param name="sender">.</param>
         /// <param name="args">.</param>
         private void InvokeCommand(object sender, EventArgs args)
         {
-            BindingOperations.SetBinding(this.Element, CommandParameterBinderProperty, this.CommandParameter);
-            var commandParameter = this.Element.GetValue(CommandParameterBinderProperty);
-            BindingOperations.ClearBinding(this.Element, CommandParameterBinderProperty);
+            object commandParameter = null;
+            if (this.CommandParameter != null)
+            {
+                BindingOperations.SetBinding(this.Element, CommandParameterBinderProperty, this.CommandParameter);
+                commandParameter = this.Element.GetValue(CommandParameterBinderProperty);
+                BindingOperations.ClearBinding(this.Element, CommandParameterBinderProperty);
+            }
 
-            if (!string.IsNullOrEmpty(_commandName) && (sender is FrameworkElement control))
+            var dataContext = this.GetDataContext(sender);
+            if (!string.IsNullOrEmpty(_commandName) && dataContext != null)
             {
                 // Find control's ViewModel
-                var viewmodel = control.DataContext;
+                var viewmodel = dataContext;
                 if (viewmodel != null)
                 {
                     // Command must be declared as public property within ViewModel

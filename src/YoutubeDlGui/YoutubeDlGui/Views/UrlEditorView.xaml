@@ -65,11 +65,11 @@
                 HorizontalAlignment="Left"
                 IsSynchronizedWithCurrentItem="True"
                 ItemsSource="{Binding Formats}"
-                SelectedIndex="{Binding SelectedFormatIndex, UpdateSourceTrigger=PropertyChanged}"
-                SelectedItem="{Binding SelectedFormat, UpdateSourceTrigger=PropertyChanged}" />
+                SelectedIndex="{Binding SelectedFormatIndex, UpdateSourceTrigger=PropertyChanged, Delay=300}"
+                SelectedItem="{Binding SelectedFormat, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" />
             <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
-                <TextBox Width="300" Text="{Binding OutputFolder}" />
-                <Button Margin="4,0,0,0" Command="{Binding GetFolderCommand}">
+                <TextBlock VerticalAlignment="Center" Text="{Binding OutputFolder}" />
+                <Button Margin="8,0,0,0" Command="{Binding GetFolderCommand}">
                     <Path Style="{StaticResource VideoFolder}" />
                 </Button>
             </StackPanel>

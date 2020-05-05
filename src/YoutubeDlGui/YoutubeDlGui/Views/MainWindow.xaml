@@ -62,6 +62,9 @@
             <TabItem DataContext="{Binding Settings}" Header="Settings">
                 <views:SettingsView />
             </TabItem>
+            <TabItem DataContext="{Binding About}" Header="About">
+                <views:AboutView />
+            </TabItem>
         </TabControl>
     </Grid>
 </Controls:MetroWindow>

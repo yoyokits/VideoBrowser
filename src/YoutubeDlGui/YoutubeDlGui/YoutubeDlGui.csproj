@@ -95,6 +95,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf">
+      <HintPath>..\..\..\bin\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -118,9 +121,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="WrapYoutubeDl">
-      <HintPath>Binaries\WrapYoutubeDl.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -162,7 +162,6 @@
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Core\Commands.cs" />
-    <Compile Include="Core\Downloader.cs" />
     <Compile Include="Core\DownloadOperation.cs" />
     <Compile Include="Core\DownloadQueueHandler.cs" />
     <Compile Include="Core\EventHandlers.cs" />
@@ -209,12 +208,16 @@
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />
     <Compile Include="Resources\Icons.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\DownloadQueueViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UrlEditorViewModel.cs" />
     <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
+    <Compile Include="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DownloadQueueView.xaml.cs">
       <DependentUpon>DownloadQueueView.xaml</DependentUpon>
     </Compile>
@@ -240,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\IconsResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

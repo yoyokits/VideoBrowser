@@ -28,7 +28,7 @@
         internal GlobalData()
         {
             this.DownloadQueueViewModel = new DownloadQueueViewModel();
-            this.Settings = new SettingsViewModel();
+            this.Settings = new SettingsViewModel(this);
         }
 
         #endregion Constructors
