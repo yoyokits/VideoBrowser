@@ -25,16 +25,24 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label
-                Grid.Row="0"
-                Height="50"
-                Padding="16,5,5,5"
-                VerticalContentAlignment="Center"
-                Background="RoyalBlue"
-                Content="{Binding ApplicationName}"
-                FontSize="16"
-                FontWeight="SemiBold"
-                Foreground="White" />
+            <Grid Grid.Row="0" Background="RoyalBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Grid.Column="0"
+                    Margin="8,0,8,0"
+                    Source="{Binding AppIcon}" />
+                <Label
+                    Grid.Column="1"
+                    Height="50"
+                    VerticalContentAlignment="Center"
+                    Content="{Binding ApplicationName}"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="White" />
+            </Grid>
             <StackPanel
                 Grid.Row="1"
                 Width="500"

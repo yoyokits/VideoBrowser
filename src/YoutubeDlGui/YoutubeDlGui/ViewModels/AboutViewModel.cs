@@ -4,6 +4,7 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using YoutubeDlGui.Common;
+    using YoutubeDlGui.Helpers;
     using YoutubeDlGui.Resources;
 
     /// <summary>
@@ -27,6 +28,11 @@
         #region Properties
 
         /// <summary>
+        /// Gets the AppIcon.
+        /// </summary>
+        public ImageSource AppIcon { get; } = Properties.Resources.Icon.ToImageSource();
+
+        /// <summary>
         /// Gets the ApplicationName.
         /// </summary>
         public string ApplicationName { get; }
@@ -37,9 +43,9 @@
         public string Author => $"By {AppEnvironment.Author}";
 
         /// <summary>
-        /// Gets or sets the Icon.
+        /// Gets the Icon.
         /// </summary>
-        public Geometry Icon { get; set; } = Icons.Info;
+        public Geometry Icon => Icons.Info;
 
         /// <summary>
         /// Gets the ProjectUrl.

@@ -83,7 +83,7 @@
                 Grid.Column="2"
                 Height="32"
                 Orientation="Horizontal">
-                <Button Command="{Binding DownloadCommand}">
+                <Button Command="{Binding DownloadCommand}" IsEnabled="{Binding UrlEditor.IsDownloadable}">
                     <Path Style="{StaticResource Download}" />
                 </Button>
                 <Button Command="{Binding SettingsCommand}">
@@ -92,6 +92,7 @@
             </StackPanel>
         </Grid>
         <cefsharpbrowser:CefSharpBrowser
+            x:Name="CefSharpBrowserControl"
             Grid.Row="1"
             BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
             ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"

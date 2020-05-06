@@ -3,6 +3,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Models;
     using YoutubeDlGui.Test.Common;
@@ -25,7 +26,7 @@
         public void Show_DownloadQueueView()
         {
             var viewModel = new DownloadQueueViewModel();
-            this.CreateDummyOperations(viewModel.Operations);
+            this.CreateDummyOperations(viewModel.OperationModels, viewModel.OnPauseDownloadCalled);
             var view = new DownloadQueueView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view);
         }
@@ -34,13 +35,14 @@
         /// The CreateDummyOperations.
         /// </summary>
         /// <param name="operations">The operations<see cref="ObservableCollection{OperationModel}"/>.</param>
-        private void CreateDummyOperations(ObservableCollection<OperationModel> operations)
+        /// <param name="pauseDownloadAction">The pauseDownloadAction<see cref="ICommand"/>.</param>
+        private void CreateDummyOperations(ObservableCollection<OperationModel> operations, Action<OperationModel> pauseDownloadAction)
         {
             var random = new Random();
             for (var i = 0; i < 10; i++)
             {
-                var operation = new DummyOperation();
-                var operationModel = new OperationModel(operation);
+                var operation = new DummyOperation() { Status = (OperationStatus)(i % 6) };
+                var operationModel = new OperationModel(operation) { PauseDownloadAction = pauseDownloadAction, IsQueuedControlsVisible = (i & 1) == 1 };
                 var progress = TestHelper.GetRandomLong(0, 100);
                 operation.Duration = TestHelper.GetRandomLong(10, 10000);
                 operation.FileSize = TestHelper.GetRandomLong(10000, 10000000000);

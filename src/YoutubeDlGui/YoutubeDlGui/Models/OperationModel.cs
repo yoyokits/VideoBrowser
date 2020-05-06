@@ -5,6 +5,7 @@
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Windows.Input;
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Extensions;
@@ -14,13 +15,17 @@
     /// Defines the <see cref="OperationModel" />
     /// The Download Queue Items.
     /// </summary>
-    public class OperationModel : INotifyPropertyChanged
+    public class OperationModel : NotifyPropertyChanged, IDisposable
     {
         #region Fields
 
         private string _duration;
 
         private string _fileSize;
+
+        private bool _isQueuedControlsVisible = true;
+
+        private string _pauseText = "Pause";
 
         private int _progress;
 
@@ -37,13 +42,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationModel"/> class.
         /// </summary>
-        /// <param name="operation">The operation<see cref="Operation"/></param>
+        /// <param name="operation">The operation<see cref="Operation"/>.</param>
         public OperationModel(Operation operation)
         {
             this.Title = operation.Title;
             this.Url = operation.Link;
             this.FileSize = FormatString.FormatFileSize(operation.FileSize);
             this.Duration = FormatString.FormatVideoLength(operation.Duration);
+            this.CancelDownloadCommand = new RelayCommand((o) => this.CancelDownloadAction?.Invoke(this), nameof(this.CancelDownloadCommand), (o) => this.Operation.CanStop());
+            this.PauseDownloadCommand = new RelayCommand((o) => this.PauseDownloadAction?.Invoke(this), nameof(this.PauseDownloadCommand), (o) => this.Operation.CanPause() || this.Operation.CanResume());
+            this.PlayMediaCommand = new RelayCommand(this.OnPlayMedia, nameof(this.PlayMediaCommand));
+            this.ShowMediaInFolderCommand = new RelayCommand(this.OnShowMediaInFolder, nameof(this.ShowMediaInFolderCommand));
 
             this.Operation = operation;
             this.Operation.Completed += OnOperation_Completed;
@@ -62,44 +71,78 @@
         #region Events
 
         /// <summary>
-        /// Defines the OperationComplete
+        /// Defines the OperationComplete.
         /// </summary>
         public event OperationEventHandler OperationComplete;
-
-        /// <summary>
-        /// Defines the PropertyChanged
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion Events
 
         #region Properties
 
         /// <summary>
-        /// Gets the Duration
-        /// Gets or sets the Duration.
+        /// Gets or sets the CancelDownloadCommand.
         /// </summary>
-        public string Duration { get => this._duration; private set => this.Set(this.PropertyChanged, ref this._duration, value); }
+        public ICommand CancelDownloadCommand { get; internal set; }
 
         /// <summary>
-        /// Gets the FileSize
-        /// Gets or sets the FileSize.
+        /// Gets the Duration.
         /// </summary>
-        public string FileSize { get => this._fileSize; private set => this.Set(this.PropertyChanged, ref this._fileSize, value); }
+        public string Duration { get => this._duration; private set => this.Set(this.PropertyChangedHandler, ref this._duration, value); }
 
         /// <summary>
-        /// Gets the Operation
+        /// Gets the FileSize.
+        /// </summary>
+        public string FileSize { get => this._fileSize; private set => this.Set(this.PropertyChangedHandler, ref this._fileSize, value); }
+
+        /// <summary>
+        /// Gets a value indicating whether IsCompletedControlsVisible.
+        /// </summary>
+        public bool IsCompletedControlsVisible { get => !this.IsQueuedControlsVisible; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsQueuedControlsVisible.
+        /// </summary>
+        public bool IsQueuedControlsVisible
+        {
+            get => _isQueuedControlsVisible;
+            internal set
+            {
+                if (!this.Set(this.PropertyChangedHandler, ref _isQueuedControlsVisible, value))
+                {
+                    return;
+                }
+
+                this.OnPropertyChanged(nameof(this.IsCompletedControlsVisible));
+            }
+        }
+
+        /// <summary>
+        /// Gets the Operation.
         /// </summary>
         public Operation Operation { get; private set; }
 
         /// <summary>
-        /// Gets the Progress
-        /// Gets or sets the Progress
+        /// Gets the PauseDownloadCommand.
         /// </summary>
-        public int Progress { get => this._progress; private set => this.Set(this.PropertyChanged, ref this._progress, value); }
+        public ICommand PauseDownloadCommand { get; }
 
         /// <summary>
-        /// Gets the ProgressText
+        /// Gets or sets the PauseText.
+        /// </summary>
+        public string PauseText { get => _pauseText; internal set => this.Set(this.PropertyChangedHandler, ref _pauseText, value); }
+
+        /// <summary>
+        /// Gets the PlayMediaCommand.
+        /// </summary>
+        public ICommand PlayMediaCommand { get; }
+
+        /// <summary>
+        /// Gets the Progress.
+        /// </summary>
+        public int Progress { get => this._progress; private set => this.Set(this.PropertyChangedHandler, ref this._progress, value); }
+
+        /// <summary>
+        /// Gets the ProgressText.
         /// </summary>
         public string ProgressText
         {
@@ -126,34 +169,47 @@
         }
 
         /// <summary>
-        /// Gets or sets the Status
+        /// Gets the ShowMediaInFolderCommand.
         /// </summary>
-        public string Status { get => this._status; set => this.Set(this.PropertyChanged, ref this._status, value); }
+        public ICommand ShowMediaInFolderCommand { get; }
 
         /// <summary>
-        /// Gets the Stopwatch
+        /// Gets or sets the Status.
+        /// </summary>
+        public string Status { get => this._status; set => this.Set(this.PropertyChangedHandler, ref this._status, value); }
+
+        /// <summary>
+        /// Gets the Stopwatch.
         /// </summary>
         public Stopwatch Stopwatch { get; private set; }
 
         /// <summary>
-        /// Gets the Title
-        /// Gets or sets the Title.
+        /// Gets the Title.
         /// </summary>
-        public string Title { get => this._title; private set => this.Set(this.PropertyChanged, ref this._title, value); }
+        public string Title { get => this._title; private set => this.Set(this.PropertyChangedHandler, ref this._title, value); }
 
         /// <summary>
-        /// Gets the Url
-        /// Gets or sets the Url.
+        /// Gets the Url.
         /// </summary>
-        public string Url { get => this._url; private set => this.Set(this.PropertyChanged, ref this._url, value); }
+        public string Url { get => this._url; private set => this.Set(this.PropertyChangedHandler, ref this._url, value); }
 
         /// <summary>
-        /// Gets the ProgressMaximum
+        /// Gets or sets the CancelDownloadAction.
+        /// </summary>
+        internal Action<OperationModel> CancelDownloadAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PauseDownloadAction.
+        /// </summary>
+        internal Action<OperationModel> PauseDownloadAction { get; set; }
+
+        /// <summary>
+        /// Gets the ProgressMaximum.
         /// </summary>
         private static int ProgressMaximum { get; } = 100;
 
         /// <summary>
-        /// Gets the ProgressMinimum
+        /// Gets the ProgressMinimum.
         /// </summary>
         private static int ProgressMinimum { get; } = 0;
 
@@ -162,10 +218,25 @@
         #region Methods
 
         /// <summary>
-        /// The OnOperation_Completed
+        /// The Dispose.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="OperationEventArgs"/></param>
+        public void Dispose()
+        {
+            if (this.Operation.CanStop())
+            {
+                this.Operation.Stop();
+            }
+
+            this.Operation.Dispose();
+            this.CancelDownloadAction = null;
+            this.PauseDownloadAction = null;
+        }
+
+        /// <summary>
+        /// The OnOperation_Completed.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="OperationEventArgs"/>.</param>
         private void OnOperation_Completed(object sender, OperationEventArgs e)
         {
             this.Stopwatch?.Stop();
@@ -203,10 +274,10 @@
         }
 
         /// <summary>
-        /// The OnOperation_ProgressChanged
+        /// The OnOperation_ProgressChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="ProgressChangedEventArgs"/>.</param>
         private void OnOperation_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             this.Progress = Math.Min(ProgressMaximum, Math.Max(ProgressMinimum, e.ProgressPercentage));
@@ -227,10 +298,10 @@
         }
 
         /// <summary>
-        /// The OnOperation_PropertyChanged
+        /// The OnOperation_PropertyChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="PropertyChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="PropertyChangedEventArgs"/>.</param>
         private void OnOperation_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -254,19 +325,19 @@
         }
 
         /// <summary>
-        /// The OnOperation_ReportsProgressChanged
+        /// The OnOperation_ReportsProgressChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="EventArgs"/>.</param>
         private void OnOperation_ReportsProgressChanged(object sender, EventArgs e)
         {
         }
 
         /// <summary>
-        /// The OnOperation_Started
+        /// The OnOperation_Started.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="EventArgs"/>.</param>
         private void OnOperation_Started(object sender, EventArgs e)
         {
             this.Stopwatch = new Stopwatch();
@@ -274,16 +345,17 @@
         }
 
         /// <summary>
-        /// The OnOperation_StatusChanged
+        /// The OnOperation_StatusChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="EventArgs"/>.</param>
         private void OnOperation_StatusChanged(object sender, EventArgs e)
         {
             switch (this.Operation.Status)
             {
                 case OperationStatus.Success:
                     this.Status = "Completed";
+                    this.IsQueuedControlsVisible = false;
                     break;
 
                 case OperationStatus.Canceled:
@@ -304,9 +376,28 @@
         }
 
         /// <summary>
-        /// The Wait
+        /// The OnPlayMedia.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnPlayMedia(object obj)
+        {
+            Process.Start(this.Operation.Output);
+        }
+
+        /// <summary>
+        /// The OnShowMediaInFolder.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnShowMediaInFolder(object obj)
+        {
+            var path = Path.GetDirectoryName(this.Operation.Output);
+            Process.Start(path);
+        }
+
+        /// <summary>
+        /// The Wait.
+        /// </summary>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool Wait()
         {
             // Limit the progress update to avoid flickering.

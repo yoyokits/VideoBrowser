@@ -24,7 +24,7 @@
         public DownloadQueueViewModel()
         {
             this.RemoveOperationCommand = new RelayCommand(this.OnRemoveOperation);
-            this.OperationCollectionView = CollectionViewSource.GetDefaultView(this.Operations);
+            this.OperationCollectionView = CollectionViewSource.GetDefaultView(this.OperationModels);
         }
 
         #endregion Constructors
@@ -42,9 +42,9 @@
         public ICollectionView OperationCollectionView { get; }
 
         /// <summary>
-        /// Gets the Operations.
+        /// Gets the OperationModels.
         /// </summary>
-        public ObservableCollection<OperationModel> Operations { get; } = new ObservableCollection<OperationModel>();
+        public ObservableCollection<OperationModel> OperationModels { get; } = new ObservableCollection<OperationModel>();
 
         /// <summary>
         /// Gets the RemoveOperationCommand.
@@ -61,10 +61,50 @@
         /// <param name="operation">The operation<see cref="Operation"/>.</param>
         public void Download(Operation operation)
         {
-            var operationModel = new OperationModel(operation);
+            var operationModel = new OperationModel(operation) { PauseDownloadAction = this.OnPauseDownloadCalled, CancelDownloadAction = this.OnCancelDownloadCalled };
             var element = (DispatcherObject)this.OperationCollectionView;
-            element.InvokeUIThread(() => this.Operations.Add(operationModel));
+            element.InvokeUIThread(() => this.OperationModels.Add(operationModel));
             DownloadQueueHandler.Add(operation);
+        }
+
+        /// <summary>
+        /// The OnCancelDownloadCalled.
+        /// </summary>
+        /// <param name="model">The model<see cref="OperationModel"/>.</param>
+        internal void OnCancelDownloadCalled(OperationModel model)
+        {
+            model.Dispose();
+            this.OperationModels.Remove(model);
+        }
+
+        /// <summary>
+        /// The OnPauseDownloadCalled.
+        /// </summary>
+        /// <param name="model">The model<see cref="OperationModel"/>.</param>
+        internal void OnPauseDownloadCalled(OperationModel model)
+        {
+            if (model == null)
+            {
+                return;
+            }
+
+            var operation = model.Operation;
+            var status = operation.Status;
+            if (status != OperationStatus.Paused && status != OperationStatus.Queued && status != OperationStatus.Working)
+            {
+                return;
+            }
+
+            if (status == OperationStatus.Paused)
+            {
+                operation.Resume();
+                model.PauseText = "Pause";
+            }
+            else
+            {
+                operation.Pause();
+                model.PauseText = "Resume";
+            }
         }
 
         /// <summary>

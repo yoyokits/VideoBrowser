@@ -45,6 +45,14 @@
         </Style.Setters>
     </Style>
     <Style
+        x:Key="Play"
+        BasedOn="{StaticResource IconPathButtonBaseStyle}"
+        TargetType="Path">
+        <Style.Setters>
+            <Setter Property="Data" Value="M0,0L22.652,16 0,32z" />
+        </Style.Setters>
+    </Style>
+    <Style
         x:Key="Reload"
         BasedOn="{StaticResource IconPathButtonBaseStyle}"
         TargetType="Path">

@@ -10,6 +10,14 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/IconsResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -79,6 +87,40 @@
                                 <TextBlock Text="{Binding Url}" />
                                 <TextBlock Text="{Binding FileSize}" />
                                 <TextBlock Text="{Binding Status}" />
+                                <StackPanel
+                                    Margin="0,8,0,0"
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding IsQueuedControlsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Button
+                                        Width="50"
+                                        Command="{Binding PauseDownloadCommand}"
+                                        Content="{Binding PauseText}" />
+                                    <Button
+                                        Width="50"
+                                        Margin="8,0,0,0"
+                                        Command="{Binding CancelDownloadCommand}"
+                                        Content="Cancel" />
+                                </StackPanel>
+                                <StackPanel
+                                    Margin="0,8,0,0"
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding IsCompletedControlsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <StackPanel.Resources>
+                                        <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Margin" Value="2" />
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <Button Command="{Binding ShowMediaInFolderCommand}">
+                                        <Path Style="{StaticResource VideoFolder}" />
+                                    </Button>
+                                    <Button
+                                        Margin="8,0,0,0"
+                                        Command="{Binding PlayMediaCommand}"
+                                        Visibility="{Binding IsCompletedControlsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Path Style="{StaticResource Play}" />
+                                    </Button>
+                                </StackPanel>
                             </StackPanel>
                             <Grid
                                 Grid.Row="1"

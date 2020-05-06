@@ -198,6 +198,7 @@
     <Compile Include="Helpers\FFMpegResult.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\Format.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Helpers\UIThreadHelper.cs" />
     <Compile Include="Helpers\YoutubeHelper.cs" />
