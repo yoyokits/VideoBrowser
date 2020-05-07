@@ -80,22 +80,22 @@
         /// <summary>
         /// Gets the Duration.
         /// </summary>
-        public string Duration { get => this._duration; private set => this.Set(this.PropertyChangedHandler, ref this._duration, value); }
+        public string Duration { get => this._duration; internal set => this.Set(this.PropertyChangedHandler, ref this._duration, value); }
 
         /// <summary>
         /// Gets or sets the FileName.
         /// </summary>
-        public string FileName { get => this._fileName; set => this.Set(this.PropertyChangedHandler, ref this._fileName, value); }
+        public string FileName { get => this._fileName; internal set => this.Set(this.PropertyChangedHandler, ref this._fileName, value); }
 
         /// <summary>
         /// Gets the FileSize.
         /// </summary>
-        public string FileSize { get => _fileSize; private set => this.Set(this.PropertyChangedHandler, ref _fileSize, value); }
+        public string FileSize { get => _fileSize; internal set => this.Set(this.PropertyChangedHandler, ref _fileSize, value); }
 
         /// <summary>
         /// Gets or sets the Formats.
         /// </summary>
-        public IList<VideoFormat> Formats { get => this._formats; set => this.Set(this.PropertyChangedHandler, ref this._formats, value); }
+        public IList<VideoFormat> Formats { get => this._formats; internal set => this.Set(this.PropertyChangedHandler, ref this._formats, value); }
 
         /// <summary>
         /// Gets the GetFolderCommand.
@@ -146,6 +146,7 @@
                 }
 
                 this._navigateUrl = value;
+                this.IsDownloadable = false;
                 if (this.UrlReader.IsDownloadable)
                 {
                     this.IsBusy = true;

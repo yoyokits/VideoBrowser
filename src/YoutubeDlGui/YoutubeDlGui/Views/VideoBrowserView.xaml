@@ -63,6 +63,7 @@
                     <Grid x:Name="UrlEditorGrid">
                         <Canvas>
                             <views:UrlEditorView
+                                x:Name="UrlEditorView"
                                 Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth, Mode=OneWay}"
                                 Background="White"
                                 DataContext="{Binding UrlEditor}" />
@@ -71,7 +72,7 @@
                 </adornedcontrol:AdornedControl.AdornerContent>
                 <TextBox
                     Height="21"
-                    Margin="2"
+                    Margin="4,4,4,2"
                     VerticalAlignment="Center"
                     Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>

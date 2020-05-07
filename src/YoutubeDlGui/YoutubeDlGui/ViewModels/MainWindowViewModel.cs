@@ -91,6 +91,7 @@
             settings.WindowPosition = new Point(window.Left, window.Top);
             settings.WindowWidth = window.ActualWidth;
             settings.WindowHeight = window.Height;
+            settings.WindowState = window.WindowState;
             settings.Save();
             DownloadQueueHandler.Stop();
             this.Dispose();
@@ -108,6 +109,7 @@
             window.Top = settings.WindowPosition.Y;
             window.Width = settings.WindowWidth;
             window.Height = settings.WindowHeight;
+            window.WindowState = settings.WindowState;
             this.GlobalData.MainWindow = window;
             DownloadQueueHandler.LimitDownloads = settings.ShowMaxSimDownloads;
             DownloadQueueHandler.StartWatching(settings.MaxSimDownloads);
