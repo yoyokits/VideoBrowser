@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>YoutubeDlGui</RootNamespace>
     <AssemblyName>YoutubeDlGui</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -16,6 +16,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -82,8 +83,7 @@
     <Reference Include="log4net">
       <HintPath>..\..\..\bin\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MahApps.Metro">
       <HintPath>..\..\..\bin\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -157,7 +157,6 @@
     <Compile Include="Controls\WebBrowserControl\WeakFunc.cs" />
     <Compile Include="Controls\WebBrowserControl\WeakFuncGeneric.cs" />
     <Compile Include="Controls\WebBrowserControl\WebBrowserControl.cs" />
-    <Compile Include="Controls\WebViewControl\WebViewControl.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
@@ -311,9 +310,6 @@
   <ItemGroup>
     <PackageReference Include="CefSharp.WinForms">
       <Version>79.1.360</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView">
-      <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.18362.2005</Version>
