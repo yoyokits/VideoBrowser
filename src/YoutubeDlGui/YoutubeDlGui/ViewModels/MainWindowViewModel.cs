@@ -1,5 +1,6 @@
 ﻿namespace YoutubeDlGui.ViewModels
 {
+    using System.Linq;
     using System.Windows;
     using System.Windows.Input;
     using YoutubeDlGui.Common;
@@ -24,12 +25,16 @@
             this.ClosingCommand = new RelayCommand(this.OnClosing);
             this.About = new AboutViewModel();
             this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData);
+            this.Initialize();
         }
 
         #endregion Constructors
 
         #region Properties
 
+        /// <summary>
+        /// Gets the About.
+        /// </summary>
         public AboutViewModel About { get; }
 
         /// <summary>
@@ -38,8 +43,7 @@
         public RelayCommand ClosingCommand { get; }
 
         /// <summary>
-        /// Gets the DownloadVideo
-        /// Gets or sets the DownloadVideo....
+        /// Gets the DownloadVideo.
         /// </summary>
         public DownloadQueueViewModel DownloadQueueViewModel => this.GlobalData.DownloadQueueViewModel;
 
@@ -78,6 +82,21 @@
         private void Dispose()
         {
             this.VideoBrowser.Dispose();
+        }
+
+        /// <summary>
+        /// The Initialize.
+        /// </summary>
+        private void Initialize()
+        {
+            var args = AppEnvironment.Arguments;
+            var url = Properties.Settings.Default.LastUrl;
+            if (args != null && args.Any())
+            {
+                url = args.First();
+            }
+
+            this.VideoBrowser.NavigateUrl = url;
         }
 
         /// <summary>

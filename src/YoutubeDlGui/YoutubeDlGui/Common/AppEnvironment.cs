@@ -66,6 +66,7 @@
         /// Gets the Version.
         /// </summary>
         public static string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static string[] Arguments { get; internal set; }
 
         #endregion Properties
 

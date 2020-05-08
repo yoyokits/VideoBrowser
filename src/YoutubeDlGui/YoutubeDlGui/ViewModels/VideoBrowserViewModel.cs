@@ -8,8 +8,8 @@
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Core;
     using YoutubeDlGui.Extensions;
+    using YoutubeDlGui.Helpers;
     using YoutubeDlGui.Models;
-    using YoutubeDlGui.Properties;
     using YoutubeDlGui.Resources;
 
     /// <summary>
@@ -59,7 +59,6 @@
             };
             this.UrlEditor.PropertyChanged += this.OnUrlEditor_PropertyChanged;
             this.PropertyChanged += this.OnPropertyChanged;
-            this.NavigateUrl = Settings.Default.LastUrl;
         }
 
         #endregion Constructors
@@ -72,18 +71,14 @@
         public ICommand BackwardCommand { get => this._backwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._backwardCommand, value); }
 
         /// <summary>
-        /// Gets or sets a value indicating whether CanBackward
-        /// Gets or sets the CanBackward..
+        /// Gets or sets a value indicating whether CanBackward.
         /// </summary>
         public bool CanBackward { get => this._canBackward; set => this.Set(this.PropertyChangedHandler, ref this._canBackward, value); }
 
         /// <summary>
-        /// Gets or sets a value indicating whether CanForward
-        /// Gets or sets the CanForward..
+        /// Gets or sets a value indicating whether CanForward.
         /// </summary>
         public bool CanForward { get => this._canForward; set => this.Set(this.PropertyChangedHandler, ref this._canForward, value); }
-
-        public GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets the DownloadCommand.
@@ -94,6 +89,11 @@
         /// Gets or sets the ForwardCommand.
         /// </summary>
         public ICommand ForwardCommand { get => this._forwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._forwardCommand, value); }
+
+        /// <summary>
+        /// Gets the GlobalData.
+        /// </summary>
+        public GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets the HomeCommand.
@@ -151,7 +151,6 @@
 
         /// <summary>
         /// Gets or sets the WebUri that is typed in the TextBox.
-        /// Gets the WebUri.
         /// </summary>
         public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
 
@@ -221,6 +220,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnNavigateUrl(object obj)
         {
+            this.Url = UrlHelper.GetValidUrl(this.Url);
             this.NavigateUrl = this.Url;
             this.GlobalData.IsAirspaceVisible = false;
         }
