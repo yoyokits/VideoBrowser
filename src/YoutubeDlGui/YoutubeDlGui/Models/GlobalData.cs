@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
     using YoutubeDlGui.Common;
     using YoutubeDlGui.Extensions;
     using YoutubeDlGui.ViewModels;
@@ -18,6 +19,8 @@
 
         private bool _isAirspaceVisible;
 
+        private bool _isFullScreen;
+
         #endregion Fields
 
         #region Constructors
@@ -29,6 +32,7 @@
         {
             this.DownloadQueueViewModel = new DownloadQueueViewModel();
             this.Settings = new SettingsViewModel(this);
+            this.IsFullScreenCommand = new RelayCommand(this.OnIsFullScreen);
         }
 
         #endregion Constructors
@@ -65,6 +69,16 @@
                 this.Set(this.PropertyChanged, ref this._isAirspaceVisible, value);
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsFullScreen.
+        /// </summary>
+        public bool IsFullScreen { get => _isFullScreen; set => this.Set(this.PropertyChanged, ref _isFullScreen, value); }
+
+        /// <summary>
+        /// Gets the IsFullScreenCommand.
+        /// </summary>
+        public ICommand IsFullScreenCommand { get; }
 
         /// <summary>
         /// Gets a value indicating whether IsMessageBoxVisible.
@@ -116,6 +130,15 @@
             }
 
             return result.Result;
+        }
+
+        /// <summary>
+        /// The OnIsFullScreen.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnIsFullScreen(object obj)
+        {
+            this.IsFullScreen = (bool)obj;
         }
 
         #endregion Methods

@@ -49,8 +49,7 @@
             this.DownloadCommand = new RelayCommand(this.OnDownload, "Download", (o) => this.UrlReader.IsDownloadable);
             this.HomeCommand = new RelayCommand(this.OnHome, "Home");
             this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl, "NavigateUrl");
-            this.SettingsCommand = new RelayCommand(this.OnSettings, "Settings");
-            _cookies = new Dictionary<string, string>();
+            this._cookies = new Dictionary<string, string>();
             IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
             this.UrlEditor = new UrlEditorViewModel(this.UrlReader, globalData)
             {
@@ -143,11 +142,6 @@
         /// Gets or sets the ReloadCommand.
         /// </summary>
         public ICommand ReloadCommand { get => this._reloadCommand; set => this.Set(this.PropertyChangedHandler, ref this._reloadCommand, value); }
-
-        /// <summary>
-        /// Gets the SettingsCommand.
-        /// </summary>
-        public ICommand SettingsCommand { get; }
 
         /// <summary>
         /// Gets or sets the WebUri that is typed in the TextBox.
@@ -246,14 +240,6 @@
                 default:
                     break;
             }
-        }
-
-        /// <summary>
-        /// The OnSettings.
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnSettings(object obj)
-        {
         }
 
         /// <summary>

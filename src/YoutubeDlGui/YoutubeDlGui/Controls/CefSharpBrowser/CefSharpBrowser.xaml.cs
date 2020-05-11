@@ -5,10 +5,11 @@
     using System.Windows;
     using System.Windows.Input;
     using YoutubeDlGui.Common;
+    using YoutubeDlGui.Core;
     using YoutubeDlGui.Helpers;
 
     /// <summary>
-    /// Interaction logic for CefSharpBrowser.xaml
+    /// Interaction logic for CefSharpBrowser.xaml.
     /// </summary>
     public partial class CefSharpBrowser
     {
@@ -22,6 +23,9 @@
 
         public static readonly DependencyProperty IsAirspaceVisibleProperty =
             DependencyProperty.Register(nameof(IsAirspaceVisible), typeof(bool), typeof(CefSharpBrowser), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty IsFullScreenCommandProperty =
+            DependencyProperty.Register(nameof(IsFullScreenCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null, OnIsFullScreenCommandChanged));
 
         public static readonly DependencyProperty ReloadCommandProperty =
             DependencyProperty.Register(nameof(ReloadCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
@@ -40,6 +44,7 @@
         {
             this.CefSettings = new CefSettings();
             Cef.Initialize(this.CefSettings);
+            this.CefDisplayHandler = new CefDisplayHandler();
             InitializeComponent();
             this.Loaded += this.OnLoaded;
         }
@@ -49,7 +54,7 @@
         #region Properties
 
         /// <summary>
-        /// Gets or sets the BackwardCommand
+        /// Gets or sets the BackwardCommand.
         /// </summary>
         public ICommand BackwardCommand
         {
@@ -58,12 +63,12 @@
         }
 
         /// <summary>
-        /// Gets the CefSettings
+        /// Gets the CefSettings.
         /// </summary>
         public CefSettings CefSettings { get; }
 
         /// <summary>
-        /// Gets or sets the ForwardCommand
+        /// Gets or sets the ForwardCommand.
         /// </summary>
         public ICommand ForwardCommand
         {
@@ -72,7 +77,7 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether IsAirspaceVisible
+        /// Gets or sets a value indicating whether IsAirspaceVisible.
         /// </summary>
         public bool IsAirspaceVisible
         {
@@ -81,7 +86,16 @@
         }
 
         /// <summary>
-        /// Gets or sets the ReloadCommand
+        /// Gets or sets the IsFullScreenCommand.
+        /// </summary>
+        public ICommand IsFullScreenCommand
+        {
+            get { return (ICommand)GetValue(IsFullScreenCommandProperty); }
+            set { SetValue(IsFullScreenCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the ReloadCommand.
         /// </summary>
         public ICommand ReloadCommand
         {
@@ -90,7 +104,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the Url
+        /// Gets or sets the Url.
         /// </summary>
         public string Url
         {
@@ -99,22 +113,27 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether CanBackward
+        /// Gets or sets a value indicating whether CanBackward.
         /// </summary>
         private bool CanBackward { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether CanForward
+        /// Gets or sets a value indicating whether CanForward.
         /// </summary>
         private bool CanForward { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether CanReload
+        /// Gets or sets a value indicating whether CanReload.
         /// </summary>
         private bool CanReload { get; set; }
 
         /// <summary>
-        /// Gets or sets the InternalUrl
+        /// Gets the CefDisplayHandler.
+        /// </summary>
+        private CefDisplayHandler CefDisplayHandler { get; }
+
+        /// <summary>
+        /// Gets or sets the InternalUrl.
         /// </summary>
         private string InternalUrl { get; set; }
 
@@ -123,10 +142,22 @@
         #region Methods
 
         /// <summary>
-        /// The OnUrlChanged
+        /// The OnIsFullScreenCommandChanged.
         /// </summary>
-        /// <param name="d">The d<see cref="DependencyObject"/></param>
-        /// <param name="e">The e<see cref="DependencyPropertyChangedEventArgs"/></param>
+        /// <param name="d">The d<see cref="DependencyObject"/>.</param>
+        /// <param name="e">The e<see cref="DependencyPropertyChangedEventArgs"/>.</param>
+        private static void OnIsFullScreenCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var browser = (CefSharpBrowser)d;
+            var isFullScreenCommand = (ICommand)e.NewValue;
+            browser.CefDisplayHandler.IsFullScreenCommand = isFullScreenCommand;
+        }
+
+        /// <summary>
+        /// The OnUrlChanged.
+        /// </summary>
+        /// <param name="d">The d<see cref="DependencyObject"/>.</param>
+        /// <param name="e">The e<see cref="DependencyPropertyChangedEventArgs"/>.</param>
         private static void OnUrlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var browser = (CefSharpBrowser)d;
@@ -139,9 +170,9 @@
         }
 
         /// <summary>
-        /// The OnBackward
+        /// The OnBackward.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnBackward(object obj)
         {
             if (this.WebBrowser.CanGoBack)
@@ -151,9 +182,9 @@
         }
 
         /// <summary>
-        /// The OnForward
+        /// The OnForward.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnForward(object obj)
         {
             if (this.WebBrowser.CanGoForward)
@@ -163,35 +194,37 @@
         }
 
         /// <summary>
-        /// The OnLoaded
+        /// The OnLoaded.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="RoutedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="RoutedEventArgs"/>.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= this.OnLoaded;
             this.WebBrowser.LoadingStateChanged += OnWebBrowser_LoadingStateChanged;
             this.WebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
             this.WebBrowser.LoadError += OnWebBrowser_LoadError;
+            this.WebBrowser.DisplayHandler = this.CefDisplayHandler;
+            this.WebBrowser.KeyboardHandler = new CefKeyboardHandler();
             this.BackwardCommand = new RelayCommand(this.OnBackward, "Backward", (o) => this.CanBackward);
             this.ForwardCommand = new RelayCommand(this.OnForward, "Forward", (o) => this.CanForward);
             this.ReloadCommand = new RelayCommand(this.OnReload, "Reload", (o) => this.CanReload);
         }
 
         /// <summary>
-        /// The OnReload
+        /// The OnReload.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnReload(object obj)
         {
             this.WebBrowser.Reload(true);
         }
 
         /// <summary>
-        /// The OnWebBrowser_AddressChanged
+        /// The OnWebBrowser_AddressChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="AddressChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="AddressChangedEventArgs"/>.</param>
         private void OnWebBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
         {
             UIThreadHelper.Invoke(() =>
@@ -203,19 +236,19 @@
         }
 
         /// <summary>
-        /// The OnWebBrowser_LoadError
+        /// The OnWebBrowser_LoadError.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="LoadErrorEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="LoadErrorEventArgs"/>.</param>
         private void OnWebBrowser_LoadError(object sender, LoadErrorEventArgs e)
         {
         }
 
         /// <summary>
-        /// The OnWebBrowser_LoadingStateChanged
+        /// The OnWebBrowser_LoadingStateChanged.
         /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="LoadingStateChangedEventArgs"/></param>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="LoadingStateChangedEventArgs"/>.</param>
         private void OnWebBrowser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
         {
             UIThreadHelper.Invoke(() =>

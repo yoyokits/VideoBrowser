@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:adornedcontrol="clr-namespace:AdornedControl"
     xmlns:cefsharpbrowser="clr-namespace:YoutubeDlGui.Controls.CefSharpBrowser"
+    xmlns:converters="clr-namespace:YoutubeDlGui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:YoutubeDlGui.ViewModels"
@@ -17,6 +18,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/IconsResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:BoolToVisibilityConverter
+                x:Key="BoolToVisibilityConverter"
+                FalseValue="Visible"
+                TrueValue="Collapsed" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -25,7 +30,10 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--  Browser Main Toolbar  -->
-        <Grid Grid.Row="0" Margin="0,0,0,4">
+        <Grid
+            Grid.Row="0"
+            Margin="0,0,0,4"
+            Visibility="{Binding GlobalData.IsFullScreen, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.Resources>
                 <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
                     <Setter Property="BorderThickness" Value="0" />
@@ -87,9 +95,6 @@
                 <Button Command="{Binding DownloadCommand}" IsEnabled="{Binding UrlEditor.IsDownloadable}">
                     <Path Style="{StaticResource Download}" />
                 </Button>
-                <Button Command="{Binding SettingsCommand}">
-                    <Path Style="{StaticResource Settings}" />
-                </Button>
             </StackPanel>
         </Grid>
         <cefsharpbrowser:CefSharpBrowser
@@ -98,6 +103,7 @@
             BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
             ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
             IsAirspaceVisible="{Binding GlobalData.IsAirspaceVisible}"
+            IsFullScreenCommand="{Binding GlobalData.IsFullScreenCommand, Mode=OneWay}"
             ReloadCommand="{Binding ReloadCommand, Mode=OneWayToSource}"
             Url="{Binding NavigateUrl}" />
     </Grid>

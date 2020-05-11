@@ -21,8 +21,8 @@
         public MainWindowViewModel()
         {
             this.GlobalData = new GlobalData();
-            this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.ClosingCommand = new RelayCommand(this.OnClosing);
+            this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.About = new AboutViewModel();
             this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData);
             this.Initialize();
@@ -43,7 +43,7 @@
         public RelayCommand ClosingCommand { get; }
 
         /// <summary>
-        /// Gets the DownloadVideo.
+        /// Gets the DownloadQueueViewModel.
         /// </summary>
         public DownloadQueueViewModel DownloadQueueViewModel => this.GlobalData.DownloadQueueViewModel;
 

@@ -161,6 +161,8 @@
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
+    <Compile Include="Core\CefDisplayHandler.cs" />
+    <Compile Include="Core\CefKeyboardHandler.cs" />
     <Compile Include="Core\Commands.cs" />
     <Compile Include="Core\DownloadOperation.cs" />
     <Compile Include="Core\DownloadQueueHandler.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\RangeExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\FFMpeg.cs" />
     <Compile Include="Helpers\FFMpegFileType.cs" />
     <Compile Include="Helpers\FFMpegHelper.cs" />
