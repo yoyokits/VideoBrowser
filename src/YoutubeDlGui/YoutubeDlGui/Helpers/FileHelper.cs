@@ -1,7 +1,9 @@
 ﻿namespace YoutubeDlGui.Helpers
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Threading;
 
     /// <summary>
     /// Defines the <see cref="FileHelper" />
@@ -9,6 +11,77 @@
     public static class FileHelper
     {
         #region Methods
+
+        /// <summary>
+        /// Returns valid file name.
+        /// </summary>
+        /// <param name="filename">The filename to validate.</param>
+        public static string GetValidFilename(string filename)
+        {
+            var illegalChars = Path.GetInvalidFileNameChars();
+
+            // Check if filename contains illegal characters
+            // Returning true for some reason: valid = filename.Any(x => illegalChars.Contains(x));
+            var valid = filename.IndexOfAny(illegalChars) <= -1;
+
+            if (!valid)
+            {
+                string new_filename = YoutubeHelper.FormatTitle(filename);
+                filename = new_filename;
+            }
+
+            return filename;
+        }
+
+        /// <summary>
+        /// Attempts to delete given file(s), ignoring exceptions for 10 tries, with 2 second delay between each try.
+        /// </summary>
+        /// <param name="files">The files to delete.</param>
+        public static void DeleteFiles(params string[] files)
+        {
+            new Thread(delegate ()
+            {
+                var dict = new Dictionary<string, int>();
+                var keys = new List<string>();
+
+                foreach (string file in files)
+                {
+                    dict.Add(file, 0);
+                    keys.Add(file);
+                }
+
+                while (dict.Count > 0)
+                {
+                    foreach (string key in keys)
+                    {
+                        try
+                        {
+                            if (File.Exists(key))
+                            {
+                                File.Delete(key);
+                            }
+
+                            // Remove file from dictionary since it either got deleted
+                            // or it doesn't exist anymore.
+                            dict.Remove(key);
+                        }
+                        catch
+                        {
+                            if (dict[key] == 10)
+                            {
+                                dict.Remove(key);
+                            }
+                            else
+                            {
+                                dict[key]++;
+                            }
+                        }
+                    }
+
+                    Thread.Sleep(2000);
+                }
+            }).Start();
+        }
 
         /// <summary>
         /// The GetDirectorySize
@@ -27,10 +100,7 @@
         /// </summary>
         /// <param name="directory">The directory<see cref="string"/></param>
         /// <returns>The <see cref="string"/></returns>
-        public static string GetDirectorySizeFormatted(string directory)
-        {
-            return FormatString.FormatFileSize(GetDirectorySize(directory));
-        }
+        public static string GetDirectorySizeFormatted(string directory) => FormatString.FormatFileSize(GetDirectorySize(directory));
 
         /// <summary>
         /// Calculates the ETA (estimated time of accomplishment).
@@ -55,10 +125,7 @@
         /// </summary>
         /// <param name="file">The file to get file size from.</param>
         /// <returns>The <see cref="long"/></returns>
-        public static long GetFileSize(string file)
-        {
-            return !File.Exists(file) ? 0 : new FileInfo(file).Length;
-        }
+        public static long GetFileSize(string file) => !File.Exists(file) ? 0 : new FileInfo(file).Length;
 
         /// <summary>
         /// Returns an formatted string of the given file's size.

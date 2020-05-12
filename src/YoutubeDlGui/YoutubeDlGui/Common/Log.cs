@@ -5,6 +5,7 @@
     using log4net.Core;
     using log4net.Layout;
     using log4net.Repository.Hierarchy;
+    using System;
     using System.IO;
     using System.Reflection;
 
@@ -31,7 +32,7 @@
         /// <summary>
         /// Gets the Log
         /// </summary>
-        public static ILog Log { get; } = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static ILog Log { get; } = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Gets the LogFilePath
@@ -76,9 +77,15 @@
         /// The Info
         /// </summary>
         /// <param name="message">The message<see cref="object"/></param>
-        public static void Info(object message)
+        public static void Info(object message = null)
         {
+            if (message == null)
+            {
+                message = string.Empty;
+            }
+
             Log.Info(message);
+            System.Diagnostics.Trace.WriteLine(message);
         }
 
         /// <summary>
@@ -98,7 +105,8 @@
         public static void Setup(string appName)
         {
             LogFilePath = GetLogFilePath(appName);
-            var hierarchy = (Hierarchy)LogManager.GetRepository(Assembly.GetEntryAssembly());
+            var entryAssembly = Assembly.GetExecutingAssembly();
+            var hierarchy = (Hierarchy)LogManager.GetRepository(entryAssembly);
 
             var patternLayout = new PatternLayout
             {
@@ -136,6 +144,15 @@
         public static void Warn(this object source, object message)
         {
             Log.Warn(message);
+        }
+
+        /// <summary>
+        /// Saves given Exception's stack trace to a readable file in the local application data folder.
+        /// </summary>
+        /// <param name="ex">The Exception to save.</param>
+        public static void WriteException(Exception ex)
+        {
+            Logger.Info(ex.ToString());
         }
 
         /// <summary>

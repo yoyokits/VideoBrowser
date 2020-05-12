@@ -8,12 +8,15 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>YoutubeDlGui</RootNamespace>
     <AssemblyName>YoutubeDlGui</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,9 +57,34 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CefSharp">
+      <HintPath>..\..\..\bin\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.BrowserSubprocess">
+      <HintPath>..\..\..\bin\CefSharp.BrowserSubprocess.exe</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.BrowserSubprocess.Core">
+      <HintPath>..\..\..\bin\CefSharp.BrowserSubprocess.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Core">
+      <HintPath>..\..\..\bin\CefSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.WinForms">
+      <HintPath>..\..\..\bin\CefSharp.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\ControlzEx.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\bin\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\..\..\bin\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
@@ -67,11 +95,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf">
+      <HintPath>..\..\..\bin\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\..\bin\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -84,9 +121,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WrapYoutubeDl">
-      <HintPath>Binaries\WrapYoutubeDl.dll</HintPath>
-    </Reference>
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -104,6 +139,16 @@
     <Compile Include="Common\RangeDouble.cs" />
     <Compile Include="Common\RangeInt.cs" />
     <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\WpfHelper.cs" />
+    <Compile Include="Controls\AdornedControl\AdornedControl.cs" />
+    <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
+    <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
+    <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefDisplayHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefKeyboardHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
+      <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WebBrowserControl\BrowserEmulationVersion.cs" />
     <Compile Include="Controls\WebBrowserControl\IExecuteWithObject.cs" />
     <Compile Include="Controls\WebBrowserControl\IExecuteWithObjectAndResult.cs" />
@@ -119,42 +164,94 @@
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Core\Commands.cs" />
-    <Compile Include="Core\Downloader.cs" />
+    <Compile Include="Core\DownloadOperation.cs" />
+    <Compile Include="Core\DownloadQueueHandler.cs" />
+    <Compile Include="Core\EventHandlers.cs" />
+    <Compile Include="Core\FileDownload.cs" />
+    <Compile Include="Core\FileDownloader.cs" />
+    <Compile Include="Core\FileDownloadEventArgs.cs" />
+    <Compile Include="Core\FileDownloadFailedEventArgs.cs" />
     <Compile Include="Core\FileSizeUpdateEventArgs.cs" />
+    <Compile Include="Core\NoneUrlHandler.cs" />
+    <Compile Include="Core\Operation.cs" />
+    <Compile Include="Core\OperationEventArgs.cs" />
+    <Compile Include="Core\OperationStatus.cs" />
     <Compile Include="Core\PlayList.cs" />
     <Compile Include="Core\PlayListReader.cs" />
+    <Compile Include="Core\StatusChangedEventArgs.cs" />
+    <Compile Include="Core\UrlReader.cs" />
     <Compile Include="Core\VideoFormat.cs" />
     <Compile Include="Core\VideoInfo.cs" />
+    <Compile Include="Core\UrlHandlerBase.cs" />
+    <Compile Include="Core\UrlHandlerProvider.cs" />
+    <Compile Include="Core\UrlTypes.cs" />
     <Compile Include="Core\YoutubeDl.cs" />
     <Compile Include="Core\YoutubeAuthentication.cs" />
+    <Compile Include="Core\YoutubeUrlHandler.cs" />
     <Compile Include="Extensions\DictionaryExtension.cs" />
+    <Compile Include="Extensions\EventBindingExtension.cs" />
     <Compile Include="Extensions\INotifyPropertyChangedExtension.cs" />
     <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\RangeExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Helpers\BindingProxy.cs" />
+    <Compile Include="Helpers\FFMpeg.cs" />
+    <Compile Include="Helpers\FFMpegFileType.cs" />
+    <Compile Include="Helpers\FFMpegHelper.cs" />
+    <Compile Include="Helpers\FFMpegResult.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\Format.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\ProcessHelper.cs" />
+    <Compile Include="Helpers\UIThreadHelper.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Helpers\YoutubeHelper.cs" />
     <Compile Include="If\IRange.cs" />
+    <Compile Include="If\IUrlHandler.cs" />
+    <Compile Include="Models\GlobalData.cs" />
+    <Compile Include="Models\OperationModel.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />
     <Compile Include="Resources\Icons.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\DownloadQueueViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\UrlEditorViewModel.cs" />
     <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
+    <Compile Include="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DownloadQueueView.xaml.cs">
       <DependentUpon>DownloadQueueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UrlEditorView.xaml.cs">
+      <DependentUpon>UrlEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VideoBrowserView.xaml.cs">
       <DependentUpon>VideoBrowserView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AirspaceFixer\Themes\AirspacePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AirspaceFixer\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\IconsResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UrlEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -207,9 +308,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="CefSharp.WinForms">
+      <Version>79.1.360</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
+      <Version>10.0.18362.2005</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.WindowsRuntime">
+      <Version>4.6.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.WindowsRuntime.UI.Xaml">
+      <Version>4.6.0</Version>
+    </PackageReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Binaries\ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -235,6 +351,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Docs\Documentation.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

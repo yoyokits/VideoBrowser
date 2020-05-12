@@ -17,7 +17,7 @@
         /// <summary>
         /// The property changed handler
         /// </summary>
-        protected PropertyChangedEventHandler PropertyChangedHandler;
+        protected PropertyChangedEventHandler PropertyChangedHandler => this.PropertyChanged;
 
         /// <summary>
         /// The OnPropertyChanged

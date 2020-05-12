@@ -2,10 +2,13 @@
     x:Class="YoutubeDlGui.Views.VideoBrowserView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:adornedcontrol="clr-namespace:AdornedControl"
+    xmlns:cefsharpbrowser="clr-namespace:YoutubeDlGui.Controls.CefSharpBrowser"
+    xmlns:converters="clr-namespace:YoutubeDlGui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:YoutubeDlGui.ViewModels"
-    xmlns:webbrowserinheritedcontrol="clr-namespace:WebBrowserInheritedControl"
+    xmlns:views="clr-namespace:YoutubeDlGui.Views"
     d:DataContext="{d:DesignInstance viewmodels:VideoBrowserViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -15,6 +18,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/IconsResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:BoolToVisibilityConverter
+                x:Key="BoolToVisibilityConverter"
+                FalseValue="Visible"
+                TrueValue="Collapsed" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -23,7 +30,10 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--  Browser Main Toolbar  -->
-        <Grid Grid.Row="0" Margin="0,0,0,4">
+        <Grid
+            Grid.Row="0"
+            Margin="0,0,0,4"
+            Visibility="{Binding GlobalData.IsFullScreen, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.Resources>
                 <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
                     <Setter Property="BorderThickness" Value="0" />
@@ -41,37 +51,60 @@
                 Grid.Column="0"
                 Height="32"
                 Orientation="Horizontal">
-                <Button Command="{Binding BackCommand}">
+                <Button Command="{Binding BackwardCommand}">
                     <Path Style="{StaticResource Back}" />
                 </Button>
                 <Button Command="{Binding ForwardCommand}">
                     <Path Style="{StaticResource Forward}" />
                 </Button>
+                <Button Command="{Binding ReloadCommand}">
+                    <Path Style="{StaticResource Reload}" />
+                </Button>
             </StackPanel>
             <!--  URL TextBox  -->
-            <TextBox
+            <adornedcontrol:AdornedControl
                 Grid.Column="1"
-                Height="21"
-                Margin="2"
-                VerticalAlignment="Center"
-                Text="{Binding WebUri}" />
+                CloseAdornerTimeOut="0.5"
+                FadeOutTime="0.5"
+                IsAdornerVisible="{Binding GlobalData.IsAirspaceVisible, Mode=OneWayToSource}">
+                <adornedcontrol:AdornedControl.AdornerContent>
+                    <Grid x:Name="UrlEditorGrid">
+                        <Canvas>
+                            <views:UrlEditorView
+                                x:Name="UrlEditorView"
+                                Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth, Mode=OneWay}"
+                                Background="White"
+                                DataContext="{Binding UrlEditor}" />
+                        </Canvas>
+                    </Grid>
+                </adornedcontrol:AdornedControl.AdornerContent>
+                <TextBox
+                    Height="21"
+                    Margin="4,4,4,2"
+                    VerticalAlignment="Center"
+                    Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding NavigateUrlCommand}" />
+                    </TextBox.InputBindings>
+                </TextBox>
+            </adornedcontrol:AdornedControl>
             <StackPanel
                 Grid.Column="2"
                 Height="32"
                 Orientation="Horizontal">
-                <Button Command="{Binding DownloadCommand}">
+                <Button Command="{Binding DownloadCommand}" IsEnabled="{Binding UrlEditor.IsDownloadable}">
                     <Path Style="{StaticResource Download}" />
-                </Button>
-                <Button Command="{Binding SettingsCommand}">
-                    <Path Style="{StaticResource Settings}" />
                 </Button>
             </StackPanel>
         </Grid>
-        <webbrowserinheritedcontrol:WebBrowserControl
+        <cefsharpbrowser:CefSharpBrowser
+            x:Name="CefSharpBrowserControl"
             Grid.Row="1"
-            BrowserVersion="Version11Edge"
-            HeaderString="{Binding WebCookies}"
-            IsSuccessful="{Binding IsSuccessful}"
-            NavigateString="{Binding WebUri}" />
+            BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
+            ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
+            IsAirspaceVisible="{Binding GlobalData.IsAirspaceVisible}"
+            IsFullScreenCommand="{Binding GlobalData.IsFullScreenCommand, Mode=OneWay}"
+            ReloadCommand="{Binding ReloadCommand, Mode=OneWayToSource}"
+            Url="{Binding NavigateUrl}" />
     </Grid>
 </UserControl>

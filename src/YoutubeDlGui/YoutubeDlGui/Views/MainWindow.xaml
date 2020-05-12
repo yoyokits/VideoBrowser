@@ -1,15 +1,30 @@
-﻿<Window
+﻿<Controls:MetroWindow
     x:Class="YoutubeDlGui.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extension="clr-namespace:YoutubeDlGui.Extensions"
+    xmlns:helpers="clr-namespace:YoutubeDlGui.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:YoutubeDlGui.ViewModels"
     xmlns:views="clr-namespace:YoutubeDlGui.Views"
     Title="{Binding Title}"
     Width="800"
     Height="450"
     d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel}"
+    Closing="{extension:EventBinding ClosingCommand,
+                                     CommandParameter={Binding RelativeSource={RelativeSource Self}}}"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    Loaded="{extension:EventBinding LoadedCommand,
+                                    CommandParameter={Binding RelativeSource={RelativeSource Self}}}"
     mc:Ignorable="d">
+    <Controls:MetroWindow.Resources>
+        <helpers:BindingProxy x:Key="MainWindowViewModelProxy" DataContext="{Binding}" />
+    </Controls:MetroWindow.Resources>
+    <Controls:MetroWindow.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding PressEscCommand}" />
+    </Controls:MetroWindow.InputBindings>
     <Grid Background="WhiteSmoke">
         <TabControl BorderBrush="WhiteSmoke" TabStripPlacement="Right">
             <TabControl.Resources>
@@ -43,17 +58,26 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Source={StaticResource MainWindowViewModelProxy}, Path=DataContext.GlobalData.IsFullScreen}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </TabControl.Resources>
             <TabItem DataContext="{Binding VideoBrowser}">
                 <views:VideoBrowserView />
             </TabItem>
-            <TabItem DataContext="{Binding DownloadVideo}" Header="Download">
+            <TabItem DataContext="{Binding DownloadQueueViewModel}" Header="Download">
                 <views:DownloadQueueView />
             </TabItem>
             <TabItem DataContext="{Binding Settings}" Header="Settings">
                 <views:SettingsView />
             </TabItem>
+            <TabItem DataContext="{Binding About}" Header="About">
+                <views:AboutView />
+            </TabItem>
         </TabControl>
     </Grid>
-</Window>
+</Controls:MetroWindow>

@@ -13,9 +13,9 @@
     using YoutubeDlGui.Helpers;
 
     /// <summary>
-    /// Defines the <see cref="YoutubeDl" />
+    /// Defines the <see cref="YoutubeDl" />.
     /// </summary>
-    public class YoutubeDl
+    public static class YoutubeDl
     {
         #region Constants
 
@@ -25,7 +25,7 @@
 
         #region Fields
 
-        public static string YouTubeDlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Externals", "youtube-dl.exe");
+        public static string YouTubeDlPath = Path.Combine(AppEnvironment.AppBinaryDirectory, "youtube-dl.exe");
 
         #endregion Fields
 
@@ -34,11 +34,10 @@
         /// <summary>
         /// Gets current youtube-dl version.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetVersion()
         {
             string version = string.Empty;
-
             ProcessHelper.StartProcess(YouTubeDlPath, Commands.Version,
                 delegate (Process process, string line)
                 {
@@ -55,8 +54,8 @@
         /// Returns a <see cref="VideoInfo"/> of the given video.
         /// </summary>
         /// <param name="url">The url to the video.</param>
-        /// <param name="authentication">The authentication<see cref="YoutubeAuthentication"/></param>
-        /// <returns>The <see cref="VideoInfo"/></returns>
+        /// <param name="authentication">The authentication<see cref="YoutubeAuthentication"/>.</param>
+        /// <returns>The <see cref="VideoInfo"/>.</returns>
         public static VideoInfo GetVideoInfo(string url,
                                              YoutubeAuthentication authentication = null)
         {
@@ -110,12 +109,12 @@
         }
 
         /// <summary>
-        /// The GetVideoInfoBatchAsync
+        /// The GetVideoInfoBatchAsync.
         /// </summary>
-        /// <param name="urls">The urls<see cref="ICollection{string}"/></param>
-        /// <param name="videoReady">The videoReady<see cref="Action{VideoInfo}"/></param>
-        /// <param name="authentication">The authentication<see cref="YoutubeAuthentication"/></param>
-        /// <returns>The <see cref="Task"/></returns>
+        /// <param name="urls">The urls<see cref="ICollection{string}"/>.</param>
+        /// <param name="videoReady">The videoReady<see cref="Action{VideoInfo}"/>.</param>
+        /// <param name="authentication">The authentication<see cref="YoutubeAuthentication"/>.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         public static async Task GetVideoInfoBatchAsync(ICollection<string> urls,
                                                         Action<VideoInfo> videoReady,
                                                         YoutubeAuthentication authentication = null)
@@ -193,7 +192,7 @@
         /// Writes log header to log.
         /// </summary>
         /// <param name="arguments">The arguments to log in header.</param>
-        /// <param name="caller">The caller<see cref="string"/></param>
+        /// <param name="caller">The caller<see cref="string"/>.</param>
         public static void LogHeader(string arguments, [CallerMemberName]string caller = "")
         {
             Logger.Info("[" + DateTime.Now + "]");
@@ -205,9 +204,9 @@
         }
 
         /// <summary>
-        /// The Update
+        /// The Update.
         /// </summary>
-        /// <returns>The <see cref="Task{string}"/></returns>
+        /// <returns>The <see cref="Task{string}"/>.</returns>
         public static async Task<string> Update()
         {
             var returnMsg = string.Empty;

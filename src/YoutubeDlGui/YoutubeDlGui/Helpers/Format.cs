@@ -58,7 +58,7 @@
         /// </summary>
         /// <param name="duration">The video duration as long.</param>
         /// <returns>The <see cref="string"/></returns>
-        public static string FormatVideoLength(long duration)
+        public static string FormatVideoLength(this long duration)
         {
             return FormatVideoLength(TimeSpan.FromSeconds(duration));
         }
