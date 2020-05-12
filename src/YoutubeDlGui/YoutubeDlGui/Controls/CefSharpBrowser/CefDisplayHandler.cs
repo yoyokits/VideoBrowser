@@ -1,11 +1,10 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace YoutubeDlGui.Controls.CefSharpBrowser
 {
     using CefSharp;
     using CefSharp.Structs;
     using CefSharp.WinForms;
     using System;
     using System.Collections.Generic;
-    using System.Windows.Forms;
     using System.Windows.Input;
 
     /// <summary>
@@ -13,14 +12,6 @@
     /// </summary>
     public class CefDisplayHandler : IDisplayHandler
     {
-        #region Fields
-
-        private readonly Form fullScreenForm;
-
-        private readonly Control parent;
-
-        #endregion Fields
-
         #region Constructors
 
         /// <summary>

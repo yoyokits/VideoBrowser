@@ -1,14 +1,41 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace YoutubeDlGui.Controls.CefSharpBrowser
 {
     using CefSharp;
     using CefSharp.WinForms;
+    using System.Windows;
     using System.Windows.Forms;
+    using System.Windows.Forms.Integration;
+    using System.Windows.Input;
 
     /// <summary>
     /// Defines the <see cref="KeyboardHandler" />.
     /// </summary>
     public class CefKeyboardHandler : IKeyboardHandler
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CefKeyboardHandler"/> class.
+        /// </summary>
+        /// <param name="host">The host<see cref="WindowsFormsHost"/>.</param>
+        internal CefKeyboardHandler(WindowsFormsHost host)
+        {
+            this.WindowsFormsHost = host;
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the WindowsFormsHost.
+        /// </summary>
+        public WindowsFormsHost WindowsFormsHost { get; }
+
+        private bool IsFullScreen { get; set; }
+
+        #endregion Properties
+
         #region Methods
 
         /// <summary>
@@ -24,7 +51,25 @@
         /// <returns>The <see cref="bool"/>.</returns>
         public bool OnKeyEvent(IWebBrowser chromiumWebBrowser, IBrowser browser, KeyType type, int windowsKeyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey)
         {
-            return false;
+            return this.WindowsFormsHost.Dispatcher.Invoke(() =>
+            {
+                var window = Window.GetWindow(this.WindowsFormsHost);
+                var routedEvent = UIElement.KeyDownEvent;
+                var kb = Keyboard.PrimaryDevice;
+                var ps = PresentationSource.FromDependencyObject(this.WindowsFormsHost);
+                var ts = 0;
+                var key = KeyInterop.KeyFromVirtualKey(windowsKeyCode);
+
+                var e = new System.Windows.Input.KeyEventArgs(kb, ps, ts, key)
+                {
+                    RoutedEvent = routedEvent
+                };
+
+                // WPF gets modifiers from PrimaryKeyboard only
+                System.Diagnostics.Debug.WriteLine("Raising {0} {1}+{{{2}}}", routedEvent, key, Keyboard.Modifiers);
+                this.WindowsFormsHost.RaiseEvent(e);
+                return e.Handled;
+            });
         }
 
         /// <summary>
