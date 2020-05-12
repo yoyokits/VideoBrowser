@@ -23,6 +23,7 @@
             this.GlobalData = new GlobalData();
             this.ClosingCommand = new RelayCommand(this.OnClosing);
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
+            this.PressEscCommand = new RelayCommand(this.OnPressEsc);
             this.About = new AboutViewModel();
             this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData);
             this.Initialize();
@@ -56,6 +57,11 @@
         /// Gets the LoadedCommand.
         /// </summary>
         public ICommand LoadedCommand { get; }
+
+        /// <summary>
+        /// Gets the PressEscCommand.
+        /// </summary>
+        public ICommand PressEscCommand { get; }
 
         /// <summary>
         /// Gets the Settings.
@@ -132,6 +138,18 @@
             this.GlobalData.MainWindow = window;
             DownloadQueueHandler.LimitDownloads = settings.ShowMaxSimDownloads;
             DownloadQueueHandler.StartWatching(settings.MaxSimDownloads);
+        }
+
+        /// <summary>
+        /// The OnPressEsc.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnPressEsc(object obj)
+        {
+            if (this.GlobalData.IsFullScreen)
+            {
+                this.GlobalData.IsFullScreenCommand.Execute(false);
+            }
         }
 
         #endregion Methods

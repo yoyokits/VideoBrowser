@@ -22,6 +22,9 @@
     <Controls:MetroWindow.Resources>
         <helpers:BindingProxy x:Key="MainWindowViewModelProxy" DataContext="{Binding}" />
     </Controls:MetroWindow.Resources>
+    <Controls:MetroWindow.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding PressEscCommand}" />
+    </Controls:MetroWindow.InputBindings>
     <Grid Background="WhiteSmoke">
         <TabControl BorderBrush="WhiteSmoke" TabStripPlacement="Right">
             <TabControl.Resources>

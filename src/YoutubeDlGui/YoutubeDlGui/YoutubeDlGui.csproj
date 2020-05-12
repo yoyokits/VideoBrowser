@@ -144,6 +144,8 @@
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefDisplayHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefKeyboardHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
@@ -161,8 +163,6 @@
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
-    <Compile Include="Core\CefDisplayHandler.cs" />
-    <Compile Include="Core\CefKeyboardHandler.cs" />
     <Compile Include="Core\Commands.cs" />
     <Compile Include="Core\DownloadOperation.cs" />
     <Compile Include="Core\DownloadQueueHandler.cs" />
