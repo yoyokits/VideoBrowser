@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.960
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeDlGui", "YoutubeDlGui\YoutubeDlGui.csproj", "{2D8225BC-F5B6-4F29-A9E3-F4694D260597}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoBrowser", "VideoBrowser\VideoBrowser.csproj", "{2D8225BC-F5B6-4F29-A9E3-F4694D260597}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeDlGui.Test", "YoutubeDlGui.Test\YoutubeDlGui.Test.csproj", "{CEB9D499-9F24-42C0-B6AD-165D2ABF9B7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoBrowser.Test", "VideoBrowser.Test\VideoBrowser.Test.csproj", "{CEB9D499-9F24-42C0-B6AD-165D2ABF9B7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
