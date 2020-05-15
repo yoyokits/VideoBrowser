@@ -1,8 +1,8 @@
-﻿namespace YoutubeDlGui.Test.Extensions
+﻿namespace VideoBrowser.Test.Extensions
 {
     using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using YoutubeDlGui.Extensions;
+    using VideoBrowser.Extensions;
 
     /// <summary>
     /// Defines the <see cref="StringExtensionTest" />

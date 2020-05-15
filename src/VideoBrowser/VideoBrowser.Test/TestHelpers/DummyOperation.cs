@@ -1,7 +1,7 @@
-﻿namespace YoutubeDlGui.Test.TestHelpers
+﻿namespace VideoBrowser.Test.TestHelpers
 {
     using System.ComponentModel;
-    using YoutubeDlGui.Core;
+    using VideoBrowser.Core;
 
     /// <summary>
     /// Defines the <see cref="DummyOperation" />.

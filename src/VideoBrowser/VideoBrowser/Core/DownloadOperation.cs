@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +7,8 @@
     using System.IO;
     using System.Text.RegularExpressions;
     using System.Threading;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Helpers;
+    using VideoBrowser.Common;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="DownloadOperation" />

@@ -1,7 +1,7 @@
-﻿namespace YoutubeDlGui.Common
+﻿namespace VideoBrowser.Common
 {
     using System;
-    using YoutubeDlGui.If;
+    using VideoBrowser.If;
 
     /// <summary>
     /// Defines the <see cref="RangeInt" />

@@ -1,11 +1,11 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using YoutubeDlGui.Extensions;
+    using VideoBrowser.Extensions;
 
     /// <summary>
     /// Defines the <see cref="Operation" />.

@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Extensions
+﻿namespace VideoBrowser.Extensions
 {
     using System.Collections.Generic;
     using System.Collections.Specialized;

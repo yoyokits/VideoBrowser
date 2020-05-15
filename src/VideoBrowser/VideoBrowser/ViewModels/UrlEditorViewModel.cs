@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.ViewModels
+﻿namespace VideoBrowser.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -7,12 +7,12 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Core;
-    using YoutubeDlGui.Extensions;
-    using YoutubeDlGui.Helpers;
-    using YoutubeDlGui.Models;
-    using YoutubeDlGui.Properties;
+    using VideoBrowser.Common;
+    using VideoBrowser.Core;
+    using VideoBrowser.Extensions;
+    using VideoBrowser.Helpers;
+    using VideoBrowser.Models;
+    using VideoBrowser.Properties;
 
     /// <summary>
     /// Defines the <see cref="UrlEditorViewModel" />.

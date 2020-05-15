@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Views
+﻿namespace VideoBrowser.Views
 {
     using System.Windows.Controls;
 

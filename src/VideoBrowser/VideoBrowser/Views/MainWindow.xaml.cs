@@ -1,10 +1,10 @@
-﻿namespace YoutubeDlGui.Views
+﻿namespace VideoBrowser.Views
 {
     using System.Windows;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Extensions;
-    using YoutubeDlGui.Models;
-    using YoutubeDlGui.ViewModels;
+    using VideoBrowser.Common;
+    using VideoBrowser.Extensions;
+    using VideoBrowser.Models;
+    using VideoBrowser.ViewModels;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
@@ -18,7 +18,7 @@
         /// </summary>
         public MainWindow()
         {
-            Logger.Info($"Start {nameof(YoutubeDlGui)}");
+            Logger.Info($"Start {nameof(VideoBrowser)}");
             this.MainWindowViewModel = new MainWindowViewModel();
             this.MainWindowViewModel.GlobalData.PropertyChanged += this.OnGlobalData_PropertyChanged;
             this.DataContext = this.MainWindowViewModel;

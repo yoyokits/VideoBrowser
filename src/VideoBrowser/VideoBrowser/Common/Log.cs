@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Common
+﻿namespace VideoBrowser.Common
 {
     using log4net;
     using log4net.Appender;
@@ -22,7 +22,7 @@
         /// </summary>
         static Logger()
         {
-            Setup(nameof(YoutubeDlGui));
+            Setup(nameof(VideoBrowser));
         }
 
         #endregion Constructors

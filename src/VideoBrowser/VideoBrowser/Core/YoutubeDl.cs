@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     using System;
     using System.Collections.Generic;
@@ -8,9 +8,9 @@
     using System.Runtime.CompilerServices;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Extensions;
-    using YoutubeDlGui.Helpers;
+    using VideoBrowser.Common;
+    using VideoBrowser.Extensions;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="YoutubeDl" />.

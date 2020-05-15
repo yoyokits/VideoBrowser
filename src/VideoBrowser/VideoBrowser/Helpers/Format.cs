@@ -1,7 +1,7 @@
-﻿namespace YoutubeDlGui.Helpers
+﻿namespace VideoBrowser.Helpers
 {
     using System;
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="FormatString" />

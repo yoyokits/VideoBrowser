@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Resources
+﻿namespace VideoBrowser.Resources
 {
     using System.Windows.Media;
 

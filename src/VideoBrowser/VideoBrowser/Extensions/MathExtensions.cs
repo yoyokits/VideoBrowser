@@ -1,9 +1,9 @@
-﻿namespace YoutubeDlGui.Extensions
+﻿namespace VideoBrowser.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="MathExtensions" />

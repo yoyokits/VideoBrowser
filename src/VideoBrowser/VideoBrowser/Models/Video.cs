@@ -1,7 +1,7 @@
-﻿namespace YoutubeDlGui.Models
+﻿namespace VideoBrowser.Models
 {
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Extensions;
+    using VideoBrowser.Common;
+    using VideoBrowser.Extensions;
 
     /// <summary>
     /// Defines the <see cref="Video" />

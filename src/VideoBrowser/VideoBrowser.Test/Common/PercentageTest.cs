@@ -1,8 +1,8 @@
-﻿namespace YoutubeDlGui.Test
+﻿namespace VideoBrowser.Test
 {
     using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="PercentageTest" />

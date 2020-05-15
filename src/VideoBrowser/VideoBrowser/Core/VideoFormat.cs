@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     using Newtonsoft.Json.Linq;
     using System;

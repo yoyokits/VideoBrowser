@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     /// <summary>
     /// Defines the <see cref="Commands" />

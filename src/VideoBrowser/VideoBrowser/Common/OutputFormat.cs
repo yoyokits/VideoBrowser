@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Common
+﻿namespace VideoBrowser.Common
 {
     #region Enums
 

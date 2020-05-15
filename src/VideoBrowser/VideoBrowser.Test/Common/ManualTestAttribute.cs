@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Test.Common
+﻿namespace VideoBrowser.Test.Common
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Collections.Generic;

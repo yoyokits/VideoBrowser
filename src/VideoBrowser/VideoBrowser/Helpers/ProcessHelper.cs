@@ -1,9 +1,9 @@
-﻿namespace YoutubeDlGui.Helpers
+﻿namespace VideoBrowser.Helpers
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="ProcessHelper" />

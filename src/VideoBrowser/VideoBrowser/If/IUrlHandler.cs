@@ -1,6 +1,6 @@
-﻿namespace YoutubeDlGui.If
+﻿namespace VideoBrowser.If
 {
-    using YoutubeDlGui.Core;
+    using VideoBrowser.Core;
 
     #region Interfaces
 

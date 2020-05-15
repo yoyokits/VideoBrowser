@@ -1,14 +1,14 @@
-﻿namespace YoutubeDlGui.Models
+﻿namespace VideoBrowser.Models
 {
     using MahApps.Metro.Controls.Dialogs;
     using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Extensions;
-    using YoutubeDlGui.ViewModels;
-    using YoutubeDlGui.Views;
+    using VideoBrowser.Common;
+    using VideoBrowser.Extensions;
+    using VideoBrowser.ViewModels;
+    using VideoBrowser.Views;
 
     /// <summary>
     /// Defines the <see cref="GlobalData" />.

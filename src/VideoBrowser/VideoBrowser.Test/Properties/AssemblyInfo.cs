@@ -1,18 +1,15 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("YoutubeDlGui.Test")]
+[assembly: AssemblyTitle("VideoBrowser.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("YoutubeDlGui.Test")]
+[assembly: AssemblyProduct("VideoBrowser.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
 [assembly: ComVisible(false)]
-
 [assembly: Guid("ceb9d499-9f24-42c0-b6ad-165d2abf9b7b")]
 
 // [assembly: AssemblyVersion("1.0.*")]

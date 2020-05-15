@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     using System;
     using System.Windows.Controls;

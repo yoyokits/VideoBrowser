@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Converters
+﻿namespace VideoBrowser.Converters
 {
     using System;
     using System.Globalization;

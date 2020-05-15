@@ -1,5 +1,5 @@
 ﻿<Grid
-    x:Class="YoutubeDlGui.Controls.CefSharpBrowser.CefSharpBrowser"
+    x:Class="VideoBrowser.Controls.CefSharpBrowser.CefSharpBrowser"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:asf="clr-namespace:AirspaceFixer"

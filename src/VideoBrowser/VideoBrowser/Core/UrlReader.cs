@@ -1,9 +1,9 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     using System;
     using System.ComponentModel;
-    using YoutubeDlGui.Extensions;
-    using YoutubeDlGui.If;
+    using VideoBrowser.Extensions;
+    using VideoBrowser.If;
 
     /// <summary>
     /// Defines the <see cref="UrlReader" />

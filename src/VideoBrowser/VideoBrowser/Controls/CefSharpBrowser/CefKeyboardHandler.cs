@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Controls.CefSharpBrowser
+﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
     using CefSharp;
     using CefSharp.WinForms;

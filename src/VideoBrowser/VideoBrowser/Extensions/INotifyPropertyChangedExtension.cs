@@ -1,9 +1,9 @@
-﻿namespace YoutubeDlGui.Extensions
+﻿namespace VideoBrowser.Extensions
 {
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="INotifyPropertyChangedExtension" />

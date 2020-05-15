@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Helpers
+﻿namespace VideoBrowser.Helpers
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading;
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="FFMpeg" />.

@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Models
+﻿namespace VideoBrowser.Models
 {
     using System;
     using System.ComponentModel;
@@ -6,10 +6,10 @@
     using System.IO;
     using System.Linq;
     using System.Windows.Input;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Core;
-    using YoutubeDlGui.Extensions;
-    using YoutubeDlGui.Helpers;
+    using VideoBrowser.Common;
+    using VideoBrowser.Core;
+    using VideoBrowser.Extensions;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="OperationModel" />

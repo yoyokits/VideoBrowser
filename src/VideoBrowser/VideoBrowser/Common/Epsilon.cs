@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Common
+﻿namespace VideoBrowser.Common
 {
     /// <summary>
     /// Defines the <see cref="Epsilon" />

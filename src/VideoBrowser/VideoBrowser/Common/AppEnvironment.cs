@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Common
+﻿namespace VideoBrowser.Common
 {
     using System;
     using System.IO;
@@ -15,7 +15,7 @@
 
         public const int ProgressUpdateDelay = 250;
 
-        public const string ShortName = nameof(YoutubeDlGui);
+        public const string ShortName = nameof(VideoBrowser);
 
         private const string BinariesDirectory = "Binaries";
 
@@ -66,6 +66,7 @@
         /// Gets the Version.
         /// </summary>
         public static string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         public static string[] Arguments { get; internal set; }
 
         #endregion Properties

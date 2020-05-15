@@ -1,7 +1,7 @@
-﻿namespace YoutubeDlGui.Common
+﻿namespace VideoBrowser.Common
 {
     using System;
-    using YoutubeDlGui.Extensions;
+    using VideoBrowser.Extensions;
 
     /// <summary>
     /// Defines the <see cref="Percentage" />

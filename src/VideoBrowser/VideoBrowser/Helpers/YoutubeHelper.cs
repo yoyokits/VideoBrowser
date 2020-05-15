@@ -1,9 +1,9 @@
-﻿namespace YoutubeDlGui.Helpers
+﻿namespace VideoBrowser.Helpers
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using YoutubeDlGui.Core;
+    using VideoBrowser.Core;
 
     /// <summary>
     /// Defines the <see cref="YoutubeHelper" />.

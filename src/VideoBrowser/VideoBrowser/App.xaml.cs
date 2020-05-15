@@ -1,7 +1,7 @@
-﻿namespace YoutubeDlGui
+﻿namespace VideoBrowser
 {
     using System.Windows;
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Interaction logic for App.xaml.

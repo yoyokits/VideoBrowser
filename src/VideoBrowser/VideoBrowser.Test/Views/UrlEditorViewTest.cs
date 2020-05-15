@@ -1,13 +1,13 @@
-﻿namespace YoutubeDlGui.Test.Views
+﻿namespace VideoBrowser.Test.Views
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Windows.Controls;
-    using YoutubeDlGui.Core;
-    using YoutubeDlGui.Models;
-    using YoutubeDlGui.Test.Common;
-    using YoutubeDlGui.Test.TestHelpers;
-    using YoutubeDlGui.ViewModels;
-    using YoutubeDlGui.Views;
+    using VideoBrowser.Core;
+    using VideoBrowser.Models;
+    using VideoBrowser.Test.Common;
+    using VideoBrowser.Test.TestHelpers;
+    using VideoBrowser.ViewModels;
+    using VideoBrowser.Views;
 
     /// <summary>
     /// Defines the <see cref="UrlEditorViewTest" />.

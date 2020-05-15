@@ -1,12 +1,12 @@
-﻿namespace YoutubeDlGui.ViewModels
+﻿namespace VideoBrowser.ViewModels
 {
     using System.Linq;
     using System.Windows;
     using System.Windows.Input;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Core;
-    using YoutubeDlGui.Models;
-    using YoutubeDlGui.Views;
+    using VideoBrowser.Common;
+    using VideoBrowser.Core;
+    using VideoBrowser.Models;
+    using VideoBrowser.Views;
 
     /// <summary>
     /// Defines the <see cref="MainWindowViewModel" />.

@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Views
+﻿namespace VideoBrowser.Views
 {
     /// <summary>
     /// Interaction logic for DownloadQueueView.xaml

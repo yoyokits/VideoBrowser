@@ -1,6 +1,6 @@
-﻿namespace YoutubeDlGui.Extensions
+﻿namespace VideoBrowser.Extensions
 {
-    using YoutubeDlGui.Common;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="RangeExtension" />

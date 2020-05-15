@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Helpers
+﻿namespace VideoBrowser.Helpers
 {
     using System.Drawing;
     using System.Windows;

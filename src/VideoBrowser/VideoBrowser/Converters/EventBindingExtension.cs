@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Converters
+﻿namespace VideoBrowser.Converters
 {
     using System;
     using System.Reflection;
@@ -6,7 +6,7 @@
     using System.Windows.Data;
     using System.Windows.Input;
     using System.Windows.Markup;
-    using YoutubeDlGui.Extensions;
+    using VideoBrowser.Extensions;
 
     /// <summary>
     /// Defines the <see cref="EventBindingExtension" />

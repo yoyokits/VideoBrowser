@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Common
+﻿namespace VideoBrowser.Common
 {
     using System;
     using System.Windows.Input;

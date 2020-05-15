@@ -1,7 +1,7 @@
-﻿namespace YoutubeDlGui.Core
+﻿namespace VideoBrowser.Core
 {
     using System.Collections.Generic;
-    using YoutubeDlGui.If;
+    using VideoBrowser.If;
 
     /// <summary>
     /// Defines the <see cref="UrlHandlerProvider" />

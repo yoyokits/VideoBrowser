@@ -1,12 +1,11 @@
-﻿namespace YoutubeDlGui.Controls.CefSharpBrowser
+﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
     using CefSharp;
     using CefSharp.WinForms;
     using System.Windows;
     using System.Windows.Input;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Core;
-    using YoutubeDlGui.Helpers;
+    using VideoBrowser.Common;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Interaction logic for CefSharpBrowser.xaml.

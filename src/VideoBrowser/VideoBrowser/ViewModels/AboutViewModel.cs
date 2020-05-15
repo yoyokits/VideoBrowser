@@ -1,11 +1,11 @@
-﻿namespace YoutubeDlGui.ViewModels
+﻿namespace VideoBrowser.ViewModels
 {
     using System.Diagnostics;
     using System.Windows.Input;
     using System.Windows.Media;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Helpers;
-    using YoutubeDlGui.Resources;
+    using VideoBrowser.Common;
+    using VideoBrowser.Helpers;
+    using VideoBrowser.Resources;
 
     /// <summary>
     /// Defines the <see cref="AboutViewModel" />.

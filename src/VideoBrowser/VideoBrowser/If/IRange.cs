@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.If
+﻿namespace VideoBrowser.If
 {
     using System;
 

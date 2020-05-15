@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.ViewModels
+﻿namespace VideoBrowser.ViewModels
 {
     using System.Collections.ObjectModel;
     using System.ComponentModel;
@@ -6,10 +6,10 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
-    using YoutubeDlGui.Common;
-    using YoutubeDlGui.Core;
-    using YoutubeDlGui.Models;
-    using YoutubeDlGui.Resources;
+    using VideoBrowser.Common;
+    using VideoBrowser.Core;
+    using VideoBrowser.Models;
+    using VideoBrowser.Resources;
 
     /// <summary>
     /// Defines the <see cref="DownloadQueueViewModel" />.

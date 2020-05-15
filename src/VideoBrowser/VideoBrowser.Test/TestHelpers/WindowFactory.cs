@@ -1,4 +1,4 @@
-﻿namespace YoutubeDlGui.Test.TestHelpers
+﻿namespace VideoBrowser.Test.TestHelpers
 {
     using System.Windows;
 
