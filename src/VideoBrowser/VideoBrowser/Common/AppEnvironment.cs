@@ -11,7 +11,7 @@
     {
         #region Constants
 
-        public const string Name = "YouTube and Online Video Downloader";
+        public const string Name = "Cekli Video Browser and Downloader";
 
         public const int ProgressUpdateDelay = 250;
 
@@ -45,7 +45,7 @@
         /// <summary>
         /// Gets the ProjectUrl.
         /// </summary>
-        public static string ProjectUrl { get; } = "https://github.com/yoyokits/youtube-dl-gui-dotnet";
+        public static string ProjectUrl { get; } = "https://github.com/yoyokits/VideoBrowser";
 
         /// <summary>
         /// Gets the UserLocalApplicationData.
@@ -65,7 +65,7 @@
         /// <summary>
         /// Gets the Version.
         /// </summary>
-        public static string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static string Version { get; } = $"{Assembly.GetExecutingAssembly().GetName().Version.ToString()} - Alpha";
 
         public static string[] Arguments { get; internal set; }
 

@@ -33,6 +33,11 @@
         /// <returns>The <see cref="bool"/>.</returns>
         public static bool IsValidUrl(string url)
         {
+            if (!url.Contains("http"))
+            {
+                url = $"http://{url}";
+            }
+
             var result = Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
             return result;

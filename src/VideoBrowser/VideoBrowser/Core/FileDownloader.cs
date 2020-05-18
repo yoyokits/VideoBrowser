@@ -7,6 +7,7 @@
     using System.IO;
     using System.Net;
     using System.Threading;
+    using VideoBrowser.Common;
 
     /// <summary>
     /// Defines the <see cref="FileDownloader" />
@@ -409,12 +410,18 @@
         /// </summary>
         private void CleanupFiles()
         {
+            if (this.Files == null)
+            {
+                Logger.Info("Clean up files is canceled, Files property is null.");
+                return;
+            }
+
+            var files = this.Files;
             new Thread(delegate ()
             {
                 var dict = new Dictionary<string, int>();
                 var keys = new List<string>();
-
-                foreach (var file in this.Files)
+                foreach (var file in files)
                 {
                     if (file.AlwaysCleanupOnCancel || !file.IsFinished)
                     {
