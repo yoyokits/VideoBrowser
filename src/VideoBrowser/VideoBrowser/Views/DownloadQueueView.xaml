@@ -44,7 +44,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemContainerStyle>
                 <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="ListBoxItem">
-                    <Setter Property="Width" Value="800" />
+                    <Setter Property="Width" Value="600" />
                     <Setter Property="Margin" Value="8" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>
@@ -84,9 +84,9 @@
                                     FontWeight="Bold"
                                     Foreground="RoyalBlue"
                                     Text="{Binding Title}" />
-                                <TextBlock Text="{Binding Url}" />
-                                <TextBlock Text="{Binding FileSize}" />
-                                <TextBlock Text="{Binding Status}" />
+                                <TextBlock Foreground="Gray" Text="{Binding Url}" />
+                                <TextBlock Foreground="Gray" Text="{Binding FileSize}" />
+                                <TextBlock Foreground="Gray" Text="{Binding Status}" />
                                 <StackPanel
                                     Margin="0,8,0,0"
                                     Orientation="Horizontal"

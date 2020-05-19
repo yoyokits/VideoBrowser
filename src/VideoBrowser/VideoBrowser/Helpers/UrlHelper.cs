@@ -20,7 +20,7 @@
             if (!IsValidUrl(url))
             {
                 var encodedUrl = HttpUtility.UrlEncode(url);
-                url = $"https://www.google.com/search?q={encodedUrl}";
+                url = $"https://www.youtube.com/results?search_query={encodedUrl}";
             }
 
             return url;
