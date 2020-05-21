@@ -2,14 +2,16 @@
 title: Cekli Video Browser and Downloader
 layout: post
 date: '2020-05-19 20:16:06 +0200'
-categories: jekyll update
+categories:
+- development
+- information
 ---
 
 Free Internet browser and Youtube video Downloader Windows desktop application.
 The video quality is customizable and can be downloaded in multithreading.
 The software is created as simple as possible like using other interenet browsers like Google Chrome, Internet Explorer, or Firefox.
 
-Cekli Video Browser based on [youtube-dl][youtube-dl] therefore in future it can support other video website like:
+{{site.title}} based on [youtube-dl][youtube-dl] therefore in future it can support other video website like:
 *  Bloomberg
 *  BusinessInsider
 *  CartoonNetwork
