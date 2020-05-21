@@ -79,12 +79,6 @@
     <Reference Include="CefSharp">
       <HintPath>..\..\..\bin\CefSharp.dll</HintPath>
     </Reference>
-    <Reference Include="CefSharp.BrowserSubprocess">
-      <HintPath>..\..\..\bin\CefSharp.BrowserSubprocess.exe</HintPath>
-    </Reference>
-    <Reference Include="CefSharp.BrowserSubprocess.Core">
-      <HintPath>..\..\..\bin\CefSharp.BrowserSubprocess.Core.dll</HintPath>
-    </Reference>
     <Reference Include="CefSharp.Core">
       <HintPath>..\..\..\bin\CefSharp.Core.dll</HintPath>
     </Reference>
