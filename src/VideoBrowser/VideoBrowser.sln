@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoBrowser", "VideoBrowse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoBrowser.Test", "VideoBrowser.Test\VideoBrowser.Test.csproj", "{CEB9D499-9F24-42C0-B6AD-165D2ABF9B7B}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "VideoBrowserSetup", "VideoBrowserSetup\VideoBrowserSetup.vdproj", "{5868F6E3-5C7F-4980-9FAD-F9E228AF6413}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +31,6 @@ Global
 		{CEB9D499-9F24-42C0-B6AD-165D2ABF9B7B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CEB9D499-9F24-42C0-B6AD-165D2ABF9B7B}.Release|x64.ActiveCfg = Release|x64
 		{CEB9D499-9F24-42C0-B6AD-165D2ABF9B7B}.Release|x64.Build.0 = Release|x64
-		{5868F6E3-5C7F-4980-9FAD-F9E228AF6413}.Debug|Any CPU.ActiveCfg = Debug
-		{5868F6E3-5C7F-4980-9FAD-F9E228AF6413}.Debug|x64.ActiveCfg = Debug
-		{5868F6E3-5C7F-4980-9FAD-F9E228AF6413}.Release|Any CPU.ActiveCfg = Release
-		{5868F6E3-5C7F-4980-9FAD-F9E228AF6413}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
