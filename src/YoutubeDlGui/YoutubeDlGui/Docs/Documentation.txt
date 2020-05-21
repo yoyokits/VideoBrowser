@@ -1,9 +1,0 @@
-﻿Acknowledgement:
-- youtube-dl: https://github.com/ytdl-org/youtube-dl
-- WebBrowserControl: https://www.codeproject.com/Tips/1158298/WPF-WebBrowser-Control-Enhancements
-- Syncfusion Metro Studio 5
-- MahApps.Metro: https://mahapps.com/
-- CefSharp: https://github.com/cefsharp/CefSharp
-- Apache Log4Net: https://logging.apache.org/log4net/
-- OokiDialogs.Wpf: https://github.com/augustoproiete/ookii-dialogs-wpf
-- ControlzEx
