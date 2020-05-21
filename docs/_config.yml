@@ -25,7 +25,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Cekli Video Browser is free a Chromium-based browser optimized for downloading Youtube Videos.
   It can download Videos in multithreading and select the video quality.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://yoyokits.github.io/VideoBrowser" # the base hostname & protocol for your site, e.g. http://example.com
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: nurcahyoyohanes
 github_username:  yoyokits/VideoBrowser
 
