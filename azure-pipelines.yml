@@ -31,5 +31,5 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    otherConsoleOptions: '/platform:x64 /Framework:.NETFramework,Version=v4.7.2'
+    otherConsoleOptions: '/platform:x64 /Framework:.NETFramework,Version=v4.6.2'
     testFiltercriteria: TestCategory!=ManualTest
