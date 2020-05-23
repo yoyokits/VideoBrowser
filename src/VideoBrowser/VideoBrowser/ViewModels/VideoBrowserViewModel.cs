@@ -206,6 +206,8 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnHome(object obj)
         {
+            this.Url = AppEnvironment.HomeUrl;
+            this.NavigateUrl = this.Url;
         }
 
         /// <summary>

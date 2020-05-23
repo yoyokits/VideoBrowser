@@ -15,7 +15,7 @@
       <Value Profile="(Default)">1080</Value>
     </Setting>
     <Setting Name="LastUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://youtube.com</Value>
+      <Value Profile="(Default)">https://yoyokits.github.io/VideoBrowser/welcome.html</Value>
     </Setting>
     <Setting Name="ShowMaxSimDownloads" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

@@ -72,7 +72,7 @@
         /// <summary>
         /// Gets the Version.
         /// </summary>
-        public string Version => $"Version {AppEnvironment.Version} - Alpha";
+        public string Version => $"Version {AppEnvironment.Version}";
 
         #endregion Properties
 

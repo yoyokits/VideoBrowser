@@ -73,7 +73,7 @@ namespace VideoBrowser.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://youtube.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://yoyokits.github.io/VideoBrowser/welcome.html")]
         public string LastUrl {
             get {
                 return ((string)(this["LastUrl"]));

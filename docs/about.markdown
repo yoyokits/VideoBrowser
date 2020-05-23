@@ -1,9 +1,16 @@
 ---
 title: About
 layout: page
-permalink: "/about/"
+permalink: "/about.html"
 ---
 
-{{site.title}} is a web browser which is optimized to download Youtube video.
+<p align="center">
+   <img src="{{site.image_folder}}cekli-logo.png"><br/>	
+   <strong>Cekli Browser and Youtube Downloader</strong>
+</p>
 
-<ul class="social-media-list"><li><a href="{{site.project_url}}"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a></li><li><a href="{{site.twitter_url}}"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">nurcahyoyohanes</span></a></li></ul>
+A web browser which is optimized to download Youtube from now andother video sites for the future.
+
+Any question, suggestion and bug report can be sent to:
+
+{{site.contact}}

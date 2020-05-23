@@ -38,9 +38,19 @@
         public static string AppDirectory => AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
+        /// Gets or sets the Arguments.
+        /// </summary>
+        public static string[] Arguments { get; internal set; }
+
+        /// <summary>
         /// Gets the Author.
         /// </summary>
         public static string Author => "Yohanes Wahyu Nurcahyo";
+
+        /// <summary>
+        /// Gets the HomeUrl.
+        /// </summary>
+        public static string HomeUrl => "https://yoyokits.github.io/VideoBrowser/welcome.html";
 
         /// <summary>
         /// Gets the ProjectUrl.
@@ -66,8 +76,6 @@
         /// Gets the Version.
         /// </summary>
         public static string Version { get; } = $"{Assembly.GetExecutingAssembly().GetName().Version.ToString()} - Alpha";
-
-        public static string[] Arguments { get; internal set; }
 
         #endregion Properties
 
