@@ -19,7 +19,7 @@
         /// </summary>
         internal AboutViewModel()
         {
-            this.ApplicationName = AppEnvironment.Name;
+            this.ApplicationName = AppEnvironment.LongName;
             this.ProjectUrlClickedCommand = new RelayCommand(this.OnProjectUrlClicked, nameof(this.ProjectUrlClickedCommand));
             this.LinkedInCommand = new RelayCommand(this.OnLinkedIn, nameof(this.TwitterCommand));
             this.TwitterCommand = new RelayCommand(this.OnTwitter, nameof(this.TwitterCommand));

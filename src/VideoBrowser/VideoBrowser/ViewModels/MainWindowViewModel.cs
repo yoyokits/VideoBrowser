@@ -71,7 +71,7 @@
         /// <summary>
         /// Gets the Title.
         /// </summary>
-        public string Title => $"{AppEnvironment.Name} v{AppEnvironment.Version}";
+        public string Title => $"{AppEnvironment.Name}";
 
         /// <summary>
         /// Gets the VideoBrowser.

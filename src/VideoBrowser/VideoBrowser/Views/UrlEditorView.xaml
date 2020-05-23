@@ -91,7 +91,8 @@
                         <Button
                             Margin="8,0,0,0"
                             Command="{Binding GetFolderCommand}"
-                            Style="{StaticResource ButtonPathStyle}">
+                            Style="{StaticResource ButtonPathStyle}"
+                            ToolTip="Change the output folder">
                             <Path Style="{StaticResource VideoFolder}" />
                         </Button>
                     </StackPanel>
@@ -99,7 +100,8 @@
                         Margin="0,4,0,8"
                         HorizontalAlignment="Left"
                         Command="{Binding DownloadCommand}"
-                        Content="Download" />
+                        Content="Download"
+                        ToolTip="Download the current video" />
                 </StackPanel>
             </Grid>
             <Grid

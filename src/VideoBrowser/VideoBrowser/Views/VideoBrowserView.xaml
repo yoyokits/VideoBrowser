@@ -51,16 +51,16 @@
                 Grid.Column="0"
                 Height="32"
                 Orientation="Horizontal">
-                <Button Command="{Binding BackwardCommand}">
+                <Button Command="{Binding BackwardCommand}" ToolTip="Go back to previous visited site">
                     <Path Style="{StaticResource Back}" />
                 </Button>
-                <Button Command="{Binding ForwardCommand}">
+                <Button Command="{Binding ForwardCommand}" ToolTip="Go forward to previous visited site">
                     <Path Style="{StaticResource Forward}" />
                 </Button>
-                <Button Command="{Binding ReloadCommand}">
+                <Button Command="{Binding ReloadCommand}" ToolTip="Refresh this site">
                     <Path Style="{StaticResource Reload}" />
                 </Button>
-                <Button Command="{Binding HomeCommand}">
+                <Button Command="{Binding HomeCommand}" ToolTip="Go home site for newest information">
                     <Path Style="{StaticResource Home}" />
                 </Button>
             </StackPanel>
@@ -95,8 +95,14 @@
                 Grid.Column="2"
                 Height="32"
                 Orientation="Horizontal">
-                <Button Command="{Binding DownloadCommand}" IsEnabled="{Binding UrlEditor.IsDownloadable}">
+                <Button
+                    Command="{Binding DownloadCommand}"
+                    IsEnabled="{Binding UrlEditor.IsDownloadable}"
+                    ToolTip="Download the current video">
                     <Path Style="{StaticResource Download}" />
+                </Button>
+                <Button Command="{Binding OpenOutputFolderCommand}" ToolTip="Open the output folder">
+                    <Path Style="{StaticResource VideoFolder}" />
                 </Button>
             </StackPanel>
         </Grid>

@@ -94,12 +94,14 @@
                                     <Button
                                         Width="50"
                                         Command="{Binding PauseDownloadCommand}"
-                                        Content="{Binding PauseText}" />
+                                        Content="{Binding PauseText}"
+                                        ToolTip="Pause or resume download" />
                                     <Button
                                         Width="50"
                                         Margin="8,0,0,0"
                                         Command="{Binding CancelDownloadCommand}"
-                                        Content="Cancel" />
+                                        Content="Cancel"
+                                        ToolTip="Cancel downloading this video" />
                                 </StackPanel>
                                 <StackPanel
                                     Margin="0,8,0,0"
@@ -111,12 +113,13 @@
                                             <Setter Property="Margin" Value="2" />
                                         </Style>
                                     </StackPanel.Resources>
-                                    <Button Command="{Binding ShowMediaInFolderCommand}">
+                                    <Button Command="{Binding ShowMediaInFolderCommand}" ToolTip="Open this video folder">
                                         <Path Style="{StaticResource VideoFolder}" />
                                     </Button>
                                     <Button
                                         Margin="8,0,0,0"
                                         Command="{Binding PlayMediaCommand}"
+                                        ToolTip="Play this video"
                                         Visibility="{Binding IsCompletedControlsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Path Style="{StaticResource Play}" />
                                     </Button>
