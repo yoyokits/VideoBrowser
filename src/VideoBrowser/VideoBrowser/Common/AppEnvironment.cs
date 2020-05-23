@@ -11,7 +11,9 @@
     {
         #region Constants
 
-        public const string Name = "Cekli Video Browser and Downloader";
+        public const string Name = "Cekli Browser";
+
+        public const string LongName = "Cekli Video Browser and Downloader";
 
         public const int ProgressUpdateDelay = 250;
 

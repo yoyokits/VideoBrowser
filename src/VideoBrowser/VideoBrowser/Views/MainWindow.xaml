@@ -25,7 +25,7 @@
     <Controls:MetroWindow.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding PressEscCommand}" />
     </Controls:MetroWindow.InputBindings>
-    <Grid Background="WhiteSmoke">
+    <Grid Background="Gainsboro">
         <TabControl BorderBrush="WhiteSmoke" TabStripPlacement="Right">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
@@ -66,16 +66,25 @@
                     </Style.Triggers>
                 </Style>
             </TabControl.Resources>
-            <TabItem DataContext="{Binding VideoBrowser}">
+            <TabItem DataContext="{Binding VideoBrowser}" ToolTip="Web browser and video downloader">
                 <views:VideoBrowserView />
             </TabItem>
-            <TabItem DataContext="{Binding DownloadQueueViewModel}" Header="Download">
+            <TabItem
+                DataContext="{Binding DownloadQueueViewModel}"
+                Header="Download"
+                ToolTip="Download queue">
                 <views:DownloadQueueView />
             </TabItem>
-            <TabItem DataContext="{Binding Settings}" Header="Settings">
+            <TabItem
+                DataContext="{Binding Settings}"
+                Header="Settings"
+                ToolTip="Change the settings">
                 <views:SettingsView />
             </TabItem>
-            <TabItem DataContext="{Binding About}" Header="About">
+            <TabItem
+                DataContext="{Binding About}"
+                Header="About"
+                ToolTip="About this software">
                 <views:AboutView />
             </TabItem>
         </TabControl>

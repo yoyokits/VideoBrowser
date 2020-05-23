@@ -6,7 +6,8 @@ layout: home
    <img src="{{site.image_folder}}cekli-logo.png"><br/>
    <strong>Cekli Browser and Youtube Downloader</strong>
 </p>
-
+Master [![Build Status](https://dev.azure.com/cekli/cekli/_apis/build/status/yoyokits.VideoBrowser?branchName=master)](https://dev.azure.com/cekli/cekli/_build/latest?definitionId=3&branchName=master)
+Development [![Build Status](https://dev.azure.com/cekli/cekli/_apis/build/status/yoyokits.VideoBrowser?branchName=development)](https://dev.azure.com/cekli/cekli/_build/latest?definitionId=3&branchName=development)
 
 Free Internet browser and Youtube video downloader Windows desktop application.
 The video quality is customizable and can be downloaded in multithreading.
@@ -15,7 +16,6 @@ The software is created as simple as possible like using other web browsers like
 Please note that this is in early development, therefore you may find bugs. Please inform meabout the bug you find via 
 
 {{site.contact}}
-
 
 ![Cekli Video Browser Screenshot]({{site.image_folder}}CekliVideoBrowserDownloadOptionsScreenShot.jpg)
 
@@ -35,6 +35,7 @@ Please note that this is in early development, therefore you may find bugs. Plea
 **Download**
 
 The most recent installer can be downloaded here:
+
 [![Download]({{site.image_folder}}Download.jpg)](download.html)
 
 **Usage**
@@ -59,6 +60,16 @@ Url text input as youtube search
 
 Simply click star to give me a power for further development of this project.
 
+**Acknowledgement**
+
+This software will not exist without the previous projects like:
+{% include_relative /_includes/acknowledgement.md %}
+
+**License**
+
+[MIT license](/about.html)<br/>
+It means you can do whatever you want from copying, redistibuting and  modifying the source code.
+Please use it wisely with your own risk.
 
 [youtube-dl]: http://ytdl-org.github.io/youtube-dl/
 [youtube-dl-supported-sites]: https://ytdl-org.github.io/youtube-dl/supportedsites.html

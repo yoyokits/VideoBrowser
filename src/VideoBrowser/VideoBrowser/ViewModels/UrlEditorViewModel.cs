@@ -316,7 +316,7 @@
             var output = Path.Combine(this.OutputFolder, fileName);
             if (File.Exists(output))
             {
-                var message = $@"File ""{fileName}"" is already downloaded";
+                var message = $@"File ""{fileName}"" is already downloaded. If it was failed, delete it and try again.";
                 this.GlobalData.ShowMessageAsync("Download Canceled", message);
                 return;
             }

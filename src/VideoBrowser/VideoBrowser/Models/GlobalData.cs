@@ -126,7 +126,7 @@
             this.IsMessageBoxVisible = false;
             if (this.IsAirspaceVisible)
             {
-                this.IsAirspaceVisible = currentAirspaceVisible;
+                this.IsAirspaceVisible = false;
             }
 
             return result.Result;

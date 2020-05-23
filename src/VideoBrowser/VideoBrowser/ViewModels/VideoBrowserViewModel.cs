@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -49,8 +50,9 @@
             this.DownloadCommand = new RelayCommand(this.OnDownload, "Download", (o) => this.UrlReader.IsDownloadable);
             this.HomeCommand = new RelayCommand(this.OnHome, "Home");
             this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl, "NavigateUrl");
+            this.OpenOutputFolderCommand = new RelayCommand(this.OnOpenOutputFolder, "Open output folder");
             this._cookies = new Dictionary<string, string>();
-            IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
+            this.IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
             this.UrlEditor = new UrlEditorViewModel(this.UrlReader, globalData)
             {
                 NavigateUrlCommand = this.NavigateUrlCommand,
@@ -129,7 +131,7 @@
         /// <summary>
         /// Gets or sets the NavigateUrl.
         /// The current valid Url that is currently opened.
-        /// It is set by Url property if the Return key is pressed or link is clicked..
+        /// It is set by Url property if the Return key is pressed or link is clicked...
         /// </summary>
         public string NavigateUrl { get => this._navigateUrl; set => this.Set(this.PropertyChangedHandler, ref this._navigateUrl, value); }
 
@@ -139,12 +141,17 @@
         public ICommand NavigateUrlCommand { get; }
 
         /// <summary>
+        /// Gets the OpenOutputFolderCommand.
+        /// </summary>
+        public ICommand OpenOutputFolderCommand { get; }
+
+        /// <summary>
         /// Gets or sets the ReloadCommand.
         /// </summary>
         public ICommand ReloadCommand { get => this._reloadCommand; set => this.Set(this.PropertyChangedHandler, ref this._reloadCommand, value); }
 
         /// <summary>
-        /// Gets or sets the WebUri that is typed in the TextBox.
+        /// Gets or sets the WebUri that is typed in the TextBox..
         /// </summary>
         public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
 
@@ -219,6 +226,15 @@
             this.Url = UrlHelper.GetValidUrl(this.Url);
             this.NavigateUrl = this.Url;
             this.GlobalData.IsAirspaceVisible = false;
+        }
+
+        /// <summary>
+        /// The OnOpenOutputFolder.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnOpenOutputFolder(object obj)
+        {
+            Process.Start(this.GlobalData.Settings.OutputFolder);
         }
 
         /// <summary>
