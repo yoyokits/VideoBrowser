@@ -60,6 +60,9 @@
                 <Button Command="{Binding ReloadCommand}">
                     <Path Style="{StaticResource Reload}" />
                 </Button>
+                <Button Command="{Binding HomeCommand}">
+                    <Path Style="{StaticResource Home}" />
+                </Button>
             </StackPanel>
             <!--  URL TextBox  -->
             <adornedcontrol:AdornedControl

@@ -2,20 +2,26 @@
 layout: home
 ---
 
+<p align="center">
+   <img src="{{site.image_folder}}cekli-logo.png"><br/>
+   <strong>Cekli Browser and Youtube Downloader</strong>
+</p>
+
+
 Free Internet browser and Youtube video downloader Windows desktop application.
 The video quality is customizable and can be downloaded in multithreading.
 The software is created as simple as possible like using other web browsers like Google Chrome, Internet Explorer, or Firefox.
 
-The development site is in <a href="{{site.project_url}}"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a>
+Please note that this is in early development, therefore you may find bugs. Please inform meabout the bug you find via 
 
-Please note that this is in early development, therefore you may find bugs. Please inform meabout the bug you find via my <a href="{{site.twitter_url}}"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">nurcahyoyohanes</span></a> or <a href="{{site.project_url}}"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a>.
+{{site.contact}}
 
 
 ![Cekli Video Browser Screenshot]({{site.image_folder}}CekliVideoBrowserDownloadOptionsScreenShot.jpg)
 
 {{site.title}} based on [youtube-dl][youtube-dl] therefore in future it can support more than 100 other video websites like:
 * youtube -> supported
-* --- will be supoorted in the future ---
+* --- will be supported in the future ---
 *  Bloomberg
 *  BusinessInsider
 *  CartoonNetwork
@@ -29,9 +35,9 @@ Please note that this is in early development, therefore you may find bugs. Plea
 **Download**
 
 The most recent installer can be downloaded here:
-[![Download]({{site.image_folder}}Download.jpg)](Download.html)
+[![Download]({{site.image_folder}}Download.jpg)](download.html)
 
-**Usages**
+**Usage**
 
 ![{{site.title}} as standard browser]({{site.image_folder}}CekliVideoBrowserMainViewScreenShot.jpg)
 Like any other web browsers, {{site.title}} can be used as a web browser.
