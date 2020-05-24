@@ -19,7 +19,7 @@ Any question, suggestion and bug report can be sent to:
 
 MIT License
 
-Copyright (c) 2020 yoyokits
+Copyright (c) 2020 Yohanes Wahyu Nurcahyo
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
