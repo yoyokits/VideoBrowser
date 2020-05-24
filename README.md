@@ -10,6 +10,9 @@ Free Internet browser and Youtube video downloader Windows desktop application.
 The video quality is customizable and can be downloaded in multithreading.
 The software is created as simple as possible like using other web browsers like Google Chrome, Internet Explorer, or Firefox.
 
+**Website for this project:**<br/>
+[Cekli Browser Website][cekli-website]
+
 Please note that this is in early development, therefore you may find bugs. Please inform meabout the bug you find via 
 
 <ul class="social-media-list"><li><a href="https://github.com/yoyokits/VideoBrowser"><svg class="svg-icon"><use xlink:href="https://yoyokits.github.io/VideoBrowser/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a></li><li><a href="https://www.twitter.com/nurcahyoyohanes"><svg class="svg-icon"><use xlink:href="https://yoyokits.github.io/VideoBrowser/assets/minima-social-icons.svg#twitter"></use></svg>  <span class="username">nurcahyoyohanes</span></a></li></ul>
@@ -78,6 +81,7 @@ MIT license<br/>
 It means you can do whatever you want from copying, redistibuting and  modifying the source code.
 Please use it wisely with your own risk.
 
+[cekli-website]: https://yoyokits.github.io/VideoBrowser/
 [youtube-dl]: http://ytdl-org.github.io/youtube-dl/
 [youtube-dl-supported-sites]: https://ytdl-org.github.io/youtube-dl/supportedsites.html
 
