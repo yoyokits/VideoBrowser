@@ -4,7 +4,8 @@
 </p>
 
 Master <img src="https://dev.azure.com/cekli/cekli/_apis/build/status/yoyokits.VideoBrowser?branchName=master"> 
-Development <img src="https://dev.azure.com/cekli/cekli/_apis/build/status/yoyokits.VideoBrowser?branchName=development">
+Development <img src="https://dev.azure.com/cekli/cekli/_apis/build/status/yoyokits.VideoBrowser?branchName=development"> 
+Downloaded [![Github All Releases](https://img.shields.io/github/downloads/yoyokits/VideoBrowser/total.svg)]()
 
 Free Internet browser and Youtube video downloader Windows desktop application.
 The video quality is customizable and can be downloaded in multithreading.
