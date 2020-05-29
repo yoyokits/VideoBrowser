@@ -2,6 +2,7 @@
 {
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.IO;
     using System.Windows.Data;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -21,8 +22,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadQueueViewModel"/> class.
         /// </summary>
-        public DownloadQueueViewModel()
+        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
+        public DownloadQueueViewModel(GlobalData globalData)
         {
+            this.GlobalData = globalData;
             this.RemoveOperationCommand = new RelayCommand(this.OnRemoveOperation);
             this.OperationCollectionView = CollectionViewSource.GetDefaultView(this.OperationModels);
         }
@@ -30,6 +33,11 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the GlobalData.
+        /// </summary>
+        public GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets or sets the Icon.
@@ -63,8 +71,19 @@
         {
             var operationModel = new OperationModel(operation) { PauseDownloadAction = this.OnPauseDownloadCalled, CancelDownloadAction = this.OnCancelDownloadCalled };
             var element = (DispatcherObject)this.OperationCollectionView;
-            element.InvokeUIThread(() => this.OperationModels.Add(operationModel));
-            DownloadQueueHandler.Add(operation);
+            element.InvokeUIThread(() =>
+            {
+                if (!this.OperationModels.Contains(operationModel))
+                {
+                    this.OperationModels.Add(operationModel);
+                    DownloadQueueHandler.Add(operation);
+                }
+                else
+                {
+                    var output = Path.GetFileName(operationModel.Operation.Output);
+                    this.GlobalData.ShowMessageAsync("Download Canceled", $"The video/audio {output} is already downloaded");
+                }
+            });
         }
 
         /// <summary>

@@ -61,7 +61,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
@@ -88,6 +89,7 @@
     <Compile Include="Common\ByteFormatProviderTest.cs" />
     <Compile Include="Common\ManualTestAttribute.cs" />
     <Compile Include="Common\PercentageTest.cs" />
+    <Compile Include="Models\OperationModelTest.cs" />
     <Compile Include="TestHelpers\DummyOperation.cs" />
     <Compile Include="TestHelpers\TestHelper.cs" />
     <Compile Include="TestHelpers\WindowFactory.cs" />
@@ -99,7 +101,6 @@
     <Compile Include="Views\DownloadQueueViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="key.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

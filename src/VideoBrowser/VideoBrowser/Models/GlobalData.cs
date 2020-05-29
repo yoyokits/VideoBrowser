@@ -30,7 +30,7 @@
         /// </summary>
         internal GlobalData()
         {
-            this.DownloadQueueViewModel = new DownloadQueueViewModel();
+            this.DownloadQueueViewModel = new DownloadQueueViewModel(this);
             this.Settings = new SettingsViewModel(this);
             this.IsFullScreenCommand = new RelayCommand(this.OnIsFullScreen);
         }
