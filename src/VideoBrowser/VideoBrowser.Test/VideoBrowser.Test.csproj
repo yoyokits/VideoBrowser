@@ -57,6 +57,12 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\..\bin\FluentAssertions.dll</HintPath>
@@ -93,6 +99,7 @@
     <Compile Include="Views\DownloadQueueViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="key.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
