@@ -21,6 +21,8 @@
 
         private bool _isFullScreen;
 
+        private int _selectedMainTabIndex;
+
         #endregion Fields
 
         #region Constructors
@@ -31,6 +33,7 @@
         internal GlobalData()
         {
             this.DownloadQueueViewModel = new DownloadQueueViewModel(this);
+            this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(this.DownloadQueueViewModel.OperationModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
             this.Settings = new SettingsViewModel(this);
             this.IsFullScreenCommand = new RelayCommand(this.OnIsFullScreen);
         }
@@ -47,6 +50,11 @@
         #endregion Events
 
         #region Properties
+
+        /// <summary>
+        /// Gets the DownloadFlyoutViewModel.
+        /// </summary>
+        public DownloadFlyoutViewModel DownloadFlyoutViewModel { get; }
 
         /// <summary>
         /// Gets the DownloadQueueViewModel.
@@ -89,6 +97,23 @@
         /// Gets or sets the MainWindow.
         /// </summary>
         public MainWindow MainWindow { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the SelectedMainTabIndex.
+        /// </summary>
+        public int SelectedMainTabIndex
+        {
+            get => _selectedMainTabIndex;
+            set
+            {
+                if (!this.Set(this.PropertyChanged, ref _selectedMainTabIndex, value))
+                {
+                    return;
+                }
+
+                this.IsAirspaceVisible = false;
+            }
+        }
 
         /// <summary>
         /// Gets the Settings.
@@ -139,6 +164,14 @@
         private void OnIsFullScreen(object obj)
         {
             this.IsFullScreen = (bool)obj;
+        }
+
+        /// <summary>
+        /// The ShowDownloadTabAction.
+        /// </summary>
+        private void ShowDownloadTabAction()
+        {
+            this.SelectedMainTabIndex = 1;
         }
 
         #endregion Methods

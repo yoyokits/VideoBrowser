@@ -83,7 +83,8 @@
                                     FontSize="14"
                                     FontWeight="Bold"
                                     Foreground="RoyalBlue"
-                                    Text="{Binding Title}" />
+                                    Text="{Binding Title}"
+                                    ToolTip="{Binding Title}" />
                                 <TextBlock Foreground="Gray" Text="{Binding Url}" />
                                 <TextBlock Foreground="Gray" Text="{Binding FileSize}" />
                                 <TextBlock Foreground="Gray" Text="{Binding Status}" />

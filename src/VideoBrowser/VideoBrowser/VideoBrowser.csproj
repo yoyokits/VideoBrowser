@@ -191,6 +191,7 @@
     <Compile Include="Controls\WebBrowserControl\WebBrowserControl.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
+    <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Core\Commands.cs" />
     <Compile Include="Core\DownloadOperation.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Common\VideoState.cs" />
     <Compile Include="Resources\Icons.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\DownloadFlyoutViewModel.cs" />
     <Compile Include="ViewModels\DownloadQueueViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -251,6 +253,9 @@
     <Compile Include="ViewModels\VideoViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DownloadFlyoutView.xaml.cs">
+      <DependentUpon>DownloadFlyoutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DownloadQueueView.xaml.cs">
       <DependentUpon>DownloadQueueView.xaml</DependentUpon>
@@ -281,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DownloadFlyoutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
