@@ -15,7 +15,7 @@
     /// Defines the <see cref="OperationModel" />
     /// The Download Queue Items.
     /// </summary>
-    public class OperationModel : NotifyPropertyChanged, IDisposable
+    public class OperationModel : NotifyPropertyChanged, IEquatable<OperationModel>, IDisposable
     {
         #region Fields
 
@@ -230,6 +230,17 @@
             this.Operation.Dispose();
             this.CancelDownloadAction = null;
             this.PauseDownloadAction = null;
+        }
+
+        /// <summary>
+        /// The Equals.
+        /// </summary>
+        /// <param name="other">The other<see cref="OperationModel"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public bool Equals(OperationModel other)
+        {
+            var isEqual = other != null && this.Operation.Output == other.Operation.Output;
+            return isEqual;
         }
 
         /// <summary>

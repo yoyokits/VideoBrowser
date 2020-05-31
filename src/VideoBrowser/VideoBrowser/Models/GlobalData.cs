@@ -7,6 +7,7 @@
     using System.Windows.Input;
     using VideoBrowser.Common;
     using VideoBrowser.Extensions;
+    using VideoBrowser.Helpers;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
 
@@ -21,6 +22,8 @@
 
         private bool _isFullScreen;
 
+        private int _selectedMainTabIndex;
+
         #endregion Fields
 
         #region Constructors
@@ -30,9 +33,11 @@
         /// </summary>
         internal GlobalData()
         {
-            this.DownloadQueueViewModel = new DownloadQueueViewModel();
+            this.DownloadQueueViewModel = new DownloadQueueViewModel(this);
+            this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(this.DownloadQueueViewModel.OperationModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
             this.Settings = new SettingsViewModel(this);
             this.IsFullScreenCommand = new RelayCommand(this.OnIsFullScreen);
+            this.TestCommand = new RelayCommand(this.OnTest, "Call test method");
         }
 
         #endregion Constructors
@@ -47,6 +52,11 @@
         #endregion Events
 
         #region Properties
+
+        /// <summary>
+        /// Gets the DownloadFlyoutViewModel.
+        /// </summary>
+        public DownloadFlyoutViewModel DownloadFlyoutViewModel { get; }
 
         /// <summary>
         /// Gets the DownloadQueueViewModel.
@@ -71,6 +81,11 @@
         }
 
         /// <summary>
+        /// Gets a value indicating whether IsDebug.
+        /// </summary>
+        public bool IsDebug => DebugHelper.IsDebug;
+
+        /// <summary>
         /// Gets or sets a value indicating whether IsFullScreen.
         /// </summary>
         public bool IsFullScreen { get => _isFullScreen; set => this.Set(this.PropertyChanged, ref _isFullScreen, value); }
@@ -91,9 +106,31 @@
         public MainWindow MainWindow { get; internal set; }
 
         /// <summary>
+        /// Gets or sets the SelectedMainTabIndex.
+        /// </summary>
+        public int SelectedMainTabIndex
+        {
+            get => _selectedMainTabIndex;
+            set
+            {
+                if (!this.Set(this.PropertyChanged, ref _selectedMainTabIndex, value))
+                {
+                    return;
+                }
+
+                this.IsAirspaceVisible = false;
+            }
+        }
+
+        /// <summary>
         /// Gets the Settings.
         /// </summary>
         public SettingsViewModel Settings { get; }
+
+        /// <summary>
+        /// Gets the TestCommand.
+        /// </summary>
+        public ICommand TestCommand { get; }
 
         #endregion Properties
 
@@ -139,6 +176,23 @@
         private void OnIsFullScreen(object obj)
         {
             this.IsFullScreen = (bool)obj;
+        }
+
+        /// <summary>
+        /// The OnTest.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnTest(object obj)
+        {
+            this.DownloadFlyoutViewModel.IsOpen = true;
+        }
+
+        /// <summary>
+        /// The ShowDownloadTabAction.
+        /// </summary>
+        private void ShowDownloadTabAction()
+        {
+            this.SelectedMainTabIndex = 1;
         }
 
         #endregion Methods

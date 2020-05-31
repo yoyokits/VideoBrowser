@@ -311,8 +311,9 @@
         private void OnDownload(object o)
         {
             var format = this.SelectedFormat;
+            var formatTitle = format.AudioOnly ? format.AudioBitRate.ToString() : format.Format.ToString();
             this.FileName = FileHelper.GetValidFilename(this.FileName);
-            var fileName = $"{this.FileName}.{format.Extension}";
+            var fileName = $"{this.FileName}-{formatTitle}.{format.Extension}";
             var output = Path.Combine(this.OutputFolder, fileName);
             if (File.Exists(output))
             {

@@ -57,6 +57,13 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\..\bin\FluentAssertions.dll</HintPath>
@@ -82,6 +89,7 @@
     <Compile Include="Common\ByteFormatProviderTest.cs" />
     <Compile Include="Common\ManualTestAttribute.cs" />
     <Compile Include="Common\PercentageTest.cs" />
+    <Compile Include="Models\OperationModelTest.cs" />
     <Compile Include="TestHelpers\DummyOperation.cs" />
     <Compile Include="TestHelpers\TestHelper.cs" />
     <Compile Include="TestHelpers\WindowFactory.cs" />

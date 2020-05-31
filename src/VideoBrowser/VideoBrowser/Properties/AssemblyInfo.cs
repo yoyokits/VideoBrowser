@@ -13,7 +13,7 @@ using System.Windows;
 [assembly: AssemblyCompany("Cekli")]
 [assembly: AssemblyProduct("VideoBrowser")]
 [assembly: AssemblyCopyright("Copyright©2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Cekli")]
 [assembly: AssemblyCulture("")]
 [assembly: InternalsVisibleTo("VideoBrowser.Test")]
 
@@ -50,6 +50,7 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.1.1.0")]
+[assembly: AssemblyFileVersion("0.1.1.0")]
 [assembly: NeutralResourcesLanguage("en-US")]
+[assembly: Guid("06AEED36-193A-434D-B5CA-27BCAB38F15C")]
