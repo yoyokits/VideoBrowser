@@ -130,9 +130,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </DataTrigger.EnterActions>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsOpen}" Value="False">
-                            <DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -142,7 +140,7 @@
                                             Duration="0:0:0.300" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </DataTrigger.EnterActions>
+                            </DataTrigger.ExitActions>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

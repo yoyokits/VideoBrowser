@@ -7,6 +7,7 @@
     using System.Windows.Input;
     using VideoBrowser.Common;
     using VideoBrowser.Extensions;
+    using VideoBrowser.Helpers;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
 
@@ -36,6 +37,7 @@
             this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(this.DownloadQueueViewModel.OperationModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
             this.Settings = new SettingsViewModel(this);
             this.IsFullScreenCommand = new RelayCommand(this.OnIsFullScreen);
+            this.TestCommand = new RelayCommand(this.OnTest, "Call test method");
         }
 
         #endregion Constructors
@@ -79,6 +81,11 @@
         }
 
         /// <summary>
+        /// Gets a value indicating whether IsDebug.
+        /// </summary>
+        public bool IsDebug => DebugHelper.IsDebug;
+
+        /// <summary>
         /// Gets or sets a value indicating whether IsFullScreen.
         /// </summary>
         public bool IsFullScreen { get => _isFullScreen; set => this.Set(this.PropertyChanged, ref _isFullScreen, value); }
@@ -119,6 +126,11 @@
         /// Gets the Settings.
         /// </summary>
         public SettingsViewModel Settings { get; }
+
+        /// <summary>
+        /// Gets the TestCommand.
+        /// </summary>
+        public ICommand TestCommand { get; }
 
         #endregion Properties
 
@@ -164,6 +176,15 @@
         private void OnIsFullScreen(object obj)
         {
             this.IsFullScreen = (bool)obj;
+        }
+
+        /// <summary>
+        /// The OnTest.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnTest(object obj)
+        {
+            this.DownloadFlyoutViewModel.IsOpen = true;
         }
 
         /// <summary>

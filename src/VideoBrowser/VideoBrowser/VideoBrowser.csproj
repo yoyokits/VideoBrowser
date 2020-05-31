@@ -225,6 +225,7 @@
     <Compile Include="Extensions\RangeExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
+    <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Helpers\FFMpeg.cs" />
     <Compile Include="Helpers\FFMpegFileType.cs" />
     <Compile Include="Helpers\FFMpegHelper.cs" />
@@ -367,16 +368,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Binaries\ffmpeg.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Binaries\ffplay.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Binaries\ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

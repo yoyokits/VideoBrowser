@@ -18,7 +18,8 @@
             Grid.Column="0"
             Margin="4"
             Command="{Binding ShowDownloadTabCommand}"
-            Content="Show Downloads" />
+            Content="Show Downloads"
+            ToolTip="Show download queue" />
         <ItemsControl Grid.Column="1" ItemsSource="{Binding OperationModels}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -31,26 +32,15 @@
                         Width="250"
                         Margin="4"
                         HorizontalAlignment="Stretch">
-                        <Border
-                            Background="Gray"
-                            BorderBrush="Black"
-                            BorderThickness="1"
-                            Opacity="0.7">
-                            <Border.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="3"
-                                    ShadowDepth="0"
-                                    Color="White" />
-                            </Border.Effect>
-                        </Border>
+                        <Border Background="#FF555555" Opacity="0.7" />
                         <StackPanel Margin="8,2,8,2">
                             <TextBlock
                                 FontSize="14"
                                 FontWeight="Bold"
-                                Foreground="RoyalBlue"
+                                Foreground="White"
                                 Text="{Binding Title}"
                                 ToolTip="{Binding Title}" />
-                            <TextBlock Foreground="White" Text="{Binding Status}" />
+                            <TextBlock Foreground="Gainsboro" Text="{Binding Status}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

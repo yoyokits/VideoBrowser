@@ -19,9 +19,13 @@
                 <ResourceDictionary Source="../Resources/IconsResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:BoolToVisibilityConverter
-                x:Key="BoolToVisibilityConverter"
+                x:Key="InverseBoolToVisibilityConverter"
                 FalseValue="Visible"
                 TrueValue="Collapsed" />
+            <converters:BoolToVisibilityConverter
+                x:Key="BoolToVisibilityConverter"
+                FalseValue="Collapsed"
+                TrueValue="Visible" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -33,7 +37,7 @@
         <Grid
             Grid.Row="0"
             Margin="0,0,0,4"
-            Visibility="{Binding GlobalData.IsFullScreen, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            Visibility="{Binding GlobalData.IsFullScreen, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
             <Grid.Resources>
                 <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
                     <Setter Property="BorderThickness" Value="0" />
@@ -103,6 +107,13 @@
                 </Button>
                 <Button Command="{Binding OpenOutputFolderCommand}" ToolTip="Open the output folder">
                     <Path Style="{StaticResource VideoFolder}" />
+                </Button>
+                <Button
+                    Command="{Binding TestCommand}"
+                    DataContext="{Binding GlobalData}"
+                    ToolTip="Test a code"
+                    Visibility="{Binding IsDebug, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Path Style="{StaticResource Test}" />
                 </Button>
             </StackPanel>
         </Grid>
