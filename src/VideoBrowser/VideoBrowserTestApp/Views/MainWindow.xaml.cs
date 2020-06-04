@@ -1,5 +1,7 @@
 ﻿namespace VideoBrowserTestApp
 {
+    using VideoBrowserTestApp.ViewModels;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
     /// </summary>
@@ -13,6 +15,7 @@
         public MainWindow()
         {
             this.InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
         }
 
         #endregion Constructors
