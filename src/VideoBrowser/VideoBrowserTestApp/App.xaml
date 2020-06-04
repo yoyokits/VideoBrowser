@@ -1,8 +1,7 @@
 ﻿<Application
-    x:Class="VideoBrowser.App"
+    x:Class="VideoBrowserTestApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Startup="OnApplication_Startup"
     StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>

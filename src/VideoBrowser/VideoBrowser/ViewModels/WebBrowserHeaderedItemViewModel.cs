@@ -30,7 +30,7 @@
             this.VideoBrowserViewModel = new VideoBrowserViewModel(globalData);
             this.VideoBrowserViewModel.PropertyChanged += this.OnVideoBrowserViewModel_PropertyChanged;
             UIThreadHelper.Invoke(() => this.VideoBrowserView = new VideoBrowserView { DataContext = this.VideoBrowserViewModel });
-            this.Header = this.VideoBrowserViewModel.Title;
+            this.Header = this.VideoBrowserViewModel.Header;
             this.Content = this.VideoBrowserView;
         }
 
@@ -80,9 +80,9 @@
         /// <param name="e">The e<see cref="PropertyChangedEventArgs"/>.</param>
         private void OnVideoBrowserViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.IsMatch(nameof(this.VideoBrowserViewModel.Title)))
+            if (e.IsMatch(nameof(this.VideoBrowserViewModel.Header)))
             {
-                this.Header = this.VideoBrowserViewModel.Title;
+                this.Header = this.VideoBrowserViewModel.Header;
             }
         }
 

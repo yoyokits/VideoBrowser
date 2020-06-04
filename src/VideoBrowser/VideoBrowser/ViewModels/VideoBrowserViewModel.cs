@@ -30,6 +30,8 @@
 
         private ICommand _forwardCommand;
 
+        private string _header;
+
         private string _navigateUrl = "youtube.com";
 
         private ICommand _reloadCommand;
@@ -97,6 +99,11 @@
         public GlobalData GlobalData { get; }
 
         /// <summary>
+        /// Gets or sets the Header.
+        /// </summary>
+        public string Header { get => _header; set => this.Set(this.PropertyChangedHandler, ref _header, value); }
+
+        /// <summary>
         /// Gets the HomeCommand.
         /// </summary>
         public ICommand HomeCommand { get; }
@@ -131,7 +138,7 @@
         /// <summary>
         /// Gets or sets the NavigateUrl.
         /// The current valid Url that is currently opened.
-        /// It is set by Url property if the Return key is pressed or link is clicked...
+        /// It is set by Url property if the Return key is pressed or link is clicked.
         /// </summary>
         public string NavigateUrl { get => this._navigateUrl; set => this.Set(this.PropertyChangedHandler, ref this._navigateUrl, value); }
 
