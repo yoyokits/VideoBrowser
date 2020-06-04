@@ -18,7 +18,7 @@
     </Grid.Resources>
     <asf:AirspacePanel FixAirspace="{Binding GlobalData.IsAirspaceVisible}">
         <WindowsFormsHost x:Name="windowsFormsHost" Visibility="Visible">
-            <winforms:ChromiumWebBrowser x:Name="WebBrowser" />
+            <winforms:ChromiumWebBrowser x:Name="ChromiumWebBrowser" />
         </WindowsFormsHost>
     </asf:AirspacePanel>
 </Grid>

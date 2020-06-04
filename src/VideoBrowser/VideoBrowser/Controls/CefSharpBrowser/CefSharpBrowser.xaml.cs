@@ -32,6 +32,9 @@
         public static readonly DependencyProperty UrlProperty =
             DependencyProperty.Register(nameof(Url), typeof(string), typeof(CefSharpBrowser), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnUrlChanged));
 
+        public static readonly DependencyProperty WebBrowserProperty =
+            DependencyProperty.Register(nameof(WebBrowser), typeof(IWebBrowser), typeof(CefSharpBrowser), new PropertyMetadata(null));
+
         #endregion Fields
 
         #region Constructors
@@ -41,10 +44,10 @@
         /// </summary>
         public CefSharpBrowser()
         {
-            this.CefSettings = new CefSettings();
-            Cef.Initialize(this.CefSettings);
+            Initialize();
             this.CefDisplayHandler = new CefDisplayHandler();
             InitializeComponent();
+            this.WebBrowser = this.ChromiumWebBrowser;
             this.Loaded += this.OnLoaded;
         }
 
@@ -112,6 +115,15 @@
         }
 
         /// <summary>
+        /// Gets or sets the WebBrowser.
+        /// </summary>
+        public IWebBrowser WebBrowser
+        {
+            get { return (IWebBrowser)this.GetValue(WebBrowserProperty); }
+            set { this.SetValue(WebBrowserProperty, value); }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether CanBackward.
         /// </summary>
         private bool CanBackward { get; set; }
@@ -139,6 +151,18 @@
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The Initialize.
+        /// </summary>
+        public static void Initialize()
+        {
+            if (!Cef.IsInitialized)
+            {
+                var settings = new CefSettings();
+                Cef.Initialize(settings);
+            }
+        }
 
         /// <summary>
         /// The OnIsFullScreenCommandChanged.
@@ -201,10 +225,10 @@
         {
             this.Loaded -= this.OnLoaded;
             this.WebBrowser.LoadingStateChanged += OnWebBrowser_LoadingStateChanged;
-            this.WebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
             this.WebBrowser.LoadError += OnWebBrowser_LoadError;
             this.WebBrowser.DisplayHandler = this.CefDisplayHandler;
             this.WebBrowser.KeyboardHandler = new CefKeyboardHandler(this.windowsFormsHost);
+            this.ChromiumWebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
             this.BackwardCommand = new RelayCommand(this.OnBackward, "Backward", (o) => this.CanBackward);
             this.ForwardCommand = new RelayCommand(this.OnForward, "Forward", (o) => this.CanForward);
             this.ReloadCommand = new RelayCommand(this.OnReload, "Reload", (o) => this.CanReload);

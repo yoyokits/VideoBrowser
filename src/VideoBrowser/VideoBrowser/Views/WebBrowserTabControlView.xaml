@@ -1,0 +1,71 @@
+﻿<UserControl
+    x:Class="VideoBrowser.Views.WebBrowserTabControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
+    xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+    xmlns:helpers="clr-namespace:VideoBrowser.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:VideoBrowser.ViewModels"
+    xmlns:views="clr-namespace:VideoBrowser.Views"
+    d:DataContext="{d:DesignInstance viewmodels:WebBrowserTabControlViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type dragablz:HeaderedItemViewModel}">
+                <ContentControl
+                    Margin="4"
+                    Content="{Binding Content}"
+                    FontSize="14" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:WebBrowserTabHeaderViewModel}">
+                <views:WebBrowserTabHeaderView />
+            </DataTemplate>
+            <!--<dragablz:InterTabController
+                x:Key="InterTabController"
+                x:Shared="False"
+                InterTabClient="{Binding InterTabClient}"
+                Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />-->
+            <dragablz:DragablzIcon
+                x:Key="WindowIcon"
+                Width="24"
+                Height="24"
+                Margin="0,-8,0,0"
+                x:Shared="False"
+                ToolTip="Added via the HeaderPrefixContent property" />
+            <helpers:WebBrowserViewModelFactory x:Key="WebBrowserViewModelFactory" GlobalData="{Binding GlobalData}" />
+            <Style x:Key="TabablzControlStyle" TargetType="{x:Type dragablz:TabablzControl}">
+                <Setter Property="ItemsSource" Value="{Binding WebBrowsers}" />
+                <Setter Property="ClosingItemCallback" Value="{Binding ClosingTabItemHandler}" />
+                <Setter Property="ShowDefaultAddButton" Value="True" />
+                <Setter Property="ShowDefaultCloseButton" Value="True" />
+                <Setter Property="AdjacentHeaderItemOffset" Value="-10" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource TrapezoidDragableTabItemStyle}" />
+                <Setter Property="HeaderMemberPath" Value="Header" />
+                <!--<Setter Property="InterTabController" Value="{StaticResource InterTabController}" />-->
+                <Setter Property="Margin" Value="0,8,0,0" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(dockablz:Layout.IsTopLeftItem)}" Value="True">
+                        <Setter Property="HeaderPrefixContent" Value="{StaticResource WindowIcon}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <dragablz:TabablzControl
+        x:Name="InitialTabablzControl"
+        AddLocationHint="After"
+        FixedHeaderCount="1"
+        NewItemFactory="{Binding Source={StaticResource WebBrowserViewModelFactory}, Path=Create}"
+        Style="{StaticResource TabablzControlStyle}">
+        <!--<dragablz:TabablzControl.InterTabController>
+            <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+        </dragablz:TabablzControl.InterTabController>-->
+    </dragablz:TabablzControl>
+</UserControl>
