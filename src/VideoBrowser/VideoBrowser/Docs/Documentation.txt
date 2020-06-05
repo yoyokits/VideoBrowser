@@ -7,3 +7,5 @@
 - Apache Log4Net: https://logging.apache.org/log4net/
 - OokiDialogs.Wpf: https://github.com/augustoproiete/ookii-dialogs-wpf
 - ControlzEx
+- Dragablz: https://dragablz.net
+- log4net

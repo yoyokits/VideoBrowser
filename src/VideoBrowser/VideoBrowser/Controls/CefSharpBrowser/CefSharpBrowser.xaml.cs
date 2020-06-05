@@ -29,8 +29,14 @@
         public static readonly DependencyProperty ReloadCommandProperty =
             DependencyProperty.Register(nameof(ReloadCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register(nameof(Title), typeof(string), typeof(CefSharpBrowser), new FrameworkPropertyMetadata("Home", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public static readonly DependencyProperty UrlProperty =
             DependencyProperty.Register(nameof(Url), typeof(string), typeof(CefSharpBrowser), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnUrlChanged));
+
+        public static readonly DependencyProperty WebBrowserProperty =
+            DependencyProperty.Register(nameof(WebBrowser), typeof(IWebBrowser), typeof(CefSharpBrowser), new PropertyMetadata(null));
 
         #endregion Fields
 
@@ -41,10 +47,11 @@
         /// </summary>
         public CefSharpBrowser()
         {
-            this.CefSettings = new CefSettings();
-            Cef.Initialize(this.CefSettings);
+            Initialize();
             this.CefDisplayHandler = new CefDisplayHandler();
             InitializeComponent();
+            this.WebBrowser = this.ChromiumWebBrowser;
+            this.ChromiumWebBrowser.TitleChanged += this.OnChromiumWebBrowser_TitleChanged;
             this.Loaded += this.OnLoaded;
         }
 
@@ -103,12 +110,30 @@
         }
 
         /// <summary>
+        /// Gets or sets the Title.
+        /// </summary>
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the Url.
         /// </summary>
         public string Url
         {
             get { return (string)GetValue(UrlProperty); }
             set { SetValue(UrlProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the WebBrowser.
+        /// </summary>
+        public IWebBrowser WebBrowser
+        {
+            get { return (IWebBrowser)this.GetValue(WebBrowserProperty); }
+            set { this.SetValue(WebBrowserProperty, value); }
         }
 
         /// <summary>
@@ -139,6 +164,18 @@
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The Initialize.
+        /// </summary>
+        public static void Initialize()
+        {
+            if (!Cef.IsInitialized)
+            {
+                var settings = new CefSettings();
+                Cef.Initialize(settings);
+            }
+        }
 
         /// <summary>
         /// The OnIsFullScreenCommandChanged.
@@ -181,6 +218,16 @@
         }
 
         /// <summary>
+        /// The OnChromiumWebBrowser_TitleChanged.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="TitleChangedEventArgs"/>.</param>
+        private void OnChromiumWebBrowser_TitleChanged(object sender, TitleChangedEventArgs e)
+        {
+            UIThreadHelper.Invoke(() => this.Title = e.Title);
+        }
+
+        /// <summary>
         /// The OnForward.
         /// </summary>
         /// <param name="obj">The obj<see cref="object"/>.</param>
@@ -201,10 +248,10 @@
         {
             this.Loaded -= this.OnLoaded;
             this.WebBrowser.LoadingStateChanged += OnWebBrowser_LoadingStateChanged;
-            this.WebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
             this.WebBrowser.LoadError += OnWebBrowser_LoadError;
             this.WebBrowser.DisplayHandler = this.CefDisplayHandler;
             this.WebBrowser.KeyboardHandler = new CefKeyboardHandler(this.windowsFormsHost);
+            this.ChromiumWebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
             this.BackwardCommand = new RelayCommand(this.OnBackward, "Backward", (o) => this.CanBackward);
             this.ForwardCommand = new RelayCommand(this.OnForward, "Forward", (o) => this.CanForward);
             this.ReloadCommand = new RelayCommand(this.OnReload, "Reload", (o) => this.CanReload);
