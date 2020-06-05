@@ -15,11 +15,12 @@
         /// </summary>
         /// <typeparam name="T">.</typeparam>
         /// <param name="list">The list<see cref="ICollection{T}"/>.</param>
-        public static void ClearAndDispose<T>(this ICollection<T> list) where T : IDisposable
+        public static void ClearAndDispose<T>(this ICollection<T> list)
         {
             foreach (var item in list)
             {
-                item?.Dispose();
+                var disposableItem = item as IDisposable;
+                disposableItem?.Dispose();
             }
 
             list.Clear();

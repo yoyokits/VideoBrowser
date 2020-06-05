@@ -25,7 +25,8 @@
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.PressEscCommand = new RelayCommand(this.OnPressEsc);
             this.About = new AboutViewModel();
-            this.VideoBrowser = new VideoBrowserViewModel(this.GlobalData);
+            this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(this.GlobalData);
+            this.WebBrowserTabControlViewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(this.GlobalData));
             this.Initialize();
         }
 
@@ -74,9 +75,9 @@
         public string Title => $"{AppEnvironment.Name}";
 
         /// <summary>
-        /// Gets the VideoBrowser.
+        /// Gets the WebBrowserController.
         /// </summary>
-        public VideoBrowserViewModel VideoBrowser { get; }
+        public WebBrowserTabControlViewModel WebBrowserTabControlViewModel { get; }
 
         #endregion Properties
 
@@ -87,7 +88,7 @@
         /// </summary>
         private void Dispose()
         {
-            this.VideoBrowser.Dispose();
+            this.WebBrowserTabControlViewModel.Dispose();
         }
 
         /// <summary>
@@ -102,7 +103,11 @@
                 url = args.First();
             }
 
-            this.VideoBrowser.NavigateUrl = url;
+            var browser = this.WebBrowserTabControlViewModel.WebBrowsers.First();
+            if (browser is WebBrowserHeaderedItemViewModel model)
+            {
+                model.VideoBrowserViewModel.NavigateUrl = url;
+            }
         }
 
         /// <summary>

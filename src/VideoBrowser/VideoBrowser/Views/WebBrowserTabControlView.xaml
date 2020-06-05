@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
-    xmlns:helpers="clr-namespace:VideoBrowser.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:VideoBrowser.ViewModels"
     xmlns:views="clr-namespace:VideoBrowser.Views"
@@ -36,7 +35,6 @@
                 Margin="0,-8,0,0"
                 x:Shared="False"
                 ToolTip="Added via the HeaderPrefixContent property" />
-            <helpers:WebBrowserViewModelFactory x:Key="WebBrowserViewModelFactory" GlobalData="{Binding GlobalData}" />
             <Style x:Key="TabablzControlStyle" TargetType="{x:Type dragablz:TabablzControl}">
                 <Setter Property="ItemsSource" Value="{Binding WebBrowsers}" />
                 <Setter Property="ClosingItemCallback" Value="{Binding ClosingTabItemHandler}" />
@@ -59,7 +57,7 @@
         x:Name="InitialTabablzControl"
         AddLocationHint="After"
         FixedHeaderCount="1"
-        NewItemFactory="{Binding Source={StaticResource WebBrowserViewModelFactory}, Path=Create}"
+        NewItemFactory="{Binding CreateBrowserFunc}"
         Style="{StaticResource TabablzControlStyle}">
         <!--<dragablz:TabablzControl.InterTabController>
             <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />

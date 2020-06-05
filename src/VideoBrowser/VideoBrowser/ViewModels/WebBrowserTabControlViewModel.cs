@@ -3,9 +3,7 @@
     using Dragablz;
     using System;
     using System.Collections.ObjectModel;
-    using System.Windows.Input;
     using System.Windows.Media;
-    using VideoBrowser.Common;
     using VideoBrowser.Extensions;
     using VideoBrowser.Models;
     using VideoBrowser.Resources;
@@ -24,10 +22,8 @@
         public WebBrowserTabControlViewModel(GlobalData globalData)
         {
             this.GlobalData = globalData;
-            this.WebBrowsers = new ObservableCollection<WebBrowserHeaderedItemViewModel>();
-            this.AddBrowserCommand = new RelayCommand(this.OnAddBrowser, nameof(this.AddBrowserCommand));
-            this.RemoveBrowserCommand = new RelayCommand(this.OnRemoveBrowser, nameof(this.RemoveBrowserCommand));
-            this.Add();
+            this.WebBrowsers = new ObservableCollection<HeaderedItemViewModel>();
+            this.CreateBrowserFunc = this.CreateBrowser;
         }
 
         #endregion Constructors
@@ -35,14 +31,14 @@
         #region Properties
 
         /// <summary>
-        /// Gets the AddBrowserCommand.
-        /// </summary>
-        public ICommand AddBrowserCommand { get; }
-
-        /// <summary>
         /// Gets the ClosingTabItemHandler.
         /// </summary>
         public ItemActionCallback ClosingTabItemHandler => ClosingTabItemHandlerImpl;
+
+        /// <summary>
+        /// Gets the CreateBrowserFunc.
+        /// </summary>
+        public Func<HeaderedItemViewModel> CreateBrowserFunc { get; }
 
         /// <summary>
         /// Gets the GlobalData.
@@ -60,14 +56,9 @@
         public IInterTabClient InterTabClient { get; }
 
         /// <summary>
-        /// Gets the RemoveBrowserCommand.
-        /// </summary>
-        public ICommand RemoveBrowserCommand { get; }
-
-        /// <summary>
         /// Gets the WebBrowsers.
         /// </summary>
-        public ObservableCollection<WebBrowserHeaderedItemViewModel> WebBrowsers { get; }
+        public ObservableCollection<HeaderedItemViewModel> WebBrowsers { get; }
 
         #endregion Properties
 
@@ -79,27 +70,6 @@
         public void Dispose()
         {
             this.WebBrowsers.ClearAndDispose();
-        }
-
-        /// <summary>
-        /// The Add.
-        /// </summary>
-        internal void Add()
-        {
-            var browser = new WebBrowserHeaderedItemViewModel(this.GlobalData);
-            this.WebBrowsers.Add(browser);
-        }
-
-        internal void Remove(WebBrowserHeaderedItemViewModel item)
-        {
-            if (this.WebBrowsers.Count == 1 || item == null)
-            {
-                Logger.Warn(this, "Cannot remove video browser, there is only a single browser");
-                return;
-            }
-
-            item.Dispose();
-            this.WebBrowsers.Remove(item);
         }
 
         /// <summary>
@@ -119,21 +89,13 @@
         }
 
         /// <summary>
-        /// The OnAddBrowser.
+        /// The CreateBrowser.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnAddBrowser(object obj)
+        /// <returns>The <see cref="HeaderedItemViewModel"/>.</returns>
+        private HeaderedItemViewModel CreateBrowser()
         {
-            this.Add();
-        }
-
-        /// <summary>
-        /// The OnRemoveBrowser.
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnRemoveBrowser(object obj)
-        {
-            this.Remove(obj as WebBrowserHeaderedItemViewModel);
+            var model = new WebBrowserHeaderedItemViewModel(this.GlobalData);
+            return model;
         }
 
         #endregion Methods

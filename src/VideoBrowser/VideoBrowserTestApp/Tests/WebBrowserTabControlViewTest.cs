@@ -34,6 +34,7 @@
             var viewModel = new WebBrowserTabControlViewModel(globalData);
             var view = new WebBrowserTabControlView { DataContext = viewModel };
             var window = WindowFactory.Create(view, testWindow);
+            viewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(globalData));
             globalData.MainWindow = window;
             window.ShowDialog();
         }

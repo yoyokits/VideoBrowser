@@ -58,6 +58,7 @@
     <Reference Include="ControlzEx">
       <HintPath>..\..\..\bin\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="Dragablz" />
     <Reference Include="MahApps.Metro">
       <HintPath>..\..\..\bin\MahApps.Metro.dll</HintPath>
     </Reference>
