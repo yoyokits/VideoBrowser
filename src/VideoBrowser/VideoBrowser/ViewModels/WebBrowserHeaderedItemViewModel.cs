@@ -29,8 +29,12 @@
         {
             this.VideoBrowserViewModel = new VideoBrowserViewModel(globalData);
             this.VideoBrowserViewModel.PropertyChanged += this.OnVideoBrowserViewModel_PropertyChanged;
-            UIThreadHelper.Invoke(() => this.VideoBrowserView = new VideoBrowserView { DataContext = this.VideoBrowserViewModel });
-            this.Header = this.VideoBrowserViewModel.Header;
+            this.HeaderViewModel = new WebBrowserTabHeaderViewModel { Header = this.VideoBrowserViewModel.Header };
+            UIThreadHelper.Invoke(() =>
+            {
+                this.VideoBrowserView = new VideoBrowserView { DataContext = this.VideoBrowserViewModel };
+                this.Header = new WebBrowserTabHeaderView { DataContext = this.HeaderViewModel };
+            });
             this.Content = this.VideoBrowserView;
         }
 
@@ -39,14 +43,17 @@
         #region Properties
 
         /// <summary>
+        /// Gets the HeaderViewModel.
+        /// </summary>
+        public WebBrowserTabHeaderViewModel HeaderViewModel { get; }
+
+        /// <summary>
         /// Gets the VideoBrowserView.
         /// </summary>
         public VideoBrowserView VideoBrowserView { get; private set; }
 
         /// <summary>
-        /// Gets the VideoBrowserViewModel
-        /// Gets or sets the VideoBrowserViewModel
-        /// Gets the VideoBrowserViewModel......
+        /// Gets the VideoBrowserViewModel.
         /// </summary>
         public VideoBrowserViewModel VideoBrowserViewModel { get => _videoBrowserViewModel; private set => this.Set(this.OnPropertyChanged, ref _videoBrowserViewModel, value); }
 
@@ -82,7 +89,7 @@
         {
             if (e.IsMatch(nameof(this.VideoBrowserViewModel.Header)))
             {
-                this.Header = this.VideoBrowserViewModel.Header;
+                this.HeaderViewModel.Header = this.VideoBrowserViewModel.Header;
             }
         }
 

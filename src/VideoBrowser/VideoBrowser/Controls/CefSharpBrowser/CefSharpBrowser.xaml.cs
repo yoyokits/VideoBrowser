@@ -29,6 +29,9 @@
         public static readonly DependencyProperty ReloadCommandProperty =
             DependencyProperty.Register(nameof(ReloadCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register(nameof(Title), typeof(string), typeof(CefSharpBrowser), new FrameworkPropertyMetadata("Home", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public static readonly DependencyProperty UrlProperty =
             DependencyProperty.Register(nameof(Url), typeof(string), typeof(CefSharpBrowser), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnUrlChanged));
 
@@ -48,6 +51,7 @@
             this.CefDisplayHandler = new CefDisplayHandler();
             InitializeComponent();
             this.WebBrowser = this.ChromiumWebBrowser;
+            this.ChromiumWebBrowser.TitleChanged += this.OnChromiumWebBrowser_TitleChanged;
             this.Loaded += this.OnLoaded;
         }
 
@@ -103,6 +107,15 @@
         {
             get { return (ICommand)GetValue(ReloadCommandProperty); }
             set { SetValue(ReloadCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Title.
+        /// </summary>
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
         }
 
         /// <summary>
@@ -202,6 +215,16 @@
             {
                 this.WebBrowser.Back();
             }
+        }
+
+        /// <summary>
+        /// The OnChromiumWebBrowser_TitleChanged.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="TitleChangedEventArgs"/>.</param>
+        private void OnChromiumWebBrowser_TitleChanged(object sender, TitleChangedEventArgs e)
+        {
+            UIThreadHelper.Invoke(() => this.Title = e.Title);
         }
 
         /// <summary>

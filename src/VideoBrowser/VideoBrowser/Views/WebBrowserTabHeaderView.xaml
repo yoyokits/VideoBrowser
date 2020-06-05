@@ -27,11 +27,12 @@
             Source="{Binding Image}"
             Stretch="Uniform" />
         <Grid>
-            <TextBlock Text="{Binding Header}" />
+            <TextBlock
+                Width="100"
+                Text="{Binding Header}"
+                ToolTip="{Binding Header}" />
             <!--  you should provide your own Thumb, which will be used to monitor dragging  -->
             <Thumb dragablz:DragablzItem.IsCustomThumb="True" Style="{DynamicResource InvisibleThumbStyle}" />
         </Grid>
-        <CheckBox IsChecked="{Binding IsSelected}" ToolTip="Embed your own controls" />
-        <Button Command="dragablz:TabablzControl.CloseItemCommand" ToolTip="Manually add a close button">X</Button>
     </StackPanel>
 </UserControl>

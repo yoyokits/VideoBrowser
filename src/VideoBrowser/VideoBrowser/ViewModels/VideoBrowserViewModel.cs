@@ -11,7 +11,6 @@
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
     using VideoBrowser.Models;
-    using VideoBrowser.Resources;
 
     /// <summary>
     /// Defines the <see cref="VideoBrowserViewModel" />.
@@ -30,7 +29,7 @@
 
         private ICommand _forwardCommand;
 
-        private string _header;
+        private string _header = "Cekli";
 
         private string _navigateUrl = "youtube.com";
 
@@ -62,6 +61,7 @@
             };
             this.UrlEditor.PropertyChanged += this.OnUrlEditor_PropertyChanged;
             this.PropertyChanged += this.OnPropertyChanged;
+            this.OnHome(null);
         }
 
         #endregion Constructors
@@ -109,11 +109,6 @@
         public ICommand HomeCommand { get; }
 
         /// <summary>
-        /// Gets or sets the Icon.
-        /// </summary>
-        public Geometry Icon { get; set; } = Icons.SearchVideo;
-
-        /// <summary>
         /// Gets the IndicatorColor.
         /// </summary>
         public Brush IndicatorColor { get; private set; }
@@ -158,7 +153,7 @@
         public ICommand ReloadCommand { get => this._reloadCommand; set => this.Set(this.PropertyChangedHandler, ref this._reloadCommand, value); }
 
         /// <summary>
-        /// Gets or sets the WebUri that is typed in the TextBox..
+        /// Gets or sets the WebUri that is typed in the TextBox.
         /// </summary>
         public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
 

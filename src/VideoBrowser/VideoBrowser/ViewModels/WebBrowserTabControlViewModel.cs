@@ -27,6 +27,7 @@
             this.WebBrowsers = new ObservableCollection<WebBrowserHeaderedItemViewModel>();
             this.AddBrowserCommand = new RelayCommand(this.OnAddBrowser, nameof(this.AddBrowserCommand));
             this.RemoveBrowserCommand = new RelayCommand(this.OnRemoveBrowser, nameof(this.RemoveBrowserCommand));
+            this.Add();
         }
 
         #endregion Constructors
@@ -85,10 +86,7 @@
         /// </summary>
         internal void Add()
         {
-            var browser = new WebBrowserHeaderedItemViewModel(this.GlobalData)
-            {
-                Header = $"Site"
-            };
+            var browser = new WebBrowserHeaderedItemViewModel(this.GlobalData);
             this.WebBrowsers.Add(browser);
         }
 

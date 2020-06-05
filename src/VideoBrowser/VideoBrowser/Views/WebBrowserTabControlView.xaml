@@ -15,9 +15,6 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type dragablz:HeaderedItemViewModel}">
                 <ContentControl
                     Margin="4"

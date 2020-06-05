@@ -121,6 +121,7 @@
         <cefsharpbrowser:CefSharpBrowser
             x:Name="CefSharpBrowserControl"
             Grid.Row="1"
+            Title="{Binding Header}"
             BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
             ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
             IsAirspaceVisible="{Binding GlobalData.IsAirspaceVisible}"
