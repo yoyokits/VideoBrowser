@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
+    using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
 
@@ -17,7 +18,7 @@
         protected TestBase(string name)
         {
             this.Name = name;
-            this.TestCommand = new RelayCommand(this.Test, nameof(this.TestCommand));
+            this.TestCommand = new RelayCommand(this.InternalTest, nameof(this.TestCommand));
         }
 
         #endregion Constructors
@@ -41,8 +42,18 @@
         /// <summary>
         /// The Test.
         /// </summary>
+        /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
+        protected abstract void Test(Window testWindow);
+
+        /// <summary>
+        /// The InternalTest.
+        /// </summary>
         /// <param name="obj">The obj<see cref="object"/>.</param>
-        protected abstract void Test(object obj);
+        private void InternalTest(object obj)
+        {
+            Properties.Settings.Default.LastTest = this.Name;
+            this.Test(obj as Window);
+        }
 
         #endregion Methods
     }

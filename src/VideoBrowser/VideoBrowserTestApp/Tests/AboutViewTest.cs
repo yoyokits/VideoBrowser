@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
+    using System.Windows;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
     using VideoBrowserTestApp.Helpers;
@@ -25,12 +26,12 @@
         /// <summary>
         /// The Test.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        protected override void Test(object obj)
+        /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
+        protected override void Test(Window testWindow)
         {
             var viewModel = new AboutViewModel();
             var view = new AboutView { DataContext = viewModel };
-            WindowFactory.CreateAndShow(view);
+            WindowFactory.CreateAndShow(view, testWindow);
         }
 
         #endregion Methods

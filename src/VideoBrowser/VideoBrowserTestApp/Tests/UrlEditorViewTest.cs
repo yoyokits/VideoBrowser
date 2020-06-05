@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
+    using System.Windows;
     using System.Windows.Controls;
     using VideoBrowser.Core;
     using VideoBrowser.Models;
@@ -28,8 +29,8 @@
         /// <summary>
         /// The Test.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        protected override void Test(object obj)
+        /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
+        protected override void Test(Window testWindow)
         {
             var globalData = new GlobalData();
             var urlReader = new UrlReader();
@@ -38,7 +39,7 @@
             var stackPanel = new StackPanel();
             stackPanel.Children.Add(new UrlEditorView { DataContext = viewModelA });
             stackPanel.Children.Add(new UrlEditorView { DataContext = viewModelB });
-            WindowFactory.CreateAndShow(stackPanel);
+            WindowFactory.CreateAndShow(stackPanel, testWindow);
         }
 
         #endregion Methods
