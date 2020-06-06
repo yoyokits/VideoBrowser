@@ -1,0 +1,10 @@
+﻿Cekli Browser and Video Downloader
+
+Thank you for using Cekli Browser 0.1.2.
+Before installing this version of software,
+please make sure uninstalling the previous version.
+
+Any installation or usage problems, 
+you can inform me using the contact at the website.
+
+https://yoyokits.github.io/VideoBrowser/
