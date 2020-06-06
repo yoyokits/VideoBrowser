@@ -12,7 +12,7 @@ layout: page
 
 {{site.title}} version {{site.version}}
 
-[![Download]({{site.image_folder}}Download.jpg)](https://github.com/yoyokits/VideoBrowser/releases/download/{{site.version}}/VideoBrowserSetup.msi)
+[![Download]({{site.image_folder}}Download.jpg)](https://github.com/yoyokits/VideoBrowser/releases/download/{{site.version}}/CekliBrowserSetup.exe)
 
 Download Cekli Browser installer and code on GitHub:<br/>
 [Latest release in GitHub](https://github.com/yoyokits/VideoBrowser/releases/latest)
