@@ -165,7 +165,7 @@ Source: "C:\Data\Repository\Git\Github\Temp\Cekli Video Browser\Release 0.1.2\Re
 Source: "C:\Data\Repository\Git\Github\Temp\Cekli Video Browser\Release 0.1.2\Release\VideoBrowser.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Data\Repository\Git\Github\Temp\Cekli Video Browser\Release 0.1.2\Release\VideoBrowser.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Data\Repository\Git\Github\Temp\Cekli Video Browser\Release 0.1.2\Release\VideoBrowser.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Data\Repository\Git\Github\Temp\Cekli Video Browser\Release 0.1.2\Release\Binaries\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Data\Repository\Git\Github\Temp\Cekli Video Browser\Release 0.1.2\Release\Binaries\*"; DestDir: "{app}\Binaries"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
