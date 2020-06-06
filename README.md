@@ -18,7 +18,7 @@ Please note that this is in early development, therefore you may find bugs. Plea
 
 <ul class="social-media-list"><li><a href="https://github.com/yoyokits/VideoBrowser"><svg class="svg-icon"><use xlink:href="https://yoyokits.github.io/VideoBrowser/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a></li><li><a href="https://www.twitter.com/nurcahyoyohanes"><svg class="svg-icon"><use xlink:href="https://yoyokits.github.io/VideoBrowser/assets/minima-social-icons.svg#twitter"></use></svg>  <span class="username">nurcahyoyohanes</span></a></li></ul>
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images/CekliVideoBrowserDownloadOptionsScreenShot.jpg"><br/>
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images/0.1.2/CekliVideoBrowserDownloadOptionsScreenShot.jpg"><br/>
 
 Cekli Browser and Youtube Downloader based on [youtube-dl][youtube-dl] therefore in future it can support more than 100 other video websites like:
 * youtube -> supported
@@ -41,7 +41,7 @@ The most recent installer can be downloaded here:
 
 **Usage**
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images/CekliVideoBrowserMainViewScreenShot.jpg"><br/>
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images/0.1.2/CekliVideoBrowserMainViewScreenShot.jpg"><br/>
 Like any other web browsers, {{site.title}} can be used as a web browser.
 
 If we browse in a youtube video then the download icon will be enabled, after clicking then it will be downloaded in a queue.
@@ -49,12 +49,12 @@ It can downloads several video concurently or multithreading.
 
 > **Warning:** some Video websites not allowing or limiting download number in a time, please make sure of it.
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images/CekliVideoBrowserDownloadScreenShot.jpg"><br/>
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images/0.1.2/CekliVideoBrowserDownloadScreenShot.jpg"><br/>
 Download queue
 
 The url text input field can be used for youtube search if we type in non url format.
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images/CekliVideoBrowserYoutubeSearchScreenShot.jpg"><br/>
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images/0.1.2/CekliVideoBrowserYoutubeSearchScreenShot.jpg"><br/>
 Url text input as youtube search
 
 **Support this project**
@@ -68,6 +68,7 @@ This software will not exist without the previous projects like:
   <li>youtube-dl: downloading youtube and othe online video websites</li>
   <li>CefSharp: chromium based browser</li>
   <li>MahApps: beautify the user interface</li>
+  <li>Dragablz: enable browsing in multiple tabs</li>
   <li>ControlzEx: used by MahApps</li>
   <li>Syncfusion Metro Studio 5: providing the icons</li>
   <li>Apache Log4Net: logging the internal process for debugging information</li>
