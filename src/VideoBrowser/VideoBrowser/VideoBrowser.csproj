@@ -182,17 +182,6 @@
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WebBrowserControl\BrowserEmulationVersion.cs" />
-    <Compile Include="Controls\WebBrowserControl\IExecuteWithObject.cs" />
-    <Compile Include="Controls\WebBrowserControl\IExecuteWithObjectAndResult.cs" />
-    <Compile Include="Controls\WebBrowserControl\InternetExplorerBrowserEmulation.cs" />
-    <Compile Include="Controls\WebBrowserControl\RelayCommand.cs" />
-    <Compile Include="Controls\WebBrowserControl\RelayCommandGeneric.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakAction.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakActionGeneric.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakFunc.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakFuncGeneric.cs" />
-    <Compile Include="Controls\WebBrowserControl\WebBrowserControl.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
