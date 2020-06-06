@@ -123,23 +123,6 @@
         }
 
         /// <summary>
-        /// Gets or sets the SelectedMainTabIndex.
-        /// </summary>
-        public int SelectedMainTabIndex
-        {
-            get => _selectedMainTabIndex;
-            set
-            {
-                if (!this.Set(this.PropertyChanged, ref _selectedMainTabIndex, value))
-                {
-                    return;
-                }
-
-                this.IsAirspaceVisible = false;
-            }
-        }
-
-        /// <summary>
         /// Gets the Settings.
         /// </summary>
         public SettingsViewModel Settings { get; }
