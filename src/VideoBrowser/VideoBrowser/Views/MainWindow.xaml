@@ -77,8 +77,11 @@
                     </Style.Triggers>
                 </Style>
             </TabControl.Resources>
-            <TabItem DataContext="{Binding VideoBrowser}" ToolTip="Web browser and video downloader">
-                <views:VideoBrowserView />
+            <TabItem
+                DataContext="{Binding WebBrowserTabControlViewModel}"
+                Header="Browser"
+                ToolTip="Web browser and video downloader">
+                <views:WebBrowserTabControlView />
             </TabItem>
             <TabItem
                 DataContext="{Binding DownloadQueueViewModel}"

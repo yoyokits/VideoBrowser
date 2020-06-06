@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowser.Models
 {
+    using MahApps.Metro.Controls;
     using MahApps.Metro.Controls.Dialogs;
     using System.ComponentModel;
     using System.Threading.Tasks;
@@ -9,7 +10,6 @@
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
     using VideoBrowser.ViewModels;
-    using VideoBrowser.Views;
 
     /// <summary>
     /// Defines the <see cref="GlobalData" />.
@@ -103,7 +103,24 @@
         /// <summary>
         /// Gets or sets the MainWindow.
         /// </summary>
-        public MainWindow MainWindow { get; internal set; }
+        public MetroWindow MainWindow { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the SelectedMainTabIndex.
+        /// </summary>
+        public int SelectedMainTabIndex
+        {
+            get => _selectedMainTabIndex;
+            set
+            {
+                if (!this.Set(this.PropertyChanged, ref _selectedMainTabIndex, value))
+                {
+                    return;
+                }
+
+                this.IsAirspaceVisible = false;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the SelectedMainTabIndex.

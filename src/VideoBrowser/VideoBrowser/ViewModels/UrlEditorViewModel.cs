@@ -63,7 +63,8 @@
             this.UrlReader = reader;
             this.GlobalData = globalData;
             this.GlobalData.Settings.PropertyChanged += this.OnSettings_PropertyChanged;
-            this.OutputFolder = string.IsNullOrEmpty(Settings.Default.DownloadFolder) ? AppEnvironment.UserVideoFolder : Settings.Default.DownloadFolder;
+            var settingFolder = Settings.Default.DownloadFolder;
+            this.OutputFolder = string.IsNullOrEmpty(settingFolder) || !Directory.Exists(settingFolder) ? AppEnvironment.UserVideoFolder : settingFolder;
             this.UrlReader.PropertyChanged += this.OnUrlReader_PropertyChanged;
             this.DownloadCommand = new RelayCommand(this.OnDownload);
         }
