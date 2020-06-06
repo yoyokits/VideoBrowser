@@ -77,7 +77,7 @@
         /// <summary>
         /// Gets the Version.
         /// </summary>
-        public static string Version { get; } = $"{Assembly.GetExecutingAssembly().GetName().Version.ToString()} - Alpha";
+        public static string Version { get; } = $"{Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
 
         #endregion Properties
 

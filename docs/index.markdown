@@ -18,7 +18,7 @@ Bug reports or following the development progress can be reached via:
 
 {{site.contact}}
 
-![Cekli Video Browser Screenshot]({{site.image_folder}}CekliVideoBrowserDownloadOptionsScreenShot.jpg)
+![Cekli Video Browser Screenshot]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserDownloadOptionsScreenShot.jpg)
 
 {{site.title}} based on [youtube-dl][youtube-dl] therefore in future it can support more than 100 other video websites like:
 * youtube -> supported
@@ -35,13 +35,18 @@ Bug reports or following the development progress can be reached via:
 
 **Download**
 
-The most recent installer can be downloaded here:
+The last version is {{site.version}}.<br/>
+And the most recent installer can be downloaded here:
 
 [![Download]({{site.image_folder}}Download.jpg)](download.html)
 
+The releases history can be followed in:
+
+[Release Notes](release-notes.html)
+
 **Usage**
 
-![{{site.title}} as standard browser]({{site.image_folder}}CekliVideoBrowserMainViewScreenShot.jpg)
+![{{site.title}} as standard browser]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserMainViewScreenShot.jpg)
 Like any other web browsers, {{site.title}} can be used as a web browser.
 
 If we browse in a youtube video then the download icon will be enabled, after clicking then it will be downloaded in a queue.
@@ -49,12 +54,12 @@ It can downloads several video concurently or multithreading.
 
 > **Warning:** some Video websites not allowing or limiting download number in a time, please make sure of it.
 
-![Doownload Queue]({{site.image_folder}}CekliVideoBrowserDownloadScreenShot.jpg)
+![Doownload Queue]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserDownloadScreenShot.jpg)
 Download queue
 
 The url text input field can be used for youtube search if we type in non url format.
 
-![Url search mode]({{site.image_folder}}CekliVideoBrowserYoutubeSearchScreenShot.jpg)
+![Url search mode]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserYoutubeSearchScreenShot.jpg)
 Url text input as youtube search
 
 **Support this project**

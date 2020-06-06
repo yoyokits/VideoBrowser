@@ -1,0 +1,36 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.logo_container { 
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  position: relative;
+  border: 3px solid white; 
+  padding: 5px; 
+}
+
+.logo_content {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo_content2 {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+}
+
+.img_center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left:0; right: 0;
+  margin: auto;
+}
+

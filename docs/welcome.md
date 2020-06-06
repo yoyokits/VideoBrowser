@@ -1,5 +1,6 @@
 ---
 layout: home
+New field 1: New Tab
 ---
 
 <p align="center">
@@ -8,12 +9,21 @@ layout: home
 </p>
 
 Thank you for using {{site.title}}.<br/>
-The software is free, so it can be copied and installed to any computers.<br/>
-Please enjoy the software.
 
-## Downloadable Sites
-[![youtube logo]({{site.image_folder}}youtube-logo.jpg)](http://youtube.com)
-
+<div class="logo_container">
+<div class="logo_content2">
+<div markdown="1">
+[<img src="{{site.image_folder}}youtube-logo.svg" width="100%" class="img_center">](http://youtube.com)
+</div>
+</div>
+</div>
+<div class="logo_container">
+<div class="logo_content2">
+<div markdown="1">
+[<img src="{{site.image_folder}}google-logo.svg" width="50px"  class="img_center">](http://google.com)
+</div>
+</div>
+</div>
 ## Usage
 Like any other web browsers, {{site.title}} can be used as a web browser.
 1. Open youtube video
@@ -28,8 +38,8 @@ It can download several videos concurently or multithreading.
 
 ## Update
 The last version is {{site.version}}<br/>
-The recent update can be checked in [{{site.title}} project website]({{site.project_url}})
-
+The recent update can be checked in [{{site.title}} project website]({{site.project_url}})<br/>
+The previous releases can be tracked in [Release Notes](release-notes.html).
 ## Contact
 Any question, suggestion or bug report can be sent to:
 {{site.contact}}
