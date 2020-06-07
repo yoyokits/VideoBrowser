@@ -247,9 +247,9 @@
     <Compile Include="ViewModels\UrlEditorViewModel.cs" />
     <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserHeaderedItemViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserTabControlViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserTabHeaderViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserHeaderedItemViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserTabControlViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserTabHeaderViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -265,13 +265,13 @@
     <Compile Include="Views\UrlEditorView.xaml.cs">
       <DependentUpon>UrlEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VideoBrowserView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\VideoBrowserView.xaml.cs">
       <DependentUpon>VideoBrowserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WebBrowserTabControlView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\WebBrowserTabControlView.xaml.cs">
       <DependentUpon>WebBrowserTabControlView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WebBrowserTabHeaderView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\WebBrowserTabHeaderView.xaml.cs">
       <DependentUpon>WebBrowserTabHeaderView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AirspaceFixer\Themes\AirspacePanel.xaml">
@@ -322,15 +322,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\VideoBrowserView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\VideoBrowserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WebBrowserTabControlView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\WebBrowserTabControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WebBrowserTabHeaderView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\WebBrowserTabHeaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -392,7 +392,9 @@
     <Resource Include="Docs\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon.ico" />
+    <Resource Include="Icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
@@ -416,5 +418,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
