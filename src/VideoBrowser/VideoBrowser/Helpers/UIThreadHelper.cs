@@ -17,6 +17,11 @@
         /// <param name="action">The action<see cref="Action"/>.</param>
         public static void Invoke(Action action)
         {
+            if (Application.Current == null)
+            {
+                return;
+            }
+
             var dispatcher = Application.Current.Dispatcher;
             if (dispatcher.CheckAccess())
             {

@@ -4,6 +4,7 @@
     using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
     using VideoBrowser.Models;
@@ -19,15 +20,15 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
-        public MainWindowViewModel()
+        public MainWindowViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
         {
-            this.GlobalData = new GlobalData();
+            this.GlobalData = globalData;
             this.ClosingCommand = new RelayCommand(this.OnClosing);
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.PressEscCommand = new RelayCommand(this.OnPressEsc);
             this.About = new AboutViewModel();
-            this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(this.GlobalData);
-            this.WebBrowserTabControlViewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(this.GlobalData));
+            this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(this.GlobalData, globalBrowserData);
+            this.WebBrowserTabControlViewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(this.GlobalData, globalBrowserData));
             this.Initialize();
         }
 

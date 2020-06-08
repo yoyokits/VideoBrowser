@@ -182,6 +182,8 @@
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CefSharpBrowser\AddInButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
@@ -230,11 +232,11 @@
     <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Helpers\UIThreadHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
-    <Compile Include="Helpers\WebBrowserViewModelFactory.cs" />
     <Compile Include="Helpers\YoutubeHelper.cs" />
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
     <Compile Include="Models\GlobalData.cs" />
+    <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />

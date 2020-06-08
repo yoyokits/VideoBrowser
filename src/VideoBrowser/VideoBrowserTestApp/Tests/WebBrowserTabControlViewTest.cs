@@ -1,6 +1,7 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
     using System.Windows;
+    using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Controls.CefSharpBrowser.Views;
     using VideoBrowser.Models;
@@ -31,10 +32,11 @@
         protected override void Test(Window testWindow)
         {
             var globalData = new GlobalData();
-            var viewModel = new WebBrowserTabControlViewModel(globalData);
+            var globalBrowserData = new GlobalBrowserData();
+            var viewModel = new WebBrowserTabControlViewModel(globalData, globalBrowserData);
             var view = new WebBrowserTabControlView { DataContext = viewModel };
             var window = WindowFactory.Create(view, testWindow);
-            viewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(globalData));
+            viewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(globalData, globalBrowserData));
             globalData.MainWindow = window;
             window.ShowDialog();
         }

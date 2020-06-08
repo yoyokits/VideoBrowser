@@ -19,9 +19,10 @@
         /// Initializes a new instance of the <see cref="WebBrowserTabControlViewModel"/> class.
         /// </summary>
         /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        public WebBrowserTabControlViewModel(GlobalData globalData)
+        public WebBrowserTabControlViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
         {
             this.GlobalData = globalData;
+            this.GlobalBrowserData = globalBrowserData;
             this.WebBrowsers = new ObservableCollection<HeaderedItemViewModel>();
             this.CreateBrowserFunc = this.CreateBrowser;
         }
@@ -39,6 +40,11 @@
         /// Gets the CreateBrowserFunc.
         /// </summary>
         public Func<HeaderedItemViewModel> CreateBrowserFunc { get; }
+
+        /// <summary>
+        /// Gets the GlobalBrowserData.
+        /// </summary>
+        public GlobalBrowserData GlobalBrowserData { get; }
 
         /// <summary>
         /// Gets the GlobalData.
@@ -92,9 +98,9 @@
         /// The CreateBrowser.
         /// </summary>
         /// <returns>The <see cref="HeaderedItemViewModel"/>.</returns>
-        private HeaderedItemViewModel CreateBrowser()
+        internal HeaderedItemViewModel CreateBrowser()
         {
-            var model = new WebBrowserHeaderedItemViewModel(this.GlobalData);
+            var model = new WebBrowserHeaderedItemViewModel(this.GlobalData, this.GlobalBrowserData);
             return model;
         }
 

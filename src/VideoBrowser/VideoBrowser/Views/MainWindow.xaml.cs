@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Extensions;
     using VideoBrowser.Models;
     using VideoBrowser.ViewModels;
@@ -15,19 +16,44 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// This constructor is called once per application instance.
         /// </summary>
-        public MainWindow()
+        public MainWindow() : this(new GlobalData(), new GlobalBrowserData())
+        {
+            var addIns = this.GlobalBrowserData.AddInButtons;
+            addIns.Add(new OpenOutputFolderButton(this.GlobalData));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// This constructor is intended to create new window after dragging the browser tab.
+        /// </summary>
+        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
+        /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
+        internal MainWindow(GlobalData globalData, GlobalBrowserData globalBrowserData)
         {
             Logger.Info($"Start {nameof(VideoBrowser)}");
-            this.MainWindowViewModel = new MainWindowViewModel();
+            this.GlobalData = globalData;
+            this.GlobalBrowserData = globalBrowserData;
+            this.MainWindowViewModel = new MainWindowViewModel(globalData, globalBrowserData);
             this.MainWindowViewModel.GlobalData.PropertyChanged += this.OnGlobalData_PropertyChanged;
             this.DataContext = this.MainWindowViewModel;
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the GlobalBrowserData.
+        /// </summary>
+        internal GlobalBrowserData GlobalBrowserData { get; }
+
+        /// <summary>
+        /// Gets the GlobalData.
+        /// </summary>
+        internal GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets or sets the LastWindowState.
@@ -40,9 +66,9 @@
         private WindowStyle LastWindowStyle { get; set; }
 
         /// <summary>
-        /// Gets the MainWindowViewModel.
+        /// Gets or sets the MainWindowViewModel.
         /// </summary>
-        private MainWindowViewModel MainWindowViewModel { get; }
+        private MainWindowViewModel MainWindowViewModel { get; set; }
 
         #endregion Properties
 

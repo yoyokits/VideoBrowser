@@ -51,7 +51,9 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <!--  Left side buttons  -->
             <StackPanel
                 Grid.Column="0"
                 Height="32"
@@ -96,6 +98,7 @@
                     </TextBox.InputBindings>
                 </TextBox>
             </adornedcontrol:AdornedControl>
+            <!--  Right side buttons  -->
             <StackPanel
                 Grid.Column="2"
                 Height="32"
@@ -106,9 +109,6 @@
                     ToolTip="Download the current video">
                     <Path Style="{StaticResource Download}" />
                 </Button>
-                <Button Command="{Binding OpenOutputFolderCommand}" ToolTip="Open the output folder">
-                    <Path Style="{StaticResource VideoFolder}" />
-                </Button>
                 <Button
                     Command="{Binding TestCommand}"
                     DataContext="{Binding GlobalData}"
@@ -117,11 +117,32 @@
                     <Path Style="{StaticResource Test}" />
                 </Button>
             </StackPanel>
+            <!--  Add in buttons  -->
+            <ItemsControl
+                Grid.Column="3"
+                Height="32"
+                ItemsSource="{Binding AddInButtons}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Command="{Binding Command}"
+                            IsEnabled="{Binding IsEnabled}"
+                            ToolTip="Download the current video">
+                            <Path Data="{Binding Icon}" Style="{StaticResource IconPathButtonBaseStyle}" />
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
         <cefsharpbrowser:CefSharpBrowser
             x:Name="CefSharpBrowserControl"
-            Grid.Row="1"
             Title="{Binding Header}"
+            Grid.Row="1"
             BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
             ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
             IsAirspaceVisible="{Binding GlobalData.IsAirspaceVisible}"

@@ -25,9 +25,9 @@
         /// Initializes a new instance of the <see cref="WebBrowserHeaderedItemViewModel"/> class.
         /// </summary>
         /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        internal WebBrowserHeaderedItemViewModel(GlobalData globalData)
+        internal WebBrowserHeaderedItemViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
         {
-            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalData);
+            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalData, globalBrowserData);
             this.VideoBrowserViewModel.PropertyChanged += this.OnVideoBrowserViewModel_PropertyChanged;
             this.HeaderViewModel = new WebBrowserTabHeaderViewModel { Header = this.VideoBrowserViewModel.Header };
             UIThreadHelper.Invoke(() =>

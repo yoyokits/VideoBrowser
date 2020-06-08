@@ -30,7 +30,7 @@
 
         private ICommand _forwardCommand;
 
-        private string _header = "Cekli";
+        private string _header = "New Tab";
 
         private string _navigateUrl = "youtube.com";
 
@@ -44,9 +44,11 @@
         /// Initializes a new instance of the <see cref="VideoBrowserViewModel"/> class.
         /// </summary>
         /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        internal VideoBrowserViewModel(GlobalData globalData)
+        /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
+        internal VideoBrowserViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
         {
             this.GlobalData = globalData;
+            this.GlobalBrowserData = globalBrowserData;
 
             // BackwardCommand and ForwardCommand are set by the View.
             this.DownloadCommand = new RelayCommand(this.OnDownload, "Download", (o) => this.UrlReader.IsDownloadable);
@@ -68,6 +70,11 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the AddInButtons.
+        /// </summary>
+        public ICollection<AddInButton> AddInButtons => this.GlobalBrowserData.AddInButtons;
 
         /// <summary>
         /// Gets or sets the BackwardCommand.
@@ -93,6 +100,11 @@
         /// Gets or sets the ForwardCommand.
         /// </summary>
         public ICommand ForwardCommand { get => this._forwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._forwardCommand, value); }
+
+        /// <summary>
+        /// Gets the GlobalBrowserData.
+        /// </summary>
+        public GlobalBrowserData GlobalBrowserData { get; }
 
         /// <summary>
         /// Gets the GlobalData.
@@ -154,7 +166,8 @@
         public ICommand ReloadCommand { get => this._reloadCommand; set => this.Set(this.PropertyChangedHandler, ref this._reloadCommand, value); }
 
         /// <summary>
-        /// Gets or sets the WebUri that is typed in the TextBox.
+        /// Gets or sets the Url.
+        /// It is typed in the TextBox.
         /// </summary>
         public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
 
