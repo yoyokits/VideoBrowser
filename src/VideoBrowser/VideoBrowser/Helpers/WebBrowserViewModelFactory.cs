@@ -3,8 +3,8 @@
     using Dragablz;
     using System;
     using System.Windows;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Models;
-    using VideoBrowser.ViewModels;
 
     /// <summary>
     /// Defines the <see cref="WebBrowserViewModelFactory" />.

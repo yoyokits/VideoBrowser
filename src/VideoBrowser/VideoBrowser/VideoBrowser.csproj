@@ -245,7 +245,7 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UrlEditorViewModel.cs" />
-    <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserHeaderedItemViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserTabControlViewModel.cs" />

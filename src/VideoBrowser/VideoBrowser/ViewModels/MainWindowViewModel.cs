@@ -4,6 +4,7 @@
     using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
     using VideoBrowser.Models;
     using VideoBrowser.Views;

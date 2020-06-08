@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.ViewModels"
     d:DataContext="{d:DesignInstance viewmodels:WebBrowserTabHeaderViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"

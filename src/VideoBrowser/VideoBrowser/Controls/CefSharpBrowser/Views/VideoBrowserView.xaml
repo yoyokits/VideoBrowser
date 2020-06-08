@@ -7,7 +7,7 @@
     xmlns:converters="clr-namespace:VideoBrowser.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="clr-namespace:VideoBrowser.ViewModels"
+    xmlns:viewmodels="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.ViewModels"
     xmlns:views="clr-namespace:VideoBrowser.Views"
     d:DataContext="{d:DesignInstance viewmodels:VideoBrowserViewModel}"
     d:DesignHeight="450"
@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/IconsResource.xaml" />
+                <ResourceDictionary Source="../../../Resources/IconsResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:BoolToVisibilityConverter
                 x:Key="InverseBoolToVisibilityConverter"

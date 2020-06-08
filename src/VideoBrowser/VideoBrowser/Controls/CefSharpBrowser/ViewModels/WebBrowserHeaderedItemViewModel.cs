@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.ViewModels
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
     using Dragablz;
     using System;
@@ -6,6 +6,7 @@
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
     using VideoBrowser.Models;
+    using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
 
     /// <summary>
