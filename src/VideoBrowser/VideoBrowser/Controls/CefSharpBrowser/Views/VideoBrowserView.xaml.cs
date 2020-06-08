@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.Views
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.Views
 {
     using System.Windows.Controls;
 

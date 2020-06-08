@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.ViewModels
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -11,6 +11,7 @@
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
     using VideoBrowser.Models;
+    using VideoBrowser.ViewModels;
 
     /// <summary>
     /// Defines the <see cref="VideoBrowserViewModel" />.

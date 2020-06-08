@@ -3,11 +3,10 @@
     using Dragablz;
     using System;
     using System.ComponentModel;
+    using VideoBrowser.Controls.CefSharpBrowser.Views;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
     using VideoBrowser.Models;
-    using VideoBrowser.ViewModels;
-    using VideoBrowser.Views;
 
     /// <summary>
     /// Defines the <see cref="WebBrowserHeaderedItemViewModel" />.

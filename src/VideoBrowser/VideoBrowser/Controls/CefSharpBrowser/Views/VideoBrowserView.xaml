@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="VideoBrowser.Views.VideoBrowserView"
+    x:Class="VideoBrowser.Controls.CefSharpBrowser.Views.VideoBrowserView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:adornedcontrol="clr-namespace:AdornedControl"

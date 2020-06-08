@@ -2,8 +2,8 @@
 {
     using System.Windows;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
+    using VideoBrowser.Controls.CefSharpBrowser.Views;
     using VideoBrowser.Models;
-    using VideoBrowser.Views;
     using VideoBrowserTestApp.Helpers;
 
     /// <summary>
