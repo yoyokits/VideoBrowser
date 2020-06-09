@@ -183,6 +183,7 @@
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CefSharpBrowser\AddInButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefWindowData.cs" />
     <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Models\GlobalData.cs" />
     <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
+    <Compile Include="Models\TestButton.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />
     <Compile Include="Resources\Icons.cs" />

@@ -37,7 +37,7 @@
         <Grid
             Grid.Row="0"
             Margin="0,0,0,4"
-            Visibility="{Binding GlobalData.IsFullScreen, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            Visibility="{Binding CefWindowData.IsFullScreen, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
             <Grid.Resources>
                 <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
                     <Setter Property="BorderThickness" Value="0" />
@@ -76,7 +76,7 @@
                 Grid.Column="1"
                 CloseAdornerTimeOut="0.5"
                 FadeOutTime="0.5"
-                IsAdornerVisible="{Binding GlobalData.IsAirspaceVisible, Mode=OneWayToSource}">
+                IsAdornerVisible="{Binding CefWindowData.IsAirspaceVisible, Mode=OneWayToSource}">
                 <adornedcontrol:AdornedControl.AdornerContent>
                     <Grid x:Name="UrlEditorGrid">
                         <Canvas>
@@ -109,13 +109,6 @@
                     ToolTip="Download the current video">
                     <Path Style="{StaticResource Download}" />
                 </Button>
-                <Button
-                    Command="{Binding TestCommand}"
-                    DataContext="{Binding GlobalData}"
-                    ToolTip="Test a code"
-                    Visibility="{Binding IsDebug, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Path Style="{StaticResource Test}" />
-                </Button>
             </StackPanel>
             <!--  Add in buttons  -->
             <ItemsControl
@@ -132,7 +125,7 @@
                         <Button
                             Command="{Binding Command}"
                             IsEnabled="{Binding IsEnabled}"
-                            ToolTip="Download the current video">
+                            ToolTip="{Binding ToolTip}">
                             <Path Data="{Binding Icon}" Style="{StaticResource IconPathButtonBaseStyle}" />
                         </Button>
                     </DataTemplate>
@@ -145,8 +138,8 @@
             Grid.Row="1"
             BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
             ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
-            IsAirspaceVisible="{Binding GlobalData.IsAirspaceVisible}"
-            IsFullScreenCommand="{Binding GlobalData.IsFullScreenCommand, Mode=OneWay}"
+            IsAirspaceVisible="{Binding CefWindowData.IsAirspaceVisible}"
+            IsFullScreenCommand="{Binding CefWindowData.IsFullScreenCommand, Mode=OneWay}"
             ReloadCommand="{Binding ReloadCommand, Mode=OneWayToSource}"
             Url="{Binding NavigateUrl}" />
     </Grid>

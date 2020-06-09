@@ -4,6 +4,7 @@
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Extensions;
+    using VideoBrowser.Helpers;
     using VideoBrowser.Models;
     using VideoBrowser.ViewModels;
 
@@ -21,7 +22,11 @@
         public MainWindow() : this(new GlobalData(), new GlobalBrowserData())
         {
             var addIns = this.GlobalBrowserData.AddInButtons;
-            addIns.Add(new OpenOutputFolderButton(this.GlobalData));
+            addIns.Add(new OpenOutputFolderButton(this.GlobalBrowserData.Settings));
+            if (DebugHelper.IsDebug)
+            {
+                addIns.Add(new TestButton());
+            }
         }
 
         /// <summary>
@@ -36,7 +41,7 @@
             this.GlobalData = globalData;
             this.GlobalBrowserData = globalBrowserData;
             this.MainWindowViewModel = new MainWindowViewModel(globalData, globalBrowserData);
-            this.MainWindowViewModel.GlobalData.PropertyChanged += this.OnGlobalData_PropertyChanged;
+            this.MainWindowViewModel.CefWindowData.PropertyChanged += this.CefWindowData_PropertyChanged;
             this.DataContext = this.MainWindowViewModel;
             this.InitializeComponent();
         }
@@ -79,12 +84,12 @@
         /// </summary>
         /// <param name="sender">The sender<see cref="object"/>.</param>
         /// <param name="e">The e<see cref="System.ComponentModel.PropertyChangedEventArgs"/>.</param>
-        private void OnGlobalData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void CefWindowData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.IsMatch(nameof(GlobalData.IsFullScreen)))
+            var cefWindowData = this.MainWindowViewModel.CefWindowData;
+            if (e.IsMatch(nameof(cefWindowData.IsFullScreen)))
             {
-                var globalData = this.MainWindowViewModel.GlobalData;
-                if (globalData.IsFullScreen)
+                if (cefWindowData.IsFullScreen)
                 {
                     this.LastWindowState = this.WindowState;
                     this.LastWindowStyle = this.WindowStyle;

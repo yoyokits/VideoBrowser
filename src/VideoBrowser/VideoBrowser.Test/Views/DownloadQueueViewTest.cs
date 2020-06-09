@@ -25,7 +25,8 @@
         [TestMethod, ManualTest]
         public void Show_DownloadQueueView()
         {
-            var viewModel = new DownloadQueueViewModel(new GlobalData());
+            var globalData = new GlobalData();
+            var viewModel = new DownloadQueueViewModel(globalData.OperationModels);
             this.CreateDummyOperations(viewModel.OperationModels, viewModel.OnPauseDownloadCalled);
             var view = new DownloadQueueView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view);

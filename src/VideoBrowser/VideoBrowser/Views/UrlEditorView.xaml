@@ -87,10 +87,11 @@
                         <TextBlock
                             MaxWidth="500"
                             VerticalAlignment="Center"
-                            Text="{Binding OutputFolder}" />
+                            Text="{Binding Settings.OutputFolder}" />
                         <Button
                             Margin="8,0,0,0"
                             Command="{Binding GetFolderCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                             Style="{StaticResource ButtonPathStyle}"
                             ToolTip="Change the output folder">
                             <Path Style="{StaticResource VideoFolder}" />

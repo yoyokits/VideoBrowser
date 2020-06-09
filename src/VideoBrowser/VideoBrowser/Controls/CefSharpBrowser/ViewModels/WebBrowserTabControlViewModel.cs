@@ -19,10 +19,10 @@
         /// Initializes a new instance of the <see cref="WebBrowserTabControlViewModel"/> class.
         /// </summary>
         /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        public WebBrowserTabControlViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
+        public WebBrowserTabControlViewModel(GlobalBrowserData globalBrowserData)
         {
-            this.GlobalData = globalData;
             this.GlobalBrowserData = globalBrowserData;
+            this.CefWindowData = new CefWindowData();
             this.WebBrowsers = new ObservableCollection<HeaderedItemViewModel>();
             this.CreateBrowserFunc = this.CreateBrowser;
         }
@@ -30,6 +30,8 @@
         #endregion Constructors
 
         #region Properties
+
+        public CefWindowData CefWindowData { get; }
 
         /// <summary>
         /// Gets the ClosingTabItemHandler.
@@ -39,17 +41,12 @@
         /// <summary>
         /// Gets the CreateBrowserFunc.
         /// </summary>
-        public Func<HeaderedItemViewModel> CreateBrowserFunc { get; }
+        public Func<HeaderedItemViewModel> CreateBrowserFunc { get; set; }
 
         /// <summary>
         /// Gets the GlobalBrowserData.
         /// </summary>
         public GlobalBrowserData GlobalBrowserData { get; }
-
-        /// <summary>
-        /// Gets the GlobalData.
-        /// </summary>
-        public GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets or sets the Icon.
@@ -98,9 +95,9 @@
         /// The CreateBrowser.
         /// </summary>
         /// <returns>The <see cref="HeaderedItemViewModel"/>.</returns>
-        internal HeaderedItemViewModel CreateBrowser()
+        private HeaderedItemViewModel CreateBrowser()
         {
-            var model = new WebBrowserHeaderedItemViewModel(this.GlobalData, this.GlobalBrowserData);
+            var model = new WebBrowserHeaderedItemViewModel(this.GlobalBrowserData, this.CefWindowData, null);
             return model;
         }
 

@@ -4,9 +4,9 @@
     using System;
     using System.ComponentModel;
     using VideoBrowser.Controls.CefSharpBrowser.Views;
+    using VideoBrowser.Core;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
-    using VideoBrowser.Models;
 
     /// <summary>
     /// Defines the <see cref="WebBrowserHeaderedItemViewModel" />.
@@ -24,11 +24,16 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WebBrowserHeaderedItemViewModel"/> class.
         /// </summary>
-        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        internal WebBrowserHeaderedItemViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
+        /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
+        /// <param name="cefWindowData">The cefWindowData<see cref="CefWindowData"/>.</param>
+        /// <param name="downloadAction">The downloadAction<see cref="Action{Operation}"/>.</param>
+        internal WebBrowserHeaderedItemViewModel(GlobalBrowserData globalBrowserData, CefWindowData cefWindowData, Action<Operation> downloadAction)
         {
-            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalData, globalBrowserData);
+            this.CefWindowData = cefWindowData;
+            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalBrowserData, this.CefWindowData);
             this.VideoBrowserViewModel.PropertyChanged += this.OnVideoBrowserViewModel_PropertyChanged;
+            this.VideoBrowserViewModel.DownloadAction = downloadAction;
+
             this.HeaderViewModel = new WebBrowserTabHeaderViewModel { Header = this.VideoBrowserViewModel.Header };
             UIThreadHelper.Invoke(() =>
             {
@@ -41,6 +46,11 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the CefWindowData.
+        /// </summary>
+        public CefWindowData CefWindowData { get; }
 
         /// <summary>
         /// Gets the HeaderViewModel.

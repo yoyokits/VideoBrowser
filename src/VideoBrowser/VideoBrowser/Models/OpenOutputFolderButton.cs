@@ -4,6 +4,7 @@
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Resources;
+    using VideoBrowser.ViewModels;
 
     /// <summary>
     /// Defines the <see cref="OpenOutputFolderButton" />.
@@ -15,10 +16,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenOutputFolderButton"/> class.
         /// </summary>
-        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        public OpenOutputFolderButton(GlobalData globalData)
+        /// <param name="settings">The settings<see cref="SettingsViewModel"/>.</param>
+        public OpenOutputFolderButton(SettingsViewModel settings)
         {
-            this.GlobalData = globalData;
+            this.SettingsViewModel = settings;
             this.Command = new RelayCommand(this.OnOpenOutputFolder, nameof(OpenOutputFolderButton));
             this.Icon = Icons.Folder;
             this.ToolTip = "Open the output folder";
@@ -29,9 +30,9 @@
         #region Properties
 
         /// <summary>
-        /// Gets the GlobalData.
+        /// Gets the SettingsViewModel.
         /// </summary>
-        public GlobalData GlobalData { get; }
+        public SettingsViewModel SettingsViewModel { get; }
 
         #endregion Properties
 
@@ -43,7 +44,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnOpenOutputFolder(object obj)
         {
-            Process.Start(this.GlobalData.Settings.OutputFolder);
+            Process.Start(this.SettingsViewModel.OutputFolder);
         }
 
         #endregion Methods

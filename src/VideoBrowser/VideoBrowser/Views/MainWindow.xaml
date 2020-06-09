@@ -37,7 +37,7 @@
         <TabControl
             Grid.Row="0"
             BorderBrush="WhiteSmoke"
-            SelectedIndex="{Binding GlobalData.SelectedMainTabIndex}"
+            SelectedIndex="{Binding SelectedMainTabIndex}"
             TabStripPlacement="Right">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
@@ -72,7 +72,7 @@
                     </Setter>
                     <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Source={StaticResource MainWindowViewModelProxy}, Path=DataContext.GlobalData.IsFullScreen}" Value="True">
+                        <DataTrigger Binding="{Binding Source={StaticResource MainWindowViewModelProxy}, Path=DataContext.CefWindowData.IsFullScreen}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -107,7 +107,7 @@
             x:Name="FlyoverPlacementGrid"
             Grid.Row="1"
             Background="{DynamicResource WindowBackgroundBrush}"
-            DataContext="{Binding GlobalData.DownloadFlyoutViewModel}">
+            DataContext="{Binding DownloadFlyoutViewModel}">
             <Grid.Height>
                 <MultiBinding Converter="{StaticResource MultiplyConverter}">
                     <Binding ElementName="DownloadFlyoutsControl" Path="ActualHeight" />
@@ -157,7 +157,7 @@
                 x:Name="AutoCloseFlyout"
                 AutoCloseInterval="10000"
                 CloseButtonVisibility="Collapsed"
-                DataContext="{Binding GlobalData.DownloadFlyoutViewModel}"
+                DataContext="{Binding DownloadFlyoutViewModel}"
                 Header="Downloads"
                 IsAutoCloseEnabled="True"
                 IsOpen="{Binding IsOpen}"

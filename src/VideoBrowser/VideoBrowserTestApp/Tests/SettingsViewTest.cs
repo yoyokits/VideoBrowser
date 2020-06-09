@@ -1,7 +1,6 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
     using System.Windows;
-    using VideoBrowser.Models;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
     using VideoBrowserTestApp.Helpers;
@@ -30,8 +29,7 @@
         /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
         protected override void Test(Window testWindow)
         {
-            var globalData = new GlobalData();
-            var viewModel = new SettingsViewModel(globalData);
+            var viewModel = new SettingsViewModel();
             var view = new SettingsView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view, testWindow);
         }
