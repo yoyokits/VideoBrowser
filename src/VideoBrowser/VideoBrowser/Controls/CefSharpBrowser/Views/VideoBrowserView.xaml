@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:adornedcontrol="clr-namespace:AdornedControl"
+    xmlns:cefSharpViews="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.Views"
     xmlns:cefsharpbrowser="clr-namespace:VideoBrowser.Controls.CefSharpBrowser"
     xmlns:converters="clr-namespace:VideoBrowser.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -124,6 +125,7 @@
                     <DataTemplate>
                         <Button
                             Command="{Binding Command}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=cefSharpViews:WebBrowserTabControlView}, Path=DataContext}"
                             IsEnabled="{Binding IsEnabled}"
                             ToolTip="{Binding ToolTip}">
                             <Path Data="{Binding Icon}" Style="{StaticResource IconPathButtonBaseStyle}" />

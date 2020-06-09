@@ -22,7 +22,10 @@
         public MainWindow() : this(new GlobalData(), new GlobalBrowserData())
         {
             var addIns = this.GlobalBrowserData.AddInButtons;
+            addIns.Add(new DownloadQueueButton(this.GlobalData.OperationModels));
             addIns.Add(new OpenOutputFolderButton(this.GlobalBrowserData.Settings));
+            addIns.Add(new SettingsButton(this.GlobalBrowserData.Settings));
+            addIns.Add(new AboutButton());
             if (DebugHelper.IsDebug)
             {
                 addIns.Add(new TestButton());

@@ -3,34 +3,54 @@
     using Dragablz;
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
     using System.Windows.Media;
+    using VideoBrowser.Common;
     using VideoBrowser.Extensions;
-    using VideoBrowser.Models;
     using VideoBrowser.Resources;
 
     /// <summary>
     /// Defines the <see cref="WebBrowserTabControlViewModel" />.
     /// </summary>
-    public class WebBrowserTabControlViewModel : IDisposable
+    public class WebBrowserTabControlViewModel : INotifyPropertyChanged, IDisposable
     {
+        #region Fields
+
+        private int _selectedTabIndex;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebBrowserTabControlViewModel"/> class.
         /// </summary>
-        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
+        /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
         public WebBrowserTabControlViewModel(GlobalBrowserData globalBrowserData)
         {
             this.GlobalBrowserData = globalBrowserData;
             this.CefWindowData = new CefWindowData();
-            this.WebBrowsers = new ObservableCollection<HeaderedItemViewModel>();
+            this.TabItems = new ObservableCollection<TabItem>();
             this.CreateBrowserFunc = this.CreateBrowser;
         }
 
         #endregion Constructors
 
+        #region Events
+
+        /// <summary>
+        /// Defines the PropertyChanged.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion Events
+
         #region Properties
 
+        /// <summary>
+        /// Gets the CefWindowData.
+        /// </summary>
         public CefWindowData CefWindowData { get; }
 
         /// <summary>
@@ -39,7 +59,7 @@
         public ItemActionCallback ClosingTabItemHandler => ClosingTabItemHandlerImpl;
 
         /// <summary>
-        /// Gets the CreateBrowserFunc.
+        /// Gets or sets the CreateBrowserFunc.
         /// </summary>
         public Func<HeaderedItemViewModel> CreateBrowserFunc { get; set; }
 
@@ -59,20 +79,69 @@
         public IInterTabClient InterTabClient { get; }
 
         /// <summary>
-        /// Gets the WebBrowsers.
+        /// Gets or sets the SelectedTabIndex.
         /// </summary>
-        public ObservableCollection<HeaderedItemViewModel> WebBrowsers { get; }
+        public int SelectedTabIndex { get => _selectedTabIndex; set => this.Set(this.PropertyChanged, ref _selectedTabIndex, value); }
+
+        /// <summary>
+        /// Gets the TabItems.
+        /// </summary>
+        public ObservableCollection<TabItem> TabItems { get; }
 
         #endregion Properties
 
         #region Methods
 
         /// <summary>
+        /// The AddTab.
+        /// </summary>
+        /// <param name="item">The item<see cref="TabItem"/>.</param>
+        public void AddTab(TabItem item)
+        {
+            if (this.IsTabItemExist(item.Guid))
+            {
+                this.SetActiveTab(item.Guid);
+                Logger.Info($"Add tab canceled: Tab {item.Title} exists.");
+                return;
+            }
+
+            this.TabItems.Add(item);
+            Logger.Info($"Tab {item.Title} is added.");
+            this.SelectedTabIndex = this.TabItems.Count - 1;
+        }
+
+        /// <summary>
         /// The Dispose.
         /// </summary>
         public void Dispose()
         {
-            this.WebBrowsers.ClearAndDispose();
+            this.TabItems.ClearAndDispose();
+        }
+
+        /// <summary>
+        /// The IsTabItemExist.
+        /// </summary>
+        /// <param name="guid">The guid<see cref="Guid"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public bool IsTabItemExist(Guid guid)
+        {
+            return this.TabItems.Any((o) => o.Guid == guid) && guid != Guid.Empty;
+        }
+
+        /// <summary>
+        /// The SetActiveTab.
+        /// </summary>
+        /// <param name="guid">The guid<see cref="Guid"/>.</param>
+        internal void SetActiveTab(Guid guid)
+        {
+            for (var i = 0; i < this.TabItems.Count; i++)
+            {
+                if (this.TabItems[i].Guid == guid)
+                {
+                    this.SelectedTabIndex = i;
+                    break;
+                }
+            }
         }
 
         /// <summary>

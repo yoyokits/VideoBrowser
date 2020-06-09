@@ -39,7 +39,7 @@
             var view = new WebBrowserTabControlView { DataContext = viewModel };
             var window = WindowFactory.Create(view, testWindow);
             var operationModels = new ObservableCollection<OperationModel>();
-            viewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(globalBrowserData, cefWindowData, null));
+            viewModel.TabItems.Add(new WebBrowserHeaderedItemViewModel(globalBrowserData, cefWindowData, null));
             cefWindowData.MainWindow = window; ;
             window.ShowDialog();
         }

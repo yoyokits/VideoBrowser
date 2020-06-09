@@ -46,7 +46,7 @@
             };
 
             // Create the first browser.
-            this.WebBrowserTabControlViewModel.WebBrowsers.Add(this.CreateBrowser());
+            this.WebBrowserTabControlViewModel.TabItems.Add(this.CreateBrowser());
             this.Initialize();
         }
 
@@ -144,7 +144,7 @@
         /// The CreateBrowser.
         /// </summary>
         /// <returns>The <see cref="HeaderedItemViewModel"/>.</returns>
-        private HeaderedItemViewModel CreateBrowser()
+        private TabItem CreateBrowser()
         {
             var model = new WebBrowserHeaderedItemViewModel(this.GlobalBrowserData, this.CefWindowData, this.DownloadAction);
             return model;
@@ -170,7 +170,7 @@
                 url = args.First();
             }
 
-            var browser = this.WebBrowserTabControlViewModel.WebBrowsers.First();
+            var browser = this.WebBrowserTabControlViewModel.TabItems.First();
             if (browser is WebBrowserHeaderedItemViewModel model)
             {
                 model.VideoBrowserViewModel.NavigateUrl = url;

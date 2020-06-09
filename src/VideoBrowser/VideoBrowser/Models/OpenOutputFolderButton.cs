@@ -1,8 +1,8 @@
 ﻿namespace VideoBrowser.Models
 {
     using System.Diagnostics;
-    using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Resources;
     using VideoBrowser.ViewModels;
 
@@ -20,7 +20,6 @@
         public OpenOutputFolderButton(SettingsViewModel settings)
         {
             this.SettingsViewModel = settings;
-            this.Command = new RelayCommand(this.OnOpenOutputFolder, nameof(OpenOutputFolderButton));
             this.Icon = Icons.Folder;
             this.ToolTip = "Open the output folder";
         }
@@ -39,10 +38,10 @@
         #region Methods
 
         /// <summary>
-        /// The OnOpenOutputFolder.
+        /// The Execute.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnOpenOutputFolder(object obj)
+        /// <param name="viewModel">The viewModel<see cref="WebBrowserTabControlViewModel"/>.</param>
+        protected override void Execute(WebBrowserTabControlViewModel viewModel)
         {
             Process.Start(this.SettingsViewModel.OutputFolder);
         }

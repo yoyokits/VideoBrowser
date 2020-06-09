@@ -184,7 +184,9 @@
     </Compile>
     <Compile Include="Controls\CefSharpBrowser\AddInButton.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefWindowData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CreateTabAddInButton.cs" />
     <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
@@ -236,9 +238,12 @@
     <Compile Include="Helpers\YoutubeHelper.cs" />
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
+    <Compile Include="Models\AboutButton.cs" />
+    <Compile Include="Models\DownloadQueueButton.cs" />
     <Compile Include="Models\GlobalData.cs" />
     <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
+    <Compile Include="Models\SettingsButton.cs" />
     <Compile Include="Models\TestButton.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />

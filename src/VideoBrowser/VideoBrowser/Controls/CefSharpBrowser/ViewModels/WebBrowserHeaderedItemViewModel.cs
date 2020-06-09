@@ -1,6 +1,5 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
-    using Dragablz;
     using System;
     using System.ComponentModel;
     using VideoBrowser.Controls.CefSharpBrowser.Views;
@@ -11,7 +10,7 @@
     /// <summary>
     /// Defines the <see cref="WebBrowserHeaderedItemViewModel" />.
     /// </summary>
-    public class WebBrowserHeaderedItemViewModel : HeaderedItemViewModel, IDisposable
+    public class WebBrowserHeaderedItemViewModel : TabItem
     {
         #region Fields
 
@@ -29,33 +28,23 @@
         /// <param name="downloadAction">The downloadAction<see cref="Action{Operation}"/>.</param>
         internal WebBrowserHeaderedItemViewModel(GlobalBrowserData globalBrowserData, CefWindowData cefWindowData, Action<Operation> downloadAction)
         {
-            this.CefWindowData = cefWindowData;
-            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalBrowserData, this.CefWindowData);
-            this.VideoBrowserViewModel.PropertyChanged += this.OnVideoBrowserViewModel_PropertyChanged;
-            this.VideoBrowserViewModel.DownloadAction = downloadAction;
+            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalBrowserData, cefWindowData)
+            {
+                DownloadAction = downloadAction
+            };
 
-            this.HeaderViewModel = new WebBrowserTabHeaderViewModel { Header = this.VideoBrowserViewModel.Header };
+            this.VideoBrowserViewModel.PropertyChanged += this.OnVideoBrowserViewModel_PropertyChanged;
+            this.Title = this.VideoBrowserViewModel.Header;
             UIThreadHelper.Invoke(() =>
             {
                 this.VideoBrowserView = new VideoBrowserView { DataContext = this.VideoBrowserViewModel };
-                this.Header = new WebBrowserTabHeaderView { DataContext = this.HeaderViewModel };
+                this.Content = this.VideoBrowserView;
             });
-            this.Content = this.VideoBrowserView;
         }
 
         #endregion Constructors
 
         #region Properties
-
-        /// <summary>
-        /// Gets the CefWindowData.
-        /// </summary>
-        public CefWindowData CefWindowData { get; }
-
-        /// <summary>
-        /// Gets the HeaderViewModel.
-        /// </summary>
-        public WebBrowserTabHeaderViewModel HeaderViewModel { get; }
 
         /// <summary>
         /// Gets the VideoBrowserView.
@@ -74,8 +63,10 @@
         /// <summary>
         /// The Dispose.
         /// </summary>
-        public void Dispose()
+        /// <param name="disposing">The disposing<see cref="bool"/>.</param>
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             if (this.VideoBrowserViewModel == null)
             {
                 return;
@@ -86,8 +77,6 @@
             this.VideoBrowserViewModel = null;
             this.VideoBrowserView.DataContext = null;
             this.VideoBrowserView = null;
-            this.Content = null;
-            this.Header = null;
         }
 
         /// <summary>
@@ -99,7 +88,7 @@
         {
             if (e.IsMatch(nameof(this.VideoBrowserViewModel.Header)))
             {
-                this.HeaderViewModel.Header = this.VideoBrowserViewModel.Header;
+                this.Title = this.VideoBrowserViewModel.Header;
             }
         }
 

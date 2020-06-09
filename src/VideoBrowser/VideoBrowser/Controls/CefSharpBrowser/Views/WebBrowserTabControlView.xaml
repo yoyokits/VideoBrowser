@@ -36,7 +36,7 @@
                 x:Shared="False"
                 ToolTip="Added via the HeaderPrefixContent property" />
             <Style x:Key="TabablzControlStyle" TargetType="{x:Type dragablz:TabablzControl}">
-                <Setter Property="ItemsSource" Value="{Binding WebBrowsers}" />
+                <Setter Property="ItemsSource" Value="{Binding TabItems}" />
                 <Setter Property="ClosingItemCallback" Value="{Binding ClosingTabItemHandler}" />
                 <Setter Property="ShowDefaultAddButton" Value="True" />
                 <Setter Property="ShowDefaultCloseButton" Value="True" />
@@ -58,6 +58,7 @@
         AddLocationHint="After"
         FixedHeaderCount="1"
         NewItemFactory="{Binding CreateBrowserFunc}"
+        SelectedIndex="{Binding SelectedTabIndex}"
         Style="{StaticResource TabablzControlStyle}">
         <!--<dragablz:TabablzControl.InterTabController>
             <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
