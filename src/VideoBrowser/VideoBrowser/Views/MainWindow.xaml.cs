@@ -30,6 +30,10 @@
             {
                 addIns.Add(new TestButton());
             }
+
+            // Add the first browser tab.
+            var browserTabModel = this.MainWindowViewModel.WebBrowserTabControlViewModel;
+            browserTabModel.TabItems.Add(this.MainWindowViewModel.CreateBrowser());
         }
 
         /// <summary>

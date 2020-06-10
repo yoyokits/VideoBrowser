@@ -7,7 +7,6 @@
     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.ViewModels"
-    xmlns:views="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.Views"
     d:DataContext="{d:DesignInstance viewmodels:WebBrowserTabControlViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -20,21 +19,11 @@
                     Content="{Binding Content}"
                     FontSize="14" />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewmodels:WebBrowserTabHeaderViewModel}">
-                <views:WebBrowserTabHeaderView />
-            </DataTemplate>
-            <!--<dragablz:InterTabController
+            <dragablz:InterTabController
                 x:Key="InterTabController"
                 x:Shared="False"
                 InterTabClient="{Binding InterTabClient}"
-                Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />-->
-            <dragablz:DragablzIcon
-                x:Key="WindowIcon"
-                Width="24"
-                Height="24"
-                Margin="0,-8,0,0"
-                x:Shared="False"
-                ToolTip="Added via the HeaderPrefixContent property" />
+                Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
             <Style x:Key="TabablzControlStyle" TargetType="{x:Type dragablz:TabablzControl}">
                 <Setter Property="ItemsSource" Value="{Binding TabItems}" />
                 <Setter Property="ClosingItemCallback" Value="{Binding ClosingTabItemHandler}" />
@@ -43,7 +32,7 @@
                 <Setter Property="AdjacentHeaderItemOffset" Value="-10" />
                 <Setter Property="ItemContainerStyle" Value="{StaticResource TrapezoidDragableTabItemStyle}" />
                 <Setter Property="HeaderMemberPath" Value="Header" />
-                <!--<Setter Property="InterTabController" Value="{StaticResource InterTabController}" />-->
+                <Setter Property="InterTabController" Value="{StaticResource InterTabController}" />
                 <Setter Property="Margin" Value="0,8,0,0" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(dockablz:Layout.IsTopLeftItem)}" Value="True">
@@ -53,15 +42,34 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <dragablz:TabablzControl
-        x:Name="InitialTabablzControl"
-        AddLocationHint="After"
-        FixedHeaderCount="1"
-        NewItemFactory="{Binding CreateBrowserFunc}"
-        SelectedIndex="{Binding SelectedTabIndex}"
-        Style="{StaticResource TabablzControlStyle}">
-        <!--<dragablz:TabablzControl.InterTabController>
-            <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
-        </dragablz:TabablzControl.InterTabController>-->
-    </dragablz:TabablzControl>
+    <dockablz:Layout
+        Name="RootLayout"
+        ClosingFloatingItemCallback="{Binding ClosingFloatingItemHandler}"
+        FloatingItemHeaderMemberPath="Header"
+        FloatingItemsContainerMargin="0 2 0 0"
+        FloatingItemsSource="{Binding ToolItems}"
+        IsFloatDropZoneEnabled="True"
+        Partition="2AE89D18-F236-4D20-9605-6C03319038E6">
+        <!--  branch template lets dragablz create a new tab control after a window is split via docking  -->
+        <dockablz:Layout.BranchTemplate>
+            <DataTemplate>
+                <dragablz:TabablzControl Style="{StaticResource TabablzControlStyle}">
+                    <dragablz:TabablzControl.InterTabController>
+                        <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+                    </dragablz:TabablzControl.InterTabController>
+                </dragablz:TabablzControl>
+            </DataTemplate>
+        </dockablz:Layout.BranchTemplate>
+        <dragablz:TabablzControl
+            x:Name="InitialTabablzControl"
+            AddLocationHint="After"
+            FixedHeaderCount="1"
+            NewItemFactory="{Binding CreateBrowserFunc}"
+            SelectedIndex="{Binding SelectedTabIndex}"
+            Style="{StaticResource TabablzControlStyle}">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+            </dragablz:TabablzControl.InterTabController>
+        </dragablz:TabablzControl>
+    </dockablz:Layout>
 </UserControl>

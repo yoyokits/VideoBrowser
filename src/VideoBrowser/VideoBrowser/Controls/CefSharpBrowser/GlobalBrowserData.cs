@@ -6,6 +6,7 @@
 
     /// <summary>
     /// Defines the <see cref="GlobalBrowserData" />.
+    /// All singleton instances are saved here.
     /// </summary>
     public class GlobalBrowserData
     {
@@ -17,6 +18,7 @@
         internal GlobalBrowserData()
         {
             this.Settings = new SettingsViewModel();
+            this.InterTabClient = new InterTabClient(this);
         }
 
         #endregion Constructors
@@ -27,6 +29,11 @@
         /// Gets the AddInButtons.
         /// </summary>
         public ICollection<AddInButton> AddInButtons { get; } = new ObservableCollection<AddInButton>();
+
+        /// <summary>
+        /// Gets the InterTabClient.
+        /// </summary>
+        public InterTabClient InterTabClient { get; }
 
         /// <summary>
         /// Gets the Settings.

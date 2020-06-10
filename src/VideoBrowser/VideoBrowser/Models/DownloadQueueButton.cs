@@ -18,7 +18,7 @@
         /// Initializes a new instance of the <see cref="DownloadQueueButton"/> class.
         /// </summary>
         /// <param name="operationModels">The operationModels<see cref="ObservableCollection{OperationModel}"/>.</param>
-        internal DownloadQueueButton(ObservableCollection<OperationModel> operationModels) : base("Download", Icons.FolderDownload)
+        internal DownloadQueueButton(ObservableCollection<OperationModel> operationModels) : base("Downloads", Icons.FolderDownload)
         {
             this.DownloadQueueViewModel = new DownloadQueueViewModel(operationModels);
             this.ToolTip = "Show downloads queue";

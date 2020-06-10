@@ -1,10 +1,12 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
     using Dragablz;
+    using Dragablz.Dockablz;
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Media;
     using VideoBrowser.Common;
     using VideoBrowser.Extensions;
@@ -54,6 +56,11 @@
         public CefWindowData CefWindowData { get; }
 
         /// <summary>
+        /// Gets the ClosingFloatingItemHandler.
+        /// </summary>
+        public ClosingFloatingItemCallback ClosingFloatingItemHandler => ClosingFloatingItemHandlerImpl;
+
+        /// <summary>
         /// Gets the ClosingTabItemHandler.
         /// </summary>
         public ItemActionCallback ClosingTabItemHandler => ClosingTabItemHandlerImpl;
@@ -76,7 +83,7 @@
         /// <summary>
         /// Gets the InterTabClient.
         /// </summary>
-        public IInterTabClient InterTabClient { get; }
+        public IInterTabClient InterTabClient => this.GlobalBrowserData.InterTabClient;
 
         /// <summary>
         /// Gets or sets the SelectedTabIndex.
@@ -87,6 +94,11 @@
         /// Gets the TabItems.
         /// </summary>
         public ObservableCollection<TabItem> TabItems { get; }
+
+        /// <summary>
+        /// Gets the ToolItems.
+        /// </summary>
+        public ObservableCollection<HeaderedItemViewModel> ToolItems { get; } = new ObservableCollection<HeaderedItemViewModel>();
 
         #endregion Properties
 
@@ -145,6 +157,21 @@
         }
 
         /// <summary>
+        /// Callback to handle floating toolbar/MDI window closing.
+        /// </summary>
+        /// <param name="args">The args<see cref="ItemActionCallbackArgs{Layout}"/>.</param>
+        private static void ClosingFloatingItemHandlerImpl(ItemActionCallbackArgs<Layout> args)
+        {
+            //in here you can dispose stuff or cancel the close
+
+            //here's your view model:
+            if (args.DragablzItem.DataContext is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Callback to handle tab closing.
         /// </summary>
         /// <param name="args">The args<see cref="ItemActionCallbackArgs{TabablzControl}"/>.</param>
@@ -154,6 +181,10 @@
 
             //here's your view model:
             var viewModel = args.DragablzItem.DataContext as HeaderedItemViewModel;
+            if (viewModel.Content is FrameworkElement element && element.DataContext is IDisposable disposable)
+            {
+                disposable?.Dispose();
+            }
 
             //here's how you can cancel stuff:
             //args.Cancel();

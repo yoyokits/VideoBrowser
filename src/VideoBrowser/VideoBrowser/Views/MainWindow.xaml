@@ -34,75 +34,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TabControl
-            Grid.Row="0"
-            BorderBrush="WhiteSmoke"
-            SelectedIndex="{Binding SelectedMainTabIndex}"
-            TabStripPlacement="Right">
-            <TabControl.Resources>
-                <Style TargetType="TabItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TabItem">
-                                <Grid Name="Panel">
-                                    <Image
-                                        Width="20"
-                                        Height="20"
-                                        Margin="8">
-                                        <Image.Source>
-                                            <DrawingImage>
-                                                <DrawingImage.Drawing>
-                                                    <GeometryDrawing Brush="Black" Geometry="{Binding Icon}" />
-                                                </DrawingImage.Drawing>
-                                            </DrawingImage>
-                                        </Image.Source>
-                                    </Image>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Panel" Property="Background" Value="White" />
-                                        <Setter TargetName="Panel" Property="Margin" Value="-2,-1,0,-1" />
-                                    </Trigger>
-                                    <!--<Trigger Property="IsSelected" Value="False">
-                                        <Setter TargetName="Panel" Property="Background" Value="LightGray" />
-                                    </Trigger>-->
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Visibility" Value="Visible" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Source={StaticResource MainWindowViewModelProxy}, Path=DataContext.CefWindowData.IsFullScreen}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TabControl.Resources>
-            <TabItem
-                DataContext="{Binding WebBrowserTabControlViewModel}"
-                Header="Browser"
-                ToolTip="Web browser and video downloader">
-                <browserViews:WebBrowserTabControlView />
-            </TabItem>
-            <TabItem
-                DataContext="{Binding DownloadQueueViewModel}"
-                Header="Download"
-                ToolTip="Download queue">
-                <views:DownloadQueueView />
-            </TabItem>
-            <TabItem
-                DataContext="{Binding Settings}"
-                Header="Settings"
-                ToolTip="Change the settings">
-                <views:SettingsView />
-            </TabItem>
-            <TabItem
-                DataContext="{Binding About}"
-                Header="About"
-                ToolTip="About this software">
-                <views:AboutView />
-            </TabItem>
-        </TabControl>
+        <browserViews:WebBrowserTabControlView Grid.Row="0" DataContext="{Binding WebBrowserTabControlViewModel}" />
         <Grid
             x:Name="FlyoverPlacementGrid"
             Grid.Row="1"

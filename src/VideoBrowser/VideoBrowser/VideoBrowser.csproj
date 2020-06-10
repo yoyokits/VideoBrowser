@@ -108,7 +108,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\ControlzEx.dll</HintPath>
     </Reference>
-    <Reference Include="Dragablz">
+    <Reference Include="Dragablz, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
@@ -186,7 +187,12 @@
     <Compile Include="Controls\CefSharpBrowser\CefWindowData.cs" />
     <Compile Include="Controls\CefSharpBrowser\CreateTabAddInButton.cs" />
     <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
+      <DependentUpon>DefaultTabHostWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
@@ -292,6 +298,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -427,6 +437,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

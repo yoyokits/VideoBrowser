@@ -32,7 +32,6 @@
         /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
         protected override void Test(Window testWindow)
         {
-            var globalData = new GlobalData();
             var globalBrowserData = new GlobalBrowserData();
             var viewModel = new WebBrowserTabControlViewModel(globalBrowserData);
             var cefWindowData = viewModel.CefWindowData;
