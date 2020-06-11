@@ -49,8 +49,7 @@
         public string Message { get => _message; internal set => this.Set(this.PropertyChangedHandler, ref _message, value); }
 
         /// <summary>
-        /// Gets or sets the OperationModels
-        /// Gets the OperationModels...
+        /// Gets or sets the OperationModels.
         /// </summary>
         public ObservableCollection<OperationModel> OperationModels { get; internal set; }
 

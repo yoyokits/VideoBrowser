@@ -50,7 +50,6 @@
             Initialize();
             this.CefDisplayHandler = new CefDisplayHandler();
             InitializeComponent();
-            this.WebBrowser = this.ChromiumWebBrowser;
             this.ChromiumWebBrowser.TitleChanged += this.OnChromiumWebBrowser_TitleChanged;
             this.Loaded += this.OnLoaded;
         }
@@ -172,7 +171,10 @@
         {
             if (!Cef.IsInitialized)
             {
-                var settings = new CefSettings();
+                var settings = new CefSettings
+                {
+                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0"
+                };
                 Cef.Initialize(settings);
             }
         }
@@ -202,7 +204,7 @@
                 return;
             }
 
-            browser.WebBrowser.Load(url);
+            browser.ChromiumWebBrowser.Load(url);
         }
 
         /// <summary>
@@ -224,7 +226,7 @@
         /// <param name="e">The e<see cref="TitleChangedEventArgs"/>.</param>
         private void OnChromiumWebBrowser_TitleChanged(object sender, TitleChangedEventArgs e)
         {
-            UIThreadHelper.Invoke(() => this.Title = e.Title);
+            UIThreadHelper.InvokeAsync(() => this.Title = e.Title);
         }
 
         /// <summary>
@@ -247,6 +249,7 @@
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= this.OnLoaded;
+            this.WebBrowser = this.ChromiumWebBrowser;
             this.WebBrowser.LoadingStateChanged += OnWebBrowser_LoadingStateChanged;
             this.WebBrowser.LoadError += OnWebBrowser_LoadError;
             this.WebBrowser.DisplayHandler = this.CefDisplayHandler;
@@ -273,7 +276,7 @@
         /// <param name="e">The e<see cref="AddressChangedEventArgs"/>.</param>
         private void OnWebBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
         {
-            UIThreadHelper.Invoke(() =>
+            UIThreadHelper.InvokeAsync(() =>
             {
                 this.InternalUrl = e.Address;
                 this.Url = this.InternalUrl;

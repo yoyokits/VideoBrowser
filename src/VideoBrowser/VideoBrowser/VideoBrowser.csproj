@@ -108,7 +108,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\ControlzEx.dll</HintPath>
     </Reference>
-    <Reference Include="Dragablz">
+    <Reference Include="Dragablz, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
@@ -182,6 +183,16 @@
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CefSharpBrowser\AddInButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefWindowData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CreateTabAddInButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />
+    <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
+      <DependentUpon>DefaultTabHostWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
@@ -230,12 +241,16 @@
     <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Helpers\UIThreadHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
-    <Compile Include="Helpers\WebBrowserViewModelFactory.cs" />
     <Compile Include="Helpers\YoutubeHelper.cs" />
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
+    <Compile Include="Models\AboutButton.cs" />
+    <Compile Include="Models\DownloadQueueButton.cs" />
     <Compile Include="Models\GlobalData.cs" />
+    <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
+    <Compile Include="Models\SettingsButton.cs" />
+    <Compile Include="Models\TestButton.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />
     <Compile Include="Resources\Icons.cs" />
@@ -245,11 +260,11 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UrlEditorViewModel.cs" />
-    <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserHeaderedItemViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserTabControlViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserTabHeaderViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserHeaderedItemViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserTabControlViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserTabHeaderViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -265,13 +280,13 @@
     <Compile Include="Views\UrlEditorView.xaml.cs">
       <DependentUpon>UrlEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VideoBrowserView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\VideoBrowserView.xaml.cs">
       <DependentUpon>VideoBrowserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WebBrowserTabControlView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\WebBrowserTabControlView.xaml.cs">
       <DependentUpon>WebBrowserTabControlView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WebBrowserTabHeaderView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\WebBrowserTabHeaderView.xaml.cs">
       <DependentUpon>WebBrowserTabHeaderView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AirspaceFixer\Themes\AirspacePanel.xaml">
@@ -283,6 +298,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,15 +341,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\VideoBrowserView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\VideoBrowserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WebBrowserTabControlView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\WebBrowserTabControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WebBrowserTabHeaderView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\WebBrowserTabHeaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -392,7 +411,9 @@
     <Resource Include="Docs\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon.ico" />
+    <Resource Include="Icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">

@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.ViewModels
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
     using System.Windows.Media;
     using VideoBrowser.Common;

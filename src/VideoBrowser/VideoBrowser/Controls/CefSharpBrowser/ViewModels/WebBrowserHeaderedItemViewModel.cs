@@ -1,17 +1,16 @@
-﻿namespace VideoBrowser.ViewModels
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
-    using Dragablz;
     using System;
     using System.ComponentModel;
+    using VideoBrowser.Controls.CefSharpBrowser.Views;
+    using VideoBrowser.Core;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
-    using VideoBrowser.Models;
-    using VideoBrowser.Views;
 
     /// <summary>
     /// Defines the <see cref="WebBrowserHeaderedItemViewModel" />.
     /// </summary>
-    public class WebBrowserHeaderedItemViewModel : HeaderedItemViewModel, IDisposable
+    public class WebBrowserHeaderedItemViewModel : TabItem
     {
         #region Fields
 
@@ -24,28 +23,28 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WebBrowserHeaderedItemViewModel"/> class.
         /// </summary>
-        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        internal WebBrowserHeaderedItemViewModel(GlobalData globalData)
+        /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
+        /// <param name="cefWindowData">The cefWindowData<see cref="CefWindowData"/>.</param>
+        /// <param name="downloadAction">The downloadAction<see cref="Action{Operation}"/>.</param>
+        internal WebBrowserHeaderedItemViewModel(GlobalBrowserData globalBrowserData, CefWindowData cefWindowData, Action<Operation> downloadAction)
         {
-            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalData);
+            this.VideoBrowserViewModel = new VideoBrowserViewModel(globalBrowserData, cefWindowData)
+            {
+                DownloadAction = downloadAction
+            };
+
             this.VideoBrowserViewModel.PropertyChanged += this.OnVideoBrowserViewModel_PropertyChanged;
-            this.HeaderViewModel = new WebBrowserTabHeaderViewModel { Header = this.VideoBrowserViewModel.Header };
+            this.Title = this.VideoBrowserViewModel.Header;
             UIThreadHelper.Invoke(() =>
             {
                 this.VideoBrowserView = new VideoBrowserView { DataContext = this.VideoBrowserViewModel };
-                this.Header = new WebBrowserTabHeaderView { DataContext = this.HeaderViewModel };
+                this.Content = this.VideoBrowserView;
             });
-            this.Content = this.VideoBrowserView;
         }
 
         #endregion Constructors
 
         #region Properties
-
-        /// <summary>
-        /// Gets the HeaderViewModel.
-        /// </summary>
-        public WebBrowserTabHeaderViewModel HeaderViewModel { get; }
 
         /// <summary>
         /// Gets the VideoBrowserView.
@@ -64,8 +63,10 @@
         /// <summary>
         /// The Dispose.
         /// </summary>
-        public void Dispose()
+        /// <param name="disposing">The disposing<see cref="bool"/>.</param>
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             if (this.VideoBrowserViewModel == null)
             {
                 return;
@@ -76,8 +77,6 @@
             this.VideoBrowserViewModel = null;
             this.VideoBrowserView.DataContext = null;
             this.VideoBrowserView = null;
-            this.Content = null;
-            this.Header = null;
         }
 
         /// <summary>
@@ -89,7 +88,7 @@
         {
             if (e.IsMatch(nameof(this.VideoBrowserViewModel.Header)))
             {
-                this.HeaderViewModel.Header = this.VideoBrowserViewModel.Header;
+                this.Title = this.VideoBrowserViewModel.Header;
             }
         }
 

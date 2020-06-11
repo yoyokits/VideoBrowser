@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.Views
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.Views
 {
     /// <summary>
     /// Interaction logic for WebBrowserTabControlView.xaml.

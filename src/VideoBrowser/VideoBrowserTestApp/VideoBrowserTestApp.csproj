@@ -99,6 +99,7 @@
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\WindowFactory.cs" />
     <Compile Include="Tests\AboutViewTest.cs" />
+    <Compile Include="Tests\DefaultTabHostWindowTest.cs" />
     <Compile Include="Tests\DownloadQueueViewTest.cs" />
     <Compile Include="Tests\SettingsViewTest.cs" />
     <Compile Include="Tests\TestBase.cs" />

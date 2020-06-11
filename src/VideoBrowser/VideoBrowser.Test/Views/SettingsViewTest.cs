@@ -1,7 +1,6 @@
 ﻿namespace VideoBrowser.Test.Views
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using VideoBrowser.Models;
     using VideoBrowser.Test.Common;
     using VideoBrowser.Test.TestHelpers;
     using VideoBrowser.ViewModels;
@@ -21,8 +20,7 @@
         [TestMethod, ManualTest]
         public void Show_SettingsView()
         {
-            var globalData = new GlobalData();
-            var viewModel = new SettingsViewModel(globalData);
+            var viewModel = new SettingsViewModel();
             var view = new SettingsView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view);
         }

@@ -5,7 +5,9 @@
     xmlns:asf="clr-namespace:AirspaceFixer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.ViewModels"
     xmlns:winforms="clr-namespace:CefSharp.WinForms;assembly=CefSharp.WinForms"
+    d:DataContext="{d:DesignInstance viewmodels:VideoBrowserViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -16,7 +18,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Grid.Resources>
-    <asf:AirspacePanel FixAirspace="{Binding GlobalData.IsAirspaceVisible}">
+    <asf:AirspacePanel FixAirspace="{Binding CefWindowData.IsAirspaceVisible}">
         <WindowsFormsHost x:Name="windowsFormsHost" Visibility="Visible">
             <winforms:ChromiumWebBrowser x:Name="ChromiumWebBrowser" />
         </WindowsFormsHost>

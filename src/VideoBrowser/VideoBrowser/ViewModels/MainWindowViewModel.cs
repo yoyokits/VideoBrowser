@@ -1,9 +1,13 @@
 ﻿namespace VideoBrowser.ViewModels
 {
+    using Dragablz;
+    using System;
     using System.Linq;
     using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
     using VideoBrowser.Models;
     using VideoBrowser.Views;
@@ -18,15 +22,23 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
-        public MainWindowViewModel()
+        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
+        /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
+        public MainWindowViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
         {
-            this.GlobalData = new GlobalData();
+            this.GlobalData = globalData;
             this.ClosingCommand = new RelayCommand(this.OnClosing);
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.PressEscCommand = new RelayCommand(this.OnPressEsc);
             this.About = new AboutViewModel();
-            this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(this.GlobalData);
-            this.WebBrowserTabControlViewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(this.GlobalData));
+            var operationModels = this.GlobalData.OperationModels;
+            this.DownloadQueueViewModel = new DownloadQueueViewModel(operationModels) { ShowMessageAsync = this.ShowMessageAsync };
+            this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(operationModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
+            this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(globalBrowserData)
+            {
+                CreateBrowserFunc = this.CreateBrowser
+            };
+
             this.Initialize();
         }
 
@@ -40,14 +52,29 @@
         public AboutViewModel About { get; }
 
         /// <summary>
+        /// Gets the CefWindowData.
+        /// </summary>
+        public CefWindowData CefWindowData => this.WebBrowserTabControlViewModel.CefWindowData;
+
+        /// <summary>
         /// Gets the ClosingCommand.
         /// </summary>
         public RelayCommand ClosingCommand { get; }
 
         /// <summary>
+        /// Gets the DownloadFlyoutViewModel.
+        /// </summary>
+        public DownloadFlyoutViewModel DownloadFlyoutViewModel { get; }
+
+        /// <summary>
         /// Gets the DownloadQueueViewModel.
         /// </summary>
-        public DownloadQueueViewModel DownloadQueueViewModel => this.GlobalData.DownloadQueueViewModel;
+        public DownloadQueueViewModel DownloadQueueViewModel { get; }
+
+        /// <summary>
+        /// Gets the GlobalBrowserData.
+        /// </summary>
+        public GlobalBrowserData GlobalBrowserData => this.WebBrowserTabControlViewModel.GlobalBrowserData;
 
         /// <summary>
         /// Gets the GlobalData.
@@ -67,7 +94,7 @@
         /// <summary>
         /// Gets the Settings.
         /// </summary>
-        public SettingsViewModel Settings => this.GlobalData.Settings;
+        public SettingsViewModel Settings => this.GlobalBrowserData.Settings;
 
         /// <summary>
         /// Gets the Title.
@@ -75,13 +102,28 @@
         public string Title => $"{AppEnvironment.Name}";
 
         /// <summary>
-        /// Gets the WebBrowserController.
+        /// Gets the WebBrowserTabControlViewModel.
         /// </summary>
         public WebBrowserTabControlViewModel WebBrowserTabControlViewModel { get; }
+
+        /// <summary>
+        /// Gets the DownloadAction.
+        /// </summary>
+        private Action<Operation> DownloadAction => this.DownloadQueueViewModel.Download;
 
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The CreateBrowser.
+        /// </summary>
+        /// <returns>The <see cref="HeaderedItemViewModel"/>.</returns>
+        internal TabItem CreateBrowser()
+        {
+            var model = new WebBrowserHeaderedItemViewModel(this.GlobalBrowserData, this.CefWindowData, this.DownloadAction);
+            return model;
+        }
 
         /// <summary>
         /// The Dispose.
@@ -103,10 +145,13 @@
                 url = args.First();
             }
 
-            var browser = this.WebBrowserTabControlViewModel.WebBrowsers.First();
-            if (browser is WebBrowserHeaderedItemViewModel model)
+            if (this.WebBrowserTabControlViewModel.TabItems.Any())
             {
-                model.VideoBrowserViewModel.NavigateUrl = url;
+                var browser = this.WebBrowserTabControlViewModel.TabItems.First();
+                if (browser is WebBrowserHeaderedItemViewModel model)
+                {
+                    model.VideoBrowserViewModel.NavigateUrl = url;
+                }
             }
         }
 
@@ -140,7 +185,7 @@
             window.Width = settings.WindowWidth;
             window.Height = settings.WindowHeight;
             window.WindowState = settings.WindowState;
-            this.GlobalData.MainWindow = window;
+            this.CefWindowData.MainWindow = window;
             DownloadQueueHandler.LimitDownloads = settings.ShowMaxSimDownloads;
             DownloadQueueHandler.StartWatching(settings.MaxSimDownloads);
         }
@@ -151,10 +196,30 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnPressEsc(object obj)
         {
-            if (this.GlobalData.IsFullScreen)
+            // Leave full screen.
+            if (this.CefWindowData.IsFullScreen)
             {
-                this.GlobalData.IsFullScreenCommand.Execute(false);
+                this.CefWindowData.IsFullScreenCommand.Execute(false);
             }
+        }
+
+        /// <summary>
+        /// The ShowDownloadTabAction.
+        /// </summary>
+        private void ShowDownloadTabAction()
+        {
+            var button = this.GlobalBrowserData.GetAddInButton(typeof(DownloadQueueButton));
+            button?.Command.Execute(this.WebBrowserTabControlViewModel);
+        }
+
+        /// <summary>
+        /// The ShowMessageAsync.
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/>.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        private void ShowMessageAsync(string title, string message)
+        {
+            this.CefWindowData.ShowMessageAsync(title, message);
         }
 
         #endregion Methods

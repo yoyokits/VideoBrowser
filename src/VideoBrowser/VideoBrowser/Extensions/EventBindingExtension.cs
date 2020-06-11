@@ -180,6 +180,12 @@
         /// <param name="args">.</param>
         private void InvokeCommand(object sender, EventArgs args)
         {
+            var dataContext = this.GetDataContext(sender);
+            if (dataContext == null)
+            {
+                throw new NullReferenceException($"DataContext is null.");
+            }
+
             object commandParameter = null;
             if (this.CommandParameter != null)
             {
@@ -188,7 +194,6 @@
                 BindingOperations.ClearBinding(this.Element, CommandParameterBinderProperty);
             }
 
-            var dataContext = this.GetDataContext(sender);
             if (!string.IsNullOrEmpty(_commandName) && dataContext != null)
             {
                 // Find control's ViewModel

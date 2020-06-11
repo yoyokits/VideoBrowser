@@ -1,16 +1,16 @@
-﻿namespace VideoBrowser.ViewModels
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
+    using CefSharp;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
     using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
     using VideoBrowser.Core;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
-    using VideoBrowser.Models;
+    using VideoBrowser.ViewModels;
 
     /// <summary>
     /// Defines the <see cref="VideoBrowserViewModel" />.
@@ -18,8 +18,6 @@
     public class VideoBrowserViewModel : NotifyPropertyChanged, IDisposable
     {
         #region Fields
-
-        private readonly Dictionary<string, string> _cookies;
 
         private ICommand _backwardCommand;
 
@@ -29,11 +27,13 @@
 
         private ICommand _forwardCommand;
 
-        private string _header = "Cekli";
+        private string _header = "New Tab";
 
         private string _navigateUrl = "youtube.com";
 
         private ICommand _reloadCommand;
+
+        private IWebBrowser _webBrowser;
 
         #endregion Fields
 
@@ -42,22 +42,23 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoBrowserViewModel"/> class.
         /// </summary>
-        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        internal VideoBrowserViewModel(GlobalData globalData)
+        /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
+        /// <param name="windowData">The windowData<see cref="CefWindowData"/>.</param>
+        internal VideoBrowserViewModel(GlobalBrowserData globalBrowserData, CefWindowData windowData)
         {
-            this.GlobalData = globalData;
+            this.GlobalBrowserData = globalBrowserData;
+            this.CefWindowData = windowData;
 
             // BackwardCommand and ForwardCommand are set by the View.
             this.DownloadCommand = new RelayCommand(this.OnDownload, "Download", (o) => this.UrlReader.IsDownloadable);
             this.HomeCommand = new RelayCommand(this.OnHome, "Home");
             this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl, "NavigateUrl");
             this.OpenOutputFolderCommand = new RelayCommand(this.OnOpenOutputFolder, "Open output folder");
-            this._cookies = new Dictionary<string, string>();
             this.IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
-            this.UrlEditor = new UrlEditorViewModel(this.UrlReader, globalData)
+            this.UrlEditor = new UrlEditorViewModel(this.UrlReader, this.GlobalBrowserData.Settings)
             {
                 NavigateUrlCommand = this.NavigateUrlCommand,
-                DownloadAction = globalData.DownloadQueueViewModel.Download
+                ShowMessageAsyncAction = this.ShowMessageAsync
             };
             this.UrlEditor.PropertyChanged += this.OnUrlEditor_PropertyChanged;
             this.PropertyChanged += this.OnPropertyChanged;
@@ -67,6 +68,11 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the AddInButtons.
+        /// </summary>
+        public ICollection<AddInButton> AddInButtons => this.GlobalBrowserData.AddInButtons;
 
         /// <summary>
         /// Gets or sets the BackwardCommand.
@@ -84,6 +90,11 @@
         public bool CanForward { get => this._canForward; set => this.Set(this.PropertyChangedHandler, ref this._canForward, value); }
 
         /// <summary>
+        /// Gets the CefWindowData.
+        /// </summary>
+        public CefWindowData CefWindowData { get; }
+
+        /// <summary>
         /// Gets the DownloadCommand.
         /// </summary>
         public ICommand DownloadCommand { get; }
@@ -94,9 +105,9 @@
         public ICommand ForwardCommand { get => this._forwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._forwardCommand, value); }
 
         /// <summary>
-        /// Gets the GlobalData.
+        /// Gets the GlobalBrowserData.
         /// </summary>
-        public GlobalData GlobalData { get; }
+        public GlobalBrowserData GlobalBrowserData { get; }
 
         /// <summary>
         /// Gets or sets the Header.
@@ -153,7 +164,8 @@
         public ICommand ReloadCommand { get => this._reloadCommand; set => this.Set(this.PropertyChangedHandler, ref this._reloadCommand, value); }
 
         /// <summary>
-        /// Gets or sets the WebUri that is typed in the TextBox.
+        /// Gets or sets the Url.
+        /// It is typed in the TextBox.
         /// </summary>
         public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
 
@@ -168,9 +180,30 @@
         public UrlReader UrlReader { get; } = new UrlReader();
 
         /// <summary>
-        /// Gets the WebCookies.
+        /// Gets or sets the WebBrowser.
         /// </summary>
-        public string WebCookies => string.Join("; ", _cookies.Select(x => $"{x.Key}={x.Value}"));
+        public IWebBrowser WebBrowser
+        {
+            get => _webBrowser;
+            set
+            {
+                if (this.WebBrowser == value)
+                {
+                    return;
+                }
+
+                _webBrowser = value;
+                if (this.WebBrowser != null)
+                {
+                    this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the DownloadAction.
+        /// </summary>
+        internal Action<Operation> DownloadAction { get => this.UrlEditor.DownloadAction; set => this.UrlEditor.DownloadAction = value; }
 
         #endregion Properties
 
@@ -227,7 +260,7 @@
         {
             this.Url = UrlHelper.GetValidUrl(this.Url);
             this.NavigateUrl = this.Url;
-            this.GlobalData.IsAirspaceVisible = false;
+            this.CefWindowData.IsAirspaceVisible = false;
         }
 
         /// <summary>
@@ -236,7 +269,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnOpenOutputFolder(object obj)
         {
-            Process.Start(this.GlobalData.Settings.OutputFolder);
+            Process.Start(this.GlobalBrowserData.Settings.OutputFolder);
         }
 
         /// <summary>
@@ -273,6 +306,16 @@
             {
                 this.OnPropertyChanged(nameof(this.Url));
             }
+        }
+
+        /// <summary>
+        /// The ShowMessage.
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/>.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        private void ShowMessageAsync(string title, string message)
+        {
+            this.CefWindowData.ShowMessageAsync(title, message);
         }
 
         #endregion Methods
