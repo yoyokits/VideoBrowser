@@ -29,16 +29,18 @@
     <Controls:MetroWindow.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding PressEscCommand}" />
     </Controls:MetroWindow.InputBindings>
-    <Grid Background="Gainsboro">
+    <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <browserViews:WebBrowserTabControlView Grid.Row="0" DataContext="{Binding WebBrowserTabControlViewModel}" />
+        <browserViews:WebBrowserTabControlView
+            x:Name="WebBrowserTabControlView"
+            Grid.Row="0"
+            DataContext="{Binding WebBrowserTabControlViewModel}" />
         <Grid
             x:Name="FlyoverPlacementGrid"
             Grid.Row="1"
-            Background="{DynamicResource WindowBackgroundBrush}"
             DataContext="{Binding DownloadFlyoutViewModel}">
             <Grid.Height>
                 <MultiBinding Converter="{StaticResource MultiplyConverter}">

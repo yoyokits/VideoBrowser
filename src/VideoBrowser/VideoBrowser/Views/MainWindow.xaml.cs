@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowser.Views
 {
+    using Dragablz;
     using System.Windows;
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser;
@@ -17,10 +18,10 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
-        /// This constructor is called once per application instance.
         /// </summary>
         public MainWindow() : this(new GlobalData(), new GlobalBrowserData())
         {
+            // This constructor is called once per application instance.
             var addIns = this.GlobalBrowserData.AddInButtons;
             addIns.Add(new DownloadQueueButton(this.GlobalData.OperationModels));
             addIns.Add(new OpenOutputFolderButton(this.GlobalBrowserData.Settings));
@@ -31,6 +32,9 @@
                 addIns.Add(new TestButton());
             }
 
+            // Register create browser tab.
+            this.GlobalBrowserData.InterTabClient.CreateWindow = this.CreateWindow;
+
             // Add the first browser tab.
             var browserTabModel = this.MainWindowViewModel.WebBrowserTabControlViewModel;
             browserTabModel.TabItems.Add(this.MainWindowViewModel.CreateBrowser());
@@ -38,12 +42,12 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
-        /// This constructor is intended to create new window after dragging the browser tab.
         /// </summary>
         /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
         /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
         internal MainWindow(GlobalData globalData, GlobalBrowserData globalBrowserData)
         {
+            // This constructor is intended to create new window after dragging the browser tab.
             Logger.Info($"Start {nameof(VideoBrowser)}");
             this.GlobalData = globalData;
             this.GlobalBrowserData = globalBrowserData;
@@ -111,6 +115,18 @@
                     this.ShowTitleBar = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// The CreateWindow.
+        /// </summary>
+        /// <returns>The <see cref="(Window, TabablzControl)"/>.</returns>
+        private (Window, TabablzControl) CreateWindow()
+        {
+            var viewModel = new MainWindowViewModel(this.GlobalData, this.GlobalBrowserData);
+            var window = new MainWindow(this.GlobalData, this.GlobalBrowserData) { DataContext = viewModel };
+            var initialTabablzControl = window.WebBrowserTabControlView.InitialTabablzControl;
+            return (window, initialTabablzControl);
         }
 
         #endregion Methods

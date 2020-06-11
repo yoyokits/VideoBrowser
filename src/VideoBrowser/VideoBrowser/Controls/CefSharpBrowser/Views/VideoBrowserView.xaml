@@ -143,6 +143,7 @@
             IsAirspaceVisible="{Binding CefWindowData.IsAirspaceVisible}"
             IsFullScreenCommand="{Binding CefWindowData.IsFullScreenCommand, Mode=OneWay}"
             ReloadCommand="{Binding ReloadCommand, Mode=OneWayToSource}"
-            Url="{Binding NavigateUrl}" />
+            Url="{Binding NavigateUrl}"
+            WebBrowser="{Binding WebBrowser, Mode=OneWayToSource}" />
     </Grid>
 </UserControl>

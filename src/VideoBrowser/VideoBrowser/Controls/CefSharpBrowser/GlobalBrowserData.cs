@@ -1,7 +1,9 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using VideoBrowser.ViewModels;
 
     /// <summary>
@@ -41,5 +43,20 @@
         public SettingsViewModel Settings { get; }
 
         #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        /// The GetAddInButton.
+        /// </summary>
+        /// <param name="addInType">The addInType<see cref="Type"/>.</param>
+        /// <returns>The <see cref="AddInButton"/>.</returns>
+        public AddInButton GetAddInButton(Type addInType)
+        {
+            var addIn = this.AddInButtons.FirstOrDefault(o => o.GetType() == addInType);
+            return addIn;
+        }
+
+        #endregion Methods
     }
 }

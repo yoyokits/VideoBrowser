@@ -36,7 +36,7 @@
         /// <summary>
         /// The Invoke.
         /// </summary>
-        /// <param name="dispatcher">The dispatcher<see cref="Dispatcher"/>.</param>
+        /// <param name="dispatcherObject">The dispatcherObject<see cref="DispatcherObject"/>.</param>
         /// <param name="action">The action<see cref="Action"/>.</param>
         public static void Invoke(this DispatcherObject dispatcherObject, Action action)
         {
@@ -48,6 +48,28 @@
             else
             {
                 dispatcher.Invoke(() => action?.Invoke());
+            }
+        }
+
+        /// <summary>
+        /// The InvokeAsync.
+        /// </summary>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        public static void InvokeAsync(Action action)
+        {
+            if (Application.Current == null)
+            {
+                return;
+            }
+
+            var dispatcher = Application.Current.Dispatcher;
+            if (dispatcher.CheckAccess())
+            {
+                action?.Invoke();
+            }
+            else
+            {
+                dispatcher.InvokeAsync(() => action?.Invoke());
             }
         }
 

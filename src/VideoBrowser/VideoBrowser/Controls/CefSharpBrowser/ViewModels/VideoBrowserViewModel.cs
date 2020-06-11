@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
+    using CefSharp;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -31,6 +32,8 @@
         private string _navigateUrl = "youtube.com";
 
         private ICommand _reloadCommand;
+
+        private IWebBrowser _webBrowser;
 
         #endregion Fields
 
@@ -175,6 +178,27 @@
         /// Gets the UrlReader.
         /// </summary>
         public UrlReader UrlReader { get; } = new UrlReader();
+
+        /// <summary>
+        /// Gets or sets the WebBrowser.
+        /// </summary>
+        public IWebBrowser WebBrowser
+        {
+            get => _webBrowser;
+            set
+            {
+                if (this.WebBrowser == value)
+                {
+                    return;
+                }
+
+                _webBrowser = value;
+                if (this.WebBrowser != null)
+                {
+                    this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the DownloadAction.

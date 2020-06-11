@@ -29,6 +29,7 @@
         internal CefWindowData()
         {
             this.IsFullScreenCommand = new RelayCommand(this.OnIsFullScreen);
+            this.CefRequestHandler = new CefRequestHandler();
         }
 
         #endregion Constructors
@@ -80,6 +81,11 @@
         /// Gets or sets the MainWindow.
         /// </summary>
         public MetroWindow MainWindow { get; internal set; }
+
+        /// <summary>
+        /// Gets the CefRequestHandler.
+        /// </summary>
+        internal CefRequestHandler CefRequestHandler { get; }
 
         #endregion Properties
 

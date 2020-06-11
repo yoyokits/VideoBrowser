@@ -62,7 +62,7 @@
                 return;
             }
 
-            UIThreadHelper.Invoke(() =>
+            UIThreadHelper.InvokeAsync(() =>
             {
                 var view = this.CreateView();
                 var tab = new TabItem(this.Guid)

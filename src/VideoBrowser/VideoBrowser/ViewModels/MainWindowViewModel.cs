@@ -9,7 +9,6 @@
     using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
-    using VideoBrowser.Extensions;
     using VideoBrowser.Models;
     using VideoBrowser.Views;
 
@@ -18,12 +17,6 @@
     /// </summary>
     public class MainWindowViewModel : NotifyPropertyChanged
     {
-        #region Fields
-
-        private int _selectedMainTabIndex;
-
-        #endregion Fields
-
         #region Constructors
 
         /// <summary>
@@ -38,8 +31,9 @@
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.PressEscCommand = new RelayCommand(this.OnPressEsc);
             this.About = new AboutViewModel();
-            this.DownloadQueueViewModel = new DownloadQueueViewModel(this.GlobalData.OperationModels) { ShowMessageAsync = this.ShowMessageAsync };
-            this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(this.DownloadQueueViewModel.OperationModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
+            var operationModels = this.GlobalData.OperationModels;
+            this.DownloadQueueViewModel = new DownloadQueueViewModel(operationModels) { ShowMessageAsync = this.ShowMessageAsync };
+            this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(operationModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
             this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(globalBrowserData)
             {
                 CreateBrowserFunc = this.CreateBrowser
@@ -96,23 +90,6 @@
         /// Gets the PressEscCommand.
         /// </summary>
         public ICommand PressEscCommand { get; }
-
-        /// <summary>
-        /// Gets or sets the SelectedMainTabIndex.
-        /// </summary>
-        public int SelectedMainTabIndex
-        {
-            get => _selectedMainTabIndex;
-            set
-            {
-                if (!this.Set(this.PropertyChangedHandler, ref _selectedMainTabIndex, value))
-                {
-                    return;
-                }
-
-                this.WebBrowserTabControlViewModel.CefWindowData.IsAirspaceVisible = false;
-            }
-        }
 
         /// <summary>
         /// Gets the Settings.
@@ -231,7 +208,8 @@
         /// </summary>
         private void ShowDownloadTabAction()
         {
-            this.SelectedMainTabIndex = 1;
+            var button = this.GlobalBrowserData.GetAddInButton(typeof(DownloadQueueButton));
+            button?.Command.Execute(this.WebBrowserTabControlViewModel);
         }
 
         /// <summary>

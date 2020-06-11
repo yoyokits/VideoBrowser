@@ -10,6 +10,7 @@
     using System.Windows.Media;
     using VideoBrowser.Common;
     using VideoBrowser.Extensions;
+    using VideoBrowser.Helpers;
     using VideoBrowser.Resources;
 
     /// <summary>
@@ -35,6 +36,7 @@
             this.CefWindowData = new CefWindowData();
             this.TabItems = new ObservableCollection<TabItem>();
             this.CreateBrowserFunc = this.CreateBrowser;
+            this.CefWindowData.CefRequestHandler.OpenUrlFromTabAction = this.OnOpenUrlFromTab;
         }
 
         #endregion Constructors
@@ -199,6 +201,17 @@
         {
             var model = new WebBrowserHeaderedItemViewModel(this.GlobalBrowserData, this.CefWindowData, null);
             return model;
+        }
+
+        /// <summary>
+        /// The OnOpenUrlFromTab.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        private void OnOpenUrlFromTab(string url)
+        {
+            var browser = this.CreateBrowserFunc() as WebBrowserHeaderedItemViewModel;
+            browser.VideoBrowserViewModel.NavigateUrl = url;
+            UIThreadHelper.InvokeAsync(() => this.AddTab(browser));
         }
 
         #endregion Methods
