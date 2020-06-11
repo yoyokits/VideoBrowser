@@ -161,7 +161,8 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnClosing(object obj)
         {
-            var window = (MainWindow)obj;
+            var (_, _, commandParameter) = (ValueTuple<object, EventArgs, object>)obj;
+            var window = (Window)commandParameter;
             var settings = Properties.Settings.Default;
             settings.WindowPosition = new Point(window.Left, window.Top);
             settings.WindowWidth = window.ActualWidth;
@@ -178,8 +179,9 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnLoaded(object obj)
         {
+            var (_, _, commandParameter) = (ValueTuple<object, EventArgs, object>)obj;
             var settings = Properties.Settings.Default;
-            var window = (MainWindow)obj;
+            var window = (MainWindow)commandParameter;
             window.Left = settings.WindowPosition.X;
             window.Top = settings.WindowPosition.Y;
             window.Width = settings.WindowWidth;

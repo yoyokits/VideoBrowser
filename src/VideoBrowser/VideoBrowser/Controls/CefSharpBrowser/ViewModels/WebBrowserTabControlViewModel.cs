@@ -3,7 +3,9 @@
     using Dragablz;
     using Dragablz.Dockablz;
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
     using System.Windows;
@@ -35,8 +37,11 @@
             this.GlobalBrowserData = globalBrowserData;
             this.CefWindowData = new CefWindowData();
             this.TabItems = new ObservableCollection<TabItem>();
+            this.TabItems.CollectionChanged += this.OnTabItems_CollectionChanged;
             this.CreateBrowserFunc = this.CreateBrowser;
             this.CefWindowData.CefRequestHandler.OpenUrlFromTabAction = this.OnOpenUrlFromTab;
+            this.CefWindowData.CefContextMenuHandler.OpenInNewTabAction = this.OnOpenUrlFromTab;
+            this.CefWindowData.CefContextMenuHandler.OpenInNewWindowAction = this.OnOpenUrlFromWindow;
         }
 
         #endregion Constructors
@@ -129,6 +134,7 @@
         /// </summary>
         public void Dispose()
         {
+            this.TabItems.CollectionChanged -= this.OnTabItems_CollectionChanged;
             this.TabItems.ClearAndDispose();
         }
 
@@ -212,6 +218,45 @@
             var browser = this.CreateBrowserFunc() as WebBrowserHeaderedItemViewModel;
             browser.VideoBrowserViewModel.NavigateUrl = url;
             UIThreadHelper.InvokeAsync(() => this.AddTab(browser));
+        }
+
+        /// <summary>
+        /// The OnOpenUrlFromWindow.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        private void OnOpenUrlFromWindow(string url)
+        {
+            var browser = this.CreateBrowserFunc() as WebBrowserHeaderedItemViewModel;
+            browser.VideoBrowserViewModel.NavigateUrl = url;
+            var (Window, TabablzControl) = this.GlobalBrowserData.InterTabClient.CreateWindow();
+            UIThreadHelper.Invoke(() =>
+            {
+                if (TabablzControl.ItemsSource is ICollection<TabItem> items)
+                {
+                    items.Add(browser);
+                }
+
+                Window.Show();
+            });
+        }
+
+        /// <summary>
+        /// The OnTabItems_CollectionChanged.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="NotifyCollectionChangedEventArgs"/>.</param>
+        private void OnTabItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    if (item is WebBrowserHeaderedItemViewModel browserTabItem)
+                    {
+                        browserTabItem.VideoBrowserViewModel.CefWindowData = this.CefWindowData;
+                    }
+                }
+            }
         }
 
         #endregion Methods

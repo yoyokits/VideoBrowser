@@ -29,6 +29,7 @@
         internal CefWindowData()
         {
             this.IsFullScreenCommand = new RelayCommand(this.OnIsFullScreen);
+            this.CefContextMenuHandler = new CefContextMenuHandler();
             this.CefRequestHandler = new CefRequestHandler();
         }
 
@@ -44,6 +45,16 @@
         #endregion Events
 
         #region Properties
+
+        /// <summary>
+        /// Gets the CefContextMenuHandler.
+        /// </summary>
+        public CefContextMenuHandler CefContextMenuHandler { get; }
+
+        /// <summary>
+        /// Gets the CefRequestHandler.
+        /// </summary>
+        public CefRequestHandler CefRequestHandler { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsAirspaceVisible.
@@ -81,11 +92,6 @@
         /// Gets or sets the MainWindow.
         /// </summary>
         public MetroWindow MainWindow { get; internal set; }
-
-        /// <summary>
-        /// Gets the CefRequestHandler.
-        /// </summary>
-        internal CefRequestHandler CefRequestHandler { get; }
 
         #endregion Properties
 

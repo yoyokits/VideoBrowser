@@ -177,6 +177,7 @@
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefContextMenuHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefDisplayHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefKeyboardHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefRequestHandler.cs" />
@@ -194,7 +195,6 @@
       <DependentUpon>DefaultTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToValueConverter.cs" />
-    <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Core\Commands.cs" />

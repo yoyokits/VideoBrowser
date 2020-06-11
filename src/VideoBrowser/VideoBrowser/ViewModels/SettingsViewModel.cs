@@ -87,7 +87,8 @@
             var dialog = new VistaFolderBrowserDialog
             {
                 Description = "Download Folder Location",
-                UseDescriptionForTitle = true
+                UseDescriptionForTitle = true,
+                SelectedPath = this.OutputFolder
             };
 
             var element = obj as FrameworkElement;

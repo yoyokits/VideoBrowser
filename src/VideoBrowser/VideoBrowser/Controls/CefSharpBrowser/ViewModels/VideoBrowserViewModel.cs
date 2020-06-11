@@ -25,6 +25,8 @@
 
         private bool _canForward;
 
+        private CefWindowData _cefWindowData;
+
         private ICommand _forwardCommand;
 
         private string _header = "New Tab";
@@ -90,9 +92,21 @@
         public bool CanForward { get => this._canForward; set => this.Set(this.PropertyChangedHandler, ref this._canForward, value); }
 
         /// <summary>
-        /// Gets the CefWindowData.
+        /// Gets or sets the CefWindowData.
         /// </summary>
-        public CefWindowData CefWindowData { get; }
+        public CefWindowData CefWindowData
+        {
+            get => _cefWindowData;
+            internal set
+            {
+                if (!this.Set(this.PropertyChangedHandler, ref _cefWindowData, value))
+                {
+                    return;
+                };
+
+                this.InitializeHandlers();
+            }
+        }
 
         /// <summary>
         /// Gets the DownloadCommand.
@@ -193,10 +207,7 @@
                 }
 
                 _webBrowser = value;
-                if (this.WebBrowser != null)
-                {
-                    this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
-                }
+                this.InitializeHandlers();
             }
         }
 
@@ -217,6 +228,18 @@
             this.UrlEditor.Dispose();
             this.UrlEditor.PropertyChanged -= this.OnUrlEditor_PropertyChanged;
             this.UrlReader.Dispose();
+        }
+
+        /// <summary>
+        /// The InitializeHandlers.
+        /// </summary>
+        private void InitializeHandlers()
+        {
+            if (this.WebBrowser != null)
+            {
+                this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
+                this.WebBrowser.MenuHandler = this.CefWindowData.CefContextMenuHandler;
+            }
         }
 
         /// <summary>
