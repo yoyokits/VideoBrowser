@@ -22,6 +22,8 @@
     {
         #region Fields
 
+        private static int IdCounter;
+
         private int _selectedTabIndex;
 
         #endregion Fields
@@ -88,6 +90,11 @@
         public Geometry Icon { get; set; } = Icons.SearchVideo;
 
         /// <summary>
+        /// Gets the Id.
+        /// </summary>
+        public int Id { get; } = IdCounter++;
+
+        /// <summary>
         /// Gets the InterTabClient.
         /// </summary>
         public IInterTabClient InterTabClient => this.GlobalBrowserData.InterTabClient;
@@ -146,6 +153,16 @@
         public bool IsTabItemExist(Guid guid)
         {
             return this.TabItems.Any((o) => o.Guid == guid) && guid != Guid.Empty;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
+        public override string ToString()
+        {
+            var message = $"{nameof(WebBrowserTabControlViewModel)} {this.Id}";
+            return message;
         }
 
         /// <summary>

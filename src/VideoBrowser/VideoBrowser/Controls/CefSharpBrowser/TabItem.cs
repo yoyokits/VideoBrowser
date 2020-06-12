@@ -115,12 +115,6 @@
         }
 
         /// <summary>
-        /// The GetHashCode.
-        /// </summary>
-        /// <returns>The <see cref="int"/>.</returns>
-        public override int GetHashCode() => this.Guid.GetHashCode();
-
-        /// <summary>
         /// The Dispose.
         /// </summary>
         /// <param name="disposing">The disposing<see cref="bool"/>.</param>
