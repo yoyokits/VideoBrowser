@@ -7,6 +7,7 @@
     xmlns:cefsharpbrowser="clr-namespace:VideoBrowser.Controls.CefSharpBrowser"
     xmlns:converters="clr-namespace:VideoBrowser.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extension="clr-namespace:VideoBrowser.Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.ViewModels"
     xmlns:views="clr-namespace:VideoBrowser.Views"
@@ -23,10 +24,10 @@
                 x:Key="InverseBoolToVisibilityConverter"
                 FalseValue="Visible"
                 TrueValue="Collapsed" />
-            <converters:BoolToVisibilityConverter
-                x:Key="BoolToVisibilityConverter"
-                FalseValue="Collapsed"
-                TrueValue="Visible" />
+            <converters:BoolToBoolConverter
+                x:Key="InverseBoolToBoolConverter"
+                FalseValue="True"
+                TrueValue="False" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -74,6 +75,7 @@
             </StackPanel>
             <!--  URL TextBox  -->
             <adornedcontrol:AdornedControl
+                x:Name="UrlEditorAdornedControl"
                 Grid.Column="1"
                 CloseAdornerTimeOut="0.5"
                 FadeOutTime="0.5"
@@ -93,6 +95,11 @@
                     Height="21"
                     Margin="4,4,4,2"
                     VerticalAlignment="Center"
+                    extension:FocusExtension.IsFocused="{Binding ElementName=UrlEditorAdornedControl, Path=IsAdornerVisible, Mode=OneWay, Converter={StaticResource InverseBoolToBoolConverter}}"
+                    extension:TextBoxExtension.CaretIndex="{Binding UrlEditor.CaretIndex}"
+                    extension:TextBoxExtension.SelectionLength="{Binding UrlEditor.SelectionLength}"
+                    extension:TextBoxExtension.SelectionStart="{Binding UrlEditor.SelectionStart}"
+                    extension:TextBoxExtension.TrackCaretIndex="True"
                     Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Return" Command="{Binding NavigateUrlCommand}" />

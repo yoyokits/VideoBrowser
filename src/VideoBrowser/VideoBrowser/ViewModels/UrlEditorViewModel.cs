@@ -19,6 +19,8 @@
     {
         #region Fields
 
+        private int _caretIndex;
+
         private string _duration;
 
         private string _fileName;
@@ -42,6 +44,10 @@
         private VideoFormat _selectedFormat;
 
         private int _selectedFormatIndex;
+
+        private int _selectionLength;
+
+        private int _selectionStart;
 
         private string _url;
 
@@ -67,6 +73,11 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the CaretIndex.
+        /// </summary>
+        public int CaretIndex { get => _caretIndex; set => this.Set(this.PropertyChangedHandler, ref _caretIndex, value); }
 
         /// <summary>
         /// Gets the DownloadCommand.
@@ -177,6 +188,16 @@
         /// Gets or sets the SelectedFormatIndex.
         /// </summary>
         public int SelectedFormatIndex { get => _selectedFormatIndex; set => this.Set(this.PropertyChangedHandler, ref _selectedFormatIndex, value); }
+
+        /// <summary>
+        /// Gets or sets the SelectionLength.
+        /// </summary>
+        public int SelectionLength { get => _selectionLength; set => this.Set(this.PropertyChangedHandler, ref _selectionLength, value); }
+
+        /// <summary>
+        /// Gets or sets the SelectionStart.
+        /// </summary>
+        public int SelectionStart { get => _selectionStart; set => this.Set(this.PropertyChangedHandler, ref _selectionStart, value); }
 
         /// <summary>
         /// Gets the Settings.

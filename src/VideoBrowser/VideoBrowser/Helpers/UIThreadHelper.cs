@@ -1,6 +1,7 @@
 ﻿namespace VideoBrowser.Helpers
 {
     using System;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
 
@@ -10,6 +11,20 @@
     public static class UIThreadHelper
     {
         #region Methods
+
+        /// <summary>
+        /// The DelayedInvokeAsync.
+        /// </summary>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        /// <param name="milliSecondsDelay">The milliSecondsDelay<see cref="int"/>.</param>
+        public static void DelayedInvokeAsync(Action action, int milliSecondsDelay)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(milliSecondsDelay);
+                InvokeAsync(action);
+            });
+        }
 
         /// <summary>
         /// The Invoke.

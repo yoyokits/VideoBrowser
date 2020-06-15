@@ -224,11 +224,13 @@
     <Compile Include="Core\YoutubeUrlHandler.cs" />
     <Compile Include="Extensions\DictionaryExtension.cs" />
     <Compile Include="Extensions\EventBindingExtension.cs" />
+    <Compile Include="Extensions\FocusExtension.cs" />
     <Compile Include="Extensions\INotifyPropertyChangedExtension.cs" />
     <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\RangeExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Extensions\TextBoxExtension.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Helpers\FFMpeg.cs" />

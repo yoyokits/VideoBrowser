@@ -157,8 +157,8 @@
 
         /// <summary>
         /// Gets or sets the NavigateUrl.
-        /// The current valid Url that is currently opened.
-        /// It is set by Url property if the Return key is pressed or link is clicked.
+        /// The current valid Url that is currently opened,
+        /// it is set by Url property if the Return key is pressed or link is clicked...
         /// </summary>
         public string NavigateUrl { get => this._navigateUrl; set => this.Set(this.PropertyChangedHandler, ref this._navigateUrl, value); }
 

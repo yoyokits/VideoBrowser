@@ -33,6 +33,11 @@
         /// <returns>The <see cref="bool"/>.</returns>
         public static bool IsValidUrl(string url)
         {
+            if (!url.Contains("."))
+            {
+                return false;
+            }
+
             if (!url.Contains("http"))
             {
                 url = $"http://{url}";
