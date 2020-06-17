@@ -44,6 +44,10 @@ The releases history can be followed in:
 
 [Release Notes](release-notes.html)
 
+It has dependencies (usually already installed in your system)  with:
+* At least .Net Framework 4.6.2
+* Visual C++ 2015 Redist
+
 **Usage**
 
 ![{{site.title}} as standard browser]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserMainViewScreenShot.jpg)

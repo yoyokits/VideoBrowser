@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>VideoBrowser</RootNamespace>
     <AssemblyName>VideoBrowser</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -177,18 +177,25 @@
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserProcessHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefContextMenuHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefDisplayHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\CefConfig.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefKeyboardHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefRequestHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CefSharpBrowser\AddInButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\CefSharpSchemeHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\CefSharpSchemeHandlerFactory.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefWindowData.cs" />
     <Compile Include="Controls\CefSharpBrowser\CreateTabAddInButton.cs" />
     <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\InternetOpenType.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\InternetProxyInfo.cs" />
     <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\ProxyConfig.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
@@ -233,6 +240,7 @@
     <Compile Include="Extensions\TextBoxExtension.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
+    <Compile Include="Helpers\DelayCall.cs" />
     <Compile Include="Helpers\FFMpeg.cs" />
     <Compile Include="Helpers\FFMpegFileType.cs" />
     <Compile Include="Helpers\FFMpegHelper.cs" />
@@ -386,7 +394,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CefSharp.WinForms">
+    <PackageReference Include="CefSharp.Wpf">
       <Version>81.3.100</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
@@ -438,6 +446,44 @@
     <Resource Include="Preinstallation.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\css\docs.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCore.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCoreDefault.css" />
+    <Resource Include="Controls\CefSharpBrowser\Resources\assets\images\beach-2089936_1920.jpg" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\application.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\jquery.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushCSharp.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushJScript.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shCore.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingApiCustomObjectNameTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestsAsyncTask.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestSingle.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\CdmSupportTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\CssAnimation.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\DragDropCursorsTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\DraggableRegionTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\ExceptionTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\extension.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\FramedWebGLTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\Home.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\JavascriptCallbackTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\LegacyBindingTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\MultiBindingTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\PopupTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\PostMessageTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\Recaptcha.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\ResponseFilterTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\SchemeTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\ScriptedMethodsTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\TooltipTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\UnicodeExampleGreaterThan32kb.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\UnocodeExampleEqualTo32kb.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

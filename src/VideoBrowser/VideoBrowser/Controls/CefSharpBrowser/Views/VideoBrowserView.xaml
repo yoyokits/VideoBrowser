@@ -39,6 +39,7 @@
         <Grid
             Grid.Row="0"
             Margin="0,0,0,4"
+            Panel.ZIndex="999"
             Visibility="{Binding CefWindowData.IsFullScreen, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
             <Grid.Resources>
                 <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="Button">
@@ -74,38 +75,15 @@
                 </Button>
             </StackPanel>
             <!--  URL TextBox  -->
-            <adornedcontrol:AdornedControl
-                x:Name="UrlEditorAdornedControl"
-                Grid.Column="1"
-                CloseAdornerTimeOut="0.5"
-                FadeOutTime="0.5"
-                IsAdornerVisible="{Binding CefWindowData.IsAirspaceVisible, Mode=OneWayToSource}">
-                <adornedcontrol:AdornedControl.AdornerContent>
-                    <Grid x:Name="UrlEditorGrid">
-                        <Canvas>
-                            <views:UrlEditorView
-                                x:Name="UrlEditorView"
-                                Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth, Mode=OneWay}"
-                                Background="White"
-                                DataContext="{Binding UrlEditor}" />
-                        </Canvas>
-                    </Grid>
-                </adornedcontrol:AdornedControl.AdornerContent>
-                <TextBox
-                    Height="21"
-                    Margin="4,4,4,2"
-                    VerticalAlignment="Center"
-                    extension:FocusExtension.IsFocused="{Binding ElementName=UrlEditorAdornedControl, Path=IsAdornerVisible, Mode=OneWay, Converter={StaticResource InverseBoolToBoolConverter}}"
-                    extension:TextBoxExtension.CaretIndex="{Binding UrlEditor.CaretIndex}"
-                    extension:TextBoxExtension.SelectionLength="{Binding UrlEditor.SelectionLength}"
-                    extension:TextBoxExtension.SelectionStart="{Binding UrlEditor.SelectionStart}"
-                    extension:TextBoxExtension.TrackCaretIndex="True"
-                    Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
-                    <TextBox.InputBindings>
-                        <KeyBinding Key="Return" Command="{Binding NavigateUrlCommand}" />
-                    </TextBox.InputBindings>
-                </TextBox>
-            </adornedcontrol:AdornedControl>
+            <Grid x:Name="UrlEditorGrid" Grid.Column="1">
+                <Canvas>
+                    <views:UrlEditorView
+                        x:Name="UrlEditorView"
+                        Width="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ActualWidth, Mode=OneWay}"
+                        Background="White"
+                        DataContext="{Binding UrlEditor}" />
+                </Canvas>
+            </Grid>
             <!--  Right side buttons  -->
             <StackPanel
                 Grid.Column="2"

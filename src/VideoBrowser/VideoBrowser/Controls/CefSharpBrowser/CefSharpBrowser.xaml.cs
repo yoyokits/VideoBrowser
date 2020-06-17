@@ -1,10 +1,11 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
     using CefSharp;
-    using CefSharp.WinForms;
+    using CefSharp.Wpf;
     using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Helpers;
 
     /// <summary>
@@ -49,7 +50,7 @@
         {
             Initialize();
             this.CefDisplayHandler = new CefDisplayHandler();
-            InitializeComponent();
+            this.InitializeComponent();
             this.ChromiumWebBrowser.TitleChanged += this.OnChromiumWebBrowser_TitleChanged;
             this.Loaded += this.OnLoaded;
         }
@@ -155,11 +156,6 @@
         /// </summary>
         private CefDisplayHandler CefDisplayHandler { get; }
 
-        /// <summary>
-        /// Gets or sets the InternalUrl.
-        /// </summary>
-        private string InternalUrl { get; set; }
-
         #endregion Properties
 
         #region Methods
@@ -171,11 +167,18 @@
         {
             if (!Cef.IsInitialized)
             {
+                System.AppContext.SetSwitch("Switch.System.Windows.Input.Stylus.EnablePointerSupport", true);
+                const bool multiThreadedMessageLoop = true;
+                var browserProcessHandler = new BrowserProcessHandler();
                 var settings = new CefSettings
                 {
-                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0"
+                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0",
+                    MultiThreadedMessageLoop = multiThreadedMessageLoop,
+                    ExternalMessagePump = !multiThreadedMessageLoop
                 };
-                Cef.Initialize(settings);
+
+                settings.SetOffScreenRenderingBestPerformanceArgs();
+                CefConfig.Init(settings, browserProcessHandler: browserProcessHandler);
             }
         }
 
@@ -198,13 +201,10 @@
         /// <param name="e">The e<see cref="DependencyPropertyChangedEventArgs"/>.</param>
         private static void OnUrlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var browser = (CefSharpBrowser)d;
-            if (!(e.NewValue is string url) || browser.InternalUrl == url)
+            UIThreadHelper.InvokeAsync(() =>
             {
-                return;
-            }
-
-            browser.ChromiumWebBrowser.Load(url);
+                CommandManager.InvalidateRequerySuggested();
+            });
         }
 
         /// <summary>
@@ -223,10 +223,10 @@
         /// The OnChromiumWebBrowser_TitleChanged.
         /// </summary>
         /// <param name="sender">The sender<see cref="object"/>.</param>
-        /// <param name="e">The e<see cref="TitleChangedEventArgs"/>.</param>
-        private void OnChromiumWebBrowser_TitleChanged(object sender, TitleChangedEventArgs e)
+        /// <param name="e">The e<see cref="DependencyPropertyChangedEventArgs"/>.</param>
+        private void OnChromiumWebBrowser_TitleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            UIThreadHelper.InvokeAsync(() => this.Title = e.Title);
+            UIThreadHelper.InvokeAsync(() => this.Title = (string)e.NewValue);
         }
 
         /// <summary>
@@ -253,8 +253,7 @@
             this.WebBrowser.LoadingStateChanged += OnWebBrowser_LoadingStateChanged;
             this.WebBrowser.LoadError += OnWebBrowser_LoadError;
             this.WebBrowser.DisplayHandler = this.CefDisplayHandler;
-            this.WebBrowser.KeyboardHandler = new CefKeyboardHandler(this.windowsFormsHost);
-            this.ChromiumWebBrowser.AddressChanged += OnWebBrowser_AddressChanged;
+            this.WebBrowser.KeyboardHandler = new CefKeyboardHandler(this.ChromiumWebBrowser);
             this.BackwardCommand = new RelayCommand(this.OnBackward, "Backward", (o) => this.CanBackward);
             this.ForwardCommand = new RelayCommand(this.OnForward, "Forward", (o) => this.CanForward);
             this.ReloadCommand = new RelayCommand(this.OnReload, "Reload", (o) => this.CanReload);
@@ -267,21 +266,6 @@
         private void OnReload(object obj)
         {
             this.WebBrowser.Reload(true);
-        }
-
-        /// <summary>
-        /// The OnWebBrowser_AddressChanged.
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/>.</param>
-        /// <param name="e">The e<see cref="AddressChangedEventArgs"/>.</param>
-        private void OnWebBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
-        {
-            UIThreadHelper.InvokeAsync(() =>
-            {
-                this.InternalUrl = e.Address;
-                this.Url = this.InternalUrl;
-                CommandManager.InvalidateRequerySuggested();
-            });
         }
 
         /// <summary>
