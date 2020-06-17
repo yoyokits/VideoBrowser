@@ -1,10 +1,11 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
     using CefSharp;
-    using CefSharp.WinForms;
+    using CefSharp.Wpf;
     using System.Windows;
     using System.Windows.Forms;
     using System.Windows.Input;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="KeyboardHandler" />.
@@ -93,14 +94,14 @@
             var chromiumWebBrowser = (ChromiumWebBrowser)browserControl;
             if ((Keys)windowsKeyCode == Keys.Escape)
             {
-                chromiumWebBrowser.Invoke((MethodInvoker)delegate
+                chromiumWebBrowser.Invoke(delegate
                 {
-                    var screenSize = Screen.FromControl(chromiumWebBrowser).Bounds.Size;
-                    bool fullScreen = screenSize == chromiumWebBrowser.Size;
-                    if (fullScreen)
-                    {
-                        chromiumWebBrowser.DisplayHandler.OnFullscreenModeChange(browserControl, browser, false);
-                    }
+                    ////var screenSize = Screen.FromControl(chromiumWebBrowser).Bounds.Size;
+                    ////bool fullScreen = screenSize == chromiumWebBrowser.Size;
+                    ////if (fullScreen)
+                    ////{
+                    ////    chromiumWebBrowser.DisplayHandler.OnFullscreenModeChange(browserControl, browser, false);
+                    ////}
                 });
             }
 

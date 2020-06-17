@@ -77,7 +77,16 @@
                 return;
             }
 
-            var dispatcher = Application.Current.Dispatcher;
+            Application.Current.Dispatcher.InvokeAsync(action);
+        }
+
+        /// <summary>
+        /// The InvokeAsync.
+        /// </summary>
+        /// <param name="dispatcher">The dispatcher<see cref="Dispatcher"/>.</param>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        public static void InvokeAsync(this Dispatcher dispatcher, Action action)
+        {
             if (dispatcher.CheckAccess())
             {
                 action?.Invoke();
@@ -86,6 +95,16 @@
             {
                 dispatcher.InvokeAsync(() => action?.Invoke());
             }
+        }
+
+        /// <summary>
+        /// The InvokeAsync.
+        /// </summary>
+        /// <param name="dispatcherObject">The dispatcherObject<see cref="DispatcherObject"/>.</param>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        public static void InvokeAsync(this DispatcherObject dispatcherObject, Action action)
+        {
+            dispatcherObject.Dispatcher.InvokeAsync(action);
         }
 
         #endregion Methods

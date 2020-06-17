@@ -10,6 +10,7 @@
     using System.Windows.Threading;
     using VideoBrowser.Common;
     using VideoBrowser.Core;
+    using VideoBrowser.Helpers;
     using VideoBrowser.Models;
     using VideoBrowser.Resources;
 
@@ -72,7 +73,7 @@
         {
             var operationModel = new OperationModel(operation) { PauseDownloadAction = this.OnPauseDownloadCalled, CancelDownloadAction = this.OnCancelDownloadCalled };
             var element = (DispatcherObject)this.OperationCollectionView;
-            element.InvokeUIThread(() =>
+            element.InvokeAsync(() =>
             {
                 if (!this.OperationModels.Contains(operationModel))
                 {

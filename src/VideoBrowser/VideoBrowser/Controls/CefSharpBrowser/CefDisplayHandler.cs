@@ -2,10 +2,10 @@
 {
     using CefSharp;
     using CefSharp.Structs;
-    using CefSharp.WinForms;
-    using System;
+    using CefSharp.Wpf;
     using System.Collections.Generic;
     using System.Windows.Input;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="CefDisplayHandler" />.
@@ -106,7 +106,7 @@
         void IDisplayHandler.OnFullscreenModeChange(IWebBrowser browserControl, IBrowser browser, bool fullscreen)
         {
             var chromiumWebBrowser = (ChromiumWebBrowser)browserControl;
-            chromiumWebBrowser.Invoke((Action)(() =>
+            chromiumWebBrowser.Invoke(() =>
             {
                 this.IsFullScreenCommand.Execute(fullscreen);
                 ////if (fullscreen)
@@ -130,7 +130,7 @@
                 ////    fullScreenForm.Dispose();
                 ////    fullScreenForm = null;
                 ////}
-            }));
+            });
         }
 
         /// <summary>

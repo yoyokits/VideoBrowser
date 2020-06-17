@@ -10,6 +10,8 @@
     d:DataContext="{d:DesignInstance viewmodels:UrlEditorViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    extension:FocusExtension.IsFocused="{Binding IsFocused, Mode=TwoWay}"
+    extension:FocusExtension.TrackFocus="True"
     mc:Ignorable="d">
     <Grid.Resources>
         <ResourceDictionary>
@@ -26,7 +28,7 @@
             </Style>
         </ResourceDictionary>
     </Grid.Resources>
-    <Border Background="White">
+    <Border Background="White" Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
         <Border.Effect>
             <DropShadowEffect
                 BlurRadius="10"
@@ -45,18 +47,14 @@
             Height="21"
             Margin="2,2,2,4"
             VerticalAlignment="Center"
-            extension:TextBoxExtension.CaretIndex="{Binding CaretIndex}"
-            extension:TextBoxExtension.SelectionLength="{Binding SelectionLength}"
-            extension:TextBoxExtension.SelectionStart="{Binding SelectionStart}"
-            extension:TextBoxExtension.TrackCaretIndex="True"
             extension:TextBoxExtension.IsClickToSelectAll="True"
             Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
             <TextBox.InputBindings>
                 <KeyBinding Key="Return" Command="{Binding NavigateUrlCommand}" />
             </TextBox.InputBindings>
         </TextBox>
-        <Grid Grid.Row="1">
-            <Grid Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Row="1" Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
@@ -108,13 +106,11 @@
                         HorizontalAlignment="Left"
                         Command="{Binding DownloadCommand}"
                         Content="Download"
+                        Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
                         ToolTip="Download the current video" />
                 </StackPanel>
             </Grid>
-            <Grid
-                Grid.Row="1"
-                Background="#AAFFFFFF"
-                Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid Background="#AAFFFFFF" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <mah:ProgressRing IsActive="{Binding IsBusy}" />
             </Grid>
         </Grid>

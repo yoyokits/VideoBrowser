@@ -10,7 +10,7 @@
         #region Fields
 
         public static readonly DependencyProperty IsFocusedProperty =
-            DependencyProperty.RegisterAttached(nameof(IsFocusedProperty).Name(), typeof(bool), typeof(FocusExtension), new PropertyMetadata(false, OnIsFocusedChanged));
+            DependencyProperty.RegisterAttached(nameof(IsFocusedProperty).Name(), typeof(bool), typeof(FocusExtension), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsFocusedChanged));
 
         public static readonly DependencyProperty TrackFocusProperty =
             DependencyProperty.RegisterAttached(nameof(TrackFocusProperty).Name(), typeof(bool), typeof(FocusExtension), new PropertyMetadata(false, OnTrackFocusChanged));

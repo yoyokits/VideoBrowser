@@ -109,13 +109,13 @@
             var currentAirspaceVisible = this.IsAirspaceVisible;
             this.IsAirspaceVisible = true;
             this.IsMessageBoxVisible = true;
-            var result = this.MainWindow.ShowMessageAsync(title, message, style);
+            Task<MessageDialogResult> result = this.MainWindow.Dispatcher.CheckAccess()
+                ? this.MainWindow.ShowMessageAsync(title, message, style)
+                : Task.Run(() => this.MainWindow.ShowMessageAsync(title, message, style));
             await result;
+
             this.IsMessageBoxVisible = false;
-            if (this.IsAirspaceVisible)
-            {
-                this.IsAirspaceVisible = false;
-            }
+            this.IsAirspaceVisible = false;
 
             return result.Result;
         }

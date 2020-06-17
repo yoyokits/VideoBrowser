@@ -19,8 +19,6 @@
     {
         #region Fields
 
-        private int _caretIndex;
-
         private string _duration;
 
         private string _fileName;
@@ -35,6 +33,8 @@
 
         private bool _isDownloadable;
 
+        private bool _isFocused;
+
         private bool _isFormatComboBoxVisible;
 
         private bool _isVisible;
@@ -44,10 +44,6 @@
         private VideoFormat _selectedFormat;
 
         private int _selectedFormatIndex;
-
-        private int _selectionLength;
-
-        private int _selectionStart;
 
         private string _url;
 
@@ -73,11 +69,6 @@
         #endregion Constructors
 
         #region Properties
-
-        /// <summary>
-        /// Gets or sets the CaretIndex.
-        /// </summary>
-        public int CaretIndex { get => _caretIndex; set => this.Set(this.PropertyChangedHandler, ref _caretIndex, value); }
 
         /// <summary>
         /// Gets the DownloadCommand.
@@ -125,6 +116,24 @@
         public bool IsDownloadable { get => _isDownloadable; set => this.Set(this.PropertyChangedHandler, ref _isDownloadable, value); }
 
         /// <summary>
+        /// Gets or sets a value indicating whether IsFocused.
+        /// </summary>
+        public bool IsFocused
+        {
+            get => _isFocused;
+            set
+            {
+                if (_isFocused == value)
+                {
+                    return;
+                }
+
+                _isFocused = value;
+                this.InvokePropertiesChanged(this.OnPropertyChanged, nameof(this.IsFocused), nameof(this.IsVisible));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether IsFormatComboBoxVisible.
         /// </summary>
         public bool IsFormatComboBoxVisible { get => _isFormatComboBoxVisible; set => this.Set(this.PropertyChangedHandler, ref _isFormatComboBoxVisible, value); }
@@ -132,7 +141,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether IsVisible.
         /// </summary>
-        public bool IsVisible { get => this._isVisible; internal set => this.Set(this.PropertyChangedHandler, ref this._isVisible, value); }
+        public bool IsVisible { get => this._isVisible && this.IsFocused; internal set => this.Set(this.PropertyChangedHandler, ref this._isVisible, value); }
 
         /// <summary>
         /// Gets or sets the NavigateUrl.
@@ -188,16 +197,6 @@
         /// Gets or sets the SelectedFormatIndex.
         /// </summary>
         public int SelectedFormatIndex { get => _selectedFormatIndex; set => this.Set(this.PropertyChangedHandler, ref _selectedFormatIndex, value); }
-
-        /// <summary>
-        /// Gets or sets the SelectionLength.
-        /// </summary>
-        public int SelectionLength { get => _selectionLength; set => this.Set(this.PropertyChangedHandler, ref _selectionLength, value); }
-
-        /// <summary>
-        /// Gets or sets the SelectionStart.
-        /// </summary>
-        public int SelectionStart { get => _selectionStart; set => this.Set(this.PropertyChangedHandler, ref _selectionStart, value); }
 
         /// <summary>
         /// Gets the Settings.
@@ -260,6 +259,7 @@
         private void LoadVideoInfo(Task task)
         {
             this.IsBusy = false;
+            this.IsFocused = true;
             this.IsDownloadable = false;
             this.IsFormatComboBoxVisible = false;
 
