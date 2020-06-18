@@ -245,15 +245,14 @@
         {
             var browser = this.CreateBrowserFunc() as WebBrowserHeaderedItemViewModel;
             browser.VideoBrowserViewModel.NavigateUrl = url;
-            var (Window, TabablzControl) = this.GlobalBrowserData.InterTabClient.CreateWindow();
             UIThreadHelper.Invoke(() =>
             {
+                var (Window, TabablzControl) = this.GlobalBrowserData.InterTabClient.CreateWindow();
+                Window.Show();
                 if (TabablzControl.ItemsSource is ICollection<TabItem> items)
                 {
                     items.Add(browser);
                 }
-
-                Window.Show();
             });
         }
 

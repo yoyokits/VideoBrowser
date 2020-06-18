@@ -190,6 +190,7 @@
     <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\InternetOpenType.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\InternetProxyInfo.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\UrlHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\ProxyConfig.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />

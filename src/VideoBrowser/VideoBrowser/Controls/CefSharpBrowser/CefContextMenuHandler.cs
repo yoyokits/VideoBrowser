@@ -1,7 +1,10 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
     using CefSharp;
+    using CefSharp.Wpf;
     using System;
+    using System.Windows;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="CefContextMenuHandler" />.
@@ -10,11 +13,15 @@
     {
         #region Constants
 
-        private const CefMenuCommand OpenInNewTabId = (CefMenuCommand)10000;
+        private const CefMenuCommand CopyLinkAdressId = (CefMenuCommand)10000;
 
-        private const CefMenuCommand OpenInNewWindowId = (CefMenuCommand)10001;
+        private const CefMenuCommand OpenImageInNewTabId = (CefMenuCommand)10001;
 
-        private const CefMenuCommand SearchInWebsiteId = (CefMenuCommand)10002;
+        private const CefMenuCommand OpenInNewTabId = (CefMenuCommand)10002;
+
+        private const CefMenuCommand OpenInNewWindowId = (CefMenuCommand)10003;
+
+        private const CefMenuCommand SearchInWebsiteId = (CefMenuCommand)10004;
 
         #endregion Constants
 
@@ -31,6 +38,26 @@
         public Action<string> OpenInNewWindowAction { get; set; }
 
         /// <summary>
+        /// Gets or sets the SearchEngineQuery.
+        /// </summary>
+        public string SearchEngineQuery { get; set; } = "https://www.youtube.com/results?search_query=";
+
+        /// <summary>
+        /// Gets the Copy.
+        /// </summary>
+        private static (CefMenuCommand Id, string Text) Copy { get; } = (CefMenuCommand.Copy, "Copy");
+
+        /// <summary>
+        /// Gets the CopyLinkAddress.
+        /// </summary>
+        private static (CefMenuCommand Id, string Text) CopyLinkAddress { get; } = (CopyLinkAdressId, "Copy link address");
+
+        /// <summary>
+        /// Gets the OpenImageInNewTab.
+        /// </summary>
+        private static (CefMenuCommand Id, string Text) OpenImageInNewTab { get; } = (OpenImageInNewTabId, "Open image in new tab");
+
+        /// <summary>
         /// Gets the OpenInNewTab.
         /// </summary>
         private static (CefMenuCommand Id, string Text) OpenInNewTab { get; } = (OpenInNewTabId, "Open in new tab");
@@ -41,11 +68,14 @@
         private static (CefMenuCommand Id, string Text) OpenInNewWindow { get; } = (OpenInNewWindowId, "Open in new window");
 
         /// <summary>
+        /// Gets the Paste.
+        /// </summary>
+        private static (CefMenuCommand Id, string Text) Paste { get; } = (CefMenuCommand.Paste, "Paste");
+
+        /// <summary>
         /// Gets the SearchInWebsite.
         /// </summary>
         private static (CefMenuCommand Id, string Text) SearchInWebsite { get; } = (SearchInWebsiteId, "Search in Youtube");
-
-        public string SearchEngineQuery { get; set; } = "https://www.youtube.com/results?search_query=";
 
         #endregion Properties
 
@@ -63,24 +93,38 @@
         {
             var linkExist = !string.IsNullOrEmpty(parameters.LinkUrl);
             var selectionTextExist = !string.IsNullOrEmpty(parameters.SelectionText);
+            var sourceUrlExist = !string.IsNullOrEmpty(parameters.SourceUrl);
 
             if (linkExist || selectionTextExist)
             {
                 model.AddSeparator();
             }
 
+            model.Clear();
             if (linkExist)
             {
-                model.AddItem(OpenInNewTab.Id, OpenInNewTab.Text);
-                model.AddItem(OpenInNewWindow.Id, OpenInNewWindow.Text);
-                model.SetEnabled(OpenInNewTab.Id, true);
-                model.SetEnabled(OpenInNewWindow.Id, true);
+                this.AddItem(model, CopyLinkAddress.Id, CopyLinkAddress.Text);
+                this.AddItem(model, OpenInNewTab.Id, OpenInNewTab.Text);
+                this.AddItem(model, OpenInNewWindow.Id, OpenInNewWindow.Text);
+            }
+
+            if (sourceUrlExist)
+            {
+                if (UrlHelper.IsImageUrl(parameters.SourceUrl))
+                {
+                    this.AddItem(model, OpenImageInNewTab.Id, OpenImageInNewTab.Text);
+                }
             }
 
             if (selectionTextExist)
             {
-                model.AddItem(SearchInWebsite.Id, SearchInWebsite.Text);
-                model.SetEnabled(SearchInWebsite.Id, true);
+                this.AddItem(model, Copy.Id, Copy.Text);
+                this.AddItem(model, SearchInWebsite.Id, SearchInWebsite.Text);
+            }
+
+            if ((parameters.EditStateFlags & ContextMenuEditState.CanPaste) != ContextMenuEditState.None)
+            {
+                this.AddItem(model, Paste.Id, Paste.Text);
             }
         }
 
@@ -98,6 +142,22 @@
         {
             switch (commandId)
             {
+                case CefMenuCommand.Copy:
+                    Clipboard.SetText(parameters.SelectionText);
+                    break;
+
+                case CefMenuCommand.Paste:
+                    chromiumWebBrowser.Paste();
+                    break;
+
+                case CopyLinkAdressId:
+                    Clipboard.SetText(parameters.LinkUrl);
+                    break;
+
+                case OpenImageInNewTabId:
+                    this.OpenInNewTabAction?.Invoke(parameters.SourceUrl);
+                    break;
+
                 case OpenInNewWindowId:
                     this.OpenInNewWindowAction?.Invoke(parameters.LinkUrl);
                     break;
@@ -125,6 +185,11 @@
         /// <param name="frame">The frame<see cref="IFrame"/>.</param>
         public virtual void OnContextMenuDismissed(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame)
         {
+            var webBrowser = (ChromiumWebBrowser)chromiumWebBrowser;
+            webBrowser.Dispatcher.Invoke(() =>
+            {
+                webBrowser.ContextMenu = null;
+            });
         }
 
         /// <summary>
@@ -140,6 +205,18 @@
         public virtual bool RunContextMenu(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model, IRunContextMenuCallback callback)
         {
             return false;
+        }
+
+        /// <summary>
+        /// The AddItem.
+        /// </summary>
+        /// <param name="model">The model<see cref="IMenuModel"/>.</param>
+        /// <param name="id">The id<see cref="CefMenuCommand"/>.</param>
+        /// <param name="label">The label<see cref="string"/>.</param>
+        private void AddItem(IMenuModel model, CefMenuCommand id, string label)
+        {
+            model.AddItem(id, label);
+            model.SetEnabled(id, true);
         }
 
         #endregion Methods
