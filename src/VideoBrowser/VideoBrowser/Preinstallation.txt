@@ -1,7 +1,7 @@
 ﻿Cekli Browser and Video Downloader
 
-Thank you for using Cekli Browser 0.1.2.
-Before installing this version of software,
+Thank you for using Cekli Browser.
+Before installing this version,
 please make sure uninstalling the previous version.
 
 Any installation or usage problems, 

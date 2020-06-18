@@ -1,6 +1,7 @@
 ﻿namespace VideoBrowser.Helpers
 {
     using System;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
 
@@ -12,11 +13,30 @@
         #region Methods
 
         /// <summary>
+        /// The DelayedInvokeAsync.
+        /// </summary>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        /// <param name="milliSecondsDelay">The milliSecondsDelay<see cref="int"/>.</param>
+        public static void DelayedInvokeAsync(Action action, int milliSecondsDelay)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(milliSecondsDelay);
+                InvokeAsync(action);
+            });
+        }
+
+        /// <summary>
         /// The Invoke.
         /// </summary>
         /// <param name="action">The action<see cref="Action"/>.</param>
         public static void Invoke(Action action)
         {
+            if (Application.Current == null)
+            {
+                return;
+            }
+
             var dispatcher = Application.Current.Dispatcher;
             if (dispatcher.CheckAccess())
             {
@@ -31,7 +51,7 @@
         /// <summary>
         /// The Invoke.
         /// </summary>
-        /// <param name="dispatcher">The dispatcher<see cref="Dispatcher"/>.</param>
+        /// <param name="dispatcherObject">The dispatcherObject<see cref="DispatcherObject"/>.</param>
         /// <param name="action">The action<see cref="Action"/>.</param>
         public static void Invoke(this DispatcherObject dispatcherObject, Action action)
         {
@@ -44,6 +64,47 @@
             {
                 dispatcher.Invoke(() => action?.Invoke());
             }
+        }
+
+        /// <summary>
+        /// The InvokeAsync.
+        /// </summary>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        public static void InvokeAsync(Action action)
+        {
+            if (Application.Current == null)
+            {
+                return;
+            }
+
+            Application.Current.Dispatcher.InvokeAsync(action);
+        }
+
+        /// <summary>
+        /// The InvokeAsync.
+        /// </summary>
+        /// <param name="dispatcher">The dispatcher<see cref="Dispatcher"/>.</param>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        public static void InvokeAsync(this Dispatcher dispatcher, Action action)
+        {
+            if (dispatcher.CheckAccess())
+            {
+                action?.Invoke();
+            }
+            else
+            {
+                dispatcher.InvokeAsync(() => action?.Invoke());
+            }
+        }
+
+        /// <summary>
+        /// The InvokeAsync.
+        /// </summary>
+        /// <param name="dispatcherObject">The dispatcherObject<see cref="DispatcherObject"/>.</param>
+        /// <param name="action">The action<see cref="Action"/>.</param>
+        public static void InvokeAsync(this DispatcherObject dispatcherObject, Action action)
+        {
+            dispatcherObject.Dispatcher.InvokeAsync(action);
         }
 
         #endregion Methods

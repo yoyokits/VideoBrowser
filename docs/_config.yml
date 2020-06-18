@@ -19,7 +19,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Cekli Video Browser and Downloader
-version: 0.1.2
+version: v0.1.3
 email: 
 description: >- # this means to ignore newlines until "baseurl:"
   Cekli Video Browser is free a Chromium-based browser optimized for downloading Youtube Videos.

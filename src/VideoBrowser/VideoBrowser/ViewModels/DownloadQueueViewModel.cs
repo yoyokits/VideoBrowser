@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowser.ViewModels
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.IO;
@@ -9,6 +10,7 @@
     using System.Windows.Threading;
     using VideoBrowser.Common;
     using VideoBrowser.Core;
+    using VideoBrowser.Helpers;
     using VideoBrowser.Models;
     using VideoBrowser.Resources;
 
@@ -22,22 +24,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadQueueViewModel"/> class.
         /// </summary>
-        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
-        public DownloadQueueViewModel(GlobalData globalData)
+        /// <param name="operationModels">The operationModels<see cref="ObservableCollection{OperationModel}"/>.</param>
+        internal DownloadQueueViewModel(ObservableCollection<OperationModel> operationModels)
         {
-            this.GlobalData = globalData;
             this.RemoveOperationCommand = new RelayCommand(this.OnRemoveOperation);
+            this.OperationModels = operationModels;
             this.OperationCollectionView = CollectionViewSource.GetDefaultView(this.OperationModels);
         }
 
         #endregion Constructors
 
         #region Properties
-
-        /// <summary>
-        /// Gets the GlobalData.
-        /// </summary>
-        public GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets or sets the Icon.
@@ -52,12 +49,17 @@
         /// <summary>
         /// Gets the OperationModels.
         /// </summary>
-        public ObservableCollection<OperationModel> OperationModels { get; } = new ObservableCollection<OperationModel>();
+        public ObservableCollection<OperationModel> OperationModels { get; }
 
         /// <summary>
         /// Gets the RemoveOperationCommand.
         /// </summary>
         public ICommand RemoveOperationCommand { get; }
+
+        /// <summary>
+        /// Gets or sets the ShowMessageAsync.
+        /// </summary>
+        public Action<string, string> ShowMessageAsync { get; set; }
 
         #endregion Properties
 
@@ -71,7 +73,7 @@
         {
             var operationModel = new OperationModel(operation) { PauseDownloadAction = this.OnPauseDownloadCalled, CancelDownloadAction = this.OnCancelDownloadCalled };
             var element = (DispatcherObject)this.OperationCollectionView;
-            element.InvokeUIThread(() =>
+            element.InvokeAsync(() =>
             {
                 if (!this.OperationModels.Contains(operationModel))
                 {
@@ -81,7 +83,7 @@
                 else
                 {
                     var output = Path.GetFileName(operationModel.Operation.Output);
-                    this.GlobalData.ShowMessageAsync("Download Canceled", $"The video/audio {output} is already downloaded");
+                    this.ShowMessageAsync("Download Canceled", $"The video/audio {output} is already downloaded");
                 }
             });
         }

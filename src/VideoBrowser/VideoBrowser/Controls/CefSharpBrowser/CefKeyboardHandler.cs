@@ -1,11 +1,11 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
     using CefSharp;
-    using CefSharp.WinForms;
+    using CefSharp.Wpf;
     using System.Windows;
     using System.Windows.Forms;
-    using System.Windows.Forms.Integration;
     using System.Windows.Input;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="KeyboardHandler" />.
@@ -17,10 +17,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="CefKeyboardHandler"/> class.
         /// </summary>
-        /// <param name="host">The host<see cref="WindowsFormsHost"/>.</param>
-        internal CefKeyboardHandler(WindowsFormsHost host)
+        /// <param name="host">The host<see cref="WebBrowser"/>.</param>
+        internal CefKeyboardHandler(FrameworkElement host)
         {
-            this.WindowsFormsHost = host;
+            this.WebBrowser = host;
         }
 
         #endregion Constructors
@@ -28,10 +28,13 @@
         #region Properties
 
         /// <summary>
-        /// Gets the WindowsFormsHost.
+        /// Gets the WebBrowser.
         /// </summary>
-        public WindowsFormsHost WindowsFormsHost { get; }
+        public FrameworkElement WebBrowser { get; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether IsFullScreen.
+        /// </summary>
         private bool IsFullScreen { get; set; }
 
         #endregion Properties
@@ -51,12 +54,14 @@
         /// <returns>The <see cref="bool"/>.</returns>
         public bool OnKeyEvent(IWebBrowser chromiumWebBrowser, IBrowser browser, KeyType type, int windowsKeyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey)
         {
-            return this.WindowsFormsHost.Dispatcher.Invoke(() =>
+            return false;
+
+            return this.WebBrowser.Dispatcher.Invoke(() =>
             {
-                var window = Window.GetWindow(this.WindowsFormsHost);
+                var window = Window.GetWindow(this.WebBrowser);
                 var routedEvent = UIElement.KeyDownEvent;
                 var kb = Keyboard.PrimaryDevice;
-                var ps = PresentationSource.FromDependencyObject(this.WindowsFormsHost);
+                var ps = PresentationSource.FromDependencyObject(this.WebBrowser);
                 var ts = 0;
                 var key = KeyInterop.KeyFromVirtualKey(windowsKeyCode);
 
@@ -67,7 +72,7 @@
 
                 // WPF gets modifiers from PrimaryKeyboard only
                 System.Diagnostics.Debug.WriteLine("Raising {0} {1}+{{{2}}}", routedEvent, key, Keyboard.Modifiers);
-                this.WindowsFormsHost.RaiseEvent(e);
+                this.WebBrowser.RaiseEvent(e);
                 return e.Handled;
             });
         }
@@ -89,14 +94,14 @@
             var chromiumWebBrowser = (ChromiumWebBrowser)browserControl;
             if ((Keys)windowsKeyCode == Keys.Escape)
             {
-                chromiumWebBrowser.Invoke((MethodInvoker)delegate
+                chromiumWebBrowser.Invoke(delegate
                 {
-                    var screenSize = Screen.FromControl(chromiumWebBrowser).Bounds.Size;
-                    bool fullScreen = screenSize == chromiumWebBrowser.Size;
-                    if (fullScreen)
-                    {
-                        chromiumWebBrowser.DisplayHandler.OnFullscreenModeChange(browserControl, browser, false);
-                    }
+                    ////var screenSize = Screen.FromControl(chromiumWebBrowser).Bounds.Size;
+                    ////bool fullScreen = screenSize == chromiumWebBrowser.Size;
+                    ////if (fullScreen)
+                    ////{
+                    ////    chromiumWebBrowser.DisplayHandler.OnFullscreenModeChange(browserControl, browser, false);
+                    ////}
                 });
             }
 

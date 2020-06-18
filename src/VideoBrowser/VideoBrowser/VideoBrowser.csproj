@@ -101,14 +101,12 @@
     <Reference Include="CefSharp.Core">
       <HintPath>..\..\..\bin\CefSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CefSharp.WinForms">
-      <HintPath>..\..\..\bin\CefSharp.WinForms.dll</HintPath>
-    </Reference>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\ControlzEx.dll</HintPath>
     </Reference>
-    <Reference Include="Dragablz">
+    <Reference Include="Dragablz, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
@@ -171,30 +169,36 @@
     <Compile Include="Common\RangeDouble.cs" />
     <Compile Include="Common\RangeInt.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="Common\WpfHelper.cs" />
     <Compile Include="Controls\AdornedControl\AdornedControl.cs" />
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserProcessHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefContextMenuHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefDisplayHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\CefConfig.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefKeyboardHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefRequestHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WebBrowserControl\BrowserEmulationVersion.cs" />
-    <Compile Include="Controls\WebBrowserControl\IExecuteWithObject.cs" />
-    <Compile Include="Controls\WebBrowserControl\IExecuteWithObjectAndResult.cs" />
-    <Compile Include="Controls\WebBrowserControl\InternetExplorerBrowserEmulation.cs" />
-    <Compile Include="Controls\WebBrowserControl\RelayCommand.cs" />
-    <Compile Include="Controls\WebBrowserControl\RelayCommandGeneric.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakAction.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakActionGeneric.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakFunc.cs" />
-    <Compile Include="Controls\WebBrowserControl\WeakFuncGeneric.cs" />
-    <Compile Include="Controls\WebBrowserControl\WebBrowserControl.cs" />
+    <Compile Include="Controls\CefSharpBrowser\AddInButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\CefSharpSchemeHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\CefSharpSchemeHandlerFactory.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CefWindowData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\CreateTabAddInButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\InternetOpenType.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\InternetProxyInfo.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\UrlHelper.cs" />
+    <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\ProxyConfig.cs" />
+    <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
+      <DependentUpon>DefaultTabHostWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolToValueConverter.cs" />
-    <Compile Include="Converters\EventBindingExtension.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Core\Commands.cs" />
@@ -224,13 +228,16 @@
     <Compile Include="Core\YoutubeUrlHandler.cs" />
     <Compile Include="Extensions\DictionaryExtension.cs" />
     <Compile Include="Extensions\EventBindingExtension.cs" />
+    <Compile Include="Extensions\FocusExtension.cs" />
     <Compile Include="Extensions\INotifyPropertyChangedExtension.cs" />
     <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Extensions\MathExtensions.cs" />
     <Compile Include="Extensions\RangeExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Extensions\TextBoxExtension.cs" />
     <Compile Include="Helpers\BindingProxy.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
+    <Compile Include="Helpers\DelayCall.cs" />
     <Compile Include="Helpers\FFMpeg.cs" />
     <Compile Include="Helpers\FFMpegFileType.cs" />
     <Compile Include="Helpers\FFMpegHelper.cs" />
@@ -241,12 +248,16 @@
     <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Helpers\UIThreadHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
-    <Compile Include="Helpers\WebBrowserViewModelFactory.cs" />
     <Compile Include="Helpers\YoutubeHelper.cs" />
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
+    <Compile Include="Models\AboutButton.cs" />
+    <Compile Include="Models\DownloadQueueButton.cs" />
     <Compile Include="Models\GlobalData.cs" />
+    <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
+    <Compile Include="Models\SettingsButton.cs" />
+    <Compile Include="Models\TestButton.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Common\VideoState.cs" />
     <Compile Include="Resources\Icons.cs" />
@@ -256,11 +267,11 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UrlEditorViewModel.cs" />
-    <Compile Include="ViewModels\VideoBrowserViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserHeaderedItemViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserTabControlViewModel.cs" />
-    <Compile Include="ViewModels\WebBrowserTabHeaderViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserHeaderedItemViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserTabControlViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\WebBrowserTabHeaderViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -276,13 +287,13 @@
     <Compile Include="Views\UrlEditorView.xaml.cs">
       <DependentUpon>UrlEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VideoBrowserView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\VideoBrowserView.xaml.cs">
       <DependentUpon>VideoBrowserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WebBrowserTabControlView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\WebBrowserTabControlView.xaml.cs">
       <DependentUpon>WebBrowserTabControlView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WebBrowserTabHeaderView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\WebBrowserTabHeaderView.xaml.cs">
       <DependentUpon>WebBrowserTabHeaderView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AirspaceFixer\Themes\AirspacePanel.xaml">
@@ -294,6 +305,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -333,15 +348,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\VideoBrowserView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\VideoBrowserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WebBrowserTabControlView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\WebBrowserTabControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WebBrowserTabHeaderView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\WebBrowserTabHeaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -376,7 +391,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CefSharp.WinForms">
+    <PackageReference Include="CefSharp.Wpf">
       <Version>81.3.100</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
@@ -403,7 +418,9 @@
     <Resource Include="Docs\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon.ico" />
+    <EmbeddedResource Include="Icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
@@ -418,14 +435,52 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="License.txt">
+    <EmbeddedResource Include="License.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Preinstallation.txt">
+    <EmbeddedResource Include="Preinstallation.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\css\docs.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCore.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCoreDefault.css" />
+    <Resource Include="Controls\CefSharpBrowser\Resources\assets\images\beach-2089936_1920.jpg" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\application.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\jquery.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushCSharp.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushJScript.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shCore.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingApiCustomObjectNameTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestsAsyncTask.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestSingle.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.css" />
+    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\CdmSupportTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\CssAnimation.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\DragDropCursorsTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\DraggableRegionTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\ExceptionTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\extension.js" />
+    <Content Include="Controls\CefSharpBrowser\Resources\FramedWebGLTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\Home.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\JavascriptCallbackTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\LegacyBindingTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\MultiBindingTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\PopupTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\PostMessageTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\Recaptcha.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\ResponseFilterTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\SchemeTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\ScriptedMethodsTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\TooltipTest.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\UnicodeExampleGreaterThan32kb.html" />
+    <Content Include="Controls\CefSharpBrowser\Resources\UnocodeExampleEqualTo32kb.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

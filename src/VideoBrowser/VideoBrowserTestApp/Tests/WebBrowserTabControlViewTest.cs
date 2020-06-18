@@ -1,9 +1,11 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
+    using System.Collections.ObjectModel;
     using System.Windows;
+    using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
+    using VideoBrowser.Controls.CefSharpBrowser.Views;
     using VideoBrowser.Models;
-    using VideoBrowser.ViewModels;
-    using VideoBrowser.Views;
     using VideoBrowserTestApp.Helpers;
 
     /// <summary>
@@ -30,12 +32,14 @@
         /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
         protected override void Test(Window testWindow)
         {
-            var globalData = new GlobalData();
-            var viewModel = new WebBrowserTabControlViewModel(globalData);
+            var globalBrowserData = new GlobalBrowserData();
+            var viewModel = new WebBrowserTabControlViewModel(globalBrowserData);
+            var cefWindowData = viewModel.CefWindowData;
             var view = new WebBrowserTabControlView { DataContext = viewModel };
             var window = WindowFactory.Create(view, testWindow);
-            viewModel.WebBrowsers.Add(new WebBrowserHeaderedItemViewModel(globalData));
-            globalData.MainWindow = window;
+            var operationModels = new ObservableCollection<OperationModel>();
+            viewModel.TabItems.Add(new WebBrowserHeaderedItemViewModel(globalBrowserData, cefWindowData, null));
+            cefWindowData.MainWindow = window; ;
             window.ShowDialog();
         }
 

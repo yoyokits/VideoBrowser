@@ -180,6 +180,12 @@
         /// <param name="args">.</param>
         private void InvokeCommand(object sender, EventArgs args)
         {
+            var dataContext = this.GetDataContext(sender);
+            if (dataContext == null)
+            {
+                throw new NullReferenceException($"DataContext is null.");
+            }
+
             object commandParameter = null;
             if (this.CommandParameter != null)
             {
@@ -188,7 +194,7 @@
                 BindingOperations.ClearBinding(this.Element, CommandParameterBinderProperty);
             }
 
-            var dataContext = this.GetDataContext(sender);
+            var executeParameters = (sender, args, commandParameter);
             if (!string.IsNullOrEmpty(_commandName) && dataContext != null)
             {
                 // Find control's ViewModel
@@ -200,7 +206,7 @@
                     if (commandProperty != null && commandProperty.GetValue(viewmodel) is ICommand constructorCommand && constructorCommand.CanExecute(args))
                     {
                         // Execute Command and pass event arguments as parameter
-                        constructorCommand.Execute(commandParameter ?? args);
+                        constructorCommand.Execute(executeParameters);
                         return;
                     }
                 }
@@ -214,7 +220,7 @@
             // Execute the command.
             if ((command is ICommand relayCommand) && relayCommand.CanExecute(commandParameter))
             {
-                relayCommand.Execute(commandParameter);
+                relayCommand.Execute(executeParameters);
             }
         }
 
