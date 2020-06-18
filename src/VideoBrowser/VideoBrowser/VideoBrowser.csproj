@@ -418,9 +418,9 @@
     <Resource Include="Docs\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon.ico">
+    <EmbeddedResource Include="Icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
@@ -435,14 +435,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="License.txt">
+    <EmbeddedResource Include="License.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Preinstallation.txt">
+    <EmbeddedResource Include="Preinstallation.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controls\CefSharpBrowser\Resources\assets\css\docs.css" />
