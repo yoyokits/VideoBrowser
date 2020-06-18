@@ -76,6 +76,10 @@ The browser or dialog tabs can be move to other position or to a new window
 ![Url search mode]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserMoveBrowserTabToNewWIndow.gif)
 By dragging the tab header, the position of the tab can be changed
 
+Context menu using right mouse click for copy, paste, open in new Window or tab and print.
+![Url search mode]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserContextMenu.jpg)
+Context menu for additional functionality
+
 **Support this project**
 
 Simply click star to give me a power for further development of this project.

@@ -3,7 +3,11 @@
     using CefSharp;
     using CefSharp.Wpf;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
+    using System.Windows.Controls;
+    using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser.Helpers;
 
     /// <summary>
@@ -43,11 +47,6 @@
         public string SearchEngineQuery { get; set; } = "https://www.youtube.com/results?search_query=";
 
         /// <summary>
-        /// Gets the Copy.
-        /// </summary>
-        private static (CefMenuCommand Id, string Text) Copy { get; } = (CefMenuCommand.Copy, "Copy");
-
-        /// <summary>
         /// Gets the CopyLinkAddress.
         /// </summary>
         private static (CefMenuCommand Id, string Text) CopyLinkAddress { get; } = (CopyLinkAdressId, "Copy link address");
@@ -66,11 +65,6 @@
         /// Gets the OpenInNewWindow.
         /// </summary>
         private static (CefMenuCommand Id, string Text) OpenInNewWindow { get; } = (OpenInNewWindowId, "Open in new window");
-
-        /// <summary>
-        /// Gets the Paste.
-        /// </summary>
-        private static (CefMenuCommand Id, string Text) Paste { get; } = (CefMenuCommand.Paste, "Paste");
 
         /// <summary>
         /// Gets the SearchInWebsite.
@@ -100,7 +94,7 @@
                 model.AddSeparator();
             }
 
-            model.Clear();
+            ////model.Clear();
             if (linkExist)
             {
                 this.AddItem(model, CopyLinkAddress.Id, CopyLinkAddress.Text);
@@ -108,7 +102,7 @@
                 this.AddItem(model, OpenInNewWindow.Id, OpenInNewWindow.Text);
             }
 
-            if (sourceUrlExist)
+            if (sourceUrlExist && (parameters.SourceUrl != parameters.PageUrl))
             {
                 if (UrlHelper.IsImageUrl(parameters.SourceUrl))
                 {
@@ -118,13 +112,7 @@
 
             if (selectionTextExist)
             {
-                this.AddItem(model, Copy.Id, Copy.Text);
                 this.AddItem(model, SearchInWebsite.Id, SearchInWebsite.Text);
-            }
-
-            if ((parameters.EditStateFlags & ContextMenuEditState.CanPaste) != ContextMenuEditState.None)
-            {
-                this.AddItem(model, Paste.Id, Paste.Text);
             }
         }
 
@@ -140,40 +128,6 @@
         /// <returns>The <see cref="bool"/>.</returns>
         public virtual bool OnContextMenuCommand(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, CefMenuCommand commandId, CefEventFlags eventFlags)
         {
-            switch (commandId)
-            {
-                case CefMenuCommand.Copy:
-                    Clipboard.SetText(parameters.SelectionText);
-                    break;
-
-                case CefMenuCommand.Paste:
-                    chromiumWebBrowser.Paste();
-                    break;
-
-                case CopyLinkAdressId:
-                    Clipboard.SetText(parameters.LinkUrl);
-                    break;
-
-                case OpenImageInNewTabId:
-                    this.OpenInNewTabAction?.Invoke(parameters.SourceUrl);
-                    break;
-
-                case OpenInNewWindowId:
-                    this.OpenInNewWindowAction?.Invoke(parameters.LinkUrl);
-                    break;
-
-                case OpenInNewTabId:
-                    this.OpenInNewTabAction?.Invoke(parameters.LinkUrl);
-                    break;
-
-                case SearchInWebsiteId:
-                    var searchUrl = $"{this.SearchEngineQuery}{parameters.SelectionText}";
-                    this.OpenInNewTabAction?.Invoke(searchUrl);
-                    break;
-
-                default:
-                    break;
-            }
             return true;
         }
 
@@ -193,18 +147,19 @@
         }
 
         /// <summary>
-        /// The RunContextMenu.
+        /// The GetMenuItems.
         /// </summary>
-        /// <param name="chromiumWebBrowser">The chromiumWebBrowser<see cref="IWebBrowser"/>.</param>
-        /// <param name="browser">The browser<see cref="IBrowser"/>.</param>
-        /// <param name="frame">The frame<see cref="IFrame"/>.</param>
-        /// <param name="parameters">The parameters<see cref="IContextMenuParams"/>.</param>
         /// <param name="model">The model<see cref="IMenuModel"/>.</param>
-        /// <param name="callback">The callback<see cref="IRunContextMenuCallback"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public virtual bool RunContextMenu(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model, IRunContextMenuCallback callback)
+        /// <returns>The <see cref="IEnumerable{Tuple{string, CefMenuCommand, bool}}"/>.</returns>
+        private static IEnumerable<Tuple<string, CefMenuCommand, bool>> GetMenuItems(IMenuModel model)
         {
-            return false;
+            for (var i = 0; i < model.Count; i++)
+            {
+                var header = model.GetLabelAt(i);
+                var commandId = model.GetCommandIdAt(i);
+                var isEnabled = model.IsEnabledAt(i);
+                yield return new Tuple<string, CefMenuCommand, bool>(header, commandId, isEnabled);
+            }
         }
 
         /// <summary>
@@ -217,6 +172,200 @@
         {
             model.AddItem(id, label);
             model.SetEnabled(id, true);
+        }
+
+        /// <summary>
+        /// The RunContextMenu.
+        /// </summary>
+        /// <param name="chromiumWebBrowser">The chromiumWebBrowser<see cref="IWebBrowser"/>.</param>
+        /// <param name="browser">The browser<see cref="IBrowser"/>.</param>
+        /// <param name="frame">The frame<see cref="IFrame"/>.</param>
+        /// <param name="parameters">The parameters<see cref="IContextMenuParams"/>.</param>
+        /// <param name="model">The model<see cref="IMenuModel"/>.</param>
+        /// <param name="callback">The callback<see cref="IRunContextMenuCallback"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        bool IContextMenuHandler.RunContextMenu(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model, IRunContextMenuCallback callback)
+        {
+            //NOTE: Return false to use the built in Context menu - in WPF this requires you integrate into your existing message loop, read the General Usage Guide for more details
+            //https://github.com/cefsharp/CefSharp/wiki/General-Usage#multithreadedmessageloop
+            //return false;
+
+            var webBrowser = (ChromiumWebBrowser)chromiumWebBrowser;
+
+            //IMenuModel is only valid in the context of this method, so need to read the values before invoking on the UI thread
+            var menuItems = GetMenuItems(model).ToList();
+            var linkUrl = parameters.LinkUrl;
+            var sourceUrl = parameters.SourceUrl;
+            var selectionText = parameters.SelectionText;
+
+            webBrowser.Dispatcher.Invoke(() =>
+            {
+                var menu = new ContextMenu
+                {
+                    IsOpen = true
+                };
+
+                RoutedEventHandler handler = null;
+
+                handler = (s, e) =>
+                {
+                    menu.Closed -= handler;
+
+                    //If the callback has been disposed then it's already been executed
+                    //so don't call Cancel
+                    if (!callback.IsDisposed)
+                    {
+                        callback.Cancel();
+                    }
+                };
+
+                menu.Closed += handler;
+
+                foreach (var item in menuItems)
+                {
+                    if (item.Item2 == CefMenuCommand.NotFound && string.IsNullOrWhiteSpace(item.Item1))
+                    {
+                        menu.Items.Add(new Separator());
+                        continue;
+                    }
+
+                    menu.Items.Add(new MenuItem
+                    {
+                        Header = item.Item1.Replace("&", "_"),
+                        IsEnabled = item.Item3,
+                        Command = new RelayCommand((o) =>
+                        {
+                            //BUG: CEF currently not executing callbacks correctly so we manually map the commands below
+                            //see https://github.com/cefsharp/CefSharp/issues/1767
+                            //The following line worked in previous versions, it doesn't now, so custom EXAMPLE below
+                            //callback.Continue(item.Item2, CefEventFlags.None);
+
+                            //NOTE: Note all menu item options below have been tested, you can work out the rest
+                            switch (item.Item2)
+                            {
+                                ////case CefMenuCommand.Copy:
+                                ////    Clipboard.SetText(parameters.SelectionText);
+                                ////    break;
+
+                                ////case CefMenuCommand.Paste:
+                                ////    chromiumWebBrowser.Paste();
+                                ////    break;
+
+                                case CopyLinkAdressId:
+                                    Clipboard.SetText(linkUrl);
+                                    break;
+
+                                case OpenImageInNewTabId:
+                                    this.OpenInNewTabAction?.Invoke(sourceUrl);
+                                    break;
+
+                                case OpenInNewWindowId:
+                                    this.OpenInNewWindowAction?.Invoke(linkUrl);
+                                    break;
+
+                                case OpenInNewTabId:
+                                    this.OpenInNewTabAction?.Invoke(linkUrl);
+                                    break;
+
+                                case SearchInWebsiteId:
+                                    var searchUrl = $"{this.SearchEngineQuery}{selectionText}";
+                                    this.OpenInNewTabAction?.Invoke(searchUrl);
+                                    break;
+
+                                case CefMenuCommand.Back:
+                                    {
+                                        browser.GoBack();
+                                        break;
+                                    }
+                                case CefMenuCommand.Forward:
+                                    {
+                                        browser.GoForward();
+                                        break;
+                                    }
+                                case CefMenuCommand.Cut:
+                                    {
+                                        browser.FocusedFrame.Cut();
+                                        break;
+                                    }
+
+                                case CefMenuCommand.Copy:
+                                    {
+                                        browser.FocusedFrame.Copy();
+                                        break;
+                                    }
+                                case CefMenuCommand.Paste:
+                                    {
+                                        browser.FocusedFrame.Paste();
+                                        break;
+                                    }
+                                case CefMenuCommand.Print:
+                                    {
+                                        browser.GetHost().Print();
+                                        break;
+                                    }
+                                case CefMenuCommand.ViewSource:
+                                    {
+                                        browser.FocusedFrame.ViewSource();
+                                        break;
+                                    }
+                                case CefMenuCommand.Undo:
+                                    {
+                                        browser.FocusedFrame.Undo();
+                                        break;
+                                    }
+                                case CefMenuCommand.StopLoad:
+                                    {
+                                        browser.StopLoad();
+                                        break;
+                                    }
+                                case CefMenuCommand.SelectAll:
+                                    {
+                                        browser.FocusedFrame.SelectAll();
+                                        break;
+                                    }
+                                case CefMenuCommand.Redo:
+                                    {
+                                        browser.FocusedFrame.Redo();
+                                        break;
+                                    }
+                                case CefMenuCommand.Find:
+                                    {
+                                        browser.GetHost().Find(0, parameters.SelectionText, true, false, false);
+                                        break;
+                                    }
+                                case CefMenuCommand.AddToDictionary:
+                                    {
+                                        browser.GetHost().AddWordToDictionary(parameters.MisspelledWord);
+                                        break;
+                                    }
+                                case CefMenuCommand.Reload:
+                                    {
+                                        browser.Reload();
+                                        break;
+                                    }
+                                case CefMenuCommand.ReloadNoCache:
+                                    {
+                                        browser.Reload(ignoreCache: true);
+                                        break;
+                                    }
+                                case (CefMenuCommand)26501:
+                                    {
+                                        browser.GetHost().ShowDevTools();
+                                        break;
+                                    }
+                                case (CefMenuCommand)26502:
+                                    {
+                                        browser.GetHost().CloseDevTools();
+                                        break;
+                                    }
+                            }
+                        }, "")
+                    });
+                }
+                webBrowser.ContextMenu = menu;
+            });
+
+            return true;
         }
 
         #endregion Methods
