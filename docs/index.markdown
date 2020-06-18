@@ -19,6 +19,11 @@ Bug reports or following the development progress can be reached via:
 {{site.contact}}
 
 ![Cekli Video Browser Screenshot]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserDownloadOptionsScreenShot.jpg)
+Cekli Browser screenshot
+
+![Cekli Video Browser Screenshot]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserDownload.gif)
+Download youtube with Cekli Browser
+
 
 {{site.title}} based on [youtube-dl][youtube-dl] therefore in future it can support more than 100 other video websites like:
 * youtube -> supported
@@ -35,7 +40,7 @@ Bug reports or following the development progress can be reached via:
 
 **Download**
 
-The last version is {{site.version}}.<br/>
+The latest version is {{site.version}}.<br/>
 And the most recent installer can be downloaded here:
 
 [![Download]({{site.image_folder}}Download.jpg)](download.html)
@@ -65,6 +70,11 @@ The url text input field can be used for youtube search if we type in non url fo
 
 ![Url search mode]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserYoutubeSearchScreenShot.jpg)
 Url text input as youtube search
+
+The browser or dialog tabs can be move to other position or to a new window
+
+![Url search mode]({{site.image_folder}}/{{site.version}}/CekliVideoBrowserMoveBrowserTabToNewWIndow.gif)
+By dragging the tab header, the position of the tab can be changed
 
 **Support this project**
 

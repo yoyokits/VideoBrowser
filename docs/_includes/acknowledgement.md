@@ -8,4 +8,5 @@
 * OokiDialogs.Wpf: Windows standard dialogs wrapper
 * Youtube Downloader: youtube-dl wrapper
 * InkScape is used to draw the Cekli Browser logo
+* ShareX is used to capture the software usage and save to gif
 * And other library dependency assemblies

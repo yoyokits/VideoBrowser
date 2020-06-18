@@ -30,6 +30,7 @@
             this.ClosingCommand = new RelayCommand(this.OnClosing);
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.PressEscCommand = new RelayCommand(this.OnPressEsc);
+            this.PressF2Command = new RelayCommand(this.OnPressF2);
             this.About = new AboutViewModel();
             var operationModels = this.GlobalData.OperationModels;
             this.DownloadQueueViewModel = new DownloadQueueViewModel(operationModels) { ShowMessageAsync = this.ShowMessageAsync };
@@ -90,6 +91,11 @@
         /// Gets the PressEscCommand.
         /// </summary>
         public ICommand PressEscCommand { get; }
+
+        /// <summary>
+        /// Gets the PressF2Command.
+        /// </summary>
+        public ICommand PressF2Command { get; }
 
         /// <summary>
         /// Gets the Settings.
@@ -203,6 +209,17 @@
             {
                 this.CefWindowData.IsFullScreenCommand.Execute(false);
             }
+        }
+
+        /// <summary>
+        /// The OnPressF2.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnPressF2(object obj)
+        {
+            var window = this.CefWindowData.MainWindow;
+            window.Width = 1022;
+            window.Height = 900;
         }
 
         /// <summary>

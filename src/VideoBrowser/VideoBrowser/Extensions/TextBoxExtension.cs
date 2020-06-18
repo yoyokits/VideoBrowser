@@ -138,10 +138,12 @@
             if (!oldValue && newValue) // If changed from false to true
             {
                 textbox.PreviewMouseLeftButtonDown += OnTextbox_PreviewMouseLeftButtonDown;
+                textbox.MouseDoubleClick += OnTextbox_MouseDoubleClick;
             }
             else if (oldValue && !newValue) // If changed from true to false
             {
                 textbox.PreviewMouseLeftButtonDown -= OnTextbox_PreviewMouseLeftButtonDown;
+                textbox.MouseDoubleClick -= OnTextbox_MouseDoubleClick;
             }
         }
 
@@ -199,6 +201,25 @@
         }
 
         /// <summary>
+        /// The OnTextbox_MouseDoubleClick.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="MouseButtonEventArgs"/>.</param>
+        private static void OnTextbox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!(sender is TextBox textbox))
+            {
+                return;
+            }
+
+            UIThreadHelper.DelayedInvokeAsync(() =>
+            {
+                textbox.Focus();
+                textbox.SelectAll();
+            }, 200);
+        }
+
+        /// <summary>
         /// The OnTextbox_PreviewMouseLeftButtonDown.
         /// </summary>
         /// <param name="sender">The sender<see cref="object"/>.</param>
@@ -216,7 +237,7 @@
                 {
                     textbox.Focus();
                     textbox.SelectAll();
-                }, 500);
+                }, 200);
             }
         }
 

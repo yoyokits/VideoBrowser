@@ -6,6 +6,15 @@ Cekli Video Browser development can be tracked using this release notes.<br/>
 All releases are published in GitHub site:<br/>
 [<svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/minima-social-icons.svg#github"></use></svg> Cekli Video Browser Releases](https://github.com/yoyokits/VideoBrowser/releases)
 
+# Version 0.1.3
+The usability is further improved
+* Enable to open link to new tab or new window
+* Enable to drag tab browser to a new window
+* Improve the URL editor
+* Migrate from CefSharp Winform to WPF
+* The dialogs like Settings, Download, and About are placed together with the browser tab instead in dedicated tab.
+* Click to Url Text Box or double click will select all the text
+
 # Version 0.1.2
 This version is significantly improved its usability and internal code cleaning up
 * Enable multiple websites browsing using multiple tabs

@@ -28,6 +28,7 @@
     </Controls:MetroWindow.Resources>
     <Controls:MetroWindow.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding PressEscCommand}" />
+        <KeyBinding Key="F2" Command="{Binding PressF2Command}" />
     </Controls:MetroWindow.InputBindings>
     <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
