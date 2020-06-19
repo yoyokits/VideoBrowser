@@ -176,6 +176,7 @@
     <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserProcessHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefContextMenuHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefDisplayHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserSettingsHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\CefConfig.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefKeyboardHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefRequestHandler.cs" />
@@ -193,6 +194,9 @@
     <Compile Include="Controls\CefSharpBrowser\Helpers\UrlHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\ProxyConfig.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Models\BookmarkModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Models\TabSettingsModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\BrowserSettings.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">

@@ -17,7 +17,7 @@
 
         public const int ProgressUpdateDelay = 250;
 
-        public const string ShortName = nameof(VideoBrowser);
+        public static readonly string ShortName = Assembly.GetExecutingAssembly().GetName().Name;
 
         private const string BinariesDirectory = "Binaries";
 

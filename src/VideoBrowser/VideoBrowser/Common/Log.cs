@@ -30,12 +30,12 @@
         #region Properties
 
         /// <summary>
-        /// Gets the Log
+        /// Gets the Log.
         /// </summary>
         public static ILog Log { get; } = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// Gets the LogFilePath
+        /// Gets the LogFilePath.
         /// </summary>
         public static string LogFilePath { get; private set; }
 
@@ -46,9 +46,8 @@
         /// <summary>
         /// The Debug Log.
         /// </summary>
-        /// <param name="source">The source<see cref="object"/></param>
-        /// <param name="message">The message<see cref="object"/></param>
-        public static void Debug(this object source, object message)
+        /// <param name="message">The message<see cref="object"/>.</param>
+        public static void Debug(object message)
         {
             Log.Debug(message);
         }
@@ -56,9 +55,8 @@
         /// <summary>
         /// The Error Log.
         /// </summary>
-        /// <param name="source">The source<see cref="object"/></param>
-        /// <param name="message">The message<see cref="object"/></param>
-        public static void Error(this object source, object message)
+        /// <param name="message">The message<see cref="object"/>.</param>
+        public static void Error(object message)
         {
             Log.Error(message);
         }
@@ -66,17 +64,16 @@
         /// <summary>
         /// The Fatal Log.
         /// </summary>
-        /// <param name="source">The source<see cref="object"/></param>
-        /// <param name="message">The message<see cref="object"/></param>
-        public static void Fatal(this object source, object message)
+        /// <param name="message">The message<see cref="object"/>.</param>
+        public static void Fatal(object message)
         {
             Log.Fatal(message);
         }
 
         /// <summary>
-        /// The Info
+        /// The Info.
         /// </summary>
-        /// <param name="message">The message<see cref="object"/></param>
+        /// <param name="message">The message<see cref="object"/>.</param>
         public static void Info(object message = null)
         {
             if (message == null)
@@ -91,17 +88,17 @@
         /// <summary>
         /// The Info Log.
         /// </summary>
-        /// <param name="source">The source<see cref="object"/></param>
-        /// <param name="message">The message<see cref="object"/></param>
+        /// <param name="source">The source<see cref="object"/>.</param>
+        /// <param name="message">The message<see cref="object"/>.</param>
         public static void Info(this object source, object message)
         {
             Log.Info(message);
         }
 
         /// <summary>
-        /// The Setup
+        /// The Setup.
         /// </summary>
-        /// <param name="appName">The appName<see cref="string"/></param>
+        /// <param name="appName">The appName<see cref="string"/>.</param>
         public static void Setup(string appName)
         {
             LogFilePath = GetLogFilePath(appName);
@@ -137,10 +134,10 @@
         }
 
         /// <summary>
-        /// The Warn
+        /// The Warn.
         /// </summary>
-        /// <param name="source">The source<see cref="object"/></param>
-        /// <param name="message">The message<see cref="object"/></param>
+        /// <param name="source">The source<see cref="object"/>.</param>
+        /// <param name="message">The message<see cref="object"/>.</param>
         public static void Warn(this object source, object message)
         {
             Log.Warn(message);
@@ -156,10 +153,10 @@
         }
 
         /// <summary>
-        /// The GetLogFilePath
+        /// The GetLogFilePath.
         /// </summary>
-        /// <param name="appName">The appName<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="appName">The appName<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         internal static string GetLogFilePath(string appName)
         {
             var folder = AppEnvironment.GetUserLocalApplicationData();

@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowser
 {
+    using CefSharp;
     using System.Windows;
     using VideoBrowser.Common;
 
@@ -21,5 +22,10 @@
         }
 
         #endregion Methods
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            Cef.Shutdown();
+        }
     }
 }

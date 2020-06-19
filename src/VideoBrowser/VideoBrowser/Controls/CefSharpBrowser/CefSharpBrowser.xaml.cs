@@ -177,6 +177,7 @@
                     ExternalMessagePump = !multiThreadedMessageLoop
                 };
 
+                settings.PersistSessionCookies = true;
                 settings.SetOffScreenRenderingBestPerformanceArgs();
                 CefConfig.Init(settings, browserProcessHandler: browserProcessHandler);
             }

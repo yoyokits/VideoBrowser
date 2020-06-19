@@ -33,6 +33,11 @@
         public ICollection<AddInButton> AddInButtons { get; } = new ObservableCollection<AddInButton>();
 
         /// <summary>
+        /// Gets the BrowserSettings.
+        /// </summary>
+        public BrowserSettings BrowserSettings { get; } = new BrowserSettings();
+
+        /// <summary>
         /// Gets the InterTabClient.
         /// </summary>
         public InterTabClient InterTabClient { get; }
@@ -41,6 +46,11 @@
         /// Gets the Settings.
         /// </summary>
         public SettingsViewModel Settings { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsSettingsLoaded.
+        /// </summary>
+        internal bool IsSettingsLoaded { get; set; }
 
         #endregion Properties
 
