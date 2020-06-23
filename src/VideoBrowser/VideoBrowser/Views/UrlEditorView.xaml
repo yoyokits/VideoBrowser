@@ -47,6 +47,7 @@
             Height="21"
             Margin="2,2,2,4"
             VerticalAlignment="Center"
+            extension:FocusExtension.IsFocused="{Binding IsFocused, Mode=OneWay, Delay=100}"
             extension:TextBoxExtension.IsClickToSelectAll="True"
             Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}">
             <TextBox.InputBindings>

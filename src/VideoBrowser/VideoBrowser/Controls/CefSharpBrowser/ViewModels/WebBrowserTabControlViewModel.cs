@@ -8,6 +8,7 @@
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -246,11 +247,21 @@
             if (!this.GlobalBrowserData.IsSettingsLoaded)
             {
                 this.GlobalBrowserData.IsSettingsLoaded = true;
-                BrowserSettingsHelper.Load(this.GlobalBrowserData.BrowserSettings);
-                foreach (var tabItemSetting in this.GlobalBrowserData.BrowserSettings.TabSettingModels)
+                var settings = this.GlobalBrowserData.BrowserSettings;
+                var firstTab = (this.TabItems.First().Content as FrameworkElement).DataContext as VideoBrowserViewModel;
+                firstTab.NavigateUrl = settings.TabSettingModels.First().Url;
+                firstTab.Header = settings.TabSettingModels.First().Title;
+                for (int i = 1; i < settings.TabSettingModels.Count; i++)
                 {
-                    this.OnOpenUrlFromTab(tabItemSetting.Url);
+                    var tabItemSetting = settings.TabSettingModels[i];
+                    this.OnOpenUrlFromTab(tabItemSetting.Url, tabItemSetting.Title);
                 }
+
+                Task.Run(async () =>
+                {
+                    await Task.Delay(1000);
+                    this.SelectedTabIndex = settings.SelectedTabSettingIndex;
+                });
             }
         }
 
@@ -260,10 +271,24 @@
         /// <param name="url">The url<see cref="string"/>.</param>
         private void OnOpenUrlFromTab(string url)
         {
+            OnOpenUrlFromTab(url, string.Empty);
+        }
+
+        /// <summary>
+        /// The OnOpenUrlFromTab.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <param name="title">The title<see cref="string"/>.</param>
+        private void OnOpenUrlFromTab(string url, string title)
+        {
             UIThreadHelper.InvokeAsync(() =>
             {
                 var browser = this.CreateBrowserFunc() as WebBrowserHeaderedItemViewModel;
                 browser.VideoBrowserViewModel.NavigateUrl = url;
+                if (!string.IsNullOrEmpty(title))
+                {
+                    browser.VideoBrowserViewModel.Header = title;
+                }
                 this.AddTab(browser);
             });
         }

@@ -43,13 +43,13 @@
         /// <summary>
         /// The Load.
         /// </summary>
-        /// <param name="settings">The settings<see cref="BrowserSettings"/>.</param>
-        internal static void Load(BrowserSettings settings)
+        /// <returns>The <see cref="BrowserSettings"/>.</returns>
+        internal static BrowserSettings Load()
         {
             Logger.Info($"Loading Browser setting {UserJsonSettingsPath}");
             if (!File.Exists(UserJsonSettingsPath))
             {
-                return;
+                return null;
             }
 
             try
@@ -58,14 +58,15 @@
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     var browserSettings = (BrowserSettings)serializer.Deserialize(file, typeof(BrowserSettings));
-                    settings.BookmarkModels = browserSettings.BookmarkModels;
-                    settings.TabSettingModels = browserSettings.TabSettingModels;
+                    return browserSettings;
                 }
             }
             catch (Exception e)
             {
                 Logger.Error($"Error Loading Browser Setting: {e.Message}");
             }
+
+            return null;
         }
 
         /// <summary>
@@ -83,6 +84,7 @@
                 {
                     var tabModel = new TabSettingsModel
                     {
+                        Title = videoModel.Header,
                         Url = videoModel.Url
                     };
 
@@ -90,8 +92,9 @@
                 }
             }
 
+            settings.SelectedTabSettingIndex = browserModel.SelectedTabIndex;
             var settingsFolder = Path.GetDirectoryName(UserJsonSettingsPath);
-            if (Directory.Exists(settingsFolder))
+            if (!Directory.Exists(settingsFolder))
             {
                 Directory.CreateDirectory(settingsFolder);
             }

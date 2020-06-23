@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.ViewModels;
 
     /// <summary>
@@ -21,6 +22,11 @@
         {
             this.Settings = new SettingsViewModel();
             this.InterTabClient = new InterTabClient(this);
+            var settings = BrowserSettingsHelper.Load();
+            if (settings != null)
+            {
+                this.BrowserSettings = settings;
+            }
         }
 
         #endregion Constructors

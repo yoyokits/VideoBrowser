@@ -10,6 +10,8 @@
     {
         #region Fields
 
+        private string _title;
+
         private string _url;
 
         #endregion Fields
@@ -24,6 +26,11 @@
         #endregion Events
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the Title.
+        /// </summary>
+        public string Title { get => _title; set => this.Set(this.PropertyChanged, ref _title, value); }
 
         /// <summary>
         /// Gets or sets the Url.
