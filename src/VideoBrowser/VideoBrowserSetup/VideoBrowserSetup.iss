@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Cekli Browser"
-#define MyAppVersion "0.1.3"
+#define MyAppVersion "0.1.4"
 #define MyAppPublisher "Cekli Open Source"
 #define MyAppURL "https://yoyokits.github.io/VideoBrowser/"
 #define MyAppExeName "VideoBrowser.exe"

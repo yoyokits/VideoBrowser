@@ -173,13 +173,14 @@
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Handlers\DownloadHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserProcessHandler.cs" />
-    <Compile Include="Controls\CefSharpBrowser\CefContextMenuHandler.cs" />
-    <Compile Include="Controls\CefSharpBrowser\CefDisplayHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Handlers\CefContextMenuHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Handlers\CefDisplayHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserSettingsHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\CefConfig.cs" />
-    <Compile Include="Controls\CefSharpBrowser\CefKeyboardHandler.cs" />
-    <Compile Include="Controls\CefSharpBrowser\CefRequestHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Handlers\CefKeyboardHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Handlers\CefRequestHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml.cs">
       <DependentUpon>CefSharpBrowser.xaml</DependentUpon>
     </Compile>
@@ -256,6 +257,7 @@
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
     <Compile Include="Models\AboutButton.cs" />
+    <Compile Include="Models\DownloadProcessModel.cs" />
     <Compile Include="Models\DownloadQueueButton.cs" />
     <Compile Include="Models\GlobalData.cs" />
     <Compile Include="Models\OpenOutputFolderButton.cs" />
