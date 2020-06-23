@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.ViewModels;
 
     /// <summary>
@@ -21,6 +22,11 @@
         {
             this.Settings = new SettingsViewModel();
             this.InterTabClient = new InterTabClient(this);
+            var settings = BrowserSettingsHelper.Load();
+            if (settings != null)
+            {
+                this.BrowserSettings = settings;
+            }
         }
 
         #endregion Constructors
@@ -33,6 +39,11 @@
         public ICollection<AddInButton> AddInButtons { get; } = new ObservableCollection<AddInButton>();
 
         /// <summary>
+        /// Gets the BrowserSettings.
+        /// </summary>
+        public BrowserSettings BrowserSettings { get; } = new BrowserSettings();
+
+        /// <summary>
         /// Gets the InterTabClient.
         /// </summary>
         public InterTabClient InterTabClient { get; }
@@ -41,6 +52,11 @@
         /// Gets the Settings.
         /// </summary>
         public SettingsViewModel Settings { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsSettingsLoaded.
+        /// </summary>
+        internal bool IsSettingsLoaded { get; set; }
 
         #endregion Properties
 

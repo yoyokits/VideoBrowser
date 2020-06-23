@@ -17,6 +17,9 @@ layout: page
 Download Cekli Browser installer and code on GitHub:<br/>
 [Latest release in GitHub](https://github.com/yoyokits/VideoBrowser/releases/latest)
 
+The latest and previous release notes:<br/>
+[Release Notes](release-notes.html)
+
 **Installation:**
 1. Download link above
 2. Run the VideoBrowserSetup.exe installation application

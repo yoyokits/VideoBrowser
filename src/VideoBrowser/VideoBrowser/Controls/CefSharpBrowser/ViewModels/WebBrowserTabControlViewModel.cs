@@ -8,9 +8,12 @@
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
     using VideoBrowser.Resources;
@@ -44,6 +47,7 @@
             this.CefWindowData.CefRequestHandler.OpenUrlFromTabAction = this.OnOpenUrlFromTab;
             this.CefWindowData.CefContextMenuHandler.OpenInNewTabAction = this.OnOpenUrlFromTab;
             this.CefWindowData.CefContextMenuHandler.OpenInNewWindowAction = this.OnOpenUrlFromWindow;
+            this.LoadedCommand = new RelayCommand(this.OnLoaded, nameof(this.LoadedCommand));
         }
 
         #endregion Constructors
@@ -100,6 +104,11 @@
         public IInterTabClient InterTabClient => this.GlobalBrowserData.InterTabClient;
 
         /// <summary>
+        /// Gets or sets the LoadedCommand.
+        /// </summary>
+        public ICommand LoadedCommand { get; set; }
+
+        /// <summary>
         /// Gets or sets the SelectedTabIndex.
         /// </summary>
         public int SelectedTabIndex { get => _selectedTabIndex; set => this.Set(this.PropertyChanged, ref _selectedTabIndex, value); }
@@ -141,6 +150,9 @@
         /// </summary>
         public void Dispose()
         {
+            var settings = this.GlobalBrowserData.BrowserSettings;
+            BrowserSettingsHelper.Save(settings, this);
+
             this.TabItems.CollectionChanged -= this.OnTabItems_CollectionChanged;
             this.TabItems.ClearAndDispose();
         }
@@ -227,14 +239,62 @@
         }
 
         /// <summary>
+        /// The OnLoaded.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        private void OnLoaded(object obj)
+        {
+            if (!this.GlobalBrowserData.IsSettingsLoaded)
+            {
+                this.GlobalBrowserData.IsSettingsLoaded = true;
+                var settings = this.GlobalBrowserData.BrowserSettings;
+                var tabSettings = settings.TabSettingModels;
+                if (tabSettings.Any())
+                {
+                    var firstTab = (this.TabItems.First().Content as FrameworkElement).DataContext as VideoBrowserViewModel;
+                    firstTab.NavigateUrl = tabSettings.First().Url;
+                    firstTab.Header = tabSettings.First().Title;
+                    for (var i = 1; i < tabSettings.Count; i++)
+                    {
+                        var tabItemSetting = tabSettings[i];
+                        this.OnOpenUrlFromTab(tabItemSetting.Url, tabItemSetting.Title);
+                    }
+
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1000);
+                        this.SelectedTabIndex = settings.SelectedTabSettingIndex;
+                    });
+                }
+            }
+        }
+
+        /// <summary>
         /// The OnOpenUrlFromTab.
         /// </summary>
         /// <param name="url">The url<see cref="string"/>.</param>
         private void OnOpenUrlFromTab(string url)
         {
-            var browser = this.CreateBrowserFunc() as WebBrowserHeaderedItemViewModel;
-            browser.VideoBrowserViewModel.NavigateUrl = url;
-            UIThreadHelper.InvokeAsync(() => this.AddTab(browser));
+            OnOpenUrlFromTab(url, string.Empty);
+        }
+
+        /// <summary>
+        /// The OnOpenUrlFromTab.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <param name="title">The title<see cref="string"/>.</param>
+        private void OnOpenUrlFromTab(string url, string title)
+        {
+            UIThreadHelper.InvokeAsync(() =>
+            {
+                var browser = this.CreateBrowserFunc() as WebBrowserHeaderedItemViewModel;
+                browser.VideoBrowserViewModel.NavigateUrl = url;
+                if (!string.IsNullOrEmpty(title))
+                {
+                    browser.VideoBrowserViewModel.Header = title;
+                }
+                this.AddTab(browser);
+            });
         }
 
         /// <summary>

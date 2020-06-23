@@ -1,10 +1,13 @@
 ---
-title: Release Notes
 ---
 
 Cekli Video Browser development can be tracked using this release notes.<br/>
 All releases are published in GitHub site:<br/>
 [<svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/minima-social-icons.svg#github"></use></svg> Cekli Video Browser Releases](https://github.com/yoyokits/VideoBrowser/releases)
+
+# Version 0.1.4
+Small usability  improvement but very useful
+* Save the last session and loaded websites on tabs
 
 # Version 0.1.3
 The usability is further improved
