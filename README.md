@@ -18,7 +18,7 @@ Please note that this is in early development, therefore you may find bugs. Plea
 
 <ul class="social-media-list"><li><a href="https://github.com/yoyokits/VideoBrowser"><svg class="svg-icon"><use xlink:href="https://yoyokits.github.io/VideoBrowser/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a></li><li><a href="https://www.twitter.com/nurcahyoyohanes"><svg class="svg-icon"><use xlink:href="https://yoyokits.github.io/VideoBrowser/assets/minima-social-icons.svg#twitter"></use></svg>  <span class="username">nurcahyoyohanes</span></a></li></ul>
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images/0.1.2/CekliVideoBrowserDownloadOptionsScreenShot.jpg"><br/>
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images/v0.1.3/CekliVideoBrowserDownload.gif"><br/>
 
 Cekli Browser and Youtube Downloader based on [youtube-dl][youtube-dl] therefore in future it can support more than 100 other video websites like:
 * youtube -> supported
@@ -41,8 +41,8 @@ The most recent installer can be downloaded here:
 
 **Usage**
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images/0.1.2/CekliVideoBrowserMainViewScreenShot.jpg"><br/>
-Like any other web browsers, {{site.title}} can be used as a web browser.
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images//v0.1.3/CekliVideoBrowserMoveBrowserTabToNewWIndow.gif"><br/>
+Like any other web browsers, Cekli Youtube Downloader and Browser can be used as a web browser.
 
 If we browse in a youtube video then the download icon will be enabled, after clicking then it will be downloaded in a queue.
 It can downloads several video concurently or multithreading.
