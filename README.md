@@ -41,7 +41,7 @@ The most recent installer can be downloaded here:
 
 **Usage**
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images//v0.1.3/CekliVideoBrowserMoveBrowserTabToNewWIndow.gif"><br/>
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images//v0.1.3/CekliVideoBrowserMainViewScreenShot.jpg"><br/>
 Like any other web browsers, Cekli Youtube Downloader and Browser can be used as a web browser.
 
 If we browse in a youtube video then the download icon will be enabled, after clicking then it will be downloaded in a queue.
@@ -54,7 +54,7 @@ Download queue
 
 The url text input field can be used for youtube search if we type in non url format.
 
-<img src="https://yoyokits.github.io/VideoBrowser/assets/images/0.1.2/CekliVideoBrowserYoutubeSearchScreenShot.jpg"><br/>
+<img src="https://yoyokits.github.io/VideoBrowser/assets/images//v0.1.3/CekliVideoBrowserYoutubeSearchScreenShot.jpg"><br/>
 Url text input as youtube search
 
 **Support this project**
