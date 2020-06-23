@@ -37,6 +37,8 @@
 
         private bool _isFormatComboBoxVisible;
 
+        private bool _isTextBoxFocused;
+
         private bool _isVisible;
 
         private string _navigateUrl;
@@ -137,6 +139,11 @@
         /// Gets or sets a value indicating whether IsFormatComboBoxVisible.
         /// </summary>
         public bool IsFormatComboBoxVisible { get => _isFormatComboBoxVisible; set => this.Set(this.PropertyChangedHandler, ref _isFormatComboBoxVisible, value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsTextBoxFocused.
+        /// </summary>
+        public bool IsTextBoxFocused { get => _isTextBoxFocused; set => this.Set(this.PropertyChangedHandler, ref _isTextBoxFocused, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsVisible.
@@ -260,6 +267,7 @@
         {
             this.IsBusy = false;
             this.IsFocused = true;
+            this.IsTextBoxFocused = true;
             this.IsDownloadable = false;
             this.IsFormatComboBoxVisible = false;
 

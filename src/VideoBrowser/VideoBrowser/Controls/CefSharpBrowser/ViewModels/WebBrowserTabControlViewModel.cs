@@ -248,20 +248,24 @@
             {
                 this.GlobalBrowserData.IsSettingsLoaded = true;
                 var settings = this.GlobalBrowserData.BrowserSettings;
-                var firstTab = (this.TabItems.First().Content as FrameworkElement).DataContext as VideoBrowserViewModel;
-                firstTab.NavigateUrl = settings.TabSettingModels.First().Url;
-                firstTab.Header = settings.TabSettingModels.First().Title;
-                for (int i = 1; i < settings.TabSettingModels.Count; i++)
+                var tabSettings = settings.TabSettingModels;
+                if (tabSettings.Any())
                 {
-                    var tabItemSetting = settings.TabSettingModels[i];
-                    this.OnOpenUrlFromTab(tabItemSetting.Url, tabItemSetting.Title);
-                }
+                    var firstTab = (this.TabItems.First().Content as FrameworkElement).DataContext as VideoBrowserViewModel;
+                    firstTab.NavigateUrl = tabSettings.First().Url;
+                    firstTab.Header = tabSettings.First().Title;
+                    for (var i = 1; i < tabSettings.Count; i++)
+                    {
+                        var tabItemSetting = tabSettings[i];
+                        this.OnOpenUrlFromTab(tabItemSetting.Url, tabItemSetting.Title);
+                    }
 
-                Task.Run(async () =>
-                {
-                    await Task.Delay(1000);
-                    this.SelectedTabIndex = settings.SelectedTabSettingIndex;
-                });
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1000);
+                        this.SelectedTabIndex = settings.SelectedTabSettingIndex;
+                    });
+                }
             }
         }
 

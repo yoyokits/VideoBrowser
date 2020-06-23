@@ -24,7 +24,16 @@ Cekli Browser screenshot
 ![Cekli Video Browser Screenshot]({{site.image_folder}}{{site.version}}/CekliVideoBrowserDownload.gif)
 Download youtube with Cekli Browser
 
+**Feature List** 
+* Download several Youtube video concurently
+* Able to select the video and audio quality to be downloaded
+* Working as standard browser
+* Tabbed browsing
+* Select the output folder
+* Play the downloaded videos with external video player
 
+Other feature list are in:  [Full feature list page](features_list.html)
+ 
 {{site.title}} based on [youtube-dl][youtube-dl] therefore in future it can support more than 100 other video websites like:
 * youtube -> supported
 * --- will be supported in the future ---
