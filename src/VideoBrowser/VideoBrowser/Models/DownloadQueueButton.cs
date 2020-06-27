@@ -3,6 +3,7 @@
     using System.Collections.ObjectModel;
     using System.Windows;
     using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Resources;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
@@ -17,10 +18,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadQueueButton"/> class.
         /// </summary>
-        /// <param name="operationModels">The operationModels<see cref="ObservableCollection{OperationModel}"/>.</param>
-        internal DownloadQueueButton(ObservableCollection<OperationModel> operationModels) : base("Downloads", Icons.FolderDownload)
+        /// <param name="downloadItemModels">The downloadItemModels<see cref="ObservableCollection{DownloadItemModel}"/>.</param>
+        internal DownloadQueueButton(ObservableCollection<DownloadItemModel> downloadItemModels) : base("Downloads", Icons.FolderDownload)
         {
-            this.DownloadQueueViewModel = new DownloadQueueViewModel(operationModels);
+            this.DownloadQueueViewModel = new DownloadQueueViewModel(downloadItemModels);
             this.ToolTip = "Show downloads queue";
         }
 

@@ -1,11 +1,9 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
-    using System.Collections.ObjectModel;
     using System.Windows;
     using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Controls.CefSharpBrowser.Views;
-    using VideoBrowser.Models;
     using VideoBrowserTestApp.Helpers;
 
     /// <summary>
@@ -37,7 +35,6 @@
             var cefWindowData = viewModel.CefWindowData;
             var view = new WebBrowserTabControlView { DataContext = viewModel };
             var window = WindowFactory.Create(view, testWindow);
-            var operationModels = new ObservableCollection<OperationModel>();
             viewModel.TabItems.Add(new WebBrowserHeaderedItemViewModel(globalBrowserData, cefWindowData, null));
             cefWindowData.MainWindow = window; ;
             window.ShowDialog();

@@ -23,7 +23,7 @@
         {
             // This constructor is called once per application instance.
             var addIns = this.GlobalBrowserData.AddInButtons;
-            addIns.Add(new DownloadQueueButton(this.GlobalData.OperationModels));
+            addIns.Add(new DownloadQueueButton(this.GlobalData.DownloadItemModels));
             addIns.Add(new OpenOutputFolderButton(this.GlobalBrowserData.Settings));
             addIns.Add(new SettingsButton(this.GlobalBrowserData.Settings));
             addIns.Add(new AboutButton());
@@ -53,6 +53,7 @@
             this.GlobalBrowserData = globalBrowserData;
             this.MainWindowViewModel = new MainWindowViewModel(globalData, globalBrowserData);
             this.MainWindowViewModel.CefWindowData.PropertyChanged += this.CefWindowData_PropertyChanged;
+            this.GlobalBrowserData.WindowViewModels.Add(this.MainWindowViewModel);
             this.DataContext = this.MainWindowViewModel;
             this.InitializeComponent();
         }

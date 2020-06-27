@@ -32,9 +32,9 @@
             this.PressEscCommand = new RelayCommand(this.OnPressEsc);
             this.PressF2Command = new RelayCommand(this.OnPressF2);
             this.About = new AboutViewModel();
-            var operationModels = this.GlobalData.OperationModels;
-            this.DownloadQueueViewModel = new DownloadQueueViewModel(operationModels) { ShowMessageAsync = this.ShowMessageAsync };
-            this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(operationModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
+            var downloadItemModels = this.GlobalData.DownloadItemModels;
+            this.DownloadQueueViewModel = new DownloadQueueViewModel(downloadItemModels) { ShowMessageAsync = this.ShowMessageAsync };
+            this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(downloadItemModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
             this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(globalBrowserData)
             {
                 CreateBrowserFunc = this.CreateBrowser
@@ -137,6 +137,16 @@
         private void Dispose()
         {
             this.WebBrowserTabControlViewModel.Dispose();
+            var viewModels = this.GlobalBrowserData.WindowViewModels;
+            if (viewModels.Contains(this))
+            {
+                viewModels.Remove(this);
+            }
+
+            if (!viewModels.Any())
+            {
+                this.GlobalBrowserData.Dispose();
+            }
         }
 
         /// <summary>

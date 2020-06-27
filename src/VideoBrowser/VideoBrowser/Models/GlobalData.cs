@@ -2,6 +2,7 @@
 {
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Helpers;
 
     /// <summary>
@@ -20,19 +21,17 @@
 
         #endregion Constructors
 
-
-
         #region Properties
+
+        /// <summary>
+        /// Gets the DownloadItemModels.
+        /// </summary>
+        public ObservableCollection<DownloadItemModel> DownloadItemModels { get; } = new ObservableCollection<DownloadItemModel>();
 
         /// <summary>
         /// Gets a value indicating whether IsDebug.
         /// </summary>
         public bool IsDebug => DebugHelper.IsDebug;
-
-        /// <summary>
-        /// Gets the OperationModels.
-        /// </summary>
-        public ObservableCollection<OperationModel> OperationModels { get; } = new ObservableCollection<OperationModel>();
 
         /// <summary>
         /// Gets the TestCommand.

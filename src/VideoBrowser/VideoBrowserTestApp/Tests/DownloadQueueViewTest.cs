@@ -31,7 +31,7 @@
         protected override void Test(Window testWindow)
         {
             var globalData = new GlobalData();
-            var viewModel = new DownloadQueueViewModel(globalData.OperationModels);
+            var viewModel = new DownloadQueueViewModel(globalData.DownloadItemModels);
             var view = new DownloadQueueView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view, testWindow);
         }

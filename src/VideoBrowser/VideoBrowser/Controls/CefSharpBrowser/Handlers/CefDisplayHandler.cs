@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.Controls.CefSharpBrowser
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.Handlers
 {
     using CefSharp;
     using CefSharp.Structs;

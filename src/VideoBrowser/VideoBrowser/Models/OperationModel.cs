@@ -5,8 +5,8 @@
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-    using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Core;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
@@ -15,25 +15,11 @@
     /// Defines the <see cref="OperationModel" />
     /// The Download Queue Items.
     /// </summary>
-    public class OperationModel : NotifyPropertyChanged, IEquatable<OperationModel>, IDisposable
+    public class OperationModel : DownloadItemModel, IDisposable
     {
         #region Fields
 
         private string _duration;
-
-        private string _fileSize;
-
-        private bool _isQueuedControlsVisible = true;
-
-        private string _pauseText = "Pause";
-
-        private int _progress;
-
-        private string _status;
-
-        private string _title;
-
-        private string _url;
 
         #endregion Fields
 
@@ -45,16 +31,17 @@
         /// <param name="operation">The operation<see cref="Operation"/>.</param>
         public OperationModel(Operation operation)
         {
-            this.Title = operation.Title;
-            this.Url = operation.Link;
-            this.FileSize = FormatString.FormatFileSize(operation.FileSize);
-            this.Duration = FormatString.FormatVideoLength(operation.Duration);
+            this.Operation = operation;
+            this.Title = this.Operation.Title;
+            this.Url = this.Operation.Link;
+            this.Duration = FormatString.FormatVideoLength(this.Operation.Duration);
+            this.FileSize = FormatString.FormatFileSize(this.Operation.FileSize);
+            this.OutputPath = this.Operation.Output;
+            this.Thumbnail = this.Operation.Thumbnail;
+
             this.CancelDownloadCommand = new RelayCommand((o) => this.CancelDownloadAction?.Invoke(this), nameof(this.CancelDownloadCommand), (o) => this.Operation.CanStop());
             this.PauseDownloadCommand = new RelayCommand((o) => this.PauseDownloadAction?.Invoke(this), nameof(this.PauseDownloadCommand), (o) => this.Operation.CanPause() || this.Operation.CanResume());
-            this.PlayMediaCommand = new RelayCommand(this.OnPlayMedia, nameof(this.PlayMediaCommand));
-            this.ShowMediaInFolderCommand = new RelayCommand(this.OnShowMediaInFolder, nameof(this.ShowMediaInFolderCommand));
 
-            this.Operation = operation;
             this.Operation.Completed += OnOperation_Completed;
             this.Operation.ProgressChanged += OnOperation_ProgressChanged;
             this.Operation.PropertyChanged += OnOperation_PropertyChanged;
@@ -80,66 +67,18 @@
         #region Properties
 
         /// <summary>
-        /// Gets or sets the CancelDownloadCommand.
-        /// </summary>
-        public ICommand CancelDownloadCommand { get; internal set; }
-
-        /// <summary>
         /// Gets the Duration.
         /// </summary>
         public string Duration { get => this._duration; private set => this.Set(this.PropertyChangedHandler, ref this._duration, value); }
 
         /// <summary>
-        /// Gets the FileSize.
-        /// </summary>
-        public string FileSize { get => this._fileSize; private set => this.Set(this.PropertyChangedHandler, ref this._fileSize, value); }
-
-        /// <summary>
-        /// Gets a value indicating whether IsCompletedControlsVisible.
-        /// </summary>
-        public bool IsCompletedControlsVisible { get => !this.IsQueuedControlsVisible; }
-
-        /// <summary>
+        /// Gets or sets the Operation
         /// Gets or sets a value indicating whether IsQueuedControlsVisible.
         /// </summary>
-        public bool IsQueuedControlsVisible
-        {
-            get => _isQueuedControlsVisible;
-            internal set
-            {
-                if (!this.Set(this.PropertyChangedHandler, ref _isQueuedControlsVisible, value))
-                {
-                    return;
-                }
-
-                this.OnPropertyChanged(nameof(this.IsCompletedControlsVisible));
-            }
-        }
-
         /// <summary>
-        /// Gets the Operation.
+        /// Gets the Operation...
         /// </summary>
-        public Operation Operation { get; private set; }
-
-        /// <summary>
-        /// Gets the PauseDownloadCommand.
-        /// </summary>
-        public ICommand PauseDownloadCommand { get; }
-
-        /// <summary>
-        /// Gets or sets the PauseText.
-        /// </summary>
-        public string PauseText { get => _pauseText; internal set => this.Set(this.PropertyChangedHandler, ref _pauseText, value); }
-
-        /// <summary>
-        /// Gets the PlayMediaCommand.
-        /// </summary>
-        public ICommand PlayMediaCommand { get; }
-
-        /// <summary>
-        /// Gets the Progress.
-        /// </summary>
-        public int Progress { get => this._progress; private set => this.Set(this.PropertyChangedHandler, ref this._progress, value); }
+        public Operation Operation { get; protected set; }
 
         /// <summary>
         /// Gets the ProgressText.
@@ -169,29 +108,9 @@
         }
 
         /// <summary>
-        /// Gets the ShowMediaInFolderCommand.
-        /// </summary>
-        public ICommand ShowMediaInFolderCommand { get; }
-
-        /// <summary>
-        /// Gets or sets the Status.
-        /// </summary>
-        public string Status { get => this._status; set => this.Set(this.PropertyChangedHandler, ref this._status, value); }
-
-        /// <summary>
         /// Gets the Stopwatch.
         /// </summary>
         public Stopwatch Stopwatch { get; private set; }
-
-        /// <summary>
-        /// Gets the Title.
-        /// </summary>
-        public string Title { get => this._title; private set => this.Set(this.PropertyChangedHandler, ref this._title, value); }
-
-        /// <summary>
-        /// Gets the Url.
-        /// </summary>
-        public string Url { get => this._url; private set => this.Set(this.PropertyChangedHandler, ref this._url, value); }
 
         /// <summary>
         /// Gets or sets the CancelDownloadAction.
@@ -220,8 +139,10 @@
         /// <summary>
         /// The Dispose.
         /// </summary>
-        public void Dispose()
+        /// <param name="disposing">The disposing<see cref="bool"/>.</param>
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             if (this.Operation.CanStop())
             {
                 this.Operation.Stop();
@@ -230,17 +151,6 @@
             this.Operation.Dispose();
             this.CancelDownloadAction = null;
             this.PauseDownloadAction = null;
-        }
-
-        /// <summary>
-        /// The Equals.
-        /// </summary>
-        /// <param name="other">The other<see cref="OperationModel"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public bool Equals(OperationModel other)
-        {
-            var isEqual = other != null && this.Operation.Output == other.Operation.Output;
-            return isEqual;
         }
 
         /// <summary>
@@ -253,11 +163,11 @@
             this.Stopwatch?.Stop();
             this.Stopwatch = null;
 
-            if (File.Exists(this.Operation.Output))
+            if (File.Exists(this.OutputPath))
             {
-                this.FileSize = string.Format(new ByteFormatProvider(), "{0:fs}", this.Operation.Output);
+                this.FileSize = string.Format(new ByteFormatProvider(), "{0:fs}", this.OutputPath);
             }
-            else if (Directory.Exists(this.Operation.Output))
+            else if (Directory.Exists(this.OutputPath))
             {
                 /* Get total file size of all affected files
                  *
@@ -332,6 +242,10 @@
                 case nameof(Operation.Title):
                     this.Title = this.Operation.Title;
                     break;
+
+                case nameof(Operation.Thumbnail):
+                    this.Thumbnail = this.Operation.Thumbnail;
+                    break;
             }
         }
 
@@ -384,25 +298,6 @@
 
                     break;
             }
-        }
-
-        /// <summary>
-        /// The OnPlayMedia.
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnPlayMedia(object obj)
-        {
-            Process.Start(this.Operation.Output);
-        }
-
-        /// <summary>
-        /// The OnShowMediaInFolder.
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnShowMediaInFolder(object obj)
-        {
-            var path = Path.GetDirectoryName(this.Operation.Output);
-            Process.Start(path);
         }
 
         /// <summary>

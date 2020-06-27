@@ -5,6 +5,7 @@
     using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Handlers;
     using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Helpers;
 
@@ -179,6 +180,7 @@
 
                 settings.PersistSessionCookies = true;
                 settings.SetOffScreenRenderingBestPerformanceArgs();
+                settings.CefCommandLineArgs.Remove("disable-gpu-compositing");
                 CefConfig.Init(settings, browserProcessHandler: browserProcessHandler);
             }
         }

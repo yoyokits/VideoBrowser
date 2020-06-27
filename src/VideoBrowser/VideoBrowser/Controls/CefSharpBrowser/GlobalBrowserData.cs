@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using VideoBrowser.Controls.CefSharpBrowser.Handlers;
     using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.ViewModels;
 
@@ -11,7 +12,7 @@
     /// Defines the <see cref="GlobalBrowserData" />.
     /// All singleton instances are saved here.
     /// </summary>
-    public class GlobalBrowserData
+    public class GlobalBrowserData : IDisposable
     {
         #region Constructors
 
@@ -27,6 +28,8 @@
             {
                 this.BrowserSettings = settings;
             }
+
+            this.DownloadHandler = new DownloadHandler();
         }
 
         #endregion Constructors
@@ -44,6 +47,11 @@
         public BrowserSettings BrowserSettings { get; } = new BrowserSettings();
 
         /// <summary>
+        /// Gets the DownloadHandler.
+        /// </summary>
+        public DownloadHandler DownloadHandler { get; }
+
+        /// <summary>
         /// Gets the InterTabClient.
         /// </summary>
         public InterTabClient InterTabClient { get; }
@@ -58,9 +66,22 @@
         /// </summary>
         internal bool IsSettingsLoaded { get; set; }
 
+        /// <summary>
+        /// Gets the WindowViewModels.
+        /// </summary>
+        internal IList<MainWindowViewModel> WindowViewModels { get; } = new List<MainWindowViewModel>();
+
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The Dispose.
+        /// </summary>
+        public void Dispose()
+        {
+            this.DownloadHandler.Dispose();
+        }
 
         /// <summary>
         /// The GetAddInButton.
