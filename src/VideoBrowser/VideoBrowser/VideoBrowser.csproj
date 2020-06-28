@@ -199,7 +199,7 @@
     <Compile Include="Controls\CefSharpBrowser\Helpers\ProxyConfig.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\BookmarkModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\TabSettingsModel.cs" />
-    <Compile Include="Controls\CefSharpBrowser\BrowserSettings.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Models\BrowserSettings.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
@@ -259,7 +259,7 @@
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
     <Compile Include="Models\AboutButton.cs" />
-    <Compile Include="Models\DownloadProcessModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Models\DownloadProcessModel.cs" />
     <Compile Include="Models\DownloadQueueButton.cs" />
     <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
@@ -272,7 +272,7 @@
     <Compile Include="ViewModels\DownloadFlyoutViewModel.cs" />
     <Compile Include="ViewModels\DownloadQueueViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UrlEditorViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
@@ -288,7 +288,7 @@
     <Compile Include="Views\DownloadQueueView.xaml.cs">
       <DependentUpon>DownloadQueueView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UrlEditorView.xaml.cs">
@@ -347,7 +347,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
