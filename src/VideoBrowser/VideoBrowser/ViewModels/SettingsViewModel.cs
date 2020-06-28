@@ -6,9 +6,9 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Extensions;
-    using VideoBrowser.Models;
-    using VideoBrowser.Properties;
     using VideoBrowser.Resources;
 
     /// <summary>
@@ -30,13 +30,24 @@
         internal SettingsViewModel()
         {
             this.GetFolderCommand = new RelayCommand(this.OnGetFolder);
-            var settingFolder = Settings.Default.DownloadFolder;
-            this.OutputFolder = string.IsNullOrEmpty(settingFolder) || !Directory.Exists(settingFolder) ? AppEnvironment.UserVideoFolder : settingFolder;
+            var settings = BrowserSettingsHelper.Load();
+            if (settings != null)
+            {
+                this.BrowserSettings = settings;
+            }
+
+            var outputFolder = this.BrowserSettings.OutputFolder;
+            this.OutputFolder = string.IsNullOrEmpty(outputFolder) || !Directory.Exists(outputFolder) ? AppEnvironment.UserVideoFolder : outputFolder;
         }
 
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the BrowserSettings.
+        /// </summary>
+        public BrowserSettings BrowserSettings { get; } = new BrowserSettings();
 
         /// <summary>
         /// Gets the GetFolderCommand.
@@ -59,7 +70,7 @@
                 this.Set(this.PropertyChangedHandler, ref this._outputFolder, value);
                 if (Directory.Exists(this.OutputFolder))
                 {
-                    Settings.Default.DownloadFolder = this.OutputFolder;
+                    this.BrowserSettings.OutputFolder = this.OutputFolder;
                 }
             }
         }
@@ -68,11 +79,6 @@
         /// Gets or sets the OutputType.
         /// </summary>
         public string OutputType { get; set; }
-
-        /// <summary>
-        /// Gets the GlobalData.
-        /// </summary>
-        private GlobalData GlobalData { get; }
 
         #endregion Properties
 

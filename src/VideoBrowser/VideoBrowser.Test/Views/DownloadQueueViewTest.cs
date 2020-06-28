@@ -4,6 +4,7 @@
     using System;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Core;
     using VideoBrowser.Models;
@@ -26,8 +27,8 @@
         [TestMethod, ManualTest]
         public void Show_DownloadQueueView()
         {
-            var globalData = new GlobalData();
-            var viewModel = new DownloadQueueViewModel(globalData.DownloadItemModels);
+            var globalBrowserData = new GlobalBrowserData();
+            var viewModel = new DownloadQueueViewModel(globalBrowserData.DownloadItemModels);
             this.CreateDummyOperations(viewModel.DownloadItemModels, viewModel.OnPauseDownloadCalled);
             var view = new DownloadQueueView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view);

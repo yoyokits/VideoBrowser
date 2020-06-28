@@ -1,7 +1,7 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
     using System.Windows;
-    using VideoBrowser.Models;
+    using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
     using VideoBrowserTestApp.Helpers;
@@ -30,8 +30,8 @@
         /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
         protected override void Test(Window testWindow)
         {
-            var globalData = new GlobalData();
-            var viewModel = new DownloadQueueViewModel(globalData.DownloadItemModels);
+            var globalBrowserData = new GlobalBrowserData();
+            var viewModel = new DownloadQueueViewModel(globalBrowserData.DownloadItemModels);
             var view = new DownloadQueueView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view, testWindow);
         }

@@ -24,15 +24,14 @@
         /// </summary>
         /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
         /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
-        public MainWindowViewModel(GlobalData globalData, GlobalBrowserData globalBrowserData)
+        public MainWindowViewModel(GlobalBrowserData globalBrowserData)
         {
-            this.GlobalData = globalData;
             this.ClosingCommand = new RelayCommand(this.OnClosing);
             this.LoadedCommand = new RelayCommand(this.OnLoaded);
             this.PressEscCommand = new RelayCommand(this.OnPressEsc);
             this.PressF2Command = new RelayCommand(this.OnPressF2);
             this.About = new AboutViewModel();
-            var downloadItemModels = this.GlobalData.DownloadItemModels;
+            var downloadItemModels = globalBrowserData.DownloadItemModels;
             this.DownloadQueueViewModel = new DownloadQueueViewModel(downloadItemModels) { ShowMessageAsync = this.ShowMessageAsync };
             this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(downloadItemModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
             this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(globalBrowserData)
@@ -76,11 +75,6 @@
         /// Gets the GlobalBrowserData.
         /// </summary>
         public GlobalBrowserData GlobalBrowserData => this.WebBrowserTabControlViewModel.GlobalBrowserData;
-
-        /// <summary>
-        /// Gets the GlobalData.
-        /// </summary>
-        public GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets the LoadedCommand.

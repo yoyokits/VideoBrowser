@@ -261,7 +261,6 @@
     <Compile Include="Models\AboutButton.cs" />
     <Compile Include="Models\DownloadProcessModel.cs" />
     <Compile Include="Models\DownloadQueueButton.cs" />
-    <Compile Include="Models\GlobalData.cs" />
     <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
     <Compile Include="Models\SettingsButton.cs" />

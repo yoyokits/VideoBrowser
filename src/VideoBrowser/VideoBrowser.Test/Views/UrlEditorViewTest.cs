@@ -3,7 +3,6 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Windows.Controls;
     using VideoBrowser.Core;
-    using VideoBrowser.Models;
     using VideoBrowser.Test.Common;
     using VideoBrowser.Test.TestHelpers;
     using VideoBrowser.ViewModels;
@@ -23,7 +22,6 @@
         [TestMethod, ManualTest]
         public void Show_UrlEditorView()
         {
-            var globalData = new GlobalData();
             var urlReader = new UrlReader();
             var settings = new SettingsViewModel();
             var viewModelA = new UrlEditorViewModel(urlReader, settings) { IsVisible = true, FileName = "Youtube Video File Name", FileSize = "5 MB", Duration = "00:02:45" };

@@ -19,11 +19,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        public MainWindow() : this(new GlobalData(), new GlobalBrowserData())
+        public MainWindow() : this(new GlobalBrowserData())
         {
             // This constructor is called once per application instance.
             var addIns = this.GlobalBrowserData.AddInButtons;
-            addIns.Add(new DownloadQueueButton(this.GlobalData.DownloadItemModels));
+            addIns.Add(new DownloadQueueButton(this.GlobalBrowserData.DownloadItemModels));
             addIns.Add(new OpenOutputFolderButton(this.GlobalBrowserData.Settings));
             addIns.Add(new SettingsButton(this.GlobalBrowserData.Settings));
             addIns.Add(new AboutButton());
@@ -43,15 +43,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        /// <param name="globalData">The globalData<see cref="GlobalData"/>.</param>
         /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
-        internal MainWindow(GlobalData globalData, GlobalBrowserData globalBrowserData)
+        internal MainWindow(GlobalBrowserData globalBrowserData)
         {
             // This constructor is intended to create new window after dragging the browser tab.
             Logger.Info($"Start {nameof(VideoBrowser)}");
-            this.GlobalData = globalData;
             this.GlobalBrowserData = globalBrowserData;
-            this.MainWindowViewModel = new MainWindowViewModel(globalData, globalBrowserData);
+            this.MainWindowViewModel = new MainWindowViewModel(globalBrowserData);
             this.MainWindowViewModel.CefWindowData.PropertyChanged += this.CefWindowData_PropertyChanged;
             this.GlobalBrowserData.WindowViewModels.Add(this.MainWindowViewModel);
             this.DataContext = this.MainWindowViewModel;
@@ -66,11 +64,6 @@
         /// Gets the GlobalBrowserData.
         /// </summary>
         internal GlobalBrowserData GlobalBrowserData { get; }
-
-        /// <summary>
-        /// Gets the GlobalData.
-        /// </summary>
-        internal GlobalData GlobalData { get; }
 
         /// <summary>
         /// Gets or sets the LastWindowState.
@@ -124,8 +117,8 @@
         /// <returns>The <see cref="(Window, TabablzControl)"/>.</returns>
         private (Window, TabablzControl) CreateWindow()
         {
-            var viewModel = new MainWindowViewModel(this.GlobalData, this.GlobalBrowserData);
-            var window = new MainWindow(this.GlobalData, this.GlobalBrowserData) { DataContext = viewModel };
+            var viewModel = new MainWindowViewModel(this.GlobalBrowserData);
+            var window = new MainWindow(this.GlobalBrowserData) { DataContext = viewModel };
             var initialTabablzControl = window.WebBrowserTabControlView.InitialTabablzControl;
             return (window, initialTabablzControl);
         }

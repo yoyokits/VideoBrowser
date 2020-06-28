@@ -29,6 +29,11 @@
         public IList<BookmarkModel> BookmarkModels { get; set; }
 
         /// <summary>
+        /// Gets or sets the OutputFolder.
+        /// </summary>
+        public string OutputFolder { get; set; }
+
+        /// <summary>
         /// Gets or sets the SelectedTabSettingIndex.
         /// </summary>
         public int SelectedTabSettingIndex { get; set; }

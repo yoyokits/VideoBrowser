@@ -237,8 +237,9 @@
         {
             if (this.WebBrowser != null)
             {
-                this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
+                this.WebBrowser.DownloadHandler = this.GlobalBrowserData.DownloadHandler;
                 this.WebBrowser.MenuHandler = this.CefWindowData.CefContextMenuHandler;
+                this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
             }
         }
 
