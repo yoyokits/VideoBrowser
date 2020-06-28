@@ -1,7 +1,7 @@
 ﻿namespace VideoBrowser.Models
 {
-    using System.Diagnostics;
     using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Resources;
     using VideoBrowser.ViewModels;
@@ -43,7 +43,7 @@
         /// <param name="viewModel">The viewModel<see cref="WebBrowserTabControlViewModel"/>.</param>
         protected override void Execute(WebBrowserTabControlViewModel viewModel)
         {
-            Process.Start(this.SettingsViewModel.OutputFolder);
+            ProcessHelper.OpenFolder(this.SettingsViewModel.OutputFolder);
         }
 
         #endregion Methods

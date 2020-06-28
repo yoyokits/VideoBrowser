@@ -16,9 +16,13 @@
         /// </summary>
         /// <param name="URL">The URL<see cref="string"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        public static bool IsImageUrl(string URL)
+        public static bool IsImageUrl(this string URL)
         {
-            var req = (HttpWebRequest)HttpWebRequest.Create(URL);
+            if (!(HttpWebRequest.Create(URL) is HttpWebRequest req))
+            {
+                return false;
+            }
+
             req.Method = "HEAD";
             try
             {

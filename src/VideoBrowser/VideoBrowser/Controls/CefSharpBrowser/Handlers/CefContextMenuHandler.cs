@@ -104,7 +104,7 @@
 
             if (sourceUrlExist && (parameters.SourceUrl != parameters.PageUrl))
             {
-                if (UrlHelper.IsImageUrl(parameters.SourceUrl))
+                if (parameters.SourceUrl.IsImageUrl())
                 {
                     this.AddItem(model, OpenImageInNewTab.Id, OpenImageInNewTab.Text);
                 }

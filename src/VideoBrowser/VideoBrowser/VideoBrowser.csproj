@@ -173,6 +173,7 @@
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Converters\StringToImageConverter.cs" />
     <Compile Include="Controls\CefSharpBrowser\Handlers\DownloadHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\ApplicationIconHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserProcessHandler.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\InternetOpenType.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\InternetProxyInfo.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\ProcessHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\UrlHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\DownloadItemModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />

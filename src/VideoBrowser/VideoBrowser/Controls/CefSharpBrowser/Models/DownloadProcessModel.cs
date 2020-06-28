@@ -16,10 +16,11 @@
         /// Initializes a new instance of the <see cref="DownloadProcessModel"/> class.
         /// </summary>
         /// <param name="item">The item<see cref="DownloadItem"/>.</param>
-        public DownloadProcessModel(DownloadItem item)
+        internal DownloadProcessModel(DownloadItem item)
         {
-            this.CancelDownloadCommand = new RelayCommand(this.OnCancelDownload, nameof(this.CancelDownloadCommand));
             this.Initialize(item);
+            this.IsApplicationThumbnail = true;
+            this.CancelDownloadCommand = new RelayCommand(this.OnCancelDownload, nameof(this.CancelDownloadCommand));
         }
 
         #endregion Constructors
@@ -40,6 +41,7 @@
         /// </summary>
         internal void UpdateInfo(DownloadItem downloadItem)
         {
+            this.OutputPath = downloadItem.FullPath;
             this.Progress = downloadItem.PercentComplete;
             var speed = $"{downloadItem.CurrentSpeed.FormatFileSize()}/s";
             var percentComplete = $"{downloadItem.PercentComplete}%";
@@ -49,6 +51,8 @@
             {
                 this.IsQueuedControlsVisible = false;
             }
+
+            this.Thumbnail = this.OutputPath;
         }
 
         /// <summary>
@@ -57,8 +61,8 @@
         private void Initialize(DownloadItem downloadItem)
         {
             this.FileSize = FormatString.FormatFileSize(downloadItem.TotalBytes);
-            this.OutputPath = downloadItem.FullPath;
             this.Title = downloadItem.SuggestedFileName;
+            this.Url = downloadItem.OriginalUrl;
             this.UpdateInfo(downloadItem);
         }
 

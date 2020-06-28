@@ -72,7 +72,7 @@
         /// <param name="operation">The operation<see cref="Operation"/>.</param>
         public void Download(Operation operation)
         {
-            var operationModel = new OperationModel(operation) { PauseDownloadAction = OnPauseDownloadCalled, CancelDownloadAction = this.OnCancelDownloadCalled };
+            var operationModel = new OperationModel(operation) { PauseDownloadAction = this.OnPauseDownloadCalled, CancelDownloadAction = this.OnCancelDownloadCalled };
             var element = (DispatcherObject)this.OperationCollectionView;
             element.InvokeAsync(() =>
             {
@@ -103,7 +103,7 @@
         /// The OnPauseDownloadCalled.
         /// </summary>
         /// <param name="model">The model<see cref="DownloadItemModel"/>.</param>
-        internal static void OnPauseDownloadCalled(DownloadItemModel model)
+        internal void OnPauseDownloadCalled(DownloadItemModel model)
         {
             if (!(model is OperationModel operationModel))
             {

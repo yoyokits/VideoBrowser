@@ -1,10 +1,9 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser.Models
 {
     using System;
-    using System.Diagnostics;
-    using System.IO;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Extensions;
 
     /// <summary>
@@ -17,6 +16,8 @@
         private string _fileSize;
 
         private bool _isQueuedControlsVisible = true;
+
+        private string _outputPath;
 
         private string _pauseText = "Pause";
 
@@ -70,6 +71,11 @@
         public string FileSize { get => this._fileSize; protected set => this.Set(this.PropertyChangedHandler, ref this._fileSize, value); }
 
         /// <summary>
+        /// Gets or sets a value indicating whether IsApplicationThumbnail.
+        /// </summary>
+        public bool IsApplicationThumbnail { get; protected set; }
+
+        /// <summary>
         /// Gets a value indicating whether IsCompletedControlsVisible.
         /// </summary>
         public bool IsCompletedControlsVisible { get => !this.IsQueuedControlsVisible; }
@@ -94,7 +100,7 @@
         /// <summary>
         /// Gets or sets the OutputPath.
         /// </summary>
-        public string OutputPath { get; protected set; }
+        public string OutputPath { get => _outputPath; protected set => this.Set(this.PropertyChangedHandler, ref _outputPath, value); }
 
         /// <summary>
         /// Gets or sets the PauseDownloadCommand.
@@ -150,6 +156,17 @@
         }
 
         /// <summary>
+        /// The Equals.
+        /// </summary>
+        /// <param name="other">The other<see cref="DownloadItemModel"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public bool Equals(DownloadItemModel other)
+        {
+            var isEqual = other != null && this.OutputPath == other.OutputPath;
+            return isEqual;
+        }
+
+        /// <summary>
         /// The Dispose.
         /// </summary>
         /// <param name="disposing">The disposing<see cref="bool"/>.</param>
@@ -170,23 +187,12 @@
         }
 
         /// <summary>
-        /// The Equals.
-        /// </summary>
-        /// <param name="other">The other<see cref="DownloadItemModel"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public bool Equals(DownloadItemModel other)
-        {
-            var isEqual = other != null && this.OutputPath == other.OutputPath;
-            return isEqual;
-        }
-
-        /// <summary>
         /// The OnPlayMedia.
         /// </summary>
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnExecuteDownloaded(object obj)
         {
-            Process.Start(this.OutputPath);
+            ProcessHelper.Start(this.OutputPath);
         }
 
         /// <summary>
@@ -195,8 +201,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnShowDownloadedFolderCommand(object obj)
         {
-            var path = Path.GetDirectoryName(this.OutputPath);
-            Process.Start(path);
+            ProcessHelper.OpenFolder(this.OutputPath);
         }
 
         #endregion Methods

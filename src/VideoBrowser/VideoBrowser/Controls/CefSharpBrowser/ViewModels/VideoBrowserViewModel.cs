@@ -3,13 +3,12 @@
     using CefSharp;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Core;
     using VideoBrowser.Extensions;
-    using VideoBrowser.Helpers;
     using VideoBrowser.ViewModels;
 
     /// <summary>
@@ -282,7 +281,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnNavigateUrl(object obj)
         {
-            this.Url = UrlHelper.GetValidUrl(this.Url);
+            this.Url = VideoBrowser.Helpers.UrlHelper.GetValidUrl(this.Url);
             this.NavigateUrl = this.Url;
             this.CefWindowData.IsAirspaceVisible = false;
         }
@@ -293,7 +292,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnOpenOutputFolder(object obj)
         {
-            Process.Start(this.GlobalBrowserData.Settings.OutputFolder);
+            ProcessHelper.OpenFolder(this.GlobalBrowserData.Settings.OutputFolder);
         }
 
         /// <summary>

@@ -1,10 +1,9 @@
 ﻿namespace VideoBrowser.ViewModels
 {
-    using System.Diagnostics;
     using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
-    using VideoBrowser.Helpers;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Resources;
 
     /// <summary>
@@ -32,7 +31,7 @@
         /// <summary>
         /// Gets the AppIcon.
         /// </summary>
-        public ImageSource AppIcon { get; } = Properties.Resources.Icon.ToImageSource();
+        public ImageSource AppIcon { get; } = Helpers.ImageHelper.ToImageSource(Properties.Resources.Icon);
 
         /// <summary>
         /// Gets the ApplicationName.
@@ -84,7 +83,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnLinkedIn(object obj)
         {
-            Process.Start(@"https://www.linkedin.com/in/ynurcahyo/");
+            ProcessHelper.OpenUrl(@"https://www.linkedin.com/in/ynurcahyo/");
         }
 
         /// <summary>
@@ -93,7 +92,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnProjectUrlClicked(object obj)
         {
-            Process.Start(new ProcessStartInfo(this.ProjectUrl));
+            ProcessHelper.OpenUrl(this.ProjectUrl);
         }
 
         /// <summary>
@@ -102,7 +101,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnTwitter(object obj)
         {
-            Process.Start(@"https://twitter.com/NurcahyoYohanes");
+            ProcessHelper.OpenUrl(@"https://twitter.com/NurcahyoYohanes");
         }
 
         #endregion Methods

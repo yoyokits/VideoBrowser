@@ -16,16 +16,23 @@
     /// </summary>
     public static class ApplicationIconHelper
     {
-        private static readonly Dictionary<string, ImageSource> _smallIconCache = new Dictionary<string, ImageSource>();
+        #region Fields
+
         private static readonly Dictionary<string, ImageSource> _largeIconCache = new Dictionary<string, ImageSource>();
 
+        private static readonly Dictionary<string, ImageSource> _smallIconCache = new Dictionary<string, ImageSource>();
+
+        #endregion Fields
+
+        #region Methods
+
         /// <summary>
-        /// Get an icon for a given filename
+        /// Get an icon for a given filename.
         /// </summary>
-        /// <param name="fileName">any filename</param>
-        /// <param name="large">16x16 or 32x32 icon</param>
-        /// <returns>null if path is null, otherwise - an icon</returns>
-        public static ImageSource FindIconForFilename(string fileName, bool large)
+        /// <param name="fileName">any filename.</param>
+        /// <param name="large">16x16 or 32x32 icon.</param>
+        /// <returns>null if path is null, otherwise - an icon.</returns>
+        public static ImageSource FindIconForFilename(this string fileName, bool large)
         {
             var extension = Path.GetExtension(fileName);
             if (extension == null)
@@ -46,8 +53,10 @@
         }
 
         /// <summary>
-        /// http://stackoverflow.com/a/6580799/1943849
+        /// http://stackoverflow.com/a/6580799/1943849.
         /// </summary>
+        /// <param name="icon">The icon<see cref="Icon"/>.</param>
+        /// <returns>The <see cref="ImageSource"/>.</returns>
         private static ImageSource ToImageSource(this Icon icon)
         {
             var imageSource = Imaging.CreateBitmapSourceFromHIcon(
@@ -57,14 +66,15 @@
             return imageSource;
         }
 
+        #endregion Methods
+
         /// <summary>
         /// Provides static methods to read system icons for both folders and files.
         /// </summary>
-        /// <example>
-        /// <code>IconReader.GetFileIcon("c:\\general.xls");</code>
-        /// </example>
         private static class IconReader
         {
+            #region Enums
+
             /// <summary>
             /// Options to specify the size of icons to return.
             /// </summary>
@@ -81,13 +91,17 @@
                 Small = 1
             }
 
+            #endregion Enums
+
+            #region Methods
+
             /// <summary>
             /// Returns an icon for a given file - indicated by the name parameter.
             /// </summary>
             /// <param name="name">Pathname for file.</param>
-            /// <param name="size">Large or small</param>
-            /// <param name="linkOverlay">Whether to include the link icon</param>
-            /// <returns>System.Drawing.Icon</returns>
+            /// <param name="size">Large or small.</param>
+            /// <param name="linkOverlay">Whether to include the link icon.</param>
+            /// <returns>System.Drawing.Icon.</returns>
             public static Icon GetFileIcon(string name, IconSize size, bool linkOverlay)
             {
                 var shfi = new Shell32.Shfileinfo();
@@ -117,6 +131,8 @@
                 User32.DestroyIcon(shfi.hIcon);     // Cleanup
                 return icon;
             }
+
+            #endregion Methods
         }
 
         /// <summary>
@@ -125,30 +141,35 @@
         /// </summary>
         private static class Shell32
         {
-            private const int MaxPath = 256;
+            #region Constants
 
-            [StructLayout(LayoutKind.Sequential)]
-            public struct Shfileinfo
-            {
-                private const int Namesize = 80;
-                public readonly IntPtr hIcon;
-                private readonly int iIcon;
-                private readonly uint dwAttributes;
-
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)]
-                private readonly string szDisplayName;
-
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = Namesize)]
-                private readonly string szTypeName;
-            };
-
-            public const uint ShgfiIcon = 0x000000100;     // get icon
-            public const uint ShgfiLinkoverlay = 0x000008000;     // put a link overlay on icon
-            public const uint ShgfiLargeicon = 0x000000000;     // get large icon
-            public const uint ShgfiSmallicon = 0x000000001;     // get small icon
-            public const uint ShgfiUsefileattributes = 0x000000010;     // use passed dwFileAttribute
             public const uint FileAttributeNormal = 0x00000080;
 
+            public const uint ShgfiIcon = 0x000000100;// get icon
+
+            public const uint ShgfiLargeicon = 0x000000000;// get large icon
+
+            public const uint ShgfiLinkoverlay = 0x000008000;// put a link overlay on icon
+
+            public const uint ShgfiSmallicon = 0x000000001;// get small icon
+
+            public const uint ShgfiUsefileattributes = 0x000000010;// use passed dwFileAttribute
+
+            private const int MaxPath = 256;
+
+            #endregion Constants
+
+            #region Methods
+
+            /// <summary>
+            /// The SHGetFileInfo.
+            /// </summary>
+            /// <param name="pszPath">The pszPath<see cref="string"/>.</param>
+            /// <param name="dwFileAttributes">The dwFileAttributes<see cref="uint"/>.</param>
+            /// <param name="psfi">The psfi<see cref="Shfileinfo"/>.</param>
+            /// <param name="cbFileInfo">The cbFileInfo<see cref="uint"/>.</param>
+            /// <param name="uFlags">The uFlags<see cref="uint"/>.</param>
+            /// <returns>The <see cref="IntPtr"/>.</returns>
             [DllImport("Shell32.dll")]
             public static extern IntPtr SHGetFileInfo(
                 string pszPath,
@@ -157,6 +178,39 @@
                 uint cbFileInfo,
                 uint uFlags
                 );
+
+            #endregion Methods
+
+            /// <summary>
+            /// Defines the <see cref="Shfileinfo" />.
+            /// </summary>
+            [StructLayout(LayoutKind.Sequential)]
+            public struct Shfileinfo
+            {
+                #region Constants
+
+                private const int Namesize = 80;
+
+                #endregion Constants
+
+                #region Fields
+
+                public readonly IntPtr hIcon;
+
+                private readonly uint dwAttributes;
+
+                private readonly int iIcon;
+
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)]
+                private readonly string szDisplayName;
+
+                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = Namesize)]
+                private readonly string szTypeName;
+
+                #endregion Fields
+            }
+
+;
         }
 
         /// <summary>
@@ -164,14 +218,18 @@
         /// </summary>
         private static class User32
         {
+            #region Methods
+
             /// <summary>
             /// Provides access to function required to delete handle. This method is used internally
             /// and is not required to be called separately.
             /// </summary>
             /// <param name="hIcon">Pointer to icon handle.</param>
-            /// <returns>N/A</returns>
+            /// <returns>N/A.</returns>
             [DllImport("User32.dll")]
             public static extern int DestroyIcon(IntPtr hIcon);
+
+            #endregion Methods
         }
     }
 }
