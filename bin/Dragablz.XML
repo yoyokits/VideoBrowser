@@ -37,14 +37,14 @@
         </member>
         <member name="M:Dragablz.Core.Extensions.GetActualLeft(System.Windows.Window)">
             <summary>
-            Returns the actual Left of the Window independently from the WindowState
+            Returns the actual Left of the Window independently from the LayoutWindowState
             </summary>
             <param name="window"></param>
             <returns></returns>
         </member>
         <member name="M:Dragablz.Core.Extensions.GetActualTop(System.Windows.Window)">
             <summary>
-            Returns the actual Top of the Window independently from the WindowState
+            Returns the actual Top of the Window independently from the LayoutWindowState
             </summary>
             <param name="window"></param>
             <returns></returns>
@@ -120,7 +120,7 @@
         <member name="T:Dragablz.Dockablz.FloatingItemSnapShot">
             <summary>
             experimentational.  might have to puish this back to mvvm only
-            </summary>    
+            </summary>
         </member>
         <member name="M:Dragablz.Dockablz.Layout.GetLoadedInstances">
             <summary>
@@ -236,8 +236,8 @@
         <member name="M:Dragablz.Dockablz.LayoutAccessor.Visit(System.Action{Dragablz.Dockablz.BranchAccessor},System.Action{Dragablz.TabablzControl},System.Action{System.Object})">
             <summary>
             Visits the content of the layout, according to its content type.  No more than one of the provided <see cref="T:System.Action"/>
-            callbacks will be called.  
-            </summary>        
+            callbacks will be called.
+            </summary>
         </member>
         <member name="M:Dragablz.Dockablz.LayoutAccessor.TabablzControls">
             <summary>
@@ -255,7 +255,7 @@
         <member name="M:Dragablz.Dockablz.BranchAccessor.Visit(Dragablz.Dockablz.BranchItem,System.Action{Dragablz.Dockablz.BranchAccessor},System.Action{Dragablz.TabablzControl},System.Action{System.Object})">
             <summary>
             Visits the content of the first or second side of a branch, according to its content type.  No more than one of the provided <see cref="T:System.Action"/>
-            callbacks will be called.  
+            callbacks will be called.
             </summary>
             <param name="childItem"></param>
             <param name="childBranchVisitor"></param>
@@ -280,7 +280,7 @@
         </member>
         <member name="T:Dragablz.DefaultInterLayoutClient">
             <summary>
-            Provides a simple implementation of <see cref="T:Dragablz.IInterLayoutClient"/>, but only really useful if 
+            Provides a simple implementation of <see cref="T:Dragablz.IInterLayoutClient"/>, but only really useful if
             <see cref="T:System.Windows.Controls.TabItem"/> instances are specified in XAML.  If you are binding via ItemsSource then
             you most likely want to create your own implementation of <see cref="T:Dragablz.IInterLayoutClient"/>.
             </summary>
@@ -335,7 +335,7 @@
             <summary>
             It is not necessary to use a <see cref="T:Dragablz.DragablzWindow"/> to gain tab dragging features.
             What this Window does is allow a quick way to remove the Window border, and support transparency whilst
-            dragging.  
+            dragging.
             </summary>
         </member>
         <member name="T:Dragablz.HeaderedItemViewModel">
@@ -410,12 +410,231 @@
             Display an item after the selected, or specified item.
             </summary>
         </member>
+        <member name="T:Dragablz.Savablz.BranchItemState`1">
+            <summary>
+            The item that is stored in a branch state (first or second)
+            </summary>
+            <typeparam name="TTabItem">The tab item type</typeparam>
+        </member>
+        <member name="M:Dragablz.Savablz.BranchItemState`1.#ctor(Dragablz.Savablz.BranchState{`0},Dragablz.Savablz.TabSetState{`0})">
+            <summary>
+            The generic constructor, used by the Json deserializer
+            </summary>
+            <param name="itemAsBranch">If this item is a branch, this parameter must contain the branch state (<c>null</c> otherwise)</param>
+            <param name="itemAsTabSet">If this item is a tab set, this parameter must contain the tab set state (<c>null</c> otherwise)</param>
+        </member>
+        <member name="P:Dragablz.Savablz.BranchItemState`1.ItemAsBranch">
+            <summary>
+            The branch, if this item is a branch, <c>null</c> otherwise
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.BranchItemState`1.ItemAsTabSet">
+            <summary>
+            The tab set, if this item is a tab set, <c>null</c> otherwise
+            </summary>
+        </member>
+        <member name="T:Dragablz.Savablz.BranchState`1">
+            <summary>
+            The state of a layout branching
+            </summary>
+            <typeparam name="TTabModel">The type of the tab content model</typeparam>
+        </member>
+        <member name="M:Dragablz.Savablz.BranchState`1.#ctor(Dragablz.Savablz.BranchItemState{`0},Dragablz.Savablz.BranchItemState{`0},System.Windows.Controls.Orientation,System.Double)">
+            <summary>
+            The constructor
+            </summary>
+            <param name="firstChild">The first child</param>
+            <param name="secondChild">The second child</param>
+            <param name="orientation">The split orientation</param>
+            <param name="ratio">The split ratio</param>
+        </member>
+        <member name="P:Dragablz.Savablz.BranchState`1.FirstChild">
+            <summary>
+            The first branch
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.BranchState`1.SecondChild">
+            <summary>
+            The second branch
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.BranchState`1.Orientation">
+            <summary>
+            The split orientation
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.BranchState`1.Ratio">
+            <summary>
+            The split ratio
+            </summary>
+        </member>
+        <member name="T:Dragablz.Savablz.TabSetState`1">
+            <summary>
+            Represents the state of a TabSet, in a serializable way
+            </summary>
+            <typeparam name="TTabModel">The type of the tab content model</typeparam>
+        </member>
+        <member name="M:Dragablz.Savablz.TabSetState`1.#ctor(System.Nullable{System.Int32},System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            The constructor
+            </summary>
+            <param name="selectedTabItemIndex">The index of the tab item that is currently selected in the TabSet</param>
+            <param name="tabItems">The tab items</param>
+        </member>
+        <member name="P:Dragablz.Savablz.TabSetState`1.SelectedTabItemIndex">
+            <summary>
+            The tab item that is currently selected in the TabSet
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.TabSetState`1.TabItems">
+            <summary>
+            The tab items
+            </summary>
+        </member>
+        <member name="T:Dragablz.Savablz.LayoutWindowState`1">
+            <summary>
+            Represents the state of a window
+            </summary>
+            <typeparam name="TTabModel">The type of the tab content model</typeparam>
+        </member>
+        <member name="M:Dragablz.Savablz.LayoutWindowState`1.#ctor(System.Double,System.Double,System.Double,System.Double,System.Windows.WindowState,Dragablz.Savablz.BranchItemState{`0})">
+            <summary>
+            The constructor
+            </summary>
+            <param name="x">The X position of the window</param>
+            <param name="y">The Y position of the window</param>
+            <param name="width">The window width</param>
+            <param name="height">The window height</param>
+            <param name="windowState">The window state</param>
+            <param name="child">The root of this layout</param>
+        </member>
+        <member name="P:Dragablz.Savablz.LayoutWindowState`1.X">
+            <summary>
+            The window's X position
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.LayoutWindowState`1.Y">
+            <summary>
+            The window's Y position
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.LayoutWindowState`1.Width">
+            <summary>
+            The window's width
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.LayoutWindowState`1.Height">
+            <summary>
+            The window's height
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.LayoutWindowState`1.WindowState">
+            <summary>
+            The window state (maximized, restored, minimize)
+            </summary>
+        </member>
+        <member name="P:Dragablz.Savablz.LayoutWindowState`1.Child">
+            <summary>
+            The root of this layout
+            </summary>
+        </member>
+        <member name="T:Dragablz.Savablz.WindowsStateSaver">
+            <summary>
+            Saves/restore the state of the windows
+            </summary>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.GetWindowsState``2(System.Func{``1,``0})">
+            <summary>
+            Gets the state of all windows in the app
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model, currently displayed in the app.</typeparam>
+            <param name="tabContentModelConverter">The converter that transforms tab view models to models</param>
+            <returns>The state of all windows</returns>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.GetLayoutState``2(Dragablz.Dockablz.Layout,System.Func{``1,``0})">
+            <summary>
+            Gets the state of a single window
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model, currently displayed in the app.</typeparam>
+            <param name="layout">The layout to be inspected</param>
+            <param name="tabContentModelConverter">The converter that transforms tab view models to models</param>
+            <returns>The state of the specified window</returns>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.GetBranchState``2(Dragablz.Dockablz.BranchAccessor,System.Func{``1,``0})">
+            <summary>
+            Gets the state of a branch
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model, currently displayed in the app.</typeparam>
+            <param name="branchVisitor">The branch to be inspected</param>
+            <param name="tabContentModelConverter">The converter that transforms tab view models to models</param>
+            <returns>The read state of the branch</returns>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.GetTabSetState``2(Dragablz.TabablzControl,System.Func{``1,``0})">
+            <summary>
+            Gets the state of a TabablzControl so that it can be serialized
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model, currently displayed in the app.</typeparam>
+            <param name="tabablzControl">The control to be </param>
+            <param name="tabContentModelConverter">The converter that transforms tab view models to models</param>
+            <returns>The state of the tab set</returns>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.RestoreWindowsState``2(Dragablz.TabablzControl,Dragablz.Savablz.LayoutWindowState{``0}[],System.Func{``0,``1})">
+            <summary>
+            Restors the state of all windows
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model to be displayed in the app.</typeparam>
+            <param name="windowInitialTabablzControl">The initial tabablz control that will be used for restore</param>
+            <param name="layoutWindowsState">The state of the windows</param>
+            <param name="viewModelFactory">The function that creates the view model based on a model</param>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.RestoreTabSetState``2(Dragablz.TabablzControl,Dragablz.Savablz.TabSetState{``0},System.Func{``0,``1})">
+            <summary>
+            Restores the state of the tabSet
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model to be displayed in the app.</typeparam>
+            <param name="tabablzControl">The control in which to restore the items</param>
+            <param name="tabSetState">The state of the tab set to be restored</param>
+            <param name="viewModelFactory">The function that creates the view model based on a model</param>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.RestoreBranchState``2(Dragablz.TabablzControl,Dragablz.Savablz.BranchState{``0},System.Func{``0,``1})">
+            <summary>
+            Restores the state of the branch
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model to be displayed in the app.</typeparam>
+            <param name="tabablzControl">The control in which to restore the items</param>
+            <param name="branchState">The state of the branch to be restored</param>
+            <param name="viewModelFactory">The function that creates the view model based on a model</param>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.RestoreBranchItemState``2(Dragablz.TabablzControl,Dragablz.Savablz.BranchItemState{``0},System.Func{``0,``1})">
+            <summary>
+            Restores the state of a branch item
+            </summary>
+            <typeparam name="TTabModel">The type of tab model</typeparam>
+            <typeparam name="TTabViewModel">The type of tab view model to be displayed in the app.</typeparam>
+            <param name="tabablzControl">The control in which to restore the items</param>
+            <param name="branchItemState">The state of the branch item to be restored</param>
+            <param name="viewModelFactory">The function that creates the view model based on a model</param>
+        </member>
+        <member name="M:Dragablz.Savablz.WindowsStateSaver.CopyTabablzControl(Dragablz.TabablzControl)">
+            <summary>
+            Creates a new TabablzControl based on the specified control
+            </summary>
+            <param name="tabablzControl">The control to copy</param>
+            <returns>The created control</returns>
+        </member>
         <member name="T:Dragablz.PositionMonitor">
             <summary>
-            Consumers can provide a position monitor to receive updates regarding the location of an item.    
+            Consumers can provide a position monitor to receive updates regarding the location of an item.
             </summary>
             <remarks>
-            A <see cref="T:Dragablz.PositionMonitor"/> can be used to listen to  changes 
+            A <see cref="T:Dragablz.PositionMonitor"/> can be used to listen to  changes
             instead of routed events, which can be easier in a MVVM scenario.
             </remarks>
         </member>
@@ -454,7 +673,7 @@
         </member>
         <member name="T:Dragablz.TabablzControl">
             <summary>
-            Extended tab control which supports tab repositioning, and drag and drop.  Also 
+            Extended tab control which supports tab repositioning, and drag and drop.  Also
             uses the common WPF technique for pesisting the visual tree across tabs.
             </summary>
         </member>
@@ -506,7 +725,7 @@
             </summary>
             <remarks>
             Due to the organisable nature of the control, the order of items may not reflect the order in the source collection.  This method
-            will add items to the source collection, managing their initial appearance on screen at the same time. 
+            will add items to the source collection, managing their initial appearance on screen at the same time.
             If you are using a <see cref="P:Dragablz.InterTabController.InterTabClient"/> this will be used to add the item into the source collection.
             </remarks>
             <param name="item">New item to add.</param>
@@ -526,14 +745,14 @@
         </member>
         <member name="P:Dragablz.TabablzControl.ShowDefaultCloseButton">
             <summary>
-            Indicates whether a default close button should be displayed.  If manually templating the tab header content the close command 
+            Indicates whether a default close button should be displayed.  If manually templating the tab header content the close command
             can be called by executing the <see cref="F:Dragablz.TabablzControl.CloseItemCommand"/> command (typically via a <see cref="T:System.Windows.Controls.Button"/>).
             </summary>
         </member>
         <member name="P:Dragablz.TabablzControl.ShowDefaultAddButton">
             <summary>
             Indicates whether a default add button should be displayed.  Alternately an add button
-            could be added in <see cref="P:Dragablz.TabablzControl.HeaderPrefixContent"/> or <see cref="P:Dragablz.TabablzControl.HeaderSuffixContent"/>, utilising 
+            could be added in <see cref="P:Dragablz.TabablzControl.HeaderPrefixContent"/> or <see cref="P:Dragablz.TabablzControl.HeaderSuffixContent"/>, utilising
             <see cref="F:Dragablz.TabablzControl.AddItemCommand"/>.
             </summary>
         </member>
@@ -632,14 +851,14 @@
         </member>
         <member name="F:Dragablz.TabablzControl.IsDraggingWindowProperty">
             <summary>
-            Readonly dependency property which indicates whether the owning <see cref="T:System.Windows.Window"/> 
-            is currently dragged 
+            Readonly dependency property which indicates whether the owning <see cref="T:System.Windows.Window"/>
+            is currently dragged
             </summary>
         </member>
         <member name="P:Dragablz.TabablzControl.IsDraggingWindow">
             <summary>
-            Readonly dependency property which indicates whether the owning <see cref="T:System.Windows.Window"/> 
-            is currently dragged 
+            Readonly dependency property which indicates whether the owning <see cref="T:System.Windows.Window"/>
+            is currently dragged
             </summary>
         </member>
         <member name="F:Dragablz.TabablzControl.IsDraggingWindowChangedEvent">
@@ -751,7 +970,7 @@
         </member>
         <member name="M:Dragablz.TabablzHeaderSizeConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
             <summary>
-            The first value should be the total size available size, typically the parent control size.  
+            The first value should be the total size available size, typically the parent control size.
             The second value should be from <see cref="F:Dragablz.DragablzItemsControl.ItemsPresenterWidthProperty"/> or (height equivalent)
             All additional values should be siblings sizes (width or height) which will affect (reduce) the available size.
             </summary>
@@ -802,39 +1021,39 @@
         </member>
         <member name="F:Dragablz.Themes.Ripple.RecognizesAccessKeyProperty">
             <summary>
-              The DependencyProperty for the RecognizesAccessKey property. 
-              Default Value: false 
-            </summary> 
+              The DependencyProperty for the RecognizesAccessKey property.
+              Default Value: false
+            </summary>
         </member>
         <member name="P:Dragablz.Themes.Ripple.RecognizesAccessKey">
-            <summary> 
+            <summary>
               Determine if Ripple should use AccessText in its style
-            </summary> 
+            </summary>
         </member>
         <member name="F:Dragablz.Themes.RippleAssist.IsCenteredProperty">
             <summary>
-            Set to <c>true</c> to cause the ripple to originate from the centre of the 
-            content.  Otherwise the effect will originate from the mouse down position.        
+            Set to <c>true</c> to cause the ripple to originate from the centre of the
+            content.  Otherwise the effect will originate from the mouse down position.
             </summary>
         </member>
         <member name="M:Dragablz.Themes.RippleAssist.SetIsCentered(System.Windows.DependencyObject,System.Boolean)">
             <summary>
-            Set to <c>true</c> to cause the ripple to originate from the centre of the 
-            content.  Otherwise the effect will originate from the mouse down position.        
+            Set to <c>true</c> to cause the ripple to originate from the centre of the
+            content.  Otherwise the effect will originate from the mouse down position.
             </summary>
             <param name="element"></param>
             <param name="value"></param>
         </member>
         <member name="M:Dragablz.Themes.RippleAssist.GetIsCentered(System.Windows.DependencyObject)">
             <summary>
-            Set to <c>true</c> to cause the ripple to originate from the centre of the 
-            content.  Otherwise the effect will originate from the mouse down position.        
+            Set to <c>true</c> to cause the ripple to originate from the centre of the
+            content.  Otherwise the effect will originate from the mouse down position.
             </summary>
-            <param name="element"></param>        
+            <param name="element"></param>
         </member>
         <member name="T:Dragablz.DragablzItemsControl">
             <summary>
-            Items control which typically uses a canvas and 
+            Items control which typically uses a canvas and
             </summary>
         </member>
         <member name="M:Dragablz.DragablzItemsControl.AddToSource(System.Object,Dragablz.AddLocationHint)">

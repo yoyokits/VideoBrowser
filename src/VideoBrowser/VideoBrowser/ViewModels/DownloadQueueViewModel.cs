@@ -78,7 +78,7 @@
             {
                 if (!this.DownloadItemModels.Contains(operationModel))
                 {
-                    this.DownloadItemModels.Add(operationModel);
+                    this.DownloadItemModels.Insert(0, operationModel);
                     DownloadQueueHandler.Add(operation);
                 }
                 else

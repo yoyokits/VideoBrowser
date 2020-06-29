@@ -10,7 +10,6 @@
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Helpers;
-    using VideoBrowser.Models;
 
     /// <summary>
     /// Defines the <see cref="DownloadHandler" />.
@@ -23,7 +22,7 @@
         /// Initializes a new instance of the <see cref="DownloadHandler"/> class.
         /// </summary>
         /// <param name="downloadItemModels">The downloadItemModels<see cref="ICollection{DownloadItemModel}"/>.</param>
-        public DownloadHandler(ICollection<DownloadItemModel> downloadItemModels)
+        public DownloadHandler(IList<DownloadItemModel> downloadItemModels)
         {
             this.DownloadItemModels = downloadItemModels;
             this.DownloadItemDict = new ConcurrentDictionary<int, DownloadProcessModel>();
@@ -46,7 +45,7 @@
         /// <summary>
         /// Gets the DownloadItemModels.
         /// </summary>
-        public ICollection<DownloadItemModel> DownloadItemModels { get; }
+        public IList<DownloadItemModel> DownloadItemModels { get; }
 
         /// <summary>
         /// Gets or sets the DownloadPath.
@@ -132,7 +131,7 @@
                         this.DownloadPath = Path.GetDirectoryName(filePath);
                         var model = new DownloadProcessModel(downloadItem);
                         this.DownloadItemDict.Add(downloadItem.Id, model);
-                        this.DownloadItemModels.Add(model);
+                        this.DownloadItemModels.Insert(0, model);
                         callback.Continue(filePath, false);
                     }
                 });

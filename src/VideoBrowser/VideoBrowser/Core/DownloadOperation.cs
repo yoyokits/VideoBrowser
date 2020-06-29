@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.IO;
     using System.Text.RegularExpressions;
     using System.Threading;
@@ -184,7 +183,7 @@
         {
             try
             {
-                Process.Start(this.Output);
+                Controls.CefSharpBrowser.Helpers.ProcessHelper.Start(this.Output);
             }
             catch
             {
@@ -202,7 +201,7 @@
         {
             try
             {
-                Process.Start(Path.GetDirectoryName(this.Output));
+                Controls.CefSharpBrowser.Helpers.ProcessHelper.OpenFolder(this.Output);
             }
             catch
             {

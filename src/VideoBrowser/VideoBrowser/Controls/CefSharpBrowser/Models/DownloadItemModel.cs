@@ -10,7 +10,7 @@
     /// <summary>
     /// Defines the <see cref="DownloadItemModel" />.
     /// </summary>
-    public class DownloadItemModel : NotifyPropertyChanged, IDisposable
+    public class DownloadItemModel : NotifyPropertyChanged, IEquatable<DownloadItemModel>, IDisposable
     {
         #region Fields
 
@@ -183,6 +183,26 @@
         {
             var isEqual = other != null && this.OutputPath == other.OutputPath;
             return isEqual;
+        }
+
+        /// <summary>
+        /// The Equals.
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as DownloadItemModel);
+        }
+
+        /// <summary>
+        /// The GetHashCode.
+        /// </summary>
+        /// <returns>The <see cref="int"/>.</returns>
+        public override int GetHashCode()
+        {
+            var hash = this.OutputPath == null ? string.Empty.GetHashCode() : this.OutputPath.GetHashCode();
+            return hash;
         }
 
         /// <summary>

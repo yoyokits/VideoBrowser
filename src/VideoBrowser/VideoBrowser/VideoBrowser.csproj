@@ -76,11 +76,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -388,6 +387,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="key.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -458,38 +458,11 @@
     <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCore.css" />
     <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCoreDefault.css" />
     <Resource Include="Controls\CefSharpBrowser\Resources\assets\images\beach-2089936_1920.jpg" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\application.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\jquery.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushCSharp.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushJScript.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shCore.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingApiCustomObjectNameTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestsAsyncTask.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestSingle.html" />
     <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.css" />
-    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\CdmSupportTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\CssAnimation.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\DragDropCursorsTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\DraggableRegionTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\ExceptionTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\extension.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\FramedWebGLTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\Home.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\JavascriptCallbackTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\LegacyBindingTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\MultiBindingTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\PopupTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\PostMessageTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\Recaptcha.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\ResponseFilterTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\SchemeTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\ScriptedMethodsTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\TooltipTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\UnicodeExampleGreaterThan32kb.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\UnocodeExampleEqualTo32kb.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\CefSharpBrowser\Resources\assets\js\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

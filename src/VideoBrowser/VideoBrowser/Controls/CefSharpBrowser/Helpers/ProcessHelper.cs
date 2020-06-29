@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Defines the <see cref="ProcessHelper" />.
@@ -17,7 +18,7 @@
         public static void OpenFolder(string filePath)
         {
             var path = Path.GetDirectoryName(filePath);
-            Process.Start(path);
+            Start(path);
         }
 
         /// <summary>
@@ -26,7 +27,7 @@
         /// <param name="url">The url<see cref="string"/>.</param>
         public static void OpenUrl(string url)
         {
-            Process.Start(new ProcessStartInfo(url));
+            Start(url);
         }
 
         /// <summary>
@@ -35,19 +36,22 @@
         /// <param name="filePath">The filePath<see cref="string"/>.</param>
         public static void Start(string filePath)
         {
-            var process = new Process
+            Task.Run(() =>
             {
-                StartInfo = new ProcessStartInfo()
+                var process = new Process
                 {
-                    CreateNoWindow = true,
-                    ErrorDialog = true,
-                    FileName = filePath,
-                    Verb = "Open"
-                }
-            };
-            process.Start();
+                    StartInfo = new ProcessStartInfo()
+                    {
+                        CreateNoWindow = true,
+                        ErrorDialog = true,
+                        FileName = filePath,
+                        Verb = "Open"
+                    }
+                };
+                process.Start();
+            });
         }
 
-        #endregion
+        #endregion Methods
     }
 }
