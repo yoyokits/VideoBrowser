@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.Test
+﻿namespace VideoBrowser.Test.Common
 {
     using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -2,9 +2,9 @@
 {
     using System.Windows;
     using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
+    using VideoBrowser.Controls.CefSharpBrowser.Views;
     using VideoBrowser.Resources;
-    using VideoBrowser.ViewModels;
-    using VideoBrowser.Views;
 
     /// <summary>
     /// Defines the <see cref="SettingsButton" />.

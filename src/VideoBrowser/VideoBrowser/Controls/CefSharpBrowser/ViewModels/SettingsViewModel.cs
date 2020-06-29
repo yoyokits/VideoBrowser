@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.ViewModels
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
     using Ookii.Dialogs.Wpf;
     using System.IO;
@@ -6,8 +6,8 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
-    using VideoBrowser.Controls.CefSharpBrowser;
     using VideoBrowser.Controls.CefSharpBrowser.Helpers;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Extensions;
     using VideoBrowser.Resources;
 

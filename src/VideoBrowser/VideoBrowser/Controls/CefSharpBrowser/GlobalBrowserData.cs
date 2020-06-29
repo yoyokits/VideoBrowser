@@ -8,6 +8,7 @@
     using System.Linq;
     using VideoBrowser.Controls.CefSharpBrowser.Handlers;
     using VideoBrowser.Controls.CefSharpBrowser.Models;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Extensions;
     using VideoBrowser.ViewModels;
 

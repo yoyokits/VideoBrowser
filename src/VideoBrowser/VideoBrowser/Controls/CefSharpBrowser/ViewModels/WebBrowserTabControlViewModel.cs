@@ -266,6 +266,14 @@
                         this.SelectedTabIndex = settings.SelectedTabSettingIndex;
                     });
                 }
+
+                foreach (var downloadItem in settings.DownloadItems)
+                {
+                    if (System.IO.File.Exists(downloadItem.OutputPath))
+                    {
+                        this.GlobalBrowserData.DownloadItemModels.Add(downloadItem);
+                    }
+                }
             }
         }
 

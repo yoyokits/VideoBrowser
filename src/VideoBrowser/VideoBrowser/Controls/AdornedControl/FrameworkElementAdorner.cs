@@ -1,45 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Documents;
-using System.Windows;
-using System.Windows.Media;
-using System.Collections;
-
-//
+﻿//
 // This code based on code available here:
 //
 //  http://www.codeproject.com/KB/WPF/WPFJoshSmith.aspx
 //
-namespace AdornedControl
+namespace VideoBrowser.Controls.AdornedControl
 {
+    using System;
+    using System.Collections;
+    using System.Windows;
+    using System.Windows.Documents;
+    using System.Windows.Media;
+
     //
     // This class is an adorner that allows a FrameworkElement derived class to adorn another FrameworkElement.
     //
     public class FrameworkElementAdorner : Adorner
     {
         //
-        // The framework element that is the adorner. 
+        // The framework element that is the adorner.
         //
         private FrameworkElement child;
 
         //
         // Placement of the child.
         //
-        private AdornerPlacement horizontalAdornerPlacement = AdornerPlacement.Inside;
-        private AdornerPlacement verticalAdornerPlacement = AdornerPlacement.Inside;
+        private readonly AdornerPlacement horizontalAdornerPlacement = AdornerPlacement.Inside;
+
+        private readonly AdornerPlacement verticalAdornerPlacement = AdornerPlacement.Inside;
 
         //
         // Offset of the child.
         //
-        private double offsetX = 0.0;
-        private double offsetY = 0.0;
+        private readonly double offsetX = 0.0;
+
+        private readonly double offsetY = 0.0;
 
         //
         // Position of the child (when not set to NaN).
         //
         private double positionX = Double.NaN;
+
         private double positionY = Double.NaN;
 
         public FrameworkElementAdorner(FrameworkElement adornerChildElement, FrameworkElement adornedElement)
@@ -117,42 +117,42 @@ namespace AdornedControl
             switch (child.HorizontalAlignment)
             {
                 case HorizontalAlignment.Left:
-                {
-                    if (horizontalAdornerPlacement == AdornerPlacement.Outside)
                     {
-                        return -child.DesiredSize.Width + offsetX;
+                        if (horizontalAdornerPlacement == AdornerPlacement.Outside)
+                        {
+                            return -child.DesiredSize.Width + offsetX;
+                        }
+                        else
+                        {
+                            return offsetX;
+                        }
                     }
-                    else
-                    {
-                        return offsetX;
-                    }
-                }
                 case HorizontalAlignment.Right:
-                {
-                    if (horizontalAdornerPlacement == AdornerPlacement.Outside)
                     {
-                        double adornedWidth = AdornedElement.ActualWidth;
-                        return adornedWidth + offsetX;
+                        if (horizontalAdornerPlacement == AdornerPlacement.Outside)
+                        {
+                            double adornedWidth = AdornedElement.ActualWidth;
+                            return adornedWidth + offsetX;
+                        }
+                        else
+                        {
+                            double adornerWidth = this.child.DesiredSize.Width;
+                            double adornedWidth = AdornedElement.ActualWidth;
+                            double x = adornedWidth - adornerWidth;
+                            return x + offsetX;
+                        }
                     }
-                    else
+                case HorizontalAlignment.Center:
                     {
                         double adornerWidth = this.child.DesiredSize.Width;
                         double adornedWidth = AdornedElement.ActualWidth;
-                        double x = adornedWidth - adornerWidth;
+                        double x = (adornedWidth / 2) - (adornerWidth / 2);
                         return x + offsetX;
                     }
-                }
-                case HorizontalAlignment.Center:
-                {
-                    double adornerWidth = this.child.DesiredSize.Width;
-                    double adornedWidth = AdornedElement.ActualWidth;
-                    double x = (adornedWidth / 2) - (adornerWidth / 2);
-                    return x + offsetX;
-                }
                 case HorizontalAlignment.Stretch:
-                {
-                    return 0.0;
-                }
+                    {
+                        return 0.0;
+                    }
             }
 
             return 0.0;
@@ -166,42 +166,42 @@ namespace AdornedControl
             switch (child.VerticalAlignment)
             {
                 case VerticalAlignment.Top:
-                {
-                    if (verticalAdornerPlacement == AdornerPlacement.Outside)
                     {
-                        return -child.DesiredSize.Height + offsetY;
+                        if (verticalAdornerPlacement == AdornerPlacement.Outside)
+                        {
+                            return -child.DesiredSize.Height + offsetY;
+                        }
+                        else
+                        {
+                            return offsetY;
+                        }
                     }
-                    else
-                    {
-                        return offsetY;
-                    }
-                }
                 case VerticalAlignment.Bottom:
-                {
-                    if (verticalAdornerPlacement == AdornerPlacement.Outside)
                     {
-                        double adornedHeight = AdornedElement.ActualHeight;
-                        return adornedHeight + offsetY;
+                        if (verticalAdornerPlacement == AdornerPlacement.Outside)
+                        {
+                            double adornedHeight = AdornedElement.ActualHeight;
+                            return adornedHeight + offsetY;
+                        }
+                        else
+                        {
+                            double adornerHeight = this.child.DesiredSize.Height;
+                            double adornedHeight = AdornedElement.ActualHeight;
+                            double x = adornedHeight - adornerHeight;
+                            return x + offsetY;
+                        }
                     }
-                    else
+                case VerticalAlignment.Center:
                     {
                         double adornerHeight = this.child.DesiredSize.Height;
                         double adornedHeight = AdornedElement.ActualHeight;
-                        double x = adornedHeight - adornerHeight;
+                        double x = (adornedHeight / 2) - (adornerHeight / 2);
                         return x + offsetY;
                     }
-                }
-                case VerticalAlignment.Center:
-                {
-                    double adornerHeight = this.child.DesiredSize.Height;
-                    double adornedHeight = AdornedElement.ActualHeight;
-                    double x = (adornedHeight / 2) - (adornerHeight / 2);
-                    return x + offsetY;
-                }
                 case VerticalAlignment.Stretch:
-                {
-                    return 0.0;
-                }
+                    {
+                        return 0.0;
+                    }
             }
 
             return 0.0;
@@ -220,21 +220,21 @@ namespace AdornedControl
             switch (child.HorizontalAlignment)
             {
                 case HorizontalAlignment.Left:
-                {
-                    return this.child.DesiredSize.Width;
-                }
+                    {
+                        return this.child.DesiredSize.Width;
+                    }
                 case HorizontalAlignment.Right:
-                {
-                    return this.child.DesiredSize.Width;
-                }
+                    {
+                        return this.child.DesiredSize.Width;
+                    }
                 case HorizontalAlignment.Center:
-                {
-                    return this.child.DesiredSize.Width;
-                }
+                    {
+                        return this.child.DesiredSize.Width;
+                    }
                 case HorizontalAlignment.Stretch:
-                {
-                    return AdornedElement.ActualWidth;
-                }
+                    {
+                        return AdornedElement.ActualWidth;
+                    }
             }
 
             return 0.0;
@@ -253,21 +253,21 @@ namespace AdornedControl
             switch (child.VerticalAlignment)
             {
                 case VerticalAlignment.Top:
-                {
-                    return this.child.DesiredSize.Height;
-                }
+                    {
+                        return this.child.DesiredSize.Height;
+                    }
                 case VerticalAlignment.Bottom:
-                {
-                    return this.child.DesiredSize.Height;
-                }
+                    {
+                        return this.child.DesiredSize.Height;
+                    }
                 case VerticalAlignment.Center:
-                {
-                    return this.child.DesiredSize.Height; 
-                }
+                    {
+                        return this.child.DesiredSize.Height;
+                    }
                 case VerticalAlignment.Stretch:
-                {
-                    return AdornedElement.ActualHeight;
-                }
+                    {
+                        return AdornedElement.ActualHeight;
+                    }
             }
 
             return 0.0;
@@ -307,7 +307,7 @@ namespace AdornedControl
             {
                 ArrayList list = new ArrayList();
                 list.Add(this.child);
-                return (IEnumerator)list.GetEnumerator();
+                return list.GetEnumerator();
             }
         }
 

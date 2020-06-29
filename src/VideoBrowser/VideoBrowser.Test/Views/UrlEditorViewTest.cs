@@ -2,6 +2,7 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Windows.Controls;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
     using VideoBrowser.Test.Common;
     using VideoBrowser.Test.TestHelpers;

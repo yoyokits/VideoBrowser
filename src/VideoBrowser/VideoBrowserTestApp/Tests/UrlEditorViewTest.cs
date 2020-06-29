@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Controls;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;

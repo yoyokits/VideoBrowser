@@ -1,5 +1,6 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Windows.Input;
     using VideoBrowser.Common;
@@ -9,7 +10,7 @@
     /// <summary>
     /// Defines the <see cref="DownloadItemModel" />.
     /// </summary>
-    public abstract class DownloadItemModel : NotifyPropertyChanged, IDisposable
+    public class DownloadItemModel : NotifyPropertyChanged, IDisposable
     {
         #region Fields
 
@@ -40,10 +41,28 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadItemModel"/> class.
         /// </summary>
-        protected DownloadItemModel()
+        public DownloadItemModel()
         {
             this.ExecuteDownloadedCommand = new RelayCommand(this.OnExecuteDownloaded, nameof(this.ExecuteDownloadedCommand));
             this.ShowDownloadedFolderCommand = new RelayCommand(this.OnShowDownloadedFolderCommand, nameof(this.ShowDownloadedFolderCommand));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadItemModel"/> class.
+        /// </summary>
+        /// <param name="other">The other<see cref="DownloadItemModel"/>.</param>
+        internal DownloadItemModel(DownloadItemModel other)
+        {
+            this.FileSize = other.FileSize;
+            this.IsApplicationThumbnail = other.IsApplicationThumbnail;
+            this.IsQueuedControlsVisible = other.IsQueuedControlsVisible;
+            this.OutputPath = other.OutputPath;
+            this.PauseText = other.PauseText;
+            this.Progress = other.Progress;
+            this.Status = other.Status;
+            this.Thumbnail = other.Thumbnail;
+            this.Title = other.Title;
+            this.Url = other.Url;
         }
 
         #endregion Constructors
@@ -53,31 +72,29 @@
         /// <summary>
         /// Gets or sets the CancelDownloadCommand.
         /// </summary>
+        [JsonIgnore]
         public ICommand CancelDownloadCommand { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the DownloadPath.
-        /// </summary>
-        public string DownloadPath { get; protected set; }
 
         /// <summary>
         /// Gets or sets the ExecuteDownloadedCommand.
         /// </summary>
+        [JsonIgnore]
         public ICommand ExecuteDownloadedCommand { get; protected set; }
 
         /// <summary>
         /// Gets or sets the FileSize.
         /// </summary>
-        public string FileSize { get => this._fileSize; protected set => this.Set(this.PropertyChangedHandler, ref this._fileSize, value); }
+        public string FileSize { get => this._fileSize; set => this.Set(this.PropertyChangedHandler, ref this._fileSize, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsApplicationThumbnail.
         /// </summary>
-        public bool IsApplicationThumbnail { get; protected set; }
+        public bool IsApplicationThumbnail { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether IsCompletedControlsVisible.
         /// </summary>
+        [JsonIgnore]
         public bool IsCompletedControlsVisible { get => !this.IsQueuedControlsVisible; }
 
         /// <summary>
@@ -86,7 +103,7 @@
         public bool IsQueuedControlsVisible
         {
             get => _isQueuedControlsVisible;
-            internal set
+            set
             {
                 if (!this.Set(this.PropertyChangedHandler, ref _isQueuedControlsVisible, value))
                 {
@@ -100,47 +117,49 @@
         /// <summary>
         /// Gets or sets the OutputPath.
         /// </summary>
-        public string OutputPath { get => _outputPath; protected set => this.Set(this.PropertyChangedHandler, ref _outputPath, value); }
+        public string OutputPath { get => _outputPath; set => this.Set(this.PropertyChangedHandler, ref _outputPath, value); }
 
         /// <summary>
         /// Gets or sets the PauseDownloadCommand.
         /// </summary>
+        [JsonIgnore]
         public ICommand PauseDownloadCommand { get; protected set; }
 
         /// <summary>
         /// Gets or sets the PauseText.
         /// </summary>
-        public string PauseText { get => _pauseText; internal set => this.Set(this.PropertyChangedHandler, ref _pauseText, value); }
+        public string PauseText { get => _pauseText; set => this.Set(this.PropertyChangedHandler, ref _pauseText, value); }
 
         /// <summary>
         /// Gets or sets the Progress.
         /// </summary>
-        public int Progress { get => this._progress; protected set => this.Set(this.PropertyChangedHandler, ref this._progress, value); }
+        public int Progress { get => this._progress; set => this.Set(this.PropertyChangedHandler, ref this._progress, value); }
 
         /// <summary>
         /// Gets or sets the ShowDownloadedFolderCommand.
         /// </summary>
+        [JsonIgnore]
         public ICommand ShowDownloadedFolderCommand { get; protected set; }
 
         /// <summary>
         /// Gets or sets the Status.
         /// </summary>
-        public string Status { get => this._status; protected set => this.Set(this.PropertyChangedHandler, ref this._status, value); }
+        public string Status { get => this._status; set => this.Set(this.PropertyChangedHandler, ref this._status, value); }
 
         /// <summary>
         /// Gets or sets the Thumbnail.
         /// </summary>
-        public string Thumbnail { get => _thumbnail; protected set => this.Set(this.PropertyChangedHandler, ref _thumbnail, value); }
+        public string Thumbnail { get => _thumbnail; set => this.Set(this.PropertyChangedHandler, ref _thumbnail, value); }
 
         /// <summary>
         /// Gets or sets the Title.
         /// </summary>
-        public string Title { get => this._title; protected set => this.Set(this.PropertyChangedHandler, ref this._title, value); }
+        public string Title { get => this._title; set => this.Set(this.PropertyChangedHandler, ref this._title, value); }
 
         /// <summary>
         /// Gets or sets the Url.
         /// </summary>
-        public string Url { get => this._url; protected set => this.Set(this.PropertyChangedHandler, ref this._url, value); }
+        public string Url { get => this._url; set => this.Set(this.PropertyChangedHandler, ref this._url, value); }
 
         #endregion Properties
 

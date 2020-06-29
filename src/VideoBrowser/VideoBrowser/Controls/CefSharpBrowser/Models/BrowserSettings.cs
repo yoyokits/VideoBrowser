@@ -1,7 +1,6 @@
-﻿namespace VideoBrowser.Controls.CefSharpBrowser
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.Models
 {
     using System.Collections.Generic;
-    using VideoBrowser.Controls.CefSharpBrowser.Models;
 
     /// <summary>
     /// Defines the <see cref="BrowserSettings" />.
@@ -16,6 +15,7 @@
         public BrowserSettings()
         {
             this.BookmarkModels = new List<BookmarkModel>();
+            this.DownloadItems = new List<DownloadItemModel>();
             this.TabSettingModels = new List<TabSettingsModel>();
         }
 
@@ -27,6 +27,11 @@
         /// Gets or sets the BookmarkModels.
         /// </summary>
         public IList<BookmarkModel> BookmarkModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DownloadItems.
+        /// </summary>
+        public IList<DownloadItemModel> DownloadItems { get; set; }
 
         /// <summary>
         /// Gets or sets the OutputFolder.

@@ -1,8 +1,7 @@
-﻿namespace VideoBrowser.Models
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.Models
 {
     using CefSharp;
     using VideoBrowser.Common;
-    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Helpers;
 
     /// <summary>
