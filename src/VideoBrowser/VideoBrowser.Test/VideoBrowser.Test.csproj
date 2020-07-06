@@ -92,7 +92,6 @@
     <Compile Include="Views\DownloadQueueViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="key.pfx" />
     <None Include="key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
