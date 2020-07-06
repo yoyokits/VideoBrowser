@@ -387,7 +387,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="key.pfx" />
     <None Include="key.snk" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -402,7 +401,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
-      <Version>83.3.120-pre</Version>
+      <Version>83.4.20</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.18362.2005</Version>
