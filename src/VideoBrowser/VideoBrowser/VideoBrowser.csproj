@@ -76,11 +76,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -173,7 +172,9 @@
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Converters\StringToImageConverter.cs" />
     <Compile Include="Controls\CefSharpBrowser\Handlers\DownloadHandler.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\ApplicationIconHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\BrowserProcessHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\Handlers\CefContextMenuHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\Handlers\CefDisplayHandler.cs" />
@@ -192,12 +193,14 @@
     <Compile Include="Controls\CefSharpBrowser\GlobalBrowserData.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\InternetOpenType.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\InternetProxyInfo.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Helpers\ProcessHelper.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\UrlHelper.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Models\DownloadItemModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\InterTabClient.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\ProxyConfig.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\BookmarkModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\TabSettingsModel.cs" />
-    <Compile Include="Controls\CefSharpBrowser\BrowserSettings.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Models\BrowserSettings.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
@@ -257,9 +260,8 @@
     <Compile Include="If\IRange.cs" />
     <Compile Include="If\IUrlHandler.cs" />
     <Compile Include="Models\AboutButton.cs" />
-    <Compile Include="Models\DownloadProcessModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Models\DownloadProcessModel.cs" />
     <Compile Include="Models\DownloadQueueButton.cs" />
-    <Compile Include="Models\GlobalData.cs" />
     <Compile Include="Models\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
     <Compile Include="Models\SettingsButton.cs" />
@@ -271,7 +273,7 @@
     <Compile Include="ViewModels\DownloadFlyoutViewModel.cs" />
     <Compile Include="ViewModels\DownloadQueueViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UrlEditorViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\VideoBrowserViewModel.cs" />
     <Compile Include="ViewModels\VideoViewModel.cs" />
@@ -287,7 +289,7 @@
     <Compile Include="Views\DownloadQueueView.xaml.cs">
       <DependentUpon>DownloadQueueView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
+    <Compile Include="Controls\CefSharpBrowser\Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UrlEditorView.xaml.cs">
@@ -346,7 +348,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsView.xaml">
+    <Page Include="Controls\CefSharpBrowser\Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -385,6 +387,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="key.snk" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -398,7 +401,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
-      <Version>81.3.100</Version>
+      <Version>83.4.20</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.18362.2005</Version>
@@ -455,38 +458,11 @@
     <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCore.css" />
     <Content Include="Controls\CefSharpBrowser\Resources\assets\css\shCoreDefault.css" />
     <Resource Include="Controls\CefSharpBrowser\Resources\assets\images\beach-2089936_1920.jpg" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\application.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\jquery.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushCSharp.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shBrushJScript.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\assets\js\shCore.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingApiCustomObjectNameTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestsAsyncTask.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\BindingTestSingle.html" />
     <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.css" />
-    <Content Include="Controls\CefSharpBrowser\Resources\bootstrap\bootstrap.min.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\CdmSupportTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\CssAnimation.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\DragDropCursorsTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\DraggableRegionTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\ExceptionTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\extension.js" />
-    <Content Include="Controls\CefSharpBrowser\Resources\FramedWebGLTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\Home.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\JavascriptCallbackTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\LegacyBindingTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\MultiBindingTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\PopupTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\PostMessageTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\Recaptcha.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\ResponseFilterTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\SchemeTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\ScriptedMethodsTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\TooltipTest.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\UnicodeExampleGreaterThan32kb.html" />
-    <Content Include="Controls\CefSharpBrowser\Resources\UnocodeExampleEqualTo32kb.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\CefSharpBrowser\Resources\assets\js\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

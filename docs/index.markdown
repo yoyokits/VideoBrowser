@@ -11,17 +11,15 @@ Development [![Build Status](https://dev.azure.com/cekli/cekli/_apis/build/statu
 
 Free Internet browser and Youtube video downloader Windows desktop application.
 The video quality is customizable and can be downloaded in multithreading.
-The software is created as simple as possible like using other web browsers like Google Chrome, Internet Explorer, or Firefox.
+The software is created as simple as possible like using other web browsers.
 
 Please note that this is in early development, therefore you may find bugs. <br/>
 Bug reports or following the development progress can be reached via: 
 
 {{site.contact}}
 
-![Cekli Video Browser Screenshot]({{site.image_folder}}{{site.version}}/CekliVideoBrowserDownloadOptionsScreenShot.jpg)
-Cekli Browser screenshot
-
 ![Cekli Video Browser Screenshot]({{site.image_folder}}{{site.version}}/CekliVideoBrowserDownload.gif)
+
 Download youtube with Cekli Browser
 
 **Feature List** 
@@ -31,20 +29,13 @@ Download youtube with Cekli Browser
 * Tabbed browsing
 * Select the output folder
 * Play the downloaded videos with external video player
+* Save the last tabs and sessions
 
 Other feature list are in:  [Full feature list page](features_list.html)
  
 {{site.title}} based on [youtube-dl][youtube-dl] therefore in future it can support more than 100 other video websites like:
 * youtube -> supported
 * --- will be supported in the future ---
-*  Bloomberg
-*  BusinessInsider
-*  CartoonNetwork
-*  CNN
-*  dailymotion
-*  facebook
-*  Flickr
-*  mtv
 * The complete supported sites is [youtube-dl supported sites][youtube-dl-supported-sites]
 
 **Download**

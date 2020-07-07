@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;

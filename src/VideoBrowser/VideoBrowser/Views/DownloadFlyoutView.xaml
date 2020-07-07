@@ -20,7 +20,7 @@
             Command="{Binding ShowDownloadTabCommand}"
             Content="Show Downloads"
             ToolTip="Show download queue" />
-        <ItemsControl Grid.Column="1" ItemsSource="{Binding OperationModels}">
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding DownloadItemModels}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />

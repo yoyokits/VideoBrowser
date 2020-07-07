@@ -1,28 +1,88 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser.Handlers
 {
     using CefSharp;
+    using Ookii.Dialogs.Wpf;
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows;
+    using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
+    using VideoBrowser.Helpers;
 
     /// <summary>
     /// Defines the <see cref="DownloadHandler" />.
     /// </summary>
-    public class DownloadHandler : IDownloadHandler
+    public class DownloadHandler : IDownloadHandler, IDisposable
     {
-        #region Events
+        #region Constructors
 
         /// <summary>
-        /// Defines the OnBeforeDownloadFired.
+        /// Initializes a new instance of the <see cref="DownloadHandler"/> class.
         /// </summary>
-        public event EventHandler<DownloadItem> OnBeforeDownloadFired;
+        /// <param name="downloadItemModels">The downloadItemModels<see cref="ICollection{DownloadItemModel}"/>.</param>
+        public DownloadHandler(IList<DownloadItemModel> downloadItemModels)
+        {
+            this.DownloadItemModels = downloadItemModels;
+            this.DownloadItemDict = new ConcurrentDictionary<int, DownloadProcessModel>();
+        }
+
+        #endregion Constructors
+
+        #region Properties
 
         /// <summary>
-        /// Defines the OnDownloadUpdatedFired.
+        /// Gets a value indicating whether Disposed.
         /// </summary>
-        public event EventHandler<DownloadItem> OnDownloadUpdatedFired;
+        public bool Disposed { get; private set; }
 
-        #endregion Events
+        /// <summary>
+        /// Gets the DownloadItemDict.
+        /// </summary>
+        public IDictionary<int, DownloadProcessModel> DownloadItemDict { get; }
+
+        /// <summary>
+        /// Gets the DownloadItemModels.
+        /// </summary>
+        public IList<DownloadItemModel> DownloadItemModels { get; }
+
+        /// <summary>
+        /// Gets or sets the DownloadPath.
+        /// </summary>
+        public string DownloadPath { get; set; } = AppEnvironment.UserVideoFolder;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsShowDialog.
+        /// </summary>
+        public bool IsShowDialog { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsCancelAllDownloads.
+        /// </summary>
+        private bool IsCancelAllDownloads { get; set; }
+
+        /// <summary>
+        /// Gets the Lock.
+        /// </summary>
+        private object Lock { get; } = new object();
+
+        #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The Dispose.
+        /// </summary>
+        public void Dispose()
+        {
+            if (this.Disposed)
+            {
+                return;
+            }
+
+            this.Disposed = true;
+        }
 
         /// <summary>
         /// The OnBeforeDownload.
@@ -33,14 +93,48 @@
         /// <param name="callback">The callback<see cref="IBeforeDownloadCallback"/>.</param>
         public void OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
         {
-            this.OnBeforeDownloadFired?.Invoke(this, downloadItem);
-
-            if (!callback.IsDisposed)
+            lock (this.Lock)
             {
-                using (callback)
+                if (this.DownloadItemDict.ContainsKey(downloadItem.Id) || callback.IsDisposed)
                 {
-                    callback.Continue(downloadItem.SuggestedFileName, showDialog: true);
+                    return;
                 }
+
+                UIThreadHelper.Invoke(() =>
+                {
+                    using (callback)
+                    {
+                        var fileName = downloadItem.SuggestedFileName;
+                        var filePath = Path.Combine(this.DownloadPath, downloadItem.SuggestedFileName);
+                        if (this.IsShowDialog)
+                        {
+                            var dialog = new VistaSaveFileDialog
+                            {
+                                FileName = fileName,
+                                CheckPathExists = true,
+                                InitialDirectory = this.DownloadPath,
+                                OverwritePrompt = true,
+                                Title = "Save Link to...",
+                            };
+
+                            var element = chromiumWebBrowser as FrameworkElement;
+
+                            var window = Window.GetWindow(element);
+                            if (!(bool)dialog.ShowDialog(window))
+                            {
+                                return;
+                            }
+
+                            filePath = dialog.FileName;
+                        }
+
+                        this.DownloadPath = Path.GetDirectoryName(filePath);
+                        var model = new DownloadProcessModel(downloadItem);
+                        this.DownloadItemDict.Add(downloadItem.Id, model);
+                        this.DownloadItemModels.Insert(0, model);
+                        callback.Continue(filePath, false);
+                    }
+                });
             }
         }
 
@@ -53,7 +147,24 @@
         /// <param name="callback">The callback<see cref="IDownloadItemCallback"/>.</param>
         public void OnDownloadUpdated(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IDownloadItemCallback callback)
         {
-            this.OnDownloadUpdatedFired?.Invoke(this, downloadItem);
+            lock (this.Lock)
+            {
+                var id = downloadItem.Id;
+                if (!this.DownloadItemDict.TryGetValue(id, out DownloadProcessModel processModel))
+                {
+                    return;
+                }
+
+                if (processModel.IsCanceled || this.IsCancelAllDownloads)
+                {
+                    this.DownloadItemDict.Remove(id);
+                    this.DownloadItemModels.Remove(processModel);
+                    callback.Cancel();
+                    return;
+                }
+
+                processModel.UpdateInfo(downloadItem);
+            }
         }
 
         #endregion Methods

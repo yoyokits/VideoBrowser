@@ -5,8 +5,8 @@
     using System.Collections.Specialized;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Extensions;
-    using VideoBrowser.Models;
 
     /// <summary>
     /// Defines the <see cref="DownloadFlyoutViewModel" />.
@@ -26,17 +26,22 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadFlyoutViewModel"/> class.
         /// </summary>
-        /// <param name="models">The models<see cref="ObservableCollection{OperationModel}"/>.</param>
-        internal DownloadFlyoutViewModel(ObservableCollection<OperationModel> models)
+        /// <param name="models">The models<see cref="ObservableCollection{DownloadItemModel}"/>.</param>
+        internal DownloadFlyoutViewModel(ObservableCollection<DownloadItemModel> models)
         {
-            this.OperationModels = models;
-            this.OperationModels.CollectionChanged += this.OnOperationModels_CollectionChanged;
+            this.DownloadItemModels = models;
+            this.DownloadItemModels.CollectionChanged += this.OnDownloadItemModels_CollectionChanged;
             this.ShowDownloadTabCommand = new RelayCommand(this.OnShowDownloadTab, nameof(this.ShowDownloadTabCommand));
         }
 
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the DownloadItemModels.
+        /// </summary>
+        public ObservableCollection<DownloadItemModel> DownloadItemModels { get; internal set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsOpen.
@@ -47,11 +52,6 @@
         /// Gets or sets the Message.
         /// </summary>
         public string Message { get => _message; internal set => this.Set(this.PropertyChangedHandler, ref _message, value); }
-
-        /// <summary>
-        /// Gets or sets the OperationModels.
-        /// </summary>
-        public ObservableCollection<OperationModel> OperationModels { get; internal set; }
 
         /// <summary>
         /// Gets or sets the ShowDownloadTabAction.
@@ -68,11 +68,11 @@
         #region Methods
 
         /// <summary>
-        /// The OnOperationModels_CollectionChanged.
+        /// The OnDownloadItemModels_CollectionChanged.
         /// </summary>
         /// <param name="sender">The sender<see cref="object"/>.</param>
         /// <param name="e">The e<see cref="NotifyCollectionChangedEventArgs"/>.</param>
-        private void OnOperationModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnDownloadItemModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {

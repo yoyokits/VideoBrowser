@@ -76,8 +76,9 @@
         /// <param name="browserModel">The browserModel<see cref="WebBrowserTabControlViewModel"/>.</param>
         internal static void Save(BrowserSettings settings, WebBrowserTabControlViewModel browserModel)
         {
-            settings.TabSettingModels.Clear();
             settings.BookmarkModels.Clear();
+            settings.DownloadItems.Clear();
+            settings.TabSettingModels.Clear();
             foreach (var tabItem in browserModel.TabItems)
             {
                 if (tabItem.Content is FrameworkElement element && element.DataContext is VideoBrowserViewModel videoModel)
@@ -89,6 +90,14 @@
                     };
 
                     settings.TabSettingModels.Add(tabModel);
+                }
+            }
+
+            foreach (var downloadItem in browserModel.GlobalBrowserData.DownloadItemModels)
+            {
+                if (downloadItem.Status == "Completed")
+                {
+                    settings.DownloadItems.Add(new DownloadItemModel(downloadItem));
                 }
             }
 

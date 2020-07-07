@@ -3,13 +3,12 @@
     using CefSharp;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Core;
     using VideoBrowser.Extensions;
-    using VideoBrowser.Helpers;
     using VideoBrowser.ViewModels;
 
     /// <summary>
@@ -237,8 +236,9 @@
         {
             if (this.WebBrowser != null)
             {
-                this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
+                this.WebBrowser.DownloadHandler = this.GlobalBrowserData.DownloadHandler;
                 this.WebBrowser.MenuHandler = this.CefWindowData.CefContextMenuHandler;
+                this.WebBrowser.RequestHandler = this.CefWindowData.CefRequestHandler;
             }
         }
 
@@ -281,7 +281,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnNavigateUrl(object obj)
         {
-            this.Url = UrlHelper.GetValidUrl(this.Url);
+            this.Url = VideoBrowser.Helpers.UrlHelper.GetValidUrl(this.Url);
             this.NavigateUrl = this.Url;
             this.CefWindowData.IsAirspaceVisible = false;
         }
@@ -292,7 +292,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnOpenOutputFolder(object obj)
         {
-            Process.Start(this.GlobalBrowserData.Settings.OutputFolder);
+            ProcessHelper.Start(this.GlobalBrowserData.Settings.OutputFolder);
         }
 
         /// <summary>

@@ -1,8 +1,8 @@
 ﻿namespace VideoBrowserTestApp.Tests
 {
     using System.Windows;
-    using VideoBrowser.ViewModels;
-    using VideoBrowser.Views;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
+    using VideoBrowser.Controls.CefSharpBrowser.Views;
     using VideoBrowserTestApp.Helpers;
 
     /// <summary>

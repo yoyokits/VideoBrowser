@@ -9,6 +9,7 @@
     using System.Windows.Media;
     using System.Windows.Threading;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Core;
     using VideoBrowser.Helpers;
     using VideoBrowser.Models;
@@ -24,17 +25,22 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadQueueViewModel"/> class.
         /// </summary>
-        /// <param name="operationModels">The operationModels<see cref="ObservableCollection{OperationModel}"/>.</param>
-        internal DownloadQueueViewModel(ObservableCollection<OperationModel> operationModels)
+        /// <param name="downloadItemModels">The downloadItemModels<see cref="ObservableCollection{DownloadItemModel}"/>.</param>
+        internal DownloadQueueViewModel(ObservableCollection<DownloadItemModel> downloadItemModels)
         {
+            this.DownloadItemModels = downloadItemModels;
+            this.OperationCollectionView = CollectionViewSource.GetDefaultView(this.DownloadItemModels);
             this.RemoveOperationCommand = new RelayCommand(this.OnRemoveOperation);
-            this.OperationModels = operationModels;
-            this.OperationCollectionView = CollectionViewSource.GetDefaultView(this.OperationModels);
         }
 
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the DownloadItemModels.
+        /// </summary>
+        public ObservableCollection<DownloadItemModel> DownloadItemModels { get; }
 
         /// <summary>
         /// Gets or sets the Icon.
@@ -45,11 +51,6 @@
         /// Gets the OperationCollectionView.
         /// </summary>
         public ICollectionView OperationCollectionView { get; }
-
-        /// <summary>
-        /// Gets the OperationModels.
-        /// </summary>
-        public ObservableCollection<OperationModel> OperationModels { get; }
 
         /// <summary>
         /// Gets the RemoveOperationCommand.
@@ -75,9 +76,9 @@
             var element = (DispatcherObject)this.OperationCollectionView;
             element.InvokeAsync(() =>
             {
-                if (!this.OperationModels.Contains(operationModel))
+                if (!this.DownloadItemModels.Contains(operationModel))
                 {
-                    this.OperationModels.Add(operationModel);
+                    this.DownloadItemModels.Insert(0, operationModel);
                     DownloadQueueHandler.Add(operation);
                 }
                 else
@@ -91,25 +92,25 @@
         /// <summary>
         /// The OnCancelDownloadCalled.
         /// </summary>
-        /// <param name="model">The model<see cref="OperationModel"/>.</param>
-        internal void OnCancelDownloadCalled(OperationModel model)
+        /// <param name="model">The model<see cref="DownloadItemModel"/>.</param>
+        internal void OnCancelDownloadCalled(DownloadItemModel model)
         {
             model.Dispose();
-            this.OperationModels.Remove(model);
+            this.DownloadItemModels.Remove(model);
         }
 
         /// <summary>
         /// The OnPauseDownloadCalled.
         /// </summary>
-        /// <param name="model">The model<see cref="OperationModel"/>.</param>
-        internal void OnPauseDownloadCalled(OperationModel model)
+        /// <param name="model">The model<see cref="DownloadItemModel"/>.</param>
+        internal void OnPauseDownloadCalled(DownloadItemModel model)
         {
-            if (model == null)
+            if (!(model is OperationModel operationModel))
             {
                 return;
             }
 
-            var operation = model.Operation;
+            var operation = operationModel.Operation;
             var status = operation.Status;
             if (status != OperationStatus.Paused && status != OperationStatus.Queued && status != OperationStatus.Working)
             {

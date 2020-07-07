@@ -18,7 +18,7 @@
         /// The Test.
         /// </summary>
         [TestMethod]
-        public void Test()
+        public void ContainsTest()
         {
             var operation1 = new DummyOperation
             {

@@ -1,4 +1,4 @@
-﻿namespace VideoBrowser.Controls.CefSharpBrowser
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.Handlers
 {
     using CefSharp;
     using CefSharp.Wpf;
@@ -104,7 +104,7 @@
 
             if (sourceUrlExist && (parameters.SourceUrl != parameters.PageUrl))
             {
-                if (UrlHelper.IsImageUrl(parameters.SourceUrl))
+                if (parameters.SourceUrl.IsImageUrl())
                 {
                     this.AddItem(model, OpenImageInNewTab.Id, OpenImageInNewTab.Text);
                 }

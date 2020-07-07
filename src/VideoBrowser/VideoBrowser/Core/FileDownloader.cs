@@ -314,6 +314,9 @@
                 {
                     // Free other state (managed objects)
                     _downloader.Dispose();
+                    _downloader.DoWork -= downloader_DoWork;
+                    _downloader.ProgressChanged -= downloader_ProgressChanged;
+                    _downloader.RunWorkerCompleted -= downloader_RunWorkerCompleted;
                 }
 
                 // Free your own state (unmanaged objects)

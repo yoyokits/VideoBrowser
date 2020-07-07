@@ -1,4 +1,4 @@
-﻿namespace AirspaceFixer
+﻿namespace VideoBrowser.Controls.AirspaceFixer
 {
     using System;
     using System.Drawing.Imaging;

@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:AirspaceFixer">
-
+    xmlns:local="clr-namespace:VideoBrowser.Controls.AirspaceFixer.Themes">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/AirspaceFixer;component/Themes/AirspacePanel.xaml" />
     </ResourceDictionary.MergedDictionaries>

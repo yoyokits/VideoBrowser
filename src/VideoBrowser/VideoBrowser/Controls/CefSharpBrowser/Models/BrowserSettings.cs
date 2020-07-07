@@ -1,0 +1,58 @@
+﻿namespace VideoBrowser.Controls.CefSharpBrowser.Models
+{
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="BrowserSettings" />.
+    /// </summary>
+    public class BrowserSettings
+    {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BrowserSettings"/> class.
+        /// </summary>
+        public BrowserSettings()
+        {
+            this.BookmarkModels = new List<BookmarkModel>();
+            this.DownloadItems = new List<DownloadItemModel>();
+            this.TabSettingModels = new List<TabSettingsModel>();
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the BookmarkModels.
+        /// </summary>
+        public IList<BookmarkModel> BookmarkModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DownloadItems.
+        /// </summary>
+        public IList<DownloadItemModel> DownloadItems { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OutputFolder.
+        /// </summary>
+        public string OutputFolder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SelectedTabSettingIndex.
+        /// </summary>
+        public int SelectedTabSettingIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TabSettingModels.
+        /// </summary>
+        public IList<TabSettingsModel> TabSettingModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Version.
+        /// </summary>
+        public string Version { get; set; } = "1.0";
+
+        #endregion Properties
+    }
+}

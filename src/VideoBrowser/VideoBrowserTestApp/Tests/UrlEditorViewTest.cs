@@ -2,8 +2,8 @@
 {
     using System.Windows;
     using System.Windows.Controls;
+    using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
-    using VideoBrowser.Models;
     using VideoBrowser.ViewModels;
     using VideoBrowser.Views;
     using VideoBrowserTestApp.Helpers;
@@ -32,7 +32,6 @@
         /// <param name="testWindow">The testWindow<see cref="Window"/>.</param>
         protected override void Test(Window testWindow)
         {
-            var globalData = new GlobalData();
             var urlReader = new UrlReader();
             var settings = new SettingsViewModel();
             var viewModelA = new UrlEditorViewModel(urlReader, settings) { IsVisible = true, FileName = "Youtube Video File Name", FileSize = "5 MB", Duration = "00:02:45" };

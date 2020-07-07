@@ -4,6 +4,8 @@
     using System;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Core;
     using VideoBrowser.Models;
     using VideoBrowser.Test.Common;
@@ -25,9 +27,9 @@
         [TestMethod, ManualTest]
         public void Show_DownloadQueueView()
         {
-            var globalData = new GlobalData();
-            var viewModel = new DownloadQueueViewModel(globalData.OperationModels);
-            this.CreateDummyOperations(viewModel.OperationModels, viewModel.OnPauseDownloadCalled);
+            var globalBrowserData = new GlobalBrowserData();
+            var viewModel = new DownloadQueueViewModel(globalBrowserData.DownloadItemModels);
+            this.CreateDummyOperations(viewModel.DownloadItemModels, viewModel.OnPauseDownloadCalled);
             var view = new DownloadQueueView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view);
         }
@@ -37,7 +39,7 @@
         /// </summary>
         /// <param name="operations">The operations<see cref="ObservableCollection{OperationModel}"/>.</param>
         /// <param name="pauseDownloadAction">The pauseDownloadAction<see cref="ICommand"/>.</param>
-        private void CreateDummyOperations(ObservableCollection<OperationModel> operations, Action<OperationModel> pauseDownloadAction)
+        private void CreateDummyOperations(ObservableCollection<DownloadItemModel> operations, Action<DownloadItemModel> pauseDownloadAction)
         {
             var random = new Random();
             for (var i = 0; i < 10; i++)

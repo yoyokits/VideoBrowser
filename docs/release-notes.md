@@ -5,6 +5,15 @@ Cekli Video Browser development can be tracked using this release notes.<br/>
 All releases are published in GitHub site:<br/>
 [<svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/minima-social-icons.svg#github"></use></svg> Cekli Video Browser Releases](https://github.com/yoyokits/VideoBrowser/releases)
 
+# Version 0.1.5
+* Enable classic downloading files
+* Integrate classic and video download user interface
+* Save the last completed downloads and open them on start
+* Sign the assemblies
+* Update CefSharp to v83.4.20
+* Update unit test framework to 2.1.2
+* Update unit test and test application to .Net Framework 4.8 due to supported version in DevOps from the announcement. 
+
 # Version 0.1.4
 Small usability  improvement but very useful
 * Save the last session and loaded websites on tabs

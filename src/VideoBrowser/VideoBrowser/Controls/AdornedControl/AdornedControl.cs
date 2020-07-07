@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace AdornedControl
+namespace VideoBrowser.Controls.AdornedControl
 {
     /// <summary>
     /// A content control that allows an adorner for the content to

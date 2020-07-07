@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser.Handlers;
     using VideoBrowser.Extensions;
 
     /// <summary>

@@ -11,7 +11,7 @@ layout: home
 * Go back and forward the previous visited site
 * Select the output folder
 * Play the downloaded videos with external video player
-*  Save the last session and loaded websites on tabs
+* Save the last session and loaded websites on tabs
 * Multiple websites browsing using multiple tabs and windows
 * Enable to open link to new tab or new window
 * Enable to drag tab browser to a new window

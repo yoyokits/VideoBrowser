@@ -4,7 +4,7 @@
     using VideoBrowser.Common;
 
     /// <summary>
-    /// Defines the <see cref="FormatString" />
+    /// Defines the <see cref="FormatString" />.
     /// </summary>
     public static class FormatString
     {
@@ -22,24 +22,24 @@
         /// Returns a formatted string of the given file size.
         /// </summary>
         /// <param name="size">The file size as long to format.</param>
-        /// <returns>The <see cref="string"/></returns>
-        public static string FormatFileSize(long size)
+        /// <returns>The <see cref="string"/>.</returns>
+        public static string FormatFileSize(this long size)
         {
             return string.Format(new ByteFormatProvider(), "{0:fs}", size);
         }
 
         /// <summary>
-        /// The FormatLeftTime
+        /// The FormatLeftTime.
         /// </summary>
-        /// <param name="millis">The millis<see cref="long"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public static string FormatLeftTime(long millis)
+        /// <param name="milliseconds">The milliseconds<see cref="long"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public static string FormatLeftTime(this long milliseconds)
         {
             var format = "";
             for (var i = 0; i < TimeUnitsValue.Length; i++)
             {
-                var y = millis % TimeUnitsValue[i];
-                millis = millis / TimeUnitsValue[i];
+                var y = milliseconds % TimeUnitsValue[i];
+                milliseconds = milliseconds / TimeUnitsValue[i];
 
                 if (y == 0)
                 {
@@ -57,7 +57,7 @@
         /// Returns a formatted string of the video length.
         /// </summary>
         /// <param name="duration">The video duration as long.</param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string FormatVideoLength(this long duration)
         {
             return FormatVideoLength(TimeSpan.FromSeconds(duration));
@@ -67,8 +67,8 @@
         /// Returns a formatted string of the video length.
         /// </summary>
         /// <param name="duration">The video duration as TimeSpan.</param>
-        /// <returns>The <see cref="string"/></returns>
-        public static string FormatVideoLength(TimeSpan duration)
+        /// <returns>The <see cref="string"/>.</returns>
+        public static string FormatVideoLength(this TimeSpan duration)
         {
             return duration.Hours > 0
                 ? string.Format("{0}:{1:00}:{2:00}", duration.Hours, duration.Minutes, duration.Seconds)
@@ -76,11 +76,11 @@
         }
 
         /// <summary>
-        /// The GetDirectorySizeFormatted
+        /// The GetDirectorySizeFormatted.
         /// </summary>
-        /// <param name="directory">The directory<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public static string GetDirectorySizeFormatted(string directory)
+        /// <param name="directory">The directory<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public static string GetDirectorySizeFormatted(this string directory)
         {
             return FormatFileSize(FileHelper.GetDirectorySize(directory));
         }
