@@ -166,7 +166,6 @@ Source: "C:\Temp\CekliBrowser\v0.1.5\VideoBrowser.exe"; DestDir: "{app}"; Flags:
 Source: "C:\Temp\CekliBrowser\v0.1.5\VideoBrowser.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Temp\CekliBrowser\v0.1.5\VideoBrowser.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Temp\CekliBrowser\v0.1.5\Binaries\*"; DestDir: "{app}\Binaries"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Temp\CekliBrowser\v0.1.5\GPUCache\*"; DestDir: "{app}\GPUCache"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Temp\CekliBrowser\v0.1.5\locales\*"; DestDir: "{app}\locales"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Temp\CekliBrowser\v0.1.5\swiftshader\*"; DestDir: "{app}\swiftshader"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Temp\CekliBrowser\v0.1.5\License.txt"; DestDir: "{app}"; Flags: ignoreversion
