@@ -19,6 +19,7 @@ Bug reports or following the development progress can be reached via:
 {{site.contact}}
 
 ![Cekli Video Browser Screenshot]({{site.image_folder}}{{site.version}}/CekliVideoBrowserDownload.gif)
+
 Download youtube with Cekli Browser
 
 **Feature List** 
@@ -42,7 +43,7 @@ Other feature list are in:  [Full feature list page](features_list.html)
 The latest version is {{site.version}}.<br/>
 And the most recent installer can be downloaded here:
 
-[![Download]({{site.image_folder}}Download.jpg)](download.html)
+[![Download]({{site.image_folder}}Download.jpg)](https://github.com/yoyokits/VideoBrowser/releases/latest)
 
 The releases history can be followed in:
 

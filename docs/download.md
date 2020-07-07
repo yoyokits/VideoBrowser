@@ -13,7 +13,7 @@ layout: page
 {{site.title}} version {{site.version}}
 
 Download the executable file CekliBrowserSetup.exe from the link below:<br/> 
-[![Download]({{site.image_folder}}Download.jpg)](https://github.com/yoyokits/VideoBrowser/releases)
+[![Download]({{site.image_folder}}Download.jpg)](https://github.com/yoyokits/VideoBrowser/releases/latest)
 
 Previous Cekli Browser installer and source code on GitHub:<br/>
 [All releases in GitHub](https://github.com/yoyokits/VideoBrowser/releases)
