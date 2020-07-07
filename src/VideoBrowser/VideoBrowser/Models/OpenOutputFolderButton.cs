@@ -4,7 +4,6 @@
     using VideoBrowser.Controls.CefSharpBrowser.Helpers;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Resources;
-    using VideoBrowser.ViewModels;
 
     /// <summary>
     /// Defines the <see cref="OpenOutputFolderButton" />.
@@ -43,7 +42,7 @@
         /// <param name="viewModel">The viewModel<see cref="WebBrowserTabControlViewModel"/>.</param>
         protected override void Execute(WebBrowserTabControlViewModel viewModel)
         {
-            ProcessHelper.OpenFolder(this.SettingsViewModel.OutputFolder);
+            ProcessHelper.Start(this.SettingsViewModel.OutputFolder);
         }
 
         #endregion Methods

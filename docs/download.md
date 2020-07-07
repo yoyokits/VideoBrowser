@@ -12,10 +12,11 @@ layout: page
 
 {{site.title}} version {{site.version}}
 
-[![Download]({{site.image_folder}}Download.jpg)](https://github.com/yoyokits/VideoBrowser/releases/download/{{site.version}}/CekliBrowserSetup.exe)
+Download the executable file CekliBrowserSetup.exe from the link below:<br/> 
+[![Download]({{site.image_folder}}Download.jpg)](https://github.com/yoyokits/VideoBrowser/releases)
 
-Download Cekli Browser installer and code on GitHub:<br/>
-[Latest release in GitHub](https://github.com/yoyokits/VideoBrowser/releases/latest)
+Previous Cekli Browser installer and source code on GitHub:<br/>
+[All releases in GitHub](https://github.com/yoyokits/VideoBrowser/releases)
 
 The latest and previous release notes:<br/>
 [Release Notes](release-notes.html)

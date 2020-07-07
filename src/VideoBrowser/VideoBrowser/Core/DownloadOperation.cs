@@ -201,7 +201,7 @@
         {
             try
             {
-                Controls.CefSharpBrowser.Helpers.ProcessHelper.OpenFolder(this.Output);
+                Controls.CefSharpBrowser.Helpers.ProcessHelper.OpenContainedFolder(this.Output);
             }
             catch
             {

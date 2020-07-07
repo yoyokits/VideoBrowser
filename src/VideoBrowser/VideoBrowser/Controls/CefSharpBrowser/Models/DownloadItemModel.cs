@@ -240,7 +240,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnShowDownloadedFolderCommand(object obj)
         {
-            ProcessHelper.OpenFolder(this.OutputPath);
+            ProcessHelper.OpenContainedFolder(this.OutputPath);
         }
 
         #endregion Methods

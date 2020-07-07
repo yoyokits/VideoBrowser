@@ -15,7 +15,7 @@
         /// The OpenFolder.
         /// </summary>
         /// <param name="filePath">The filePath<see cref="string"/>.</param>
-        public static void OpenFolder(string filePath)
+        public static void OpenContainedFolder(string filePath)
         {
             var path = Path.GetDirectoryName(filePath);
             Start(path);

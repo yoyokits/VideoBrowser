@@ -292,7 +292,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnOpenOutputFolder(object obj)
         {
-            ProcessHelper.OpenFolder(this.GlobalBrowserData.Settings.OutputFolder);
+            ProcessHelper.Start(this.GlobalBrowserData.Settings.OutputFolder);
         }
 
         /// <summary>
