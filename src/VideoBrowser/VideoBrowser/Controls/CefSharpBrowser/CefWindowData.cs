@@ -2,6 +2,7 @@
 {
     using MahApps.Metro.Controls;
     using MahApps.Metro.Controls.Dialogs;
+    using System;
     using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows.Input;
@@ -110,9 +111,17 @@
             var currentAirspaceVisible = this.IsAirspaceVisible;
             this.IsAirspaceVisible = true;
             this.IsMessageBoxVisible = true;
-            Task<MessageDialogResult> result = this.MainWindow.Dispatcher.CheckAccess()
-                ? this.MainWindow.ShowMessageAsync(title, message, style)
-                : Task.Run(() => this.MainWindow.ShowMessageAsync(title, message, style));
+            var dispatcher = this.MainWindow.Dispatcher;
+            Task<MessageDialogResult> result = null;
+            if (dispatcher.CheckAccess())
+            {
+                result = this.MainWindow.ShowMessageAsync(title, message, style);
+            }
+            else
+            {
+                await dispatcher.BeginInvoke((Action)(() => result = this.MainWindow.ShowMessageAsync(title, message, style)));
+            }
+
             await result;
 
             this.IsMessageBoxVisible = false;
