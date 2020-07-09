@@ -11,6 +11,20 @@
         #region Methods
 
         /// <summary>
+        /// The AddRange.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="list">The list<see cref="ICollection{T}"/>.</param>
+        /// <param name="otherList">The otherList<see cref="IEnumerable{T}"/>.</param>
+        public static void AddRange<T>(this ICollection<T> list, IEnumerable<T> otherList)
+        {
+            foreach (var item in otherList)
+            {
+                list.Add(item);
+            }
+        }
+
+        /// <summary>
         /// The ClearAndDispose.
         /// </summary>
         /// <typeparam name="T">.</typeparam>

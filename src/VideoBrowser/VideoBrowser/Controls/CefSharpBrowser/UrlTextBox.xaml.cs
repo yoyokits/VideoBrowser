@@ -1,10 +1,12 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser.AddIns;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
 
     /// <summary>
     /// Interaction logic for UrlTextBox.xaml.
@@ -15,6 +17,9 @@
 
         public static readonly DependencyProperty AddInButtonClickedProperty =
             DependencyProperty.Register(nameof(AddInButtonClicked), typeof(ICommand), typeof(UrlTextBox), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty BookmarkModelsProperty =
+            DependencyProperty.Register(nameof(BookmarkModels), typeof(IList<BookmarkModel>), typeof(UrlTextBox), new PropertyMetadata(null, OnBookmarkModelsChanged));
 
         public static readonly DependencyProperty LeftAddInButtonsProperty =
             DependencyProperty.Register(nameof(LeftAddInButtons), typeof(ObservableCollection<AddInButton>), typeof(UrlTextBox), new PropertyMetadata());
@@ -69,6 +74,11 @@
         public BookmarkAddIn BookmarkAddIn { get; }
 
         /// <summary>
+        /// Gets or sets the BookmarkModels.
+        /// </summary>
+        public IList<BookmarkModel> BookmarkModels { get => (IList<BookmarkModel>)GetValue(BookmarkModelsProperty); set => SetValue(BookmarkModelsProperty, value); }
+
+        /// <summary>
         /// Gets the IsSecureAddIn.
         /// </summary>
         public IsSecureAddIn IsSecureAddIn { get; }
@@ -106,6 +116,17 @@
         #endregion Properties
 
         #region Methods
+
+        /// <summary>
+        /// The OnBookmarkModelsChanged.
+        /// </summary>
+        /// <param name="d">The d<see cref="DependencyObject"/>.</param>
+        /// <param name="e">The e<see cref="DependencyPropertyChangedEventArgs"/>.</param>
+        private static void OnBookmarkModelsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var textBox = (UrlTextBox)d;
+            textBox.BookmarkAddIn.BookmarkModels = e.NewValue as IList<BookmarkModel>;
+        }
 
         /// <summary>
         /// The OnNavigateUrlChanged.

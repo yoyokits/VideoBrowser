@@ -8,6 +8,8 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
     using VideoBrowser.Common;
+    using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
     using VideoBrowser.Core;
     using VideoBrowser.Extensions;
@@ -60,18 +62,24 @@
         /// Initializes a new instance of the <see cref="UrlEditorViewModel"/> class.
         /// </summary>
         /// <param name="reader">The reader<see cref="UrlReader"/>.</param>
-        /// <param name="settings">The settings<see cref="Settings"/>.</param>
-        internal UrlEditorViewModel(UrlReader reader, SettingsViewModel settings)
+        /// <param name="data">The data<see cref="GlobalBrowserData"/>.</param>
+        internal UrlEditorViewModel(UrlReader reader, GlobalBrowserData data)
         {
             this.UrlReader = reader;
             this.UrlReader.PropertyChanged += this.OnUrlReader_PropertyChanged;
-            this.Settings = settings;
+            this.BookmarkModels = data.BookmarkModels;
+            this.Settings = data.Settings;
             this.DownloadCommand = new RelayCommand(this.OnDownload);
         }
 
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the BookmarkModels
+        /// </summary>
+        public IList<BookmarkModel> BookmarkModels { get; }
 
         /// <summary>
         /// Gets the DownloadCommand.

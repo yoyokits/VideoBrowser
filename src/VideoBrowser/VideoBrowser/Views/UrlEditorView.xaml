@@ -62,6 +62,7 @@
             extension:FocusExtension.IsFocused="{Binding IsTextBoxFocused, Mode=TwoWay, Delay=100}"
             extension:FocusExtension.TrackFocus="True"
             extension:TextBoxExtension.IsClickToSelectAll="True"
+            BookmarkModels="{Binding BookmarkModels}"
             NavigateUrl="{Binding NavigateUrl, UpdateSourceTrigger=PropertyChanged}"
             NavigateUrlCommand="{Binding NavigateUrlCommand}"
             Url="{Binding Url, UpdateSourceTrigger=PropertyChanged}" />

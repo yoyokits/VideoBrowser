@@ -4,6 +4,7 @@
     using Newtonsoft.Json.Converters;
     using System;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Windows;
     using VideoBrowser.Common;
@@ -93,7 +94,8 @@
                 }
             }
 
-            foreach (var downloadItem in browserModel.GlobalBrowserData.DownloadItemModels)
+            var globalBrowserData = browserModel.GlobalBrowserData;
+            foreach (var downloadItem in globalBrowserData.DownloadItemModels)
             {
                 if (downloadItem.Status == "Completed")
                 {
@@ -101,6 +103,7 @@
                 }
             }
 
+            settings.BookmarkModels = globalBrowserData.BookmarkModels.ToList();
             settings.SelectedTabSettingIndex = browserModel.SelectedTabIndex;
             var settingsFolder = Path.GetDirectoryName(UserJsonSettingsPath);
             if (!Directory.Exists(settingsFolder))

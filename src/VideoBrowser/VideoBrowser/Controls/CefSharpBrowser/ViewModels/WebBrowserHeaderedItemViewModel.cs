@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Windows.Media.Imaging;
     using VideoBrowser.Controls.CefSharpBrowser.Views;
     using VideoBrowser.Core;
     using VideoBrowser.Extensions;
@@ -86,9 +87,22 @@
         /// <param name="e">The e<see cref="PropertyChangedEventArgs"/>.</param>
         private void OnVideoBrowserViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.IsMatch(nameof(this.VideoBrowserViewModel.Header)))
+            switch (e.PropertyName)
             {
-                this.Title = this.VideoBrowserViewModel.Header;
+                case nameof(this.VideoBrowserViewModel.FavIcon):
+                    var favIcon = new BitmapImage();
+                    favIcon.BeginInit();
+                    favIcon.UriSource = new Uri(this.VideoBrowserViewModel.FavIcon);
+                    favIcon.EndInit();
+                    this.HeaderViewModel.Image = favIcon;
+                    break;
+
+                case nameof(this.VideoBrowserViewModel.Header):
+                    this.Title = this.VideoBrowserViewModel.Header;
+                    break;
+
+                default:
+                    break;
             }
         }
 

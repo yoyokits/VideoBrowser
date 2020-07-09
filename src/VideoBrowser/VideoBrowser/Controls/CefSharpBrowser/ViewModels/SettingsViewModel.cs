@@ -1,6 +1,7 @@
 ﻿namespace VideoBrowser.Controls.CefSharpBrowser.ViewModels
 {
     using Ookii.Dialogs.Wpf;
+    using System.Collections.ObjectModel;
     using System.IO;
     using System.Windows;
     using System.Windows.Input;
@@ -38,11 +39,17 @@
 
             var outputFolder = this.BrowserSettings.OutputFolder;
             this.OutputFolder = string.IsNullOrEmpty(outputFolder) || !Directory.Exists(outputFolder) ? AppEnvironment.UserVideoFolder : outputFolder;
+            this.BookmarkModels.AddRange(settings.BookmarkModels);
         }
 
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets the BookmarkModels.
+        /// </summary>
+        public ObservableCollection<BookmarkModel> BookmarkModels { get; } = new ObservableCollection<BookmarkModel>();
 
         /// <summary>
         /// Gets the BrowserSettings.

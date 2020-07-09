@@ -122,6 +122,7 @@
             Title="{Binding Header}"
             Grid.Row="1"
             BackwardCommand="{Binding BackwardCommand, Mode=OneWayToSource}"
+            FavIcon="{Binding FavIcon}"
             ForwardCommand="{Binding ForwardCommand, Mode=OneWayToSource}"
             IsAirspaceVisible="{Binding CefWindowData.IsAirspaceVisible}"
             IsFullScreenCommand="{Binding CefWindowData.IsFullScreenCommand, Mode=OneWay}"

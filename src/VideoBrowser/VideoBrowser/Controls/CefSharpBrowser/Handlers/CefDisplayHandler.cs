@@ -3,7 +3,9 @@
     using CefSharp;
     using CefSharp.Structs;
     using CefSharp.Wpf;
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows.Input;
     using VideoBrowser.Helpers;
 
@@ -24,6 +26,11 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the FaviconChangedAction.
+        /// </summary>
+        public Action<string> FaviconChangedAction { get; set; }
 
         /// <summary>
         /// Gets or sets the IsFullScreenCommand.
@@ -95,6 +102,10 @@
         /// <param name="urls">The urls<see cref="IList{string}"/>.</param>
         void IDisplayHandler.OnFaviconUrlChange(IWebBrowser browserControl, IBrowser browser, IList<string> urls)
         {
+            if (urls != null && urls.Any())
+            {
+                this.FaviconChangedAction?.Invoke(urls.First());
+            }
         }
 
         /// <summary>

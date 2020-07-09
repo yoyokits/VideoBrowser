@@ -41,6 +41,11 @@
         public ICollection<AddInButton> AddInButtons { get; } = new ObservableCollection<AddInButton>();
 
         /// <summary>
+        /// Gets the BookmarkModels.
+        /// </summary>
+        public ObservableCollection<BookmarkModel> BookmarkModels => this.Settings.BookmarkModels;
+
+        /// <summary>
         /// Gets the BrowserSettings.
         /// </summary>
         public BrowserSettings BrowserSettings => this.Settings.BrowserSettings;

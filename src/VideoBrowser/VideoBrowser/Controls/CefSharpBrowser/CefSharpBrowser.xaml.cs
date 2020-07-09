@@ -2,6 +2,7 @@
 {
     using CefSharp;
     using CefSharp.Wpf;
+    using System;
     using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
@@ -18,6 +19,9 @@
 
         public static readonly DependencyProperty BackwardCommandProperty =
             DependencyProperty.Register(nameof(BackwardCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty FavIconProperty =
+            DependencyProperty.Register(nameof(FavIcon), typeof(string), typeof(CefSharpBrowser), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty ForwardCommandProperty =
             DependencyProperty.Register(nameof(ForwardCommand), typeof(ICommand), typeof(CefSharpBrowser), new PropertyMetadata(null));
@@ -50,7 +54,7 @@
         public CefSharpBrowser()
         {
             Initialize();
-            this.CefDisplayHandler = new CefDisplayHandler();
+            this.CefDisplayHandler = new CefDisplayHandler { FaviconChangedAction = (url) => this.Dispatcher.BeginInvoke((Action)(() => this.FavIcon = url)) };
             this.InitializeComponent();
             this.ChromiumWebBrowser.TitleChanged += this.OnChromiumWebBrowser_TitleChanged;
             this.Loaded += this.OnLoaded;
@@ -73,6 +77,11 @@
         /// Gets the CefSettings.
         /// </summary>
         public CefSettings CefSettings { get; }
+
+        /// <summary>
+        /// Gets or sets the FavIcon.
+        /// </summary>
+        public string FavIcon { get => (string)GetValue(FavIconProperty); set => SetValue(FavIconProperty, value); }
 
         /// <summary>
         /// Gets or sets the ForwardCommand.

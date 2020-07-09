@@ -3,6 +3,7 @@
     using CefSharp;
     using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.Windows.Input;
     using System.Windows.Media;
     using VideoBrowser.Common;
@@ -26,6 +27,8 @@
 
         private CefWindowData _cefWindowData;
 
+        private string _favIcon;
+
         private ICommand _forwardCommand;
 
         private string _header = "New Tab";
@@ -48,6 +51,7 @@
         internal VideoBrowserViewModel(GlobalBrowserData globalBrowserData, CefWindowData windowData)
         {
             this.GlobalBrowserData = globalBrowserData;
+            this.GlobalBrowserData.BookmarkModels.CollectionChanged += this.OnBookmarkModels_CollectionChanged;
             this.CefWindowData = windowData;
 
             // BackwardCommand and ForwardCommand are set by the View.
@@ -56,7 +60,7 @@
             this.NavigateUrlCommand = new RelayCommand(this.OnNavigateUrl, "NavigateUrl");
             this.OpenOutputFolderCommand = new RelayCommand(this.OnOpenOutputFolder, "Open output folder");
             this.IndicatorColor = new SolidColorBrush(Colors.DarkBlue);
-            this.UrlEditor = new UrlEditorViewModel(this.UrlReader, this.GlobalBrowserData.Settings)
+            this.UrlEditor = new UrlEditorViewModel(this.UrlReader, this.GlobalBrowserData)
             {
                 NavigateUrlCommand = this.NavigateUrlCommand,
                 ShowMessageAsyncAction = this.ShowMessageAsync
@@ -113,6 +117,11 @@
         public ICommand DownloadCommand { get; }
 
         /// <summary>
+        /// Gets or sets the FavIcon.
+        /// </summary>
+        public string FavIcon { get => _favIcon; set => this.Set(this.PropertyChangedHandler, ref _favIcon, value); }
+
+        /// <summary>
         /// Gets or sets the ForwardCommand.
         /// </summary>
         public ICommand ForwardCommand { get => this._forwardCommand; set => this.Set(this.PropertyChangedHandler, ref this._forwardCommand, value); }
@@ -157,7 +166,7 @@
         /// <summary>
         /// Gets or sets the NavigateUrl.
         /// The current valid Url that is currently opened,
-        /// it is set by Url property if the Return key is pressed or link is clicked...
+        /// it is set by Url property if the Return key is pressed or link is clicked.
         /// </summary>
         public string NavigateUrl { get => this._navigateUrl; set => this.Set(this.PropertyChangedHandler, ref this._navigateUrl, value); }
 
@@ -178,7 +187,6 @@
 
         /// <summary>
         /// Gets or sets the Url.
-        /// It is typed in the TextBox.
         /// </summary>
         public string Url { get => this.UrlEditor.Url; set => this.UrlEditor.Url = value; }
 
@@ -224,6 +232,7 @@
         /// </summary>
         public void Dispose()
         {
+            this.GlobalBrowserData.BookmarkModels.CollectionChanged -= this.OnBookmarkModels_CollectionChanged;
             this.UrlEditor.Dispose();
             this.UrlEditor.PropertyChanged -= this.OnUrlEditor_PropertyChanged;
             this.UrlReader.Dispose();
@@ -249,6 +258,19 @@
         private bool IsUrlValid()
         {
             return true;
+        }
+
+        /// <summary>
+        /// The OnBookmarkModels_CollectionChanged.
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/>.</param>
+        /// <param name="e">The e<see cref="NotifyCollectionChangedEventArgs"/>.</param>
+        private void OnBookmarkModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                this.UpdateBookmarks();
+            }
         }
 
         /// <summary>
@@ -313,6 +335,14 @@
                     this.UrlEditor.NavigateUrl = this.NavigateUrl;
                     break;
 
+                case nameof(this.FavIcon):
+                    this.UpdateBookmarks();
+                    break;
+
+                case nameof(this.Header):
+                    this.UpdateBookmarks();
+                    break;
+
                 default:
                     break;
             }
@@ -339,6 +369,24 @@
         private void ShowMessageAsync(string title, string message)
         {
             this.CefWindowData.ShowMessageAsync(title, message);
+        }
+
+        /// <summary>
+        /// The UpdateBookmarks.
+        /// </summary>
+        private void UpdateBookmarks()
+        {
+            lock (this.GlobalBrowserData.BookmarkModels)
+            {
+                foreach (var bookmark in this.GlobalBrowserData.BookmarkModels)
+                {
+                    if (bookmark.Url == this.Url)
+                    {
+                        bookmark.Name = this.Header;
+                        bookmark.FavIcon = this.FavIcon;
+                    }
+                }
+            }
         }
 
         #endregion Methods

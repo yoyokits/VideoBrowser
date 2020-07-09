@@ -174,6 +174,7 @@
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
     <Compile Include="Controls\CefSharpBrowser\AddIns\BookmarkAddIn.cs" />
     <Compile Include="Controls\CefSharpBrowser\AddIns\IsSecureAddIn.cs" />
+    <Compile Include="Controls\CefSharpBrowser\AddIns\ShowBookmarksButton.cs" />
     <Compile Include="Controls\CefSharpBrowser\Converters\StringToImageConverter.cs" />
     <Compile Include="Controls\CefSharpBrowser\Handlers\DownloadHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\ApplicationIconHelper.cs" />
@@ -205,7 +206,11 @@
     <Compile Include="Controls\CefSharpBrowser\Models\BrowserSettings.cs" />
     <Compile Include="Controls\CefSharpBrowser\Resources\BrowserIcons.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
+    <Compile Include="Controls\CefSharpBrowser\ViewModels\BookmarksViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Views\BookmarksView.xaml.cs">
+      <DependentUpon>BookmarksView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
       <DependentUpon>DefaultTabHostWindow.xaml</DependentUpon>
     </Compile>
@@ -267,8 +272,8 @@
     <Compile Include="If\IUrlHandler.cs" />
     <Compile Include="Models\AboutButton.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\DownloadProcessModel.cs" />
-    <Compile Include="Models\DownloadQueueButton.cs" />
-    <Compile Include="Models\OpenOutputFolderButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\AddIns\DownloadQueueButton.cs" />
+    <Compile Include="Controls\CefSharpBrowser\AddIns\OpenOutputFolderButton.cs" />
     <Compile Include="Models\OperationModel.cs" />
     <Compile Include="Models\SettingsButton.cs" />
     <Compile Include="Models\TestButton.cs" />
@@ -319,6 +324,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CefSharpBrowser\CefSharpBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CefSharpBrowser\Views\BookmarksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

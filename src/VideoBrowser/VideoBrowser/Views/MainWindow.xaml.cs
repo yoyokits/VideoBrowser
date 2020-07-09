@@ -4,6 +4,7 @@
     using System.Windows;
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser;
+    using VideoBrowser.Controls.CefSharpBrowser.AddIns;
     using VideoBrowser.Extensions;
     using VideoBrowser.Helpers;
     using VideoBrowser.Models;
@@ -25,6 +26,7 @@
             var addIns = this.GlobalBrowserData.AddInButtons;
             addIns.Add(new DownloadQueueButton(this.GlobalBrowserData.DownloadItemModels));
             addIns.Add(new OpenOutputFolderButton(this.GlobalBrowserData.Settings));
+            addIns.Add(new ShowBookmarksButton(this.GlobalBrowserData.BookmarkModels));
             addIns.Add(new SettingsButton(this.GlobalBrowserData.Settings));
             addIns.Add(new AboutButton());
             if (DebugHelper.IsDebug)

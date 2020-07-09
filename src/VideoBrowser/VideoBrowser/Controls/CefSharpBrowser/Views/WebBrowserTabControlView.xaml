@@ -5,13 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
-    xmlns:extension="clr-namespace:VideoBrowser.Extensions"
+    xmlns:extensions="clr-namespace:VideoBrowser.Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.ViewModels"
     d:DataContext="{d:DesignInstance viewmodels:WebBrowserTabControlViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Loaded="{extension:EventBinding Command={Binding LoadedCommand}}"
+    Loaded="{extensions:EventBinding Command={Binding LoadedCommand}}"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
