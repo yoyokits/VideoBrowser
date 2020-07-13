@@ -22,11 +22,7 @@
         /// <summary>
         /// Gets or sets the DataContext.
         /// </summary>
-        public object DataContext
-        {
-            get { return GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
-        }
+        public object DataContext { get => GetValue(DataProperty); set => SetValue(DataProperty, value); }
 
         #endregion Properties
 
@@ -36,10 +32,7 @@
         /// The CreateInstanceCore.
         /// </summary>
         /// <returns>The <see cref="Freezable"/>.</returns>
-        protected override Freezable CreateInstanceCore()
-        {
-            return new BindingProxy();
-        }
+        protected override Freezable CreateInstanceCore() => new BindingProxy();
 
         #endregion Methods
     }

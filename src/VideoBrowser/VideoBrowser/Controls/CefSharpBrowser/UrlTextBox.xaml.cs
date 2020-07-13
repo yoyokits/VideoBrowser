@@ -45,10 +45,10 @@
         /// </summary>
         public UrlTextBox()
         {
-            this.BookmarkAddIn = new BookmarkAddIn();
-            this.IsSecureAddIn = new IsSecureAddIn();
             this.InternalNavigateUrlCommand = new RelayCommand(this.OnNavigateUrl, nameof(this.InternalNavigateUrlCommand));
             this.InitializeComponent();
+            this.BookmarkAddIn = new BookmarkAddIn();
+            this.IsSecureAddIn = new IsSecureAddIn();
             this.LeftAddInButtons = new ObservableCollection<AddInButton> { this.IsSecureAddIn };
             this.RightAddInButtons = new ObservableCollection<AddInButton> { this.BookmarkAddIn };
             this.TextBox.InputBindings.Add(new KeyBinding(this.InternalNavigateUrlCommand, Key.Enter, ModifierKeys.None));

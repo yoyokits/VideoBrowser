@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows.Input;
-    using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser.Models;
     using VideoBrowser.Controls.CefSharpBrowser.Resources;
     using VideoBrowser.Controls.CefSharpBrowser.ViewModels;
@@ -15,8 +13,6 @@
     public class BookmarkAddIn : AddInButton
     {
         #region Fields
-
-        private IList<BookmarkModel> _bookmarkModels;
 
         private string _url;
 
@@ -31,8 +27,6 @@
         {
             this.Icon = BrowserIcons.StarWF;
             this.ToolTip = "Bookmark this page";
-            this.ClickCommand = new RelayCommand(this.OnClick, $"{this.Name}.{nameof(this.ClickCommand)}");
-            this.RemoveCommand = new RelayCommand(this.OnRemove, $"{this.Name}.{nameof(this.RemoveCommand)}");
         }
 
         #endregion Constructors
@@ -42,37 +36,7 @@
         /// <summary>
         /// Gets or sets the BookmarkModels.
         /// </summary>
-        public IList<BookmarkModel> BookmarkModels
-        {
-            get => _bookmarkModels;
-            internal set
-            {
-                if (_bookmarkModels == value)
-                {
-                    return;
-                }
-
-                _bookmarkModels = value;
-                if (this.BookmarkModels != null)
-                {
-                    foreach (var bookmark in this.BookmarkModels)
-                    {
-                        bookmark.ClickCommand = this.ClickCommand;
-                        bookmark.RemoveCommand = this.RemoveCommand;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the ClickCommand.
-        /// </summary>
-        public ICommand ClickCommand { get; }
-
-        /// <summary>
-        /// Gets the RemoveCommand.
-        /// </summary>
-        public ICommand RemoveCommand { get; }
+        public IList<BookmarkModel> BookmarkModels { get; internal set; }
 
         /// <summary>
         /// Gets or sets the Url.
@@ -88,23 +52,7 @@
                 }
 
                 this.IsVisible = !string.IsNullOrEmpty(this.Url);
-                var bookmarkExist = false;
-                if (this.BookmarkModels != null)
-                {
-                    lock (this.BookmarkModels)
-                    {
-                        foreach (var bookmark in this.BookmarkModels)
-                        {
-                            if (bookmark.Url == this.Url)
-                            {
-                                bookmarkExist = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                this.Icon = bookmarkExist ? BrowserIcons.Star : BrowserIcons.StarWF;
+                this.UpdateIcon();
             }
         }
 
@@ -140,29 +88,36 @@
 
                 var bookmark = new BookmarkModel
                 {
-                    ClickCommand = this.ClickCommand,
-                    RemoveCommand = this.RemoveCommand,
                     Url = this.Url
                 };
 
                 this.BookmarkModels.Insert(0, bookmark);
             }
+
+            this.Icon = BrowserIcons.Star;
         }
 
         /// <summary>
-        /// The OnClick.
+        /// The UpdateIcon.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnClick(object obj)
+        private void UpdateIcon()
         {
-        }
+            if (this.BookmarkModels != null)
+            {
+                lock (this.BookmarkModels)
+                {
+                    foreach (var bookmark in this.BookmarkModels)
+                    {
+                        if (bookmark.Url == this.Url)
+                        {
+                            this.Icon = BrowserIcons.Star;
+                            return;
+                        }
+                    }
+                }
+            }
 
-        /// <summary>
-        /// The OnRemove.
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        private void OnRemove(object obj)
-        {
+            this.Icon = BrowserIcons.StarWF;
         }
 
         #endregion Methods

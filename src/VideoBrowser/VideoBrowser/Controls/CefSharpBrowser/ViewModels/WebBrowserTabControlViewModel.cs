@@ -178,6 +178,15 @@
         }
 
         /// <summary>
+        /// The OnOpenUrlFromTab.
+        /// </summary>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        internal void OnOpenUrlFromTab(string url)
+        {
+            OnOpenUrlFromTab(url, string.Empty);
+        }
+
+        /// <summary>
         /// The SetActiveTab.
         /// </summary>
         /// <param name="guid">The guid<see cref="Guid"/>.</param>
@@ -275,15 +284,6 @@
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// The OnOpenUrlFromTab.
-        /// </summary>
-        /// <param name="url">The url<see cref="string"/>.</param>
-        private void OnOpenUrlFromTab(string url)
-        {
-            OnOpenUrlFromTab(url, string.Empty);
         }
 
         /// <summary>

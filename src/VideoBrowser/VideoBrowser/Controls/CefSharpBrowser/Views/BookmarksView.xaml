@@ -4,12 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:VideoBrowser.Extensions"
+    xmlns:helpers="clr-namespace:VideoBrowser.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.Resources"
+    xmlns:views="clr-namespace:VideoBrowser.Controls.CefSharpBrowser.Views"
     d:DataContext="{d:DesignInstance viewmodels:BookmarksViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <helpers:BindingProxy x:Key="WebBrowserTabControlViewProxy" DataContext="{Binding RelativeSource={RelativeSource AncestorType=views:WebBrowserTabControlView}, Path=DataContext}" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -43,7 +48,16 @@
                         Height="116"
                         Margin="8"
                         Cursor="Hand"
-                        MouseDown="{extensions:EventBinding Command={Binding ClickCommand}}">
+                        MouseDown="{extensions:EventBinding Command={Binding OpenCommand},
+                                                            CommandParameter={Binding Source={StaticResource WebBrowserTabControlViewProxy},
+                                                                                      Path=DataContext}}">
+                        <Grid.ToolTip>
+                            <StackPanel Margin="4">
+                                <TextBlock FontSize="12" Text="{Binding Name}" />
+                                <TextBlock FontSize="12" Text="{Binding Url}" />
+                            </StackPanel>
+                        </Grid.ToolTip>
+                        <!--  Border with shadow effect  -->
                         <Border Background="White">
                             <Border.Effect>
                                 <DropShadowEffect
@@ -64,9 +78,10 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Width="100"
-                                Text="{Binding Name}"
-                                ToolTip="{Binding Name}" />
+                                FontSize="12"
+                                Text="{Binding Name}" />
                         </Grid>
+                        <!--  Delete Bookmark  -->
                         <Path
                             Width="16"
                             Margin="8"
@@ -74,7 +89,9 @@
                             VerticalAlignment="Top"
                             Data="{x:Static resources:BrowserIcons.Delete}"
                             Fill="Gray"
-                            MouseDown="{extensions:EventBinding Command={Binding RemoveCommand}}"
+                            MouseDown="{extensions:EventBinding Command={Binding RemoveCommand},
+                                                                CommandParameter={Binding Source={StaticResource WebBrowserTabControlViewProxy},
+                                                                                          Path=DataContext}}"
                             Stretch="Uniform" />
                     </Grid>
                 </DataTemplate>
