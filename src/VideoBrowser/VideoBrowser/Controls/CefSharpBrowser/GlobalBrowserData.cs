@@ -28,6 +28,14 @@
             this.InterTabClient = new InterTabClient(this);
             this.Settings = new SettingsViewModel();
             this.Settings.PropertyChanged += this.OnSettings_PropertyChanged;
+            foreach (var downloadItem in this.BrowserSettings.DownloadItems)
+            {
+                if (File.Exists(downloadItem.OutputPath))
+                {
+                    this.DownloadItemModels.Add(downloadItem);
+                }
+            }
+
             this.DownloadHandler = new DownloadHandler(this.DownloadItemModels) { DownloadPath = this.Settings.OutputFolder };
         }
 

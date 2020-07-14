@@ -221,7 +221,7 @@
         /// <summary>
         /// Gets or sets the DownloadAction.
         /// </summary>
-        internal Action<Operation> DownloadAction { get => this.UrlEditor.DownloadAction; set => this.UrlEditor.DownloadAction = value; }
+        internal Func<Operation, string> DownloadAction { get => this.UrlEditor.DownloadAction; set => this.UrlEditor.DownloadAction = value; }
 
         #endregion Properties
 

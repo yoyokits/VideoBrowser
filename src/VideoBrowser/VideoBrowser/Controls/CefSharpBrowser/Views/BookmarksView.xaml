@@ -50,7 +50,8 @@
                         Cursor="Hand"
                         MouseDown="{extensions:EventBinding Command={Binding OpenCommand},
                                                             CommandParameter={Binding Source={StaticResource WebBrowserTabControlViewProxy},
-                                                                                      Path=DataContext}}">
+                                                                                      Path=DataContext}}"
+                        ToolTipService.InitialShowDelay="1000">
                         <Grid.ToolTip>
                             <StackPanel Margin="4">
                                 <TextBlock FontSize="12" Text="{Binding Name}" />
@@ -58,15 +59,27 @@
                             </StackPanel>
                         </Grid.ToolTip>
                         <!--  Border with shadow effect  -->
-                        <Border Background="White">
+                        <Border x:Name="BookmarkBorder" Background="White">
                             <Border.Effect>
                                 <DropShadowEffect
                                     BlurRadius="10"
                                     Opacity="0.3"
                                     ShadowDepth="3" />
                             </Border.Effect>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Opacity" Value="0" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.Setters>
+                                                <Setter Property="Opacity" Value="1" />
+                                            </Trigger.Setters>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
                         </Border>
-                        <Grid Margin="8">
+                        <Grid Margin="8" IsHitTestVisible="False">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
@@ -92,6 +105,7 @@
                             MouseDown="{extensions:EventBinding Command={Binding RemoveCommand},
                                                                 CommandParameter={Binding Source={StaticResource WebBrowserTabControlViewProxy},
                                                                                           Path=DataContext}}"
+                            Opacity="{Binding ElementName=BookmarkBorder, Path=Opacity}"
                             Stretch="Uniform" />
                     </Grid>
                 </DataTemplate>

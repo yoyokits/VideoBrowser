@@ -99,6 +99,7 @@
                                 <TextBlock Foreground="Gray" Text="{Binding Url}" />
                                 <TextBlock Foreground="Gray" Text="{Binding FileSize}" />
                                 <TextBlock Foreground="Gray" Text="{Binding Status}" />
+                                <!--  Queue Buttons  -->
                                 <StackPanel
                                     Margin="0,8,0,0"
                                     Orientation="Horizontal"
@@ -115,6 +116,7 @@
                                         Content="Cancel"
                                         ToolTip="Cancel downloading this file" />
                                 </StackPanel>
+                                <!--  Download Completed Buttons  -->
                                 <StackPanel
                                     Margin="0,8,0,0"
                                     Orientation="Horizontal"
@@ -134,6 +136,14 @@
                                         ToolTip="Open this file with associated application"
                                         Visibility="{Binding IsCompletedControlsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Path Style="{StaticResource Play}" />
+                                    </Button>
+                                    <Button
+                                        Margin="8,0,0,0"
+                                        Command="{Binding RemoveDownloadCommand}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip="Remove download item"
+                                        Visibility="{Binding IsCompletedControlsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Path Style="{StaticResource Delete}" />
                                     </Button>
                                 </StackPanel>
                             </StackPanel>

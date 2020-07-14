@@ -44,6 +44,7 @@
         public DownloadItemModel()
         {
             this.ExecuteDownloadedCommand = new RelayCommand(this.OnExecuteDownloaded, nameof(this.ExecuteDownloadedCommand));
+            this.RemoveDownloadCommand = new RelayCommand((o) => this.RemoveDownloadAction?.Invoke(this), nameof(this.RemoveDownloadCommand));
             this.ShowDownloadedFolderCommand = new RelayCommand(this.OnShowDownloadedFolderCommand, nameof(this.ShowDownloadedFolderCommand));
         }
 
@@ -134,6 +135,18 @@
         /// Gets or sets the Progress.
         /// </summary>
         public int Progress { get => this._progress; set => this.Set(this.PropertyChangedHandler, ref this._progress, value); }
+
+        /// <summary>
+        /// Gets or sets the RemoveDownloadAction.
+        /// </summary>
+        [JsonIgnore]
+        public Action<DownloadItemModel> RemoveDownloadAction { get; internal set; }
+
+        /// <summary>
+        /// Gets the RemoveDownloadCommand.
+        /// </summary>
+        [JsonIgnore]
+        public ICommand RemoveDownloadCommand { get; }
 
         /// <summary>
         /// Gets or sets the ShowDownloadedFolderCommand.

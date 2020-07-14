@@ -6,6 +6,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Input;
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser;
@@ -250,7 +251,7 @@
         /// <summary>
         /// Gets or sets the DownloadAction.
         /// </summary>
-        internal Action<Operation> DownloadAction { get; set; }
+        internal Func<Operation, string> DownloadAction { get; set; }
 
         /// <summary>
         /// Gets or sets the ShowMessageAsyncAction.
@@ -318,7 +319,7 @@
         /// The OnDownload.
         /// </summary>
         /// <param name="o">The o<see cref="object"/>.</param>
-        private void OnDownload(object o)
+        private async void OnDownload(object o)
         {
             var format = this.SelectedFormat;
             var formatTitle = format.AudioOnly ? format.AudioBitRate.ToString() : format.Format.ToString();
@@ -327,15 +328,21 @@
             var output = Path.Combine(this.Settings.OutputFolder, fileName);
             if (File.Exists(output))
             {
-                var message = $@"File ""{fileName}"" is already downloaded. If it was failed, delete it and try again.";
-                this.ShowMessageAsyncAction("Download Canceled", message);
+                var warning = $@"File ""{fileName}"" is already downloaded. If it was failed, delete it and try again.";
+                this.ShowMessageAsyncAction("Download Canceled", warning);
                 return;
             }
 
             DownloadOperation operation = format.AudioOnly || format.HasAudioAndVideo
                 ? new DownloadOperation(format, output)
                 : new DownloadOperation(format, YoutubeHelper.GetAudioFormat(format), output);
-            Task.Run(() => this.DownloadAction?.Invoke(operation));
+            var task = Task.Run(() => this.DownloadAction?.Invoke(operation));
+            await task;
+            var message = task.Result;
+            if (!string.IsNullOrEmpty(message))
+            {
+                this.ShowMessageAsyncAction("Download Canceled", message);
+            }
         }
 
         /// <summary>

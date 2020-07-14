@@ -9,7 +9,9 @@
     using System.Windows;
     using VideoBrowser.Common;
     using VideoBrowser.Controls.CefSharpBrowser.Models;
+    using VideoBrowser.Core;
     using VideoBrowser.Helpers;
+    using VideoBrowser.Models;
 
     /// <summary>
     /// Defines the <see cref="DownloadHandler" />.
@@ -26,6 +28,10 @@
         {
             this.DownloadItemModels = downloadItemModels;
             this.DownloadItemDict = new ConcurrentDictionary<int, DownloadProcessModel>();
+            foreach (var downloadItem in this.DownloadItemModels)
+            {
+                downloadItem.RemoveDownloadAction = this.RemoveDownloadItem;
+            }
         }
 
         #endregion Constructors
@@ -85,6 +91,37 @@
         }
 
         /// <summary>
+        /// The Download.
+        /// </summary>
+        /// <param name="operation">The operation<see cref="Operation"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public string Download(Operation operation)
+        {
+            var operationModel = new OperationModel(operation)
+            {
+                CancelDownloadAction = this.OnCancelDownloadCalled,
+                PauseDownloadAction = this.OnPauseDownloadCalled,
+                RemoveDownloadAction = this.RemoveDownloadItem
+            };
+            if (!this.DownloadItemModels.Contains(operationModel))
+            {
+                // The list is connected with UI list therefore must be run in UI thread.
+                UIThreadHelper.InvokeAsync(() =>
+                {
+                    this.DownloadItemModels.Insert(0, operationModel);
+                    DownloadQueueHandler.Add(operation);
+                });
+
+                return string.Empty;
+            }
+            else
+            {
+                var output = Path.GetFileName(operationModel.Operation.Output);
+                return $"The video/audio {output} is already downloaded";
+            }
+        }
+
+        /// <summary>
         /// The OnBeforeDownload.
         /// </summary>
         /// <param name="chromiumWebBrowser">The chromiumWebBrowser<see cref="IWebBrowser"/>.</param>
@@ -129,7 +166,7 @@
                         }
 
                         this.DownloadPath = Path.GetDirectoryName(filePath);
-                        var model = new DownloadProcessModel(downloadItem);
+                        var model = new DownloadProcessModel(downloadItem) { RemoveDownloadAction = this.RemoveDownloadItem };
                         this.DownloadItemDict.Add(downloadItem.Id, model);
                         this.DownloadItemModels.Insert(0, model);
                         callback.Continue(filePath, false);
@@ -164,6 +201,63 @@
                 }
 
                 processModel.UpdateInfo(downloadItem);
+            }
+        }
+
+        /// <summary>
+        /// The OnCancelDownloadCalled.
+        /// </summary>
+        /// <param name="model">The model<see cref="DownloadItemModel"/>.</param>
+        private void OnCancelDownloadCalled(DownloadItemModel model)
+        {
+            model.Dispose();
+            this.DownloadItemModels.Remove(model);
+        }
+
+        /// <summary>
+        /// The OnPauseDownloadCalled.
+        /// </summary>
+        /// <param name="model">The model<see cref="DownloadItemModel"/>.</param>
+        private void OnPauseDownloadCalled(DownloadItemModel model)
+        {
+            if (!(model is OperationModel operationModel))
+            {
+                return;
+            }
+
+            var operation = operationModel.Operation;
+            var status = operation.Status;
+            if (status != OperationStatus.Paused && status != OperationStatus.Queued && status != OperationStatus.Working)
+            {
+                return;
+            }
+
+            if (status == OperationStatus.Paused)
+            {
+                operation.Resume();
+                model.PauseText = "Pause";
+            }
+            else
+            {
+                operation.Pause();
+                model.PauseText = "Resume";
+            }
+        }
+
+        /// <summary>
+        /// The RemoveDownloadItem.
+        /// </summary>
+        /// <param name="model">The model<see cref="DownloadItemModel"/>.</param>
+        private void RemoveDownloadItem(DownloadItemModel model)
+        {
+            lock (this.Lock)
+            {
+                if (!this.DownloadItemModels.Contains(model))
+                {
+                    return;
+                }
+
+                this.DownloadItemModels.Remove(model);
             }
         }
 

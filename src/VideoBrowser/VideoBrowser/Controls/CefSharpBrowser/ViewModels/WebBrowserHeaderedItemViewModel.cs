@@ -27,7 +27,7 @@
         /// <param name="globalBrowserData">The globalBrowserData<see cref="GlobalBrowserData"/>.</param>
         /// <param name="cefWindowData">The cefWindowData<see cref="CefWindowData"/>.</param>
         /// <param name="downloadAction">The downloadAction<see cref="Action{Operation}"/>.</param>
-        internal WebBrowserHeaderedItemViewModel(GlobalBrowserData globalBrowserData, CefWindowData cefWindowData, Action<Operation> downloadAction)
+        internal WebBrowserHeaderedItemViewModel(GlobalBrowserData globalBrowserData, CefWindowData cefWindowData, Func<Operation, string> downloadAction)
         {
             this.VideoBrowserViewModel = new VideoBrowserViewModel(globalBrowserData, cefWindowData)
             {

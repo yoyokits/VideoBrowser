@@ -32,7 +32,7 @@
             this.PressF2Command = new RelayCommand(this.OnPressF2);
             this.About = new AboutViewModel();
             var downloadItemModels = globalBrowserData.DownloadItemModels;
-            this.DownloadQueueViewModel = new DownloadQueueViewModel(downloadItemModels) { ShowMessageAsync = this.ShowMessageAsync };
+            this.DownloadQueueViewModel = new DownloadQueueViewModel(downloadItemModels);
             this.DownloadFlyoutViewModel = new DownloadFlyoutViewModel(downloadItemModels) { ShowDownloadTabAction = this.ShowDownloadTabAction };
             this.WebBrowserTabControlViewModel = new WebBrowserTabControlViewModel(globalBrowserData)
             {
@@ -109,7 +109,7 @@
         /// <summary>
         /// Gets the DownloadAction.
         /// </summary>
-        private Action<Operation> DownloadAction => this.DownloadQueueViewModel.Download;
+        private Func<Operation, string> DownloadAction => this.GlobalBrowserData.DownloadHandler.Download;
 
         #endregion Properties
 
