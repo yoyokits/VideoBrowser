@@ -218,7 +218,7 @@
         /// The OnPauseDownloadCalled.
         /// </summary>
         /// <param name="model">The model<see cref="DownloadItemModel"/>.</param>
-        private void OnPauseDownloadCalled(DownloadItemModel model)
+        internal void OnPauseDownloadCalled(DownloadItemModel model)
         {
             if (!(model is OperationModel operationModel))
             {

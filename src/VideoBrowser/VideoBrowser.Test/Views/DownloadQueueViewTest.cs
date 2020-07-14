@@ -2,6 +2,7 @@
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
     using VideoBrowser.Controls.CefSharpBrowser;
@@ -29,7 +30,7 @@
         {
             var globalBrowserData = new GlobalBrowserData();
             var viewModel = new DownloadQueueViewModel(globalBrowserData.DownloadItemModels);
-            this.CreateDummyOperations(viewModel.DownloadItemModels, viewModel.OnPauseDownloadCalled);
+            this.CreateDummyOperations(viewModel.DownloadItemModels, globalBrowserData.DownloadHandler.OnPauseDownloadCalled);
             var view = new DownloadQueueView { DataContext = viewModel };
             WindowFactory.CreateAndShow(view);
         }
@@ -39,7 +40,7 @@
         /// </summary>
         /// <param name="operations">The operations<see cref="ObservableCollection{OperationModel}"/>.</param>
         /// <param name="pauseDownloadAction">The pauseDownloadAction<see cref="ICommand"/>.</param>
-        private void CreateDummyOperations(ObservableCollection<DownloadItemModel> operations, Action<DownloadItemModel> pauseDownloadAction)
+        private void CreateDummyOperations(IList<DownloadItemModel> operations, Action<DownloadItemModel> pauseDownloadAction)
         {
             var random = new Random();
             for (var i = 0; i < 10; i++)
