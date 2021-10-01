@@ -55,7 +55,7 @@
         /// <summary>
         /// Gets the audio bit rate. Returns -1 if not defined.
         /// </summary>
-        public int AudioBitRate { get; private set; }
+        public double AudioBitRate { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether AudioOnly
@@ -258,7 +258,7 @@
             var abr = token.SelectToken("abr");
             if (abr != null)
             {
-                this.AudioBitRate = int.Parse(abr.ToString());
+                this.AudioBitRate = double.Parse(abr.ToString());
             }
 
             // Check for filesize token

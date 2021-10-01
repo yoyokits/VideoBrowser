@@ -10,7 +10,7 @@
     /// <summary>
     /// Defines the <see cref="AddInButton" />.
     /// </summary>
-    public abstract class AddInButton : INotifyPropertyChanged
+    public abstract class AddInButton : NotifyPropertyChanged
     {
         #region Fields
 
@@ -19,6 +19,8 @@
         private bool _isEnabled = true;
 
         private string _toolTip;
+
+        private bool isVisible;
 
         #endregion Fields
 
@@ -41,15 +43,6 @@
 
         #endregion Constructors
 
-        #region Events
-
-        /// <summary>
-        /// Defines the PropertyChanged.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion Events
-
         #region Properties
 
         /// <summary>
@@ -60,12 +53,17 @@
         /// <summary>
         /// Gets or sets the Icon.
         /// </summary>
-        public Geometry Icon { get => _icon; set => this.Set(this.PropertyChanged, ref _icon, value); }
+        public Geometry Icon { get => _icon; set => this.Set(this.PropertyChangedHandler, ref _icon, value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsEnabled.
         /// </summary>
-        public bool IsEnabled { get => _isEnabled; set => this.Set(this.PropertyChanged, ref _isEnabled, value); }
+        public bool IsEnabled { get => _isEnabled; set => this.Set(this.PropertyChangedHandler, ref _isEnabled, value); }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsVisible.
+        /// </summary>
+        public bool IsVisible { get => isVisible; set => this.Set(this.PropertyChangedHandler, ref isVisible, value); }
 
         /// <summary>
         /// Gets or sets the Name.
@@ -75,7 +73,7 @@
         /// <summary>
         /// Gets or sets the ToolTip.
         /// </summary>
-        public string ToolTip { get => _toolTip; set => this.Set(this.PropertyChanged, ref _toolTip, value); }
+        public string ToolTip { get => _toolTip; set => this.Set(this.PropertyChangedHandler, ref _toolTip, value); }
 
         #endregion Properties
 

@@ -9,23 +9,50 @@ namespace VideoBrowser.Controls.CefSharpBrowser.Helpers
     using System.Diagnostics;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines the <see cref="BrowserProcessHandler" />.
+    /// </summary>
     public class BrowserProcessHandler : IBrowserProcessHandler
     {
+        #region Constants
+
         /// <summary>
         /// The interval between calls to Cef.DoMessageLoopWork
         /// </summary>
-        protected const int SixtyTimesPerSecond = 1000 / 60;  // 60fps
+        protected const int SixtyTimesPerSecond = 1000 / 60;// 60fps
 
         /// <summary>
         /// The maximum number of milliseconds we're willing to wait between calls to OnScheduleMessagePumpWork().
         /// </summary>
-        protected const int ThirtyTimesPerSecond = 1000 / 30;  //30fps
+        protected const int ThirtyTimesPerSecond = 1000 / 30;//30fps
 
+        #endregion Constants
+
+        #region Methods
+
+        /// <summary>
+        /// The Dispose.
+        /// </summary>
+        public virtual void Dispose()
+        {
+        }
+
+        /// <summary>
+        /// The OnScheduleMessagePumpWork.
+        /// </summary>
+        /// <param name="delay">The delay<see cref="int"/>.</param>
+        protected virtual void OnScheduleMessagePumpWork(int delay)
+        {
+        }
+
+        /// <summary>
+        /// The OnContextInitialized.
+        /// </summary>
         void IBrowserProcessHandler.OnContextInitialized()
         {
             //The Global CookieManager has been initialized, you can now set cookies
             var cookieManager = Cef.GetGlobalCookieManager();
-            cookieManager.SetSupportedSchemes(new string[] { "custom" }, true);
+            ////cookieManager.SetSupportedSchemes(new string[] { "custom" }, true);
             if (cookieManager.SetCookie("custom://cefsharp/home.html", new Cookie
             {
                 Name = "CefSharpTestCookie",
@@ -102,6 +129,10 @@ namespace VideoBrowser.Controls.CefSharpBrowser.Helpers
             }
         }
 
+        /// <summary>
+        /// The OnScheduleMessagePumpWork.
+        /// </summary>
+        /// <param name="delay">The delay<see cref="long"/>.</param>
         void IBrowserProcessHandler.OnScheduleMessagePumpWork(long delay)
         {
             //If the delay is greater than the Maximum then use ThirtyTimesPerSecond
@@ -113,13 +144,6 @@ namespace VideoBrowser.Controls.CefSharpBrowser.Helpers
             OnScheduleMessagePumpWork((int)delay);
         }
 
-        protected virtual void OnScheduleMessagePumpWork(int delay)
-        {
-            //TODO: Schedule work on the UI thread - call Cef.DoMessageLoopWork
-        }
-
-        public virtual void Dispose()
-        {
-        }
+        #endregion Methods
     }
 }

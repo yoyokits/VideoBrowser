@@ -176,6 +176,7 @@
                 }
 
                 this.IsVisible = this.UrlReader.IsDownloadable;
+                this.OnPropertyChanged();
             }
         }
 

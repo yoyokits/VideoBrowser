@@ -172,6 +172,8 @@
     <Compile Include="Controls\AdornedControl\AdornerPlacement.cs" />
     <Compile Include="Controls\AdornedControl\FrameworkElementAdorner.cs" />
     <Compile Include="Controls\AirspaceFixer\AirspacePanel.cs" />
+    <Compile Include="Controls\CefSharpBrowser\AddIns\BookmarkAddIn.cs" />
+    <Compile Include="Controls\CefSharpBrowser\AddIns\IsSecureAddIn.cs" />
     <Compile Include="Controls\CefSharpBrowser\Converters\StringToImageConverter.cs" />
     <Compile Include="Controls\CefSharpBrowser\Handlers\DownloadHandler.cs" />
     <Compile Include="Controls\CefSharpBrowser\Helpers\ApplicationIconHelper.cs" />
@@ -201,10 +203,14 @@
     <Compile Include="Controls\CefSharpBrowser\Models\BookmarkModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\TabSettingsModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Models\BrowserSettings.cs" />
+    <Compile Include="Controls\CefSharpBrowser\Resources\BrowserIcons.cs" />
     <Compile Include="Controls\CefSharpBrowser\TabItem.cs" />
     <Compile Include="Controls\CefSharpBrowser\ViewModels\DefaultTabHostViewModel.cs" />
     <Compile Include="Controls\CefSharpBrowser\Views\DefaultTabHostWindow.xaml.cs">
       <DependentUpon>DefaultTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CefSharpBrowser\UrlTextBox.xaml.cs">
+      <DependentUpon>UrlTextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
@@ -320,6 +326,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\CefSharpBrowser\UrlTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\IconsResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -401,16 +411,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
-      <Version>86.0.241</Version>
+      <Version>94.4.20</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
-      <Version>10.0.18362.2005</Version>
+      <Version>10.0.19041.1</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.WindowsRuntime">
-      <Version>4.6.0</Version>
+      <Version>4.7.0</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.WindowsRuntime.UI.Xaml">
-      <Version>4.6.0</Version>
+      <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
     using CefSharp;
     using CefSharp.Structs;
     using CefSharp.Wpf;
+    using System;
     using System.Collections.Generic;
     using System.Windows.Input;
     using VideoBrowser.Helpers;
@@ -44,6 +45,20 @@
         public bool OnAutoResize(IWebBrowser chromiumWebBrowser, IBrowser browser, Size newSize)
         {
             return true;
+        }
+
+        /// <summary>
+        /// The OnCursorChange.
+        /// </summary>
+        /// <param name="chromiumWebBrowser">The chromiumWebBrowser<see cref="IWebBrowser"/>.</param>
+        /// <param name="browser">The browser<see cref="IBrowser"/>.</param>
+        /// <param name="cursor">The cursor<see cref="IntPtr"/>.</param>
+        /// <param name="type">The type<see cref="CefSharp.Enums.CursorType"/>.</param>
+        /// <param name="customCursorInfo">The customCursorInfo<see cref="CursorInfo"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public bool OnCursorChange(IWebBrowser chromiumWebBrowser, IBrowser browser, IntPtr cursor, CefSharp.Enums.CursorType type, CursorInfo customCursorInfo)
+        {
+            return false;
         }
 
         /// <summary>
