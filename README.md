@@ -3,8 +3,6 @@
    <strong>Cekli Browser and Youtube Downloader</strong>
 </p>
 
-**I am sorry I cannot always update this code, if the application cannot download Youtube anymore, please try to download and replace the youtubedl from [youtube-dl][youtube-dl]**<br/>
-
 Master <img src="https://dev.azure.com/cekli/cekli/_apis/build/status/yoyokits.VideoBrowser?branchName=master"> 
 Development <img src="https://dev.azure.com/cekli/cekli/_apis/build/status/yoyokits.VideoBrowser?branchName=development"> 
 Downloaded [![Github All Releases](https://img.shields.io/github/downloads/yoyokits/VideoBrowser/total.svg)]()
