@@ -411,7 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
-      <Version>94.4.20</Version>
+      <Version>99.2.120</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.19041.1</Version>

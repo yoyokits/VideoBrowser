@@ -101,7 +101,7 @@
         /// <param name="obj">The obj<see cref="object"/>.</param>
         private void OnTwitter(object obj)
         {
-            ProcessHelper.OpenUrl(@"https://twitter.com/NurcahyoYohanes");
+            ProcessHelper.OpenUrl(@"https://twitter.com/txtnurcahyo");
         }
 
         #endregion Methods

@@ -330,7 +330,7 @@
                                     }
                                 case CefMenuCommand.Find:
                                     {
-                                        browser.GetHost().Find(0, parameters.SelectionText, true, false, false);
+                                        browser.GetHost().Find(parameters.SelectionText, true, false, false);
                                         break;
                                     }
                                 case CefMenuCommand.AddToDictionary:
