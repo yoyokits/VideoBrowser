@@ -30,7 +30,7 @@ twitter_username: nurcahyoyohanes
 github_username:  yoyokits/VideoBrowser
 
 # Build settings
-theme: minima
+theme: jekyll-theme-slate
 #theme: minimal-mistakes-jekyll
 
 plugins:
