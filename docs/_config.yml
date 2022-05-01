@@ -62,7 +62,7 @@ plugins:
 #   - vendor/ruby/
 
 # Custom variable:
-contact: <ul class="social-media-list"><li><a href="https://github.com/yoyokits/VideoBrowser"><svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/images/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a></li><li><a href="https://www.twitter.com/nurcahyoyohanes"><svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/images/minima-social-icons.svg#twitter"></use></svg>  <span class="username">nurcahyoyohanes</span></a></li></ul>
+contact: <ul class="social-media-list"><li><a href="https://github.com/yoyokits/VideoBrowser"><svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/images/minima-social-icons.svg#github"></use></svg> <span class="username">yoyokits/VideoBrowser</span></a></li><li><a href="https://www.twitter.com/txtnurcahyo"><svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/images/minima-social-icons.svg#twitter"></use></svg>  <span class="username">txtnurcahyo</span></a></li></ul>
 project_url: https://github.com/yoyokits/VideoBrowser
 twitter_url: https://www.twitter.com/nurcahyoyohanes
 twitter_img: <svg class="svg-icon"><use xlink:href="/VideoBrowser/assets/images/minima-social-icons.svg#twitter"></use></svg>
