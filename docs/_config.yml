@@ -28,7 +28,7 @@ baseurl: "/VideoBrowser" # the subpath of your site, e.g. /blog
 url: "https://yoyokits.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 timezone: Europe/Berlin
 future: true
-twitter_username: nurcahyoyohanes
+twitter_username: txtnurcahyo
 github_username:  yoyokits/VideoBrowser
 
 # Build settings
