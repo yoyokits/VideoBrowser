@@ -27,6 +27,7 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "/VideoBrowser" # the subpath of your site, e.g. /blog
 url: "https://yoyokits.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 timezone: Europe/Berlin
+future: true
 twitter_username: nurcahyoyohanes
 github_username:  yoyokits/VideoBrowser
 
