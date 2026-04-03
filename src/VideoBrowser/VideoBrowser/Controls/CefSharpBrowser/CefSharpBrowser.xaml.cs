@@ -166,7 +166,7 @@
         /// </summary>
         public static void Initialize()
         {
-            if (!Cef.IsInitialized)
+            if (Cef.IsInitialized != true)
             {
                 System.AppContext.SetSwitch("Switch.System.Windows.Input.Stylus.EnablePointerSupport", true);
                 const bool multiThreadedMessageLoop = true;

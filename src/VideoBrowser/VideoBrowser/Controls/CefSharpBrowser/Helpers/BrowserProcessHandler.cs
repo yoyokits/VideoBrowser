@@ -2,13 +2,14 @@
 //
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+using CefSharp;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 namespace VideoBrowser.Controls.CefSharpBrowser.Helpers
 {
-    using CefSharp;
-    using System;
-    using System.Diagnostics;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// Defines the <see cref="BrowserProcessHandler" />.
     /// </summary>
@@ -142,6 +143,17 @@ namespace VideoBrowser.Controls.CefSharpBrowser.Helpers
                 delay = ThirtyTimesPerSecond;
             }
             OnScheduleMessagePumpWork((int)delay);
+        }
+
+        /// <summary>
+        /// The OnAlreadyRunningAppRelaunch.
+        /// </summary>
+        /// <param name="commandLine">The commandLine<see cref="IReadOnlyDictionary{string, string}"/>.</param>
+        /// <param name="currentDirectory">The currentDirectory<see cref="string"/>.</param>
+        /// <returns>true if the relaunch is handled; false for default behavior.</returns>
+        public bool OnAlreadyRunningAppRelaunch(IReadOnlyDictionary<string, string> commandLine, string currentDirectory)
+        {
+            return false;
         }
 
         #endregion Methods

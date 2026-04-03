@@ -233,7 +233,7 @@ namespace VideoBrowser.Controls.CefSharpBrowser.Helpers
             Cef.AddCrossOriginWhitelistEntry(BaseUrl, "https", "cefsharp.com", false);
         }
 
-        public static async void RegisterTestResources(IWebBrowser browser)
+        public static void RegisterTestResources(IWebBrowser browser)
         {
             if (browser.ResourceRequestHandlerFactory == null)
             {
@@ -255,42 +255,7 @@ namespace VideoBrowser.Controls.CefSharpBrowser.Helpers
 
                 if (string.IsNullOrEmpty(PluginInformation))
                 {
-                    var pluginBody = new StringBuilder();
-                    pluginBody.Append("<html><body><h1>Plugins</h1><table>");
-                    pluginBody.Append("<tr>");
-                    pluginBody.Append("<th>Name</th>");
-                    pluginBody.Append("<th>Description</th>");
-                    pluginBody.Append("<th>Version</th>");
-                    pluginBody.Append("<th>Path</th>");
-                    pluginBody.Append("</tr>");
-
-                    var plugins = await Cef.GetPlugins();
-
-                    if (plugins.Count == 0)
-                    {
-                        pluginBody.Append("<tr>");
-                        pluginBody.Append("<td colspan='4'>Cef.GetPlugins returned an empty list - likely no plugins were loaded on your system</td>");
-                        pluginBody.Append("</tr>");
-                        pluginBody.Append("<tr>");
-                        pluginBody.Append("<td colspan='4'>You may find that NPAPI/PPAPI need to be enabled</td>");
-                        pluginBody.Append("</tr>");
-                    }
-                    else
-                    {
-                        foreach (var plugin in plugins)
-                        {
-                            pluginBody.Append("<tr>");
-                            pluginBody.Append("<td>" + plugin.Name + "</td>");
-                            pluginBody.Append("<td>" + plugin.Description + "</td>");
-                            pluginBody.Append("<td>" + plugin.Version + "</td>");
-                            pluginBody.Append("<td>" + plugin.Path + "</td>");
-                            pluginBody.Append("</tr>");
-                        }
-                    }
-
-                    pluginBody.Append("</table></body></html>");
-
-                    PluginInformation = pluginBody.ToString();
+                    PluginInformation = "<html><body><h1>Plugins</h1><p>Plugin enumeration is no longer supported.</p></body></html>";
                 }
 
                 handler.RegisterHandler(PluginsTestUrl, ResourceHandler.GetByteArray(PluginInformation, Encoding.UTF8));

@@ -85,19 +85,33 @@
         }
 
         /// <summary>
+        /// The CanDownload.
+        /// </summary>
+        /// <param name="chromiumWebBrowser">The chromiumWebBrowser<see cref="IWebBrowser"/>.</param>
+        /// <param name="browser">The browser<see cref="IBrowser"/>.</param>
+        /// <param name="url">The url<see cref="string"/>.</param>
+        /// <param name="requestMethod">The requestMethod<see cref="string"/>.</param>
+        /// <returns>true to proceed with the download; false to cancel.</returns>
+        public bool CanDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, string url, string requestMethod)
+        {
+            return true;
+        }
+
+        /// <summary>
         /// The OnBeforeDownload.
         /// </summary>
         /// <param name="chromiumWebBrowser">The chromiumWebBrowser<see cref="IWebBrowser"/>.</param>
         /// <param name="browser">The browser<see cref="IBrowser"/>.</param>
         /// <param name="downloadItem">The downloadItem<see cref="DownloadItem"/>.</param>
         /// <param name="callback">The callback<see cref="IBeforeDownloadCallback"/>.</param>
-        public void OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
+        /// <returns>true to continue or cancel the download; false for default handling.</returns>
+        public bool OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
         {
             lock (this.Lock)
             {
                 if (this.DownloadItemDict.ContainsKey(downloadItem.Id) || callback.IsDisposed)
                 {
-                    return;
+                    return true;
                 }
 
                 UIThreadHelper.Invoke(() =>
@@ -136,6 +150,8 @@
                     }
                 });
             }
+
+            return true;
         }
 
         /// <summary>
