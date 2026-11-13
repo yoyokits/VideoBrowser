@@ -29,6 +29,7 @@ steps:
 
 - task: VSTest@2
   inputs:
+    vsTestVersion: 'latest'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     otherConsoleOptions: '/platform:x64 /Framework:.NETFramework,Version=v4.6.2'
